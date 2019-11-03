@@ -198,7 +198,7 @@
   'import' => 'Student Import',
   'import_csv_file_supported' => 'Only CSV files are supported.',
   'import_sample_data' => 'Sample Data',
-  'import_tip' => 'Read the import guide at http://support.scriptmint.com',
+  'import_tip' => 'contact administrator',
   'imported' => 'Student imported.',
   'institute_name' => 'Institute Name',
   'invalid_column_found' => 'Invalid column found.',

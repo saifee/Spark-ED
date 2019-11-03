@@ -172,7 +172,7 @@
   'tip_permission' => 'By default, the system supports few permissions which cannot be deleted. You can add as many permissions you want. Read our documentation to know more about permissions.',
   'tip_receiver_mobile' => 'Mobile number which will be used to receive testing SMS when you click on save button.',
   'tip_role' => 'By default, the system supports few roles which cannot be deleted. You can add as many roles you want. Read our documentation to know more about roles.',
-  'tip_sms' => 'Please visit http://support.scriptmint.com to read about SMS configuration',
+  'tip_sms' => 'contact the administrator',
   'tip_system_configuration' => 'These system configurations are very useful to enable/disable certain features.',
   'todo' => 'Enable To do',
   'top_left' => 'Top Left',
