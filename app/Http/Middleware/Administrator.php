@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Mint\Service\Repositories\InitRepository;
 use App\Repositories\Configuration\ConfigurationRepository;
 
-class ScriptMint
+class Administrator
 {
     protected $config;
     protected $repo;
@@ -33,7 +33,7 @@ class ScriptMint
         $this->repo->init();
 
         $this->config->setDefault();
-        
+
         return $next($request);
     }
 }
