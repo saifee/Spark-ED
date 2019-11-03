@@ -51,7 +51,7 @@ class PasswordResetted extends Notification
                     ->line('Your password has been reset successfully!')
                     ->line('Click on the below link to continue login.')
                     ->action('Login', $url)
-                    ->line('If you haven\'t changed your password, please contact ScriptMint.')
+                    ->line('If you haven\'t changed your password, please contact Administrator.')
                     ->line('Thank you!');
     }
 
