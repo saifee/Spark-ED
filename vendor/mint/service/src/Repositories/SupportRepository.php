@@ -16,8 +16,10 @@ class SupportRepository
         $url = url()->current();
         $ip = getClientIp();
 
+        /*
         \Mail::send('emails.default.support', compact('subject', 'body', 'requester_email', 'purchase_code', 'url', 'ip', 'product_name', 'date_of_support_expiry'), function ($message) {
             $message->to('hello@scriptmint.com')->subject('ScriptMint Support Request');
         });
+        */
     }
 }

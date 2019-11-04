@@ -44,8 +44,8 @@ class InstallRequest extends FormRequest
         }
 
         if ($option === 'access_code') {
-            $rules['access_code']  = 'required';
-            $rules['envato_email'] = 'required|email';
+            // $rules['access_code']  = 'required';
+            // $rules['envato_email'] = 'required|email';
         }
 
         return $rules;

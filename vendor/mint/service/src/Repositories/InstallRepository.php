@@ -96,6 +96,7 @@ class InstallRepository
      */
     public function install($params)
     {
+        /*
         $url = config('app.verifier').'/api/cc?a=install&u='.url()->current().'&ac='.request('access_code').'&i='.config('app.item').'&e='.request('envato_email');
         $response = curlIt($url);
 
@@ -107,6 +108,8 @@ class InstallRepository
             $message = isset($response['message']) ? $response['message'] : trans('install.contact_script_author');
             throw ValidationException::withMessages(['message' => $message]);
         }
+        */
+        $checksum = 1234567890;
 
         $this->setDBEnv($params);
 

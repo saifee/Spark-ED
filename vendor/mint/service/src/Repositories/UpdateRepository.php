@@ -16,6 +16,7 @@ class UpdateRepository
 
     public function download()
     {
+        /*
         $info = $this->init->product();
 
         $product = isset($info['product']) ? $info['product'] : null;
@@ -56,10 +57,13 @@ class UpdateRepository
         curl_close($ch);
 
         return ['build' => $build, 'version' => $version];
+        */
+        return ['build' => null, 'version' => null];
     }
 
     public function update($params)
     {
+        /*
         $info = $this->init->product();
 
         $product = isset($info['product']) ? $info['product'] : null;
@@ -98,5 +102,6 @@ class UpdateRepository
         \Storage::put('.version', $version);
 
         unlink('../'.$build.".zip");
+        */
     }
 }

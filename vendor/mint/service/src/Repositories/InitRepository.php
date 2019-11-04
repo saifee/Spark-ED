@@ -8,12 +8,13 @@ class InitRepository
     public function init()
     {
         config(['app.item' => '858790']);
-        config(['app.verifier' => 'https://auth.scriptmint.com']);
-        config(['app.helpdoc' => 'https://helpdoc.instikit.com']);
+        config(['app.verifier' => 'https://example.com']);
+        config(['app.helpdoc' => 'https://example.com']);
     }
 
     public function check()
     {
+        /*
         if (isTestMode()) {
             return;
         }
@@ -42,10 +43,12 @@ class InitRepository
         } else {
             \Storage::put('.access_log', date('Y-m-d'));
         }
+        */
     }
 
     public function product()
     {
+        /*
         if (! isConnected()) {
             throw ValidationException::withMessages(['message' => 'No internect connection.']);
         }
@@ -92,12 +95,19 @@ class InitRepository
 
             $is_downloaded = 0;
         }
+        */
 
+        $about = [];
+        $product = [];
+        $update_tips = [];
+        $support_tips = [];
+        $is_downloaded = 0;
         return compact('about', 'product', 'update_tips', 'support_tips', 'is_downloaded');
     }
 
     public function helpDoc($subject = null)
     {
+        /*
         if (! isConnected()) {
             throw ValidationException::withMessages(['message' => 'No internect connection.']);
         }
@@ -111,5 +121,7 @@ class InitRepository
         $response = curlIt($url);
 
         return isset($response['content']) ? $response['content'] : 'No content found.';
+        */
+        return 'Content';
     }
 }

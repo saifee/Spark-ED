@@ -7,6 +7,7 @@ class LicenseRepository
 {
     public function verify($params)
     {
+        /*
         $access_code = isset($params['access_code']) ? $params['access_code'] : null;
         $envato_email = isset($params['envato_email']) ? $params['envato_email'] : null;
 
@@ -25,5 +26,6 @@ class LicenseRepository
         \Storage::put('.app_installed', $checksum);
         \Storage::put('.access_code', $access_code);
         \Storage::put('.account_email', $envato_email);
+        */
     }
 }

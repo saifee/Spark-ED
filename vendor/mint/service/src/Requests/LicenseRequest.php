@@ -24,8 +24,8 @@ class LicenseRequest extends FormRequest
     public function rules()
     {
         return [
-            'access_code' => 'required',
-            'envato_email' => 'required|email'
+            // 'access_code' => 'required',
+            // 'envato_email' => 'required|email'
         ];
     }
 
