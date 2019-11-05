@@ -2,9 +2,9 @@
     <header class="topbar">
         <nav class="navbar top-navbar navbar-expand-md navbar-light">
             <div class="navbar-header white-sm">
-                <router-link class="navbar-brand" to="/">
+                <!-- <router-link class="navbar-brand" to="/">
                     <img :src="getIcon" />
-                </router-link>
+                </router-link> -->
             </div>
             <div class="navbar-collapse">
                 <ul class="navbar-nav mt-md-0 ">
