@@ -160,7 +160,7 @@ const store = new Vuex.Store({
     },
     plugins: [
         createPersistedState({
-            key: 'InstiKit',
+            key: 'Spark',
         })
     ]
 });
