@@ -40,15 +40,6 @@
             </ul>
         </li>
         <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
-            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-file-alt fa-fw"></i> <span class="hide-menu">{{trans('exam.configuration')}}</span></a>
-            <ul aria-expanded="false" class="collapse">
-                <li><router-link to="/configuration/exam/term"><i class="fas fa-angle-double-right"></i> {{trans('exam.term')}}</router-link></li>
-                <li><router-link to="/configuration/exam/assessment"><i class="fas fa-angle-double-right"></i> {{trans('exam.assessment')}}</router-link></li>
-                <li><router-link to="/configuration/exam/observation"><i class="fas fa-angle-double-right"></i> <span class="font-80pc">{{trans('exam.observation')}}</span></router-link></li>
-                <li><router-link to="/configuration/exam/grade"><i class="fas fa-angle-double-right"></i> {{trans('exam.grade')}}</router-link></li>
-            </ul>
-        </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-user-tie fa-fw"></i> <span class="hide-menu">{{trans('employee.employee_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/employee"><i class="fas fa-angle-double-right"></i> {{trans('general.general')}}</router-link></li>
@@ -82,28 +73,10 @@
             </ul>
         </li>
         <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
-            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-calendar-alt fa-fw"></i> <span class="hide-menu">{{trans('calendar.calendar_configuration')}}</span></a>
-            <ul aria-expanded="false" class="collapse">
-                <li><router-link to="/configuration/calendar/event/type"><i class="fas fa-angle-double-right"></i> {{trans('calendar.event_type')}}</router-link></li>
-            </ul>
-        </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
-            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-newspaper fa-fw"></i> <span class="hide-menu">{{trans('post.post_configuration')}}</span></a>
-            <ul aria-expanded="false" class="collapse">
-                <li><router-link to="/configuration/post/article/type"><i class="fas fa-angle-double-right"></i> {{trans('post.article_type')}}</router-link></li>
-            </ul>
-        </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-building fa-fw"></i> <span class="hide-menu">{{trans('asset.asset_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/asset/building"><i class="fas fa-angle-double-right"></i> {{trans('asset.building')}}</router-link></li>
                 <li><router-link to="/configuration/asset/room"><i class="fas fa-angle-double-right"></i> {{trans('asset.room')}}</router-link></li>
-            </ul>
-        </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
-            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-suitcase fa-fw"></i> <span class="hide-menu">{{trans('frontend.frontend_configuration')}}</span></a>
-            <ul aria-expanded="false" class="collapse">
-                <li><router-link to="/configuration/frontend/index"><i class="fas fa-angle-double-right"></i> {{trans('frontend.frontend')}}</router-link></li>
             </ul>
         </li>
         <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
@@ -113,19 +86,6 @@
                 <li><router-link to="/configuration/misc/caste"><i class="fas fa-angle-double-right"></i> {{trans('misc.caste')}}</router-link></li>
                 <li><router-link to="/configuration/misc/category"><i class="fas fa-angle-double-right"></i> {{trans('misc.category')}}</router-link></li>
                 <li><router-link to="/configuration/misc/blood/group"><i class="fas fa-angle-double-right"></i> {{trans('misc.blood_group')}}</router-link></li>
-            </ul>
-        </li>
-
-        <li v-show="moduleMenu && hasAnyPermission(['list-enquiry','list-visitor-log','list-postal-record','list-call-log','list-complaint','list-gate-pass'])">
-            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-user-circle fa-fw"></i> <span class="hide-menu">{{trans('reception.reception')}}</span></a>
-            <ul aria-expanded="false" class="collapse">
-                <li v-if="hasPermission('list-enquiry')"><router-link to="/reception/enquiry"><i class="fas fa-angle-double-right"></i> {{trans('reception.admission_enquiry')}}</router-link></li>
-                <li v-if="hasPermission('list-visitor-log')"><router-link to="/reception/visitor/log"><i class="fas fa-angle-double-right"></i> {{trans('reception.visitor_log')}}</router-link></li>
-                <li v-if="hasPermission('list-call-log')"><router-link to="/reception/call/log"><i class="fas fa-angle-double-right"></i> {{trans('reception.call_log')}}</router-link></li>
-                <li v-if="hasPermission('list-postal-record')"><router-link to="/reception/postal/record"><i class="fas fa-angle-double-right"></i> {{trans('reception.postal_record')}}</router-link></li>
-                <li v-if="hasPermission('list-complaint')"><router-link to="/reception/complaint"><i class="fas fa-angle-double-right"></i> {{trans('reception.complaint')}}</router-link></li>
-                <li v-if="hasPermission('list-gate-pass')"><router-link to="/reception/gate/pass"><i class="fas fa-angle-double-right"></i> {{trans('reception.gate_pass')}}</router-link></li>
-                <li v-if="hasPermission('list-visitor-message')"><router-link to="/reception/visitor/message"><i class="fas fa-angle-double-right"></i> {{trans('reception.visitor_message')}}</router-link></li>
             </ul>
         </li>
         <li v-show="moduleMenu && hasAnyPermission(['list-academic-session','list-course','list-batch','list-class-teacher','list-subject','list-subject-teacher','list-class-timing','list-timetable'])">
