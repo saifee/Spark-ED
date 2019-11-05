@@ -22,7 +22,7 @@
 	    "email_log": 1,
 	    "reset_password": 1,
 	    "login_with_otp": 0,
-	    "footer_credit": "InstiKit by Spark",
+	    "footer_credit": "© Spark",
 	    "multilingual": 1,
 	    "ip_filter": 1,
 	    "email_template": 1,
