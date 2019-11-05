@@ -250,13 +250,6 @@
                 <li><router-link to="/inventory/stock/transfer"><i class="fas fa-angle-double-right"></i> {{trans('inventory.stock_transfer')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasPermission('list-article')">
-            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-newspaper fa-fw"></i> <span class="hide-menu">{{trans('post.post')}}</span></a>
-            <ul aria-expanded="false" class="collapse">
-                <li><router-link to="/post/feed"><i class="fas fa-angle-double-right"></i> {{trans('post.feed')}}</router-link></li>
-                <li><router-link to="/post/article"><i class="fas fa-angle-double-right"></i> {{trans('post.article')}}</router-link></li>
-            </ul>
-        </li>
         <li v-show="moduleMenu && hasAnyPermission('send-sms')">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-paper-plane fa-fw"></i> <span class="hide-menu">{{trans('communication.communication')}}</span></a>
             <ul aria-expanded="false" class="collapse">
