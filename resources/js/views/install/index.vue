@@ -122,10 +122,10 @@
                         </form>
                     </tab-content>
                     <tab-content :title="trans('install.ready_to_go')" :before-change="validateAccessCode">
-                        <p class="alert alert-success"><i class="fas fa-check"></i> {{trans('install.ready_to_go_message')}}</p>
-                        <h4 class="card-subtitle text-center">{{trans('install.verify_purchase')}}</h4>
+                        <!-- <p class="alert alert-success"><i class="fas fa-check"></i> {{trans('install.ready_to_go_message')}}</p> -->
+                        <!-- <h4 class="card-subtitle text-center">{{trans('install.verify_purchase')}}</h4> -->
                         <form class="form-horizontal" @keydown="installForm.errors.clear($event.target.name)">
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-6">
                                     <div class="form-group ">
                                         <input type="text" name="access_code" class="form-control" :placeholder="trans('install.access_code')" v-model="installForm.access_code">
@@ -138,7 +138,7 @@
                                         <show-error :form-name="installForm" prop-name="envato_email"></show-error>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" v-model="installForm.seed" value="1" name="seed">
@@ -147,11 +147,11 @@
                             </div>
                         </form>
 
-                        <div class="row justify-content-center">
+                        <!-- <div class="row justify-content-center">
                             <div class="col-6 text-center">
                                 <a :href="verifier" target="_blank" class="btn btn-info btn-block">{{trans('install.get_access_code')}}</a>
                             </div>
-                        </div>
+                        </div> -->
                     </tab-content>
                 </form-wizard>
             </div>
