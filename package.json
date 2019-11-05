@@ -1,9 +1,9 @@
 {
-  "name": "InstiKit",
+  "name": "Spark",
   "version": "2.2.0",
   "author": "spark",
-  "email": "hello@spark.com",
-  "homepage": "https://instikit.com",
+  "email": "hello@example.com",
+  "homepage": "https://example.com",
   "license": "GNU license",
   "private": true,
   "scripts": {
