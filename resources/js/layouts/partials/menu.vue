@@ -215,14 +215,6 @@
                 <li v-if="hasPermission('access-transport-report')"><router-link to="/transport/report"><i class="fas fa-angle-double-right"></i> {{trans('general.report')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission(['list-holiday','list-event'])">
-            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-calendar-alt fa-fw"></i> <span class="hide-menu">{{trans('calendar.calendar')}}</span></a>
-            <ul aria-expanded="false" class="collapse">
-                <li v-if="hasPermission('list-holiday')"><router-link to="/calendar/holiday"><i class="fas fa-angle-double-right"></i> {{trans('calendar.holiday')}}</router-link></li>
-                <li v-if="hasPermission('list-event')"><router-link to="/calendar/event"><i class="fas fa-angle-double-right"></i> {{trans('calendar.event')}}</router-link></li>
-                <li v-if="hasPermission('list-birthday')"><router-link to="/calendar/celebration/birthday"><i class="fas fa-angle-double-right"></i> {{trans('calendar.celebration')}}</router-link></li>
-            </ul>
-        </li>
         <li v-show="moduleMenu && hasAnyPermission(['list-assignment','list-notes','list-lesson-plan','list-syllabus'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-folder fa-fw"></i> <span class="hide-menu">{{trans('resource.resource')}}</span></a>
             <ul aria-expanded="false" class="collapse">
