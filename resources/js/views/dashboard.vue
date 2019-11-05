@@ -15,21 +15,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-md-8">
-                    <notice-highlight class="border-right border-bottom p-4" v-if="showTourVideo && !getConfig('mode')">
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <iframe width="100%" height="325" src="https://www.youtube.com/embed/ydTGjP-dMuM?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                            </div>
-                            <div class="col-12 col-md-6 product-intro">
-                                <h2>Do you want a <span class="special">Tour</span>?</h2>
-                                <h3>Watch InstiKit's Short Introduction Video</h3>
-                                <p>We will go through all the primary modules and features that InstiKit currently has in this short video. If you like InstiKit click on the button below to buy InstiKit.</p>
-                                <a class="btn btn-danger" href="https://instikit.com/buy/regular"><span class="p-r-10 m-r-10 border-right">Liked it?</span><strong><i class="fas fa-shopping-cart m-r-5"></i> Buy it Now</strong></a>
-                                <button class="btn" @click="hideTourVideo"><i class="fas fa-times"></i> Hide</button>
-                            </div>
-                        </div>
-                    </notice-highlight>
-
                     <div class="card border-right">
                         <div class="card-body p-4">
                             <template v-if="hasAnyRole(['admin','manager','principal'])">
