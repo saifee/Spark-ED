@@ -17,9 +17,6 @@
                 </ul>
                 <ul class="navbar-nav flex-filler"></ul>
                 <ul class="navbar-nav my-lg-0">
-                    <li class="nav-item d-none d-md-inline" v-if="!getConfig('mode')">
-                        <a class="nav-link" href="https://instikit.com/buy/regular"><i class="fas fa-shopping-cart"></i> Buy Now</a>
-                    </li>
                     <li class="nav-item dropdown" v-if="getAcademicSessions.length && hasPermission('change-academic-session')">
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-tooltip.bottom="trans('academic_session.academic_session')">{{getDefaultAcademicSession ? getDefaultAcademicSession.name : trans('academic_session.choose_session')}} <i class="fa fa-chevron-down"></i> </a>
                         <div :class="['dropdown-menu', getConfig('direction') != 'rtl' ? 'dropdown-menu-right' : '']">
