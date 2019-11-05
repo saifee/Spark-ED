@@ -52,12 +52,6 @@
                                     </div>
                                 </li>
                                 <li><router-link to="/change/password"><i class="fas fa-key"></i> {{trans('user.change_password')}}</router-link></li>
-                                <template v-if="getConfig('pb')">
-                                    <li v-if="hasRole('admin')"><router-link to="/product/about"><i class="fas fa-user-tie"></i> {{trans('general.about')}}</router-link></li>
-                                    <li v-if="hasRole('admin')"><router-link to="/product/support"><i class="fas fa-life-ring"></i> {{trans('general.support')}}</router-link></li>
-                                    <li v-if="hasRole('admin')"><router-link to="/product/update"><i class="fas fa-download"></i> {{trans('general.update')}}</router-link></li>
-                                </template>
-                                <li role="separator" class="divider"></li>
                                 <li><a href="#" @click.prevent="logout"><i class="fas fa-power-off"></i> {{trans('auth.logout')}}</a></li>
                             </ul>
                         </div>
