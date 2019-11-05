@@ -17,9 +17,6 @@
                 </ul>
                 <ul class="navbar-nav flex-filler"></ul>
                 <ul class="navbar-nav my-lg-0">
-                    <li class="nav-item hidden-sm-down d-none d-md-inline">
-                        <global-search></global-search>
-                    </li>
                     <li class="nav-item d-none d-md-inline" v-if="!getConfig('mode')">
                         <a class="nav-link" href="https://instikit.com/buy/regular"><i class="fas fa-shopping-cart"></i> Buy Now</a>
                     </li>
@@ -75,10 +72,7 @@
 </template>
 
 <script>
-    import globalSearch from './global-search'
-
     export default {
-        components: {globalSearch},
         mounted() {
         },
         methods : {
