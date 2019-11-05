@@ -5,11 +5,6 @@
                 <main-menu></main-menu>
             </nav>
         </div>
-        <div class="sidebar-footer">
-            <router-link v-if="hasPermission('access-configuration')" to="/configuration" class="link" v-tooltip="trans('configuration.configuration')"><i class="fas fa-cogs"></i></router-link>
-            <router-link to="/change/password" class="link" v-tooltip="trans('user.change_password')"><i class="fas fa-key"></i></router-link>
-            <a href="#" class="link" v-tooltip="trans('auth.logout')" @click.prevent="logout"><i class="fas fa-power-off"></i></a>
-        </div>
     </aside>
 </template>
 
