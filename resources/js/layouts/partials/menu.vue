@@ -271,20 +271,6 @@
                 <li><router-link to="/frontend/menu"><i class="fas fa-angle-double-right"></i> {{trans('frontend.menu')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission(['access-todo','access-configuration'])">
-            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-puzzle-piece fa-fw"></i> <span class="hide-menu">{{trans('utility.utility')}}</span></a>
-            <ul aria-expanded="false" class="collapse">
-                <li v-if="hasPermission('access-todo')"><router-link to="/utility/todo"><i class="fas fa-angle-double-right"></i> {{trans('utility.todo')}}</router-link></li>
-                <template v-if="hasPermission('access-configuration')">
-                    <li><router-link to="/utility/backup"><i class="fas fa-angle-double-right"></i> {{trans('utility.backup')}}</router-link></li>
-                    <li><router-link to="/utility/ip-filter"><i class="fas fa-angle-double-right"></i> {{trans('utility.ip_filter')}}</router-link></li>
-                    <!-- <li><router-link to="/utility/email-template"><i class="fas fa-angle-double-right"></i> {{trans('utility.email_template')}}</router-link></li>
-                    <li><router-link to="/utility/email-log"><i class="fas fa-angle-double-right"></i> {{trans('utility.email_log')}}</router-link></li>
-                    <li><router-link to="/utility/activity-log"><i class="fas fa-angle-double-right"></i> {{trans('utility.activity_log')}}</router-link></li>
-                    <li><router-link to="/utility/scheduled-job"><i class="fas fa-angle-double-right"></i> {{trans('utility.scheduled_job')}}</router-link></li> -->
-                </template>
-            </ul>
-        </li>
         <li v-show="moduleMenu && hasPermission('access-configuration')"><router-link to="/configuration" exact><i class="fas fa-cogs fa-fw"></i> <span class="hide-menu">{{trans('configuration.configuration')}}</span></router-link></li>
     </ul>
 </template>
