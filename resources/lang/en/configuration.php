@@ -137,7 +137,7 @@
   'setup_finish_button_content' => 'Finish',
   'setup_next_button_content' => 'Next',
   'setup_previous_button_content' => 'Previous',
-  'setup_subtitle' => 'Configure InstiKit',
+  'setup_subtitle' => 'Configure Spark',
   'setup_title' => 'Easy Setup Wizard',
   'show_menu' => 'Show :menu Menu',
   'sidebar' => 'Sidebar',
