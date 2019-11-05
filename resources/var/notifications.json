@@ -1,12 +1,12 @@
 {
 	"frontend_home": {
 		"title": {
-			"heading": "Hi there! I am InstiKit Bot!",
+			"heading": "Hi there! I am Spark Bot!",
 			"subheading": "I will guide you through this product in 5 minutes, if you allow me to do so!",
 			"nextUrl": "/articles",
 			"disableCloseForever": 1
 		},
-		"message": "<p>Experience the Best! <ul><li>Feature Rich Exam Module</li> <li>Full Featured HR Module</li> <li>Most Flexible Fee Module</li> <li>Detailed Student & Employee Profile</li></ul> We <strong>BET</strong> you cannot get these detailed module in any other product available on CodeCanyon.</p> <p>Do you know this website is built & managed by InstiKit App? You need not to be expert in coding. You can manage menus in header, footer, change slider image & even create new pages & blocks. </p><p> Yes, Its simple & you can save upto $500 for designing a website.</p> <p>Check the Article Feed page!</p>"
+		"message": "<p>Experience the Best! <ul><li>Feature Rich Exam Module</li> <li>Full Featured HR Module</li> <li>Most Flexible Fee Module</li> <li>Detailed Student & Employee Profile</li></ul> We <strong>BET</strong> you cannot get these detailed module in any other product available on CodeCanyon.</p> <p>Do you know this website is built & managed by Spark App? You need not to be expert in coding. You can manage menus in header, footer, change slider image & even create new pages & blocks. </p><p> Yes, Its simple & you can save upto $500 for designing a website.</p> <p>Check the Article Feed page!</p>"
 	},
 	"frontend_article": {
 		"title": {
@@ -15,7 +15,7 @@
 			"nextUrl": "/calendar",
 			"disableCloseForever": 1
 		},
-		"message": "<p>Post Articles, Blogs, News & even Circulars in website. Any public post from InstiKit App will be appear right here in Article Feed. I am sure, you liked the feed page design.</p> <p>Check the Calendar Page now!</p>"
+		"message": "<p>Post Articles, Blogs, News & even Circulars in website. Any public post from Spark App will be appear right here in Article Feed. I am sure, you liked the feed page design.</p> <p>Check the Calendar Page now!</p>"
 	},
 	"frontend_calendar": {
 		"title": {
@@ -42,11 +42,11 @@
 			"nextUrl": "/login",
 			"disableCloseForever": 1
 		},
-		"message": "<p>Here is a custom page we have built for you! You can create any number of custom page. Put it in Header Menu or Footer Menu. I have also created small blocks of information for you. You can also upload attachments in it. Amazing! Right?</p> <p>Let's Login & Check the InstiKit App.</p>"
+		"message": "<p>Here is a custom page we have built for you! You can create any number of custom page. Put it in Header Menu or Footer Menu. I have also created small blocks of information for you. You can also upload attachments in it. Amazing! Right?</p> <p>Let's Login & Check the Spark App.</p>"
 	},
 	"login": {
 		"title": {
-			"heading": "Time to Explore InstiKit App",
+			"heading": "Time to Explore Spark App",
 			"subheading": "You must login, we have 8 predefined roles, 150 permissions. You can define your own roles too!",
 			"disableCloseForever": 1
 		},
@@ -71,7 +71,7 @@
 	"dashboard_student": {
 		"title": {
 			"heading": "Let's go through Student Module",
-			"subheading": "From student registration to termination, every thing is available in InstiKit in detail.",
+			"subheading": "From student registration to termination, every thing is available in Spark in detail.",
 			"nextUrl": "/student/admission",
 			"disableCloseForever": 1
 		},
@@ -92,7 +92,7 @@
 			"subheading": "Move your mouse over Employee Menu in left sidebar, select any employee, go to Designation History.",
 			"nextUrl": "/employee/list"
 		},
-		"message": "<p>Do you know with InstiKit you can create Hierarchical Structure of employees of your institute. Yes, Now let Principal manage all staff, staff manage their junior staff and so on. Isn't it Awesome?</p>"
+		"message": "<p>Do you know with Spark you can create Hierarchical Structure of employees of your institute. Yes, Now let Principal manage all staff, staff manage their junior staff and so on. Isn't it Awesome?</p>"
 	},
 	"dashboard_finance": {
 		"title": {
@@ -100,7 +100,7 @@
 			"subheading": "Move your mouse over Finance Menu in left sidebar, choose Fee Allocation. Click on any fee allocation row detail to see the magic.",
 			"nextUrl": "/finance/feee/allocation"
 		},
-		"message": "<p>I bet, whatever your school fee structure is, you can easily implement it in InstiKit. Multiple Installments, due dates, late fee, optional fee, fee concession, different transport fee and everything which you will not find anywhere. </p>"
+		"message": "<p>I bet, whatever your school fee structure is, you can easily implement it in Spark. Multiple Installments, due dates, late fee, optional fee, fee concession, different transport fee and everything which you will not find anywhere. </p>"
 	},
 	"dashboard_transport": {
 		"title": {
@@ -108,7 +108,7 @@
 			"subheading": "Check it now, move your mouse over Transport Menu in left sidebar, choose Fuel Menu, check some fuel input records.",
 			"nextUrl": "/transport/vehicle/fuel"
 		},
-		"message": "<p>Transport module with Vehicle Performance? Yes, Its only available with InstiKit. Track your vehicle service record, running log, fuel consumption.</p>"
+		"message": "<p>Transport module with Vehicle Performance? Yes, Its only available with Spark. Track your vehicle service record, running log, fuel consumption.</p>"
 	},
 	"dashboard_frontend": {
 		"title": {
@@ -116,7 +116,7 @@
 			"subheading": "Move your mouse over Frontend Menu in left sidebar, choose Page Menu, start editing website content!",
 			"nextUrl": "/frontend/page"
 		},
-		"message": "<p>How much you spent annually for website of your institute? $200, $300, $400 or $500? With InstiKit, you can have your website ready with minutes. Website with slider images, calendar, articles, events, teacher list & a contact form.</p>"
+		"message": "<p>How much you spent annually for website of your institute? $200, $300, $400 or $500? With Spark, you can have your website ready with minutes. Website with slider images, calendar, articles, events, teacher list & a contact form.</p>"
 	},
 	"dashboard_post": {
 		"title": {
@@ -124,7 +124,7 @@
 			"subheading": "Move your mouse over Post Menu in left sidebar, choose Article, start writing!",
 			"nextUrl": "/post/article"
 		},
-		"message": "<p>Publishing blogs, circular, news is so much fun with InstiKit. You will love the Feed Page. Its specially designed for you! Isn't it refreshing?</p>"
+		"message": "<p>Publishing blogs, circular, news is so much fun with Spark. You will love the Feed Page. Its specially designed for you! Isn't it refreshing?</p>"
 	},
 	"dashboard_calendar": {
 		"title": {
@@ -139,7 +139,7 @@
 			"heading": "Ready to Purchase?",
 			"subheading": "We are looking for your suggestions, feedback! Do send us at hello@spark.com"
 		},
-		"message": "<p>Hope you enjoyed Live Demo. Click on the Buy Now button available in https://instikit.com to purchase. I will again help you in Installation.</p>"
+		"message": "<p>Hope you enjoyed Live Demo. Click on the Buy Now button available in https://example.com to purchase. I will again help you in Installation.</p>"
 	},
 	"reception": {
 		"title": {
@@ -151,11 +151,11 @@
 	},
 	"academic": {
 		"title": {
-			"heading": "You know, InstiKit is authored by an Education Coordinator with 10+ Years of Experience in field of Education.",
+			"heading": "You know, Spark is authored by an Education Coordinator with 10+ Years of Experience in field of Education.",
 			"subheading": "This is why we understand our requirement very well.",
 			"nextUrl": "/academic/timetable/7e4448d8-0140-4549-96ca-01df6b93b767/allocation"
 		},
-		"message": "<p>InstiKit offers you a full fledged academic planner for your school. Starting from academic sessions, courses, batches, subjects till timetable.</p> <p>While you can keep history of Class Teacher & Subject Teacher, no other system have this facility.</p> <p> The timetable module is something which allows you to store a copy of your school timetable & track it. Check the Timetable Module now!</p>"
+		"message": "<p>Spark offers you a full fledged academic planner for your school. Starting from academic sessions, courses, batches, subjects till timetable.</p> <p>While you can keep history of Class Teacher & Subject Teacher, no other system have this facility.</p> <p> The timetable module is something which allows you to store a copy of your school timetable & track it. Check the Timetable Module now!</p>"
 	},
 	"academic_timetable": {
 		"title": {
@@ -163,19 +163,19 @@
 			"subheading": "We have the solution. You can manage multiple class timing and generate timetable accordingly.",
 			"nextUrl": "/dashboard"
 		},
-		"message": "<p>InstiKit supports timetable creation with class allocation. You can easily create timetable for each batch then allocate the subject.</p> <p>You get the idea of no of subject each batch has been allotted. You can print single or multiple timetables.</p> <p>Moreover, you can always keep history of timetable with date effective. We are working on reporting module & it will be released soon.</p>"
+		"message": "<p>Spark supports timetable creation with class allocation. You can easily create timetable for each batch then allocate the subject.</p> <p>You get the idea of no of subject each batch has been allotted. You can print single or multiple timetables.</p> <p>Moreover, you can always keep history of timetable with date effective. We are working on reporting module & it will be released soon.</p>"
 	},
 	"student": {
 		"title": {
-			"heading": "Registration, Admission, Promotion, Termination. This is what InstiKit offer!",
-			"subheading": "Everything you need to record student data is available in InstiKit.",
+			"heading": "Registration, Admission, Promotion, Termination. This is what Spark offer!",
+			"subheading": "Everything you need to record student data is available in Spark.",
 			"nextUrl": "/student/admission"
 		},
-		"message": "<p>InstiKit is so designed in such a way that you keep all kinds of record of student data, ranging from basic information to bank account details.</p> <p>It supports student registration which is Pre-Admission process missing from most of the system. You can allot or reject seat after registration. You can also charge registration fee.</p> <p>After academic session end, easily promote students in bulk, you can also terminate the student. Check out the Admission List of Sudent now!</p>"
+		"message": "<p>Spark is so designed in such a way that you keep all kinds of record of student data, ranging from basic information to bank account details.</p> <p>It supports student registration which is Pre-Admission process missing from most of the system. You can allot or reject seat after registration. You can also charge registration fee.</p> <p>After academic session end, easily promote students in bulk, you can also terminate the student. Check out the Admission List of Sudent now!</p>"
 	},
 	"student_admission": {
 		"title": {
-			"heading": "Student record is most important part of any School & InstiKit provides convinient way to handle it.",
+			"heading": "Student record is most important part of any School & Spark provides convinient way to handle it.",
 			"subheading": "List, Filter, Print Student record with ease - This is what we are aiming for!",
 			"nextUrl": "/dashboard"
 		},
@@ -184,10 +184,10 @@
 	"student_attendance": {
 		"title": {
 			"heading": "How tedious it is to record attendance of student!",
-			"subheading": "InstiKit offers Monthly View of Student Attendance, Just like your Attendance Register",
+			"subheading": "Spark offers Monthly View of Student Attendance, Just like your Attendance Register",
 			"nextUrl": "/dashboard"
 		},
-		"message": "<p>If you are having 30 students, you might need 30 seconds to record student admission for a day.</p> <p>The user interface of Student Attendance in InstiKit allows you to register attendance quickly & efficiently.</p> <p>At the same time you get reports of no of student present and each student's attendance report. Choose Term 2017/18, Grade VI, Month August Attendance for demo.</p>"
+		"message": "<p>If you are having 30 students, you might need 30 seconds to record student admission for a day.</p> <p>The user interface of Student Attendance in Spark allows you to register attendance quickly & efficiently.</p> <p>At the same time you get reports of no of student present and each student's attendance report. Choose Term 2017/18, Grade VI, Month August Attendance for demo.</p>"
 	},
 	"employee": {
 		"title": {
@@ -199,19 +199,19 @@
 	},
 	"finance": {
 		"title": {
-			"heading": "Have you compared finance module of InstiKit with Others?",
-			"subheading": "If yes, then you might have noted the benefit of InstiKit over Other School Management System",
+			"heading": "Have you compared finance module of Spark with Others?",
+			"subheading": "If yes, then you might have noted the benefit of Spark over Other School Management System",
 			"nextUrl": "/finance/fee/allocation"
 		},
-		"message": "<p>Fee groups, fee heads, fee concessions, batch or course wise fee, multiple transport circle & fee. Everything you need is already available for fee collection.</p> <p>Do check the most flexible Fee Allocation system of InstiKit. </p>"
+		"message": "<p>Fee groups, fee heads, fee concessions, batch or course wise fee, multiple transport circle & fee. Everything you need is already available for fee collection.</p> <p>Do check the most flexible Fee Allocation system of Spark. </p>"
 	},
 	"finance_fee_allocation": {
 		"title": {
-			"heading": "Does my school fee structure fit in InstiKit? Obviously Yes!",
-			"subheading": "We are sure, that your school fee structure can be easily implemented in InstiKit.",
+			"heading": "Does my school fee structure fit in Spark? Obviously Yes!",
+			"subheading": "We are sure, that your school fee structure can be easily implemented in Spark.",
 			"nextUrl": "/dashboard"
 		},
-		"message": "<p>Your school charges fee in Multiple Installments? No problem. Your school offers different concessions to different students? No problem.</p> <p>Your school has different types of transport fee? No problem. You can implement any fee structure with InstiKit & will love the interface.</p> <p>You can define optional fee, can charge late fee daily, weekly, monthly etc. We have already prepared what you need! Try to create one fee allocation!</p>"
+		"message": "<p>Your school charges fee in Multiple Installments? No problem. Your school offers different concessions to different students? No problem.</p> <p>Your school has different types of transport fee? No problem. You can implement any fee structure with Spark & will love the interface.</p> <p>You can define optional fee, can charge late fee daily, weekly, monthly etc. We have already prepared what you need! Try to create one fee allocation!</p>"
 	},
 	"transport": {
 		"title": {
@@ -219,11 +219,11 @@
 			"subheading": "If yes, then you are at the Right Place.",
 			"nextUrl": "/dashboard"
 		},
-		"message": "<p>Transport is one of the most hectic department of any School. You may need to hire multiple employees to manage it but with InstiKit you will be able to manage it easily.</p> <p>Starting from Vehicle Documents (Registration Certificate, Insurance Certificate etc), track them with expirty dates. Track Vehicle Fuel consumption.</p> <p>Track vehicle running log, service record. We are coming up with many reports that will give you the idea of how your vehicles are performing!</p>"
+		"message": "<p>Transport is one of the most hectic department of any School. You may need to hire multiple employees to manage it but with Spark you will be able to manage it easily.</p> <p>Starting from Vehicle Documents (Registration Certificate, Insurance Certificate etc), track them with expirty dates. Track Vehicle Fuel consumption.</p> <p>Track vehicle running log, service record. We are coming up with many reports that will give you the idea of how your vehicles are performing!</p>"
 	},
 	"calendar": {
 		"title": {
-			"heading": "Prepare your School Calendar with InstiKit!",
+			"heading": "Prepare your School Calendar with Spark!",
 			"subheading": "Publish your School Calendar in your website in no time!",
 			"nextUrl": "/dashboard"
 		},
@@ -235,7 +235,7 @@
 			"subheading": "Did it fulfill your requirement? No?",
 			"nextUrl": "/dashboard"
 		},
-		"message": "<p>Just try InstiKit Library Module. You will have good time with it.</p> <p>List all your books at once, filter it by author, publisher, language, subject etc. Take print out or generate PDF of filtered books.</p> <p>Get record of all issued books, get record of books overdue for return, charge late fee daily, weekly, monthly etc. Anything else you need?</p>"
+		"message": "<p>Just try Spark Library Module. You will have good time with it.</p> <p>List all your books at once, filter it by author, publisher, language, subject etc. Take print out or generate PDF of filtered books.</p> <p>Get record of all issued books, get record of books overdue for return, charge late fee daily, weekly, monthly etc. Anything else you need?</p>"
 	},
 	"post": {
 		"title": {
@@ -248,9 +248,9 @@
 	"frontend": {
 		"title": {
 			"heading": "You want to have School Website? Do not search for developers!",
-			"subheading": "InstiKit will do it for you!",
+			"subheading": "Spark will do it for you!",
 			"nextUrl": "/dashboard"
 		},
-		"message": "<p>What are the things you want to have in your website? A good looking website with events, news, circulars, teachers list etc.</p> <p>While you can create this website of your own, without need of any coding skill. Your InstiKit App data will be available to the website and everything will be synchonized always.</p> <p>You can create any number of pages, change menu, create multiple blocks to customize your website that fit your requirement with zero cost!</p>"
+		"message": "<p>What are the things you want to have in your website? A good looking website with events, news, circulars, teachers list etc.</p> <p>While you can create this website of your own, without need of any coding skill. Your Spark App data will be available to the website and everything will be synchonized always.</p> <p>You can create any number of pages, change menu, create multiple blocks to customize your website that fit your requirement with zero cost!</p>"
 	}
 }
