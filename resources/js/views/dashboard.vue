@@ -8,7 +8,6 @@
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
                         <button class="btn btn-info btn-sm right-sidebar-toggle " v-tooltip="trans('user.user_preference')"><i class="fas fa-cog"></i></button>
-                        <button class="btn btn-danger btn-sm" @click.prevent="logout"><i class="fas fa-power-off"></i> <span class="d-none d-sm-inline">{{trans('auth.logout')}}</span></button>
                     </div>
                 </div>
             </div>
