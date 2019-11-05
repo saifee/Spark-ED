@@ -215,15 +215,6 @@
                 <li v-if="hasPermission('access-transport-report')"><router-link to="/transport/report"><i class="fas fa-angle-double-right"></i> {{trans('general.report')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission(['list-assignment','list-notes','list-lesson-plan','list-syllabus'])">
-            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-folder fa-fw"></i> <span class="hide-menu">{{trans('resource.resource')}}</span></a>
-            <ul aria-expanded="false" class="collapse">
-                <li v-if="hasPermission('list-assignment')"><router-link to="/resource/assignment"><i class="fas fa-angle-double-right"></i> {{trans('resource.assignment')}}</router-link></li>
-                <li v-if="hasPermission('list-notes')"><router-link to="/resource/notes"><i class="fas fa-angle-double-right"></i> {{trans('resource.notes')}}</router-link></li>
-                <li v-if="hasPermission('list-lesson-plan')"><router-link to="/resource/lesson/plan"><i class="fas fa-angle-double-right"></i> {{trans('resource.lesson_plan')}}</router-link></li>
-                <li v-if="hasPermission('list-syllabus')"><router-link to="/resource/syllabus"><i class="fas fa-angle-double-right"></i> {{trans('resource.syllabus')}}</router-link></li>
-            </ul>
-        </li>
         <li v-show="moduleMenu && hasAnyPermission(['list-book','issue-book','return-book'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-book fa-fw"></i> <span class="hide-menu">{{trans('library.library')}}</span></a>
             <ul aria-expanded="false" class="collapse">
