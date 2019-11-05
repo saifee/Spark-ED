@@ -1,7 +1,7 @@
 <template>
-	<footer class="footer">
+	<!-- <footer class="footer">
         {{getConfig('footer_credit')}} {{trans('general.version')+' '+getConfig('v')}}
-    </footer>
+    </footer> -->
 </template>
 
 <script>
