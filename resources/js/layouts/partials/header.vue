@@ -17,12 +17,6 @@
                 </ul>
                 <ul class="navbar-nav flex-filler"></ul>
                 <ul class="navbar-nav my-lg-0">
-                    <li class="nav-item d-none d-sm-inline" v-tooltip.bottom="trans('todo.todo')" v-if="getConfig('todo') && hasPermission('access-todo')">
-                        <router-link class="nav-link" to="/utility/todo"><i class="far fa-check-circle"></i></router-link>
-                    </li>
-                    <li class="nav-item" v-tooltip.bottom="trans('configuration.configuration')" v-if="hasPermission('access-configuration')">
-                        <router-link class="nav-link" to="/configuration"><i class="fas fa-cogs"></i></router-link>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user"></i>
