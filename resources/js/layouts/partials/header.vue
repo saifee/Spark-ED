@@ -17,21 +17,6 @@
                 </ul>
                 <ul class="navbar-nav flex-filler"></ul>
                 <ul class="navbar-nav my-lg-0">
-                    <li class="nav-item dropdown" v-if="getAcademicSessions.length && hasPermission('change-academic-session')">
-                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-tooltip.bottom="trans('academic_session.academic_session')">{{getDefaultAcademicSession ? getDefaultAcademicSession.name : trans('academic_session.choose_session')}} <i class="fa fa-chevron-down"></i> </a>
-                        <div :class="['dropdown-menu', getConfig('direction') != 'rtl' ? 'dropdown-menu-right' : '']">
-                            <ul class="dropdown-user" style="padding-bottom:10px;">
-                                <li v-for="academic_session in getAcademicSessions" @click="setDefaultAcademicSession(academic_session)" style="padding:10px 20px 0 20px;cursor:pointer;">
-                                    {{academic_session.name}}
-                                    <span class="pull-right" v-if="getDefaultAcademicSession && academic_session.id == getDefaultAcademicSession.id"><i class="fas fa-check"></i></span>
-                                </li>
-                                <li v-if="hasPermission('create-academic-session')" @click="$router.push('/academic/session')" style="padding:10px 20px 0 20px;cursor:pointer;">{{trans('academic.add_new_session')}}</li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown" v-if="getAcademicSessions.length && !hasPermission('change-academic-session')">
-                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#">{{getDefaultAcademicSession ? getDefaultAcademicSession.name : ''}}</a>
-                    </li>
                     <li class="nav-item d-none d-sm-inline" v-tooltip.bottom="trans('todo.todo')" v-if="getConfig('todo') && hasPermission('access-todo')">
                         <router-link class="nav-link" to="/utility/todo"><i class="far fa-check-circle"></i></router-link>
                     </li>
@@ -84,27 +69,11 @@
             hasRole(role){
                 return helper.hasRole(role);
             },
-            setDefaultAcademicSession(academic_session){
-                axios.post('/api/academic/session/'+academic_session.id+'/user/default')
-                    .then(response => {
-                        this.$store.dispatch('setDefaultAcademicSession',academic_session);
-                        location.reload();
-                    })
-                    .catch(error => {
-                        helper.showErrorMsg(error);
-                    });
-            }
         },
         computed: {
             getIcon(){
                 return helper.getIcon();
             },
-            getAcademicSessions(){
-                return helper.getAcademicSessions();
-            },
-            getDefaultAcademicSession(){
-                return helper.getDefaultAcademicSession();
-            }
         }
     }
 </script>
