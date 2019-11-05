@@ -263,14 +263,6 @@
                 <li><router-link to="/communication/sms"><i class="fas fa-angle-double-right"></i> {{trans('communication.sms')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasPermission('configure-frontend')">
-            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-suitcase fa-fw"></i> <span class="hide-menu">{{trans('frontend.frontend')}}</span></a>
-            <ul aria-expanded="false" class="collapse">
-                <li><router-link to="/frontend/page"><i class="fas fa-angle-double-right"></i> {{trans('frontend.page')}}</router-link></li>
-                <li><router-link to="/frontend/block"><i class="fas fa-angle-double-right"></i> {{trans('frontend.block')}}</router-link></li>
-                <li><router-link to="/frontend/menu"><i class="fas fa-angle-double-right"></i> {{trans('frontend.menu')}}</router-link></li>
-            </ul>
-        </li>
         <li v-show="moduleMenu && hasPermission('access-configuration')"><router-link to="/configuration" exact><i class="fas fa-cogs fa-fw"></i> <span class="hide-menu">{{trans('configuration.configuration')}}</span></router-link></li>
     </ul>
 </template>
