@@ -3,6 +3,15 @@
 	    <li><router-link to="/dashboard" exact><i class="fas fa-home fa-fw"></i> <span class="hide-menu">{{trans('general.dashboard')}}</span></router-link></li>
 	    
         <li v-show="configMenu && hasPermission('access-configuration')"><router-link to="/configuration/basic" exact><i class="fas fa-cog fa-fw"></i> <span class="hide-menu">{{trans('configuration.basic_configuration')}}</span></router-link></li>
+        <li v-show="configMenu && hasPermission('access-configuration')"><router-link to="/configuration/social" exact><i class="fas fa-share-alt fa-fw"></i> <span class="hide-menu">{{trans('configuration.social_network')}}</span></router-link></li>
+        <li v-show="configMenu && hasPermission('access-configuration')"><router-link to="/configuration/system" exact><i class="fas fa-cogs fa-fw"></i> <span class="hide-menu">{{trans('configuration.system_configuration')}}</span></router-link></li>
+        <li v-show="configMenu && hasPermission('access-configuration')"><router-link to="/configuration/mail" exact><i class="fas fa-envelope fa-fw"></i> <span class="hide-menu">{{trans('configuration.mail_configuration')}}</span></router-link></li>
+        <li v-show="configMenu && hasPermission('access-configuration') && getConfig('multilingual')"><router-link to="/configuration/locale" exact><i class="fas fa-globe fa-fw"></i> <span class="hide-menu">{{trans('configuration.locale')}}</span></router-link></li>
+        <li v-show="configMenu && hasPermission('access-configuration') && hasRole('admin')"><router-link to="/configuration/role" exact><i class="fas fa-users fa-fw"></i> <span class="hide-menu">{{trans('configuration.role')}}</span></router-link></li>
+        <li v-show="configMenu && hasPermission('access-configuration') && hasRole('admin')"><router-link to="/configuration/permission" exact><i class="fas fa-key fa-fw"></i> <span class="hide-menu">{{trans('configuration.permission')}}</span></router-link></li>
+        <li v-show="configMenu && hasPermission('access-configuration')"><router-link to="/configuration/sms" exact><i class="fas fa-comment fa-fw"></i> <span class="hide-menu">{{trans('configuration.sms')}}</span></router-link></li>
+        <li v-show="configMenu && hasPermission('access-configuration')"><router-link to="/configuration/payment/gateway" exact><i class="fas fa-credit-card fa-fw"></i> <span class="hide-menu">{{trans('finance.payment_gateway')}}</span></router-link></li>
+        <li v-show="configMenu && hasPermission('access-configuration')"><router-link to="/configuration/authentication" exact><i class="fas fa-sign-in-alt fa-fw"></i> <span class="hide-menu">{{trans('auth.authentication')}}</span></router-link></li>
         <li v-show="configMenu && hasPermission('access-configuration')"><router-link to="/configuration/module" exact><i class="fas fa-boxes fa-fw"></i> <span class="hide-menu">{{trans('configuration.module_configuration')}}</span></router-link></li>
 
         <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
@@ -40,6 +49,15 @@
             </ul>
         </li>
         <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-file-alt fa-fw"></i> <span class="hide-menu">{{trans('exam.configuration')}}</span></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><router-link to="/configuration/exam/term"><i class="fas fa-angle-double-right"></i> {{trans('exam.term')}}</router-link></li>
+                <li><router-link to="/configuration/exam/assessment"><i class="fas fa-angle-double-right"></i> {{trans('exam.assessment')}}</router-link></li>
+                <li><router-link to="/configuration/exam/observation"><i class="fas fa-angle-double-right"></i> <span class="font-80pc">{{trans('exam.observation')}}</span></router-link></li>
+                <li><router-link to="/configuration/exam/grade"><i class="fas fa-angle-double-right"></i> {{trans('exam.grade')}}</router-link></li>
+            </ul>
+        </li>
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-user-tie fa-fw"></i> <span class="hide-menu">{{trans('employee.employee_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/employee"><i class="fas fa-angle-double-right"></i> {{trans('general.general')}}</router-link></li>
@@ -73,10 +91,28 @@
             </ul>
         </li>
         <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-calendar-alt fa-fw"></i> <span class="hide-menu">{{trans('calendar.calendar_configuration')}}</span></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><router-link to="/configuration/calendar/event/type"><i class="fas fa-angle-double-right"></i> {{trans('calendar.event_type')}}</router-link></li>
+            </ul>
+        </li>
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-newspaper fa-fw"></i> <span class="hide-menu">{{trans('post.post_configuration')}}</span></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><router-link to="/configuration/post/article/type"><i class="fas fa-angle-double-right"></i> {{trans('post.article_type')}}</router-link></li>
+            </ul>
+        </li>
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-building fa-fw"></i> <span class="hide-menu">{{trans('asset.asset_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/asset/building"><i class="fas fa-angle-double-right"></i> {{trans('asset.building')}}</router-link></li>
                 <li><router-link to="/configuration/asset/room"><i class="fas fa-angle-double-right"></i> {{trans('asset.room')}}</router-link></li>
+            </ul>
+        </li>
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-suitcase fa-fw"></i> <span class="hide-menu">{{trans('frontend.frontend_configuration')}}</span></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><router-link to="/configuration/frontend/index"><i class="fas fa-angle-double-right"></i> {{trans('frontend.frontend')}}</router-link></li>
             </ul>
         </li>
         <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
@@ -86,6 +122,19 @@
                 <li><router-link to="/configuration/misc/caste"><i class="fas fa-angle-double-right"></i> {{trans('misc.caste')}}</router-link></li>
                 <li><router-link to="/configuration/misc/category"><i class="fas fa-angle-double-right"></i> {{trans('misc.category')}}</router-link></li>
                 <li><router-link to="/configuration/misc/blood/group"><i class="fas fa-angle-double-right"></i> {{trans('misc.blood_group')}}</router-link></li>
+            </ul>
+        </li>
+
+        <li v-show="moduleMenu && hasAnyPermission(['list-enquiry','list-visitor-log','list-postal-record','list-call-log','list-complaint','list-gate-pass'])">
+            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-user-circle fa-fw"></i> <span class="hide-menu">{{trans('reception.reception')}}</span></a>
+            <ul aria-expanded="false" class="collapse">
+                <li v-if="hasPermission('list-enquiry')"><router-link to="/reception/enquiry"><i class="fas fa-angle-double-right"></i> {{trans('reception.admission_enquiry')}}</router-link></li>
+                <li v-if="hasPermission('list-visitor-log')"><router-link to="/reception/visitor/log"><i class="fas fa-angle-double-right"></i> {{trans('reception.visitor_log')}}</router-link></li>
+                <li v-if="hasPermission('list-call-log')"><router-link to="/reception/call/log"><i class="fas fa-angle-double-right"></i> {{trans('reception.call_log')}}</router-link></li>
+                <li v-if="hasPermission('list-postal-record')"><router-link to="/reception/postal/record"><i class="fas fa-angle-double-right"></i> {{trans('reception.postal_record')}}</router-link></li>
+                <li v-if="hasPermission('list-complaint')"><router-link to="/reception/complaint"><i class="fas fa-angle-double-right"></i> {{trans('reception.complaint')}}</router-link></li>
+                <li v-if="hasPermission('list-gate-pass')"><router-link to="/reception/gate/pass"><i class="fas fa-angle-double-right"></i> {{trans('reception.gate_pass')}}</router-link></li>
+                <li v-if="hasPermission('list-visitor-message')"><router-link to="/reception/visitor/message"><i class="fas fa-angle-double-right"></i> {{trans('reception.visitor_message')}}</router-link></li>
             </ul>
         </li>
         <li v-show="moduleMenu && hasAnyPermission(['list-academic-session','list-course','list-batch','list-class-teacher','list-subject','list-subject-teacher','list-class-timing','list-timetable'])">
@@ -166,6 +215,23 @@
                 <li v-if="hasPermission('access-transport-report')"><router-link to="/transport/report"><i class="fas fa-angle-double-right"></i> {{trans('general.report')}}</router-link></li>
             </ul>
         </li>
+        <li v-show="moduleMenu && hasAnyPermission(['list-holiday','list-event'])">
+            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-calendar-alt fa-fw"></i> <span class="hide-menu">{{trans('calendar.calendar')}}</span></a>
+            <ul aria-expanded="false" class="collapse">
+                <li v-if="hasPermission('list-holiday')"><router-link to="/calendar/holiday"><i class="fas fa-angle-double-right"></i> {{trans('calendar.holiday')}}</router-link></li>
+                <li v-if="hasPermission('list-event')"><router-link to="/calendar/event"><i class="fas fa-angle-double-right"></i> {{trans('calendar.event')}}</router-link></li>
+                <li v-if="hasPermission('list-birthday')"><router-link to="/calendar/celebration/birthday"><i class="fas fa-angle-double-right"></i> {{trans('calendar.celebration')}}</router-link></li>
+            </ul>
+        </li>
+        <li v-show="moduleMenu && hasAnyPermission(['list-assignment','list-notes','list-lesson-plan','list-syllabus'])">
+            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-folder fa-fw"></i> <span class="hide-menu">{{trans('resource.resource')}}</span></a>
+            <ul aria-expanded="false" class="collapse">
+                <li v-if="hasPermission('list-assignment')"><router-link to="/resource/assignment"><i class="fas fa-angle-double-right"></i> {{trans('resource.assignment')}}</router-link></li>
+                <li v-if="hasPermission('list-notes')"><router-link to="/resource/notes"><i class="fas fa-angle-double-right"></i> {{trans('resource.notes')}}</router-link></li>
+                <li v-if="hasPermission('list-lesson-plan')"><router-link to="/resource/lesson/plan"><i class="fas fa-angle-double-right"></i> {{trans('resource.lesson_plan')}}</router-link></li>
+                <li v-if="hasPermission('list-syllabus')"><router-link to="/resource/syllabus"><i class="fas fa-angle-double-right"></i> {{trans('resource.syllabus')}}</router-link></li>
+            </ul>
+        </li>
         <li v-show="moduleMenu && hasAnyPermission(['list-book','issue-book','return-book'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-book fa-fw"></i> <span class="hide-menu">{{trans('library.library')}}</span></a>
             <ul aria-expanded="false" class="collapse">
@@ -184,10 +250,39 @@
                 <li><router-link to="/inventory/stock/transfer"><i class="fas fa-angle-double-right"></i> {{trans('inventory.stock_transfer')}}</router-link></li>
             </ul>
         </li>
+        <li v-show="moduleMenu && hasPermission('list-article')">
+            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-newspaper fa-fw"></i> <span class="hide-menu">{{trans('post.post')}}</span></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><router-link to="/post/feed"><i class="fas fa-angle-double-right"></i> {{trans('post.feed')}}</router-link></li>
+                <li><router-link to="/post/article"><i class="fas fa-angle-double-right"></i> {{trans('post.article')}}</router-link></li>
+            </ul>
+        </li>
         <li v-show="moduleMenu && hasAnyPermission('send-sms')">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-paper-plane fa-fw"></i> <span class="hide-menu">{{trans('communication.communication')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/communication/sms"><i class="fas fa-angle-double-right"></i> {{trans('communication.sms')}}</router-link></li>
+            </ul>
+        </li>
+        <li v-show="moduleMenu && hasPermission('configure-frontend')">
+            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-suitcase fa-fw"></i> <span class="hide-menu">{{trans('frontend.frontend')}}</span></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><router-link to="/frontend/page"><i class="fas fa-angle-double-right"></i> {{trans('frontend.page')}}</router-link></li>
+                <li><router-link to="/frontend/block"><i class="fas fa-angle-double-right"></i> {{trans('frontend.block')}}</router-link></li>
+                <li><router-link to="/frontend/menu"><i class="fas fa-angle-double-right"></i> {{trans('frontend.menu')}}</router-link></li>
+            </ul>
+        </li>
+        <li v-show="moduleMenu && hasAnyPermission(['access-todo','access-configuration'])">
+            <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-puzzle-piece fa-fw"></i> <span class="hide-menu">{{trans('utility.utility')}}</span></a>
+            <ul aria-expanded="false" class="collapse">
+                <li v-if="hasPermission('access-todo')"><router-link to="/utility/todo"><i class="fas fa-angle-double-right"></i> {{trans('utility.todo')}}</router-link></li>
+                <template v-if="hasPermission('access-configuration')">
+                    <li><router-link to="/utility/backup"><i class="fas fa-angle-double-right"></i> {{trans('utility.backup')}}</router-link></li>
+                    <li><router-link to="/utility/ip-filter"><i class="fas fa-angle-double-right"></i> {{trans('utility.ip_filter')}}</router-link></li>
+                    <!-- <li><router-link to="/utility/email-template"><i class="fas fa-angle-double-right"></i> {{trans('utility.email_template')}}</router-link></li>
+                    <li><router-link to="/utility/email-log"><i class="fas fa-angle-double-right"></i> {{trans('utility.email_log')}}</router-link></li>
+                    <li><router-link to="/utility/activity-log"><i class="fas fa-angle-double-right"></i> {{trans('utility.activity_log')}}</router-link></li>
+                    <li><router-link to="/utility/scheduled-job"><i class="fas fa-angle-double-right"></i> {{trans('utility.scheduled_job')}}</router-link></li> -->
+                </template>
             </ul>
         </li>
         <li v-show="moduleMenu && hasPermission('access-configuration')"><router-link to="/configuration" exact><i class="fas fa-cogs fa-fw"></i> <span class="hide-menu">{{trans('configuration.configuration')}}</span></router-link></li>

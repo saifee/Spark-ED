@@ -7,13 +7,94 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
-                        <!-- <button class="btn btn-info btn-sm right-sidebar-toggle " v-tooltip="trans('user.user_preference')"><i class="fas fa-cog"></i></button> -->
+                        <button class="btn btn-info btn-sm right-sidebar-toggle " v-tooltip="trans('user.user_preference')"><i class="fas fa-cog"></i></button>
+                        <button class="btn btn-danger btn-sm" @click.prevent="logout"><i class="fas fa-power-off"></i> <span class="d-none d-sm-inline">{{trans('auth.logout')}}</span></button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container-fluid">
             <div class="row">
+                <div class="col-12 col-md-8">
+                    <notice-highlight class="border-right border-bottom p-4" v-if="showTourVideo && !getConfig('mode')">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <iframe width="100%" height="325" src="https://www.youtube.com/embed/ydTGjP-dMuM?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                            </div>
+                            <div class="col-12 col-md-6 product-intro">
+                                <h2>Do you want a <span class="special">Tour</span>?</h2>
+                                <h3>Watch InstiKit's Short Introduction Video</h3>
+                                <p>We will go through all the primary modules and features that InstiKit currently has in this short video. If you like InstiKit click on the button below to buy InstiKit.</p>
+                                <a class="btn btn-danger" href="https://instikit.com/buy/regular"><span class="p-r-10 m-r-10 border-right">Liked it?</span><strong><i class="fas fa-shopping-cart m-r-5"></i> Buy it Now</strong></a>
+                                <button class="btn" @click="hideTourVideo"><i class="fas fa-times"></i> Hide</button>
+                            </div>
+                        </div>
+                    </notice-highlight>
+
+                    <div class="card border-right">
+                        <div class="card-body p-4">
+                            <template v-if="hasAnyRole(['admin','manager','principal'])">
+                                <h4 class="card-title">{{trans('student.total_strength', {total: total_strength})}}
+                                    <span class="pull-right">
+                                        <button v-if="strength_chart_type == 'batch'" class="btn btn-sm btn-info" @click="strength_chart_type = 'course'">{{trans('academic.course_wise')}}</button>
+                                        <button v-if="strength_chart_type == 'course'" class="btn btn-sm btn-info" @click="strength_chart_type = 'batch'">{{trans('academic.batch_wise')}}</button>
+                                    </span>
+                                </h4>
+                                <bar-chart :chart="chart.strength"></bar-chart>
+                            </template>
+
+                            <calendar></calendar>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 p-0">
+                    <div class="card widget" v-if="hasNotAnyRole(['student','parent'])">
+                        <div class="card-body">
+                            <div class="row border-bottom">
+                                <div class="col p-4 b-r">
+                                    <h2 class="font-light">{{birthday_count}} <span class="float-right"><i class="fas text-themecolor fa-birthday-cake"></i></span></h2>
+                                    <h5>{{trans('general.birthday')}}</h5></div>
+                                <div class="col p-4 b-r">
+                                    <h2 class="font-light">{{anniversary_count}} <span class="float-right"><i class="fas text-themecolor fa-heartbeat"></i></span></h2>
+                                    <h5>{{trans('general.anniversary')}}</h5></div>
+                                <div class="col p-4 mr-4">
+                                    <h2 class="font-light">{{work_anniversary_count}} <span class="float-right"><i class="fas text-themecolor fa-gift"></i></span></h2>
+                                    <h5>{{trans('general.work_anniversary')}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card widget" v-if="hasRole('librarian')">
+                        <div class="card-body">
+                            <div class="row border-bottom">
+                                <div class="col p-4 b-r">
+                                    <h2 class="font-light">{{total_book_count}} <span class="float-right"><i class="fas text-themecolor fa-book"></i></span></h2>
+                                    <h5>{{trans('library.total_books')}}</h5></div>
+                                <div class="col p-4 b-r">
+                                    <h2 class="font-light">{{pending_return_book_count}} <span class="float-right"><i class="fas text-themecolor fa-book-open"></i></span></h2>
+                                    <h5>{{trans('library.pending_return')}}</h5></div>
+                                <div class="col p-4 mr-4">
+                                    <h2 class="font-light">{{overdue_return_book_count}} <span class="float-right"><i class="fas text-themecolor fa-swatchbook"></i></span></h2>
+                                    <h5>{{trans('library.overdue_return')}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div :class="['card widget', hasAnyRole(['student','parent']) ? 'm-t-20' : '']" v-if="hasPermission('access-todo')">
+                        <div class="card-body">
+                            <div class="row border-bottom">
+                                <div class="col-12">
+                                    <h4 class="card-title mb-3">{{trans('utility.todo')}}</h4>
+                                    <todo-widget></todo-widget>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <events-list v-if="events.length && hasPermission('list-event')" :events="events" class="frontend-widget" body-class="row-like-margin border-bottom px-3 p-b-30" view-more-link="/calendar/event"></events-list>
+
+                    <articles-list v-if="articles.length && hasPermission('list-article')" :articles="articles" class="frontend-widget" body-class="row-like-margin border-bottom px-3 p-b-30" view-more-link="/post/feed"></articles-list>
+                </div>
             </div>
         </div>
         <div class="right-sidebar">
