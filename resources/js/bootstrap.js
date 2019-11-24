@@ -82,11 +82,11 @@ Vue.use(VueAuthenticate, {
   providers: {
     google: {
       clientId: '380346935662-60adamq08ovpkjv4qccs685ctk3elma6.apps.googleusercontent.com',
-      redirectUri: 'http://localhost:8080/auth/callback' // Your client app URL
+      redirectUri: 'http://school.thenextceo.org/auth/callback' // Your client app URL
     },
     live: {
       clientId: 'e531598b-ddac-46dc-aa96-a4695caaca1d',
-      redirectUri: 'http://localhost:8080/auth/callback' // Your client app URL
+      redirectUri: 'http://school.thenextceo.org/auth/callback' // Your client app URL
     }
   }
 })
