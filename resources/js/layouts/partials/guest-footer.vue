@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<p class="text-center"><small>{{getConfig('footer_credit')}} {{trans('general.version')+' '+getConfig('v')}}</small></p>
+		<!-- <p class="text-center"><small>{{getConfig('footer_credit')}} {{trans('general.version')+' '+getConfig('v')}}</small></p> -->
 	</div>
 </template>
 
