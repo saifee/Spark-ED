@@ -40,9 +40,6 @@
         @endif
     </head>
     <body class="fix-header fix-sidebar">
-        @if(config('app.mode') != 'live')
-            <div style="position: fixed; width: 100%; background-color:#000000; z-index:99999999; text-align:center; color: #ffffff; padding: 10px 50px">Version 2.2.0 released! New Inventory Module Available! Send us your suggestions for next update. Buy now, Get Lifetime Free Updates!</div>
-        @endif
         <div class="preloader">
             <svg class="circular" viewBox="25 25 50 50">
                 <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
