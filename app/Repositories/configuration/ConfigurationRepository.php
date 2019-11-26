@@ -122,6 +122,7 @@ class ConfigurationRepository
         }
 
         $config['authenticated'] = true;
+        $config['made'] = env('MADE', null);
         return $config;
     }
 
