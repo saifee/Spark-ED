@@ -38,7 +38,7 @@ mix.js('resources/js/app.js', 'public/js/app.js')
     .sass('resources/sass/colors/megna.scss', 'public/css/colors')
     .sass('resources/sass/colors/purple.scss', 'public/css/colors')
     .sass('resources/sass/colors/red.scss', 'public/css/colors')
-    .browserSync('instikit')                     // this is the alias/virtual host which will be called to load http://localhost:3000
+    .browserSync('spark')                     // this is the alias/virtual host which will be called to load http://localhost:3000
     .webpackConfig({
         devtool: "cheap-module-source-map",     // "eval-source-map" or "inline-source-map" or "cheap-module-source-map" or "eval"
         plugins: [
