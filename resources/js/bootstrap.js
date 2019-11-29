@@ -8,9 +8,7 @@ try {
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from './store'
-import VueAxios from 'vue-axios'
 import axios from 'axios'
-import VueAuthenticate from 'vue-authenticate'
 import Form from './services/form'
 import helper from './services/helper'
 import VTooltip from 'v-tooltip'
@@ -75,21 +73,6 @@ Vue.prototype.$first = function (item, list) {
   return item == list[0]
 };
 
-Vue.use(VueAxios, axios);
-Vue.use(VueAuthenticate, {
-  baseUrl: 'http://school.thenextceo.org/', // Your API domain
-
-  providers: {
-    google: {
-      clientId: '380346935662-60adamq08ovpkjv4qccs685ctk3elma6.apps.googleusercontent.com',
-      redirectUri: 'http://school.thenextceo.org/auth/callback' // Your client app URL
-    },
-    live: {
-      clientId: 'e531598b-ddac-46dc-aa96-a4695caaca1d',
-      redirectUri: 'http://school.thenextceo.org/auth/callback' // Your client app URL
-    }
-  }
-})
 Vue.use(VueFormWizard)
 Vue.use(VTooltip);
 Vue.use(VuejsDialog);
