@@ -6,8 +6,7 @@
                     <!-- <img :src="getLogo" class="org-logo" /> -->
                     <form class="form-horizontal form-material" id="loginform" @submit.prevent="process" @keydown="loginForm.errors.clear($event.target.name)">
                         <h3 class="box-title m-t-20 m-b-10">{{trans('auth.login')}}</h3>
-                        <button type="button" class="btn btn-info btn-block text-uppercase waves-effect waves-light" @click="authenticate('google')" style="background-color:#D44638;border:0;border-radius:0;">Continue with Google</button>
-                        <button type="button" class="btn btn-info btn-block text-uppercase waves-effect waves-light mb-4" @click="authenticate('live')" style="background-color:#0065b3;border:0;border-radius:0;">Continue with Microsoft</button>
+                        <social-login />
                         <div v-if="! login_with_otp">
                             <div class="form-group ">
                                 <input type="text" name="email_or_username" class="form-control" :placeholder="trans('auth.email_or_username')" v-model="loginForm.email_or_username">
@@ -88,6 +87,7 @@
 </template>
 
 <script>
+    import socialLogin from '@views/auth/social-login.vue'
     import guestFooter from '@js/layouts/partials/guest-footer.vue'
 
     export default {
@@ -104,17 +104,13 @@
             }
         },
         components: {
+            socialLogin,
             guestFooter
         },
         mounted(){
             helper.showDemoNotification(['login','login_with_different_role']);
         },
         methods: {
-            authenticate(provider){
-                this.$auth.authenticate(provider).then(function () {
-                    // Execute application logic after successful social authentication
-                })
-            },
             otpLogin(status){
                 this.login_with_otp = status;
             },
