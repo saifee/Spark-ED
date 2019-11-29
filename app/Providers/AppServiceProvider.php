@@ -2,12 +2,16 @@
 
 namespace App\Providers;
 
+use App\Traits\ModelRelation;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Activitylog\Models\Activity;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
+    use ModelRelation;
+    
     /**
      * Bootstrap any application services.
      *
@@ -21,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
             $activity->properties = $activity->properties->put('ip', getClientIp());
             $activity->properties = $activity->properties->put('user_agent', \Request::header('User-Agent'));
         });
+        
+        Relation::morphMap($this->relations());
     }
 
     /**

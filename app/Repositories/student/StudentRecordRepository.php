@@ -187,7 +187,7 @@ class StudentRecordRepository {
 			$student_record->date_of_entry = $date_of_entry;
 
 			if ($first_student_record->id == $student_record->id) {
-				$admission->date = $date_of_entry;
+				$admission->date_of_admission = $date_of_entry;
 			}
 
 		}

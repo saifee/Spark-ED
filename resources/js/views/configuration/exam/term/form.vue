@@ -1,11 +1,22 @@
 <template>
     <form @submit.prevent="proceed" @keydown="termForm.errors.clear($event.target.name)">
         <div class="row">
-            <div class="col-12 col-sm-6">
+            <div class="col-12 col-sm-3">
                 <div class="form-group">
                     <label for="">{{trans('exam.term_name')}}</label>
                     <input class="form-control" type="text" v-model="termForm.name" name="name" :placeholder="trans('exam.term_name')">
                     <show-error :form-name="termForm" prop-name="name"></show-error>
+                </div>
+            </div>
+            <div class="col-12 col-sm-3">
+                <div class="form-group">
+                    <label for="">{{trans('academic.course_group')}} </label>
+                    <v-select label="name" v-model="selected_course_group" name="course_group_id" id="course_group_id" :options="course_groups" :placeholder="trans('academic.select_course_group')" @select="onCourseGroupSelect" @close="termForm.errors.clear('course_group_id')" @remove="termForm.course_group_id = ''">
+                        <div class="multiselect__option" slot="afterList" v-if="!course_groups.length">
+                            {{trans('general.no_option_found')}}
+                        </div>
+                    </v-select>
+                    <show-error :form-name="termForm" prop-name="course_group_id"></show-error>
                 </div>
             </div>
             <div class="col-12 col-sm-6">
@@ -34,16 +45,34 @@
             return {
                 termForm: new Form({
                     name : '',
+                    course_group_id: '',
                     description : ''
-                })
+                }),
+                course_groups: [],
+                selected_course_group: null
             };
         },
         props: ['id'],
         mounted() {
-            if(this.id)
-                this.get();
+            this.getPreRequisite();
         },
         methods: {
+            getPreRequisite(){
+                let loader = this.$loading.show();
+                axios.get('/api/exam/term/pre-requisite')
+                    .then(response => {
+                        this.course_groups = response;
+
+                        if(this.id)
+                            this.get();
+
+                        loader.hide();
+                    })
+                    .catch(error => {
+                        loader.hide();
+                        helper.showErrorMsg(error);
+                    });
+            },
             proceed(){
                 if(this.id)
                     this.update();
@@ -55,6 +84,7 @@
                 this.termForm.post('/api/exam/term')
                     .then(response => {
                         toastr.success(response.message);
+                        this.selected_course_group = null
                         this.$emit('completed');
                         loader.hide();
                     })
@@ -68,7 +98,9 @@
                 axios.get('/api/exam/term/'+this.id)
                     .then(response => {
                         this.termForm.name = response.name;
+                        this.termForm.course_group_id = response.course_group_id;
                         this.termForm.description = response.description;
+                        // this.selected_course_group = {id: response.course_group_id, name: response.course_group.name};
                         loader.hide();
                     })
                     .catch(error => {
@@ -89,7 +121,10 @@
                         loader.hide();
                         helper.showErrorMsg(error);
                     });
-            }
+            },
+            onCourseGroupSelect(selectedOption){
+                this.termForm.course_group_id = selectedOption.id;
+            },
         }
     }
 </script>

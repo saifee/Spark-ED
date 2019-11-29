@@ -13,9 +13,9 @@
             </div>
         </div>
         <div class="container-fluid">
-        	<div class="card">
-        		<div class="card-body p-4">
-			        <div class="row">
+            <div class="card">
+                <div class="card-body p-4">
+                    <div class="row">
                         <div class="col-12 col-sm-3">
                             <div class="form-group">
                                 <label for="">{{trans('employee.category')}}</label>
@@ -26,7 +26,7 @@
                                 </v-select>
                             </div>
                         </div>
-			            <div class="col-12 col-sm-3">
+                        <div class="col-12 col-sm-3">
                             <div class="form-group">
                                 <label for="">{{trans('employee.designation')}}</label>
                                 <v-select label="name" track-by="id" v-model="selected_designations" name="designation_id" id="designation_id" :options="designations" :placeholder="trans('employee.select_designation')" @select="onDesignationSelect" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" @remove="onDesignationRemove" :selected="selected_designations">
@@ -35,7 +35,7 @@
                                     </div>
                                 </v-select>
                             </div>
-			            </div>
+                        </div>
                         <div class="col-12 col-sm-3">
                             <div class="form-group">
                                 <label for="">{{trans('employee.department')}}</label>

@@ -134,6 +134,20 @@ class AttendanceController extends Controller
     }
 
     /**
+     * Used to default attendance
+     * @post ("/api/student/attendance/default")
+     * @return Response
+     */
+    public function default()
+    {
+        $this->authorize('store', StudentAttendance::class);
+
+        $this->repo->default($this->request->all());
+
+        return $this->success(['message' => trans('student.attendance_updated')]);
+    }
+
+    /**
      * Used to delete attendance
      * @post ("/api/student/attendance/delete")
      * @return Response

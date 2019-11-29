@@ -14,9 +14,9 @@
                             <h4 class="card-title" v-if="employee_document.employee_document_type">{{employee_document.title}} ({{employee_document.employee_document_type.name}})</h4>
                             <div class="m-t-20" v-html="employee_document.description"></div>
                             <div v-if="documents.length">
-                                <ul style="list-style: none;padding: 0;" class="m-t-10">
-                                    <li v-for="document in documents">
-                                        <a :href="`/employee/${employee.uuid}/document/${employee_document.id}/attachment/${document.uuid}/download?token=${authToken}`"><i class="fas fa-paperclip"></i> {{document.user_filename}}</a>
+                                <ul class="m-t-10 upload-file-list">
+                                    <li class="upload-file-list-item" v-for="document in documents">
+                                        <a :href="`/employee/${employee.uuid}/document/${employee_document.id}/attachment/${document.uuid}/download?token=${authToken}`" class="no-link-color"><i :class="['file-icon', 'fas', 'fa-lg', document.file_info.icon]"></i> <span class="upload-file-list-item-size">{{document.file_info.size}}</span> {{document.user_filename}}</a>
                                     </li>
                                 </ul>
                             </div>

@@ -5,6 +5,7 @@
         <thead>
             <tr>
             	<th>{{trans('exam.term_name')}}</th>
+                <th>{{trans('academic.course_group')}}</th>
                 <th>{{trans('exam.term_description')}}</th>
             </tr>
         </thead>
@@ -12,6 +13,7 @@
         	@foreach($exam_terms as $exam_term)
         		<tr>
         			<td>{{$exam_term->name}}</td>
+                    <td>{{$exam_term->courseGroup->name}}</td>
                     <td>{{$exam_term->description}}</td>
         		</tr>
         	@endforeach

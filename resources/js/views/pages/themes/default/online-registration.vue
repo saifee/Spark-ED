@@ -160,6 +160,7 @@
                                 </div>
                             </div>
                         </div>
+                        <custom-field :fields="custom_fields" :customValues="custom_values" :clear="clearCustomField" :formErrors="customFieldFormErrors" @updateCustomValues="updateCustomValues"></custom-field>
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-info btn-lg waves-effect waves-light m-t-10">{{trans('general.submit')}}</button>
@@ -198,9 +199,14 @@
                     city: '',
                     state: '',
                     zipcode: '',
-                    country: ''
+                    country: '',
+                    custom_values: [],
                 }),
-                selected_course: null
+                selected_course: null,
+                custom_fields: [],
+                custom_values: [],
+                clearCustomField: false,
+                customFieldFormErrors: {}
             }
         },
         mounted(){
@@ -214,6 +220,7 @@
                     this.genders = response.genders;
                     this.courses = response.courses.courses;
                     this.course_details = response.courses.course_details;
+                    this.custom_fields = response.custom_fields;
                     loader.hide();
                 })
                 .catch(error => {
@@ -225,16 +232,21 @@
             getConfig(config) {
                 return helper.getConfig(config)
             },
+            updateCustomValues(value) {
+                this.registrationForm.custom_values = value;
+            },
             submit(){
                 let loader = this.$loading.show();
                 this.registrationForm.date_of_birth = helper.toDate(this.registrationForm.date_of_birth);
                 this.registrationForm.post('/api/frontend/online-registration')
                     .then(response => {
                         toastr.success(response.message);
+                        this.clearCustomField = true;
                         loader.hide();
                     })
                     .catch(error => {
                         loader.hide();
+                        this.customFieldFormErrors = error;
                         helper.showErrorMsg(error);
                     });
             },

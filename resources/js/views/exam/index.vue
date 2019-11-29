@@ -71,7 +71,9 @@
                             <tbody>
                                 <tr v-for="exam in exams.data">
                                     <td v-text="exam.name"></td>
-                                    <td>{{exam.exam_term_id ? exam.term.name : ''}}</td>
+                                    <td>
+                                        {{exam.exam_term_id ? exam.term.name+' ('+exam.term.course_group.name+')' : ''}}
+                                    </td>
                                     <td v-text="exam.description"></td>
                                     <td class="table-option">
                                         <div class="btn-group">

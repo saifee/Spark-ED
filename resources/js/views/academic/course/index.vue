@@ -69,7 +69,6 @@
                                     <th>{{trans('academic.course_name')}}</th>
                                     <th>{{trans('academic.course_group')}}</th>
                                     <th>{{trans('academic.batch')}}</th>
-                                    <th>{{trans('student.attendance_type')}}</th>
                                     <th>{{trans('general.option')}}</th>
                                     <th>{{trans('academic.course_description')}}</th>
                                     <th class="table-option">{{trans('general.action')}}</th>
@@ -83,10 +82,6 @@
                                         <ul style="list-style:none;padding:0;margin:0;">
                                             <li v-for="batch in course.batches">{{batch.name}}</li>
                                         </ul>
-                                    </td>
-                                    <td>
-                                        <span v-if="course.options">{{trans('student.'+course.options.attendance_type)}}</span>
-                                        <span v-else>{{trans('student.'+getConfig('default_attendance_type'))}}</span>
                                     </td>
                                     <td>
                                         <template v-if="course.options">

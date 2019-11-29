@@ -204,7 +204,7 @@
                 this.stockPurchaseForm.post('/api/stock/purchase')
                     .then(response => {
                         toastr.success(response.message);
-                        this.stockPurchaseForm.selected_vendor = null;
+                        this.selected_vendor = null;
                         this.stockPurchaseForm.details = [];
                         this.clearAttachment = !this.clearAttachment;
                         this.stockPurchaseForm.upload_token = this.$uuid.v4();

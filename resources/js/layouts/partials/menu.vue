@@ -12,6 +12,7 @@
         <li v-show="configMenu && hasPermission('access-configuration')"><router-link to="/configuration/sms" exact><i class="fas fa-comment fa-fw"></i> <span class="hide-menu">{{trans('configuration.sms')}}</span></router-link></li>
         <li v-show="configMenu && hasPermission('access-configuration')"><router-link to="/configuration/payment/gateway" exact><i class="fas fa-credit-card fa-fw"></i> <span class="hide-menu">{{trans('finance.payment_gateway')}}</span></router-link></li>
         <li v-show="configMenu && hasPermission('access-configuration')"><router-link to="/configuration/authentication" exact><i class="fas fa-sign-in-alt fa-fw"></i> <span class="hide-menu">{{trans('auth.authentication')}}</span></router-link></li>
+        <li v-show="configMenu && hasPermission('access-configuration')"><router-link to="/configuration/menu" exact><i class="fas fa-ellipsis-h fa-fw"></i> <span class="hide-menu">{{trans('configuration.menu')}}</span></router-link></li>
         <li v-show="configMenu && hasPermission('access-configuration')"><router-link to="/configuration/module" exact><i class="fas fa-boxes fa-fw"></i> <span class="hide-menu">{{trans('configuration.module_configuration')}}</span></router-link></li>
 
         <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
@@ -116,6 +117,9 @@
             </ul>
         </li>
         <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+            <router-link class="has-arrow" to="/configuration/custom-field" aria-expanded="false"><i class="fas fa-cubes fa-fw"></i> <span class="hide-menu">{{trans('configuration.custom_field')}}</span></router-link>
+        </li>
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-align-justify fa-fw"></i> <span class="hide-menu">{{trans('misc.misc_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/misc/religion"><i class="fas fa-angle-double-right"></i> {{trans('misc.religion')}}</router-link></li>
@@ -125,159 +129,165 @@
             </ul>
         </li>
 
-        <li v-show="moduleMenu && hasAnyPermission(['list-enquiry','list-visitor-log','list-postal-record','list-call-log','list-complaint','list-gate-pass'])">
+        <li v-show="moduleMenu && showMenu('institute_document') && hasPermission('list-institute-document')"><router-link to="/institute/document" exact><i class="fas fa-file fa-fw"></i> <span class="hide-menu">{{trans('institute.document')}}</span></router-link></li>
+
+        <li v-show="moduleMenu && showMenu('reception') && hasAnyPermission(['list-enquiry','list-visitor-log','list-postal-record','list-call-log','list-complaint','list-gate-pass'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-user-circle fa-fw"></i> <span class="hide-menu">{{trans('reception.reception')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li v-if="hasPermission('list-enquiry')"><router-link to="/reception/enquiry"><i class="fas fa-angle-double-right"></i> {{trans('reception.admission_enquiry')}}</router-link></li>
-                <li v-if="hasPermission('list-visitor-log')"><router-link to="/reception/visitor/log"><i class="fas fa-angle-double-right"></i> {{trans('reception.visitor_log')}}</router-link></li>
-                <li v-if="hasPermission('list-call-log')"><router-link to="/reception/call/log"><i class="fas fa-angle-double-right"></i> {{trans('reception.call_log')}}</router-link></li>
-                <li v-if="hasPermission('list-postal-record')"><router-link to="/reception/postal/record"><i class="fas fa-angle-double-right"></i> {{trans('reception.postal_record')}}</router-link></li>
-                <li v-if="hasPermission('list-complaint')"><router-link to="/reception/complaint"><i class="fas fa-angle-double-right"></i> {{trans('reception.complaint')}}</router-link></li>
-                <li v-if="hasPermission('list-gate-pass')"><router-link to="/reception/gate/pass"><i class="fas fa-angle-double-right"></i> {{trans('reception.gate_pass')}}</router-link></li>
-                <li v-if="hasPermission('list-visitor-message')"><router-link to="/reception/visitor/message"><i class="fas fa-angle-double-right"></i> {{trans('reception.visitor_message')}}</router-link></li>
+                <li v-if="hasPermission('list-enquiry') && showMenu('enquiry')"><router-link to="/reception/enquiry"><i class="fas fa-angle-double-right"></i> {{trans('reception.admission_enquiry')}}</router-link></li>
+                <li v-if="hasPermission('list-visitor-log') && showMenu('visitor_log')"><router-link to="/reception/visitor/log"><i class="fas fa-angle-double-right"></i> {{trans('reception.visitor_log')}}</router-link></li>
+                <li v-if="hasPermission('list-call-log') && showMenu('call_log')"><router-link to="/reception/call/log"><i class="fas fa-angle-double-right"></i> {{trans('reception.call_log')}}</router-link></li>
+                <li v-if="hasPermission('list-postal-record') && showMenu('postal_record')"><router-link to="/reception/postal/record"><i class="fas fa-angle-double-right"></i> {{trans('reception.postal_record')}}</router-link></li>
+                <li v-if="hasPermission('list-complaint') && showMenu('complaint')"><router-link to="/reception/complaint"><i class="fas fa-angle-double-right"></i> {{trans('reception.complaint')}}</router-link></li>
+                <li v-if="hasPermission('list-gate-pass') && showMenu('gate_pass')"><router-link to="/reception/gate/pass"><i class="fas fa-angle-double-right"></i> {{trans('reception.gate_pass')}}</router-link></li>
+                <li v-if="hasPermission('list-visitor-message') && showMenu('visitor_message')"><router-link to="/reception/visitor/message"><i class="fas fa-angle-double-right"></i> {{trans('reception.visitor_message')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission(['list-academic-session','list-course','list-batch','list-class-teacher','list-subject','list-subject-teacher','list-class-timing','list-timetable'])">
+        <li v-show="moduleMenu && showMenu('academic') && hasAnyPermission(['list-academic-session','list-course','list-batch','list-class-teacher','list-subject','list-subject-teacher','list-class-timing','list-timetable'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-school fa-fw"></i> <span class="hide-menu">{{trans('academic.academic')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li v-if="hasPermission('list-academic-session')"><router-link to="/academic/session"><i class="fas fa-angle-double-right"></i> {{trans('academic.academic_session')}}</router-link></li>
-                <li v-if="hasPermission('list-course')"><router-link to="/academic/course"><i class="fas fa-angle-double-right"></i> {{trans('academic.course')}}</router-link></li>
-                <li v-if="hasPermission('list-batch')"><router-link to="/academic/batch"><i class="fas fa-angle-double-right"></i> {{trans('academic.batch')}}</router-link></li>
-                <li v-if="hasPermission('list-class-teacher')"><router-link to="/academic/class/teacher"><i class="fas fa-angle-double-right"></i> {{trans('academic.class_teacher')}}</router-link></li>
-                <li v-if="hasPermission('list-subject')"><router-link to="/academic/subject"><i class="fas fa-angle-double-right"></i> {{trans('academic.subject')}}</router-link></li>
-                <li v-if="hasPermission('list-subject-teacher')"><router-link to="/academic/subject/teacher"><i class="fas fa-angle-double-right"></i> {{trans('academic.subject_teacher')}}</router-link></li>
-                <li v-if="hasPermission('list-class-timing')"><router-link to="/academic/class/timing"><i class="fas fa-angle-double-right"></i> {{trans('academic.class_timing')}}</router-link></li>
-                <li v-if="hasPermission('list-timetable')"><router-link to="/academic/timetable"><i class="fas fa-angle-double-right"></i> {{trans('academic.timetable')}}</router-link></li>
-                <li v-if="hasPermission('list-certificate')"><router-link to="/academic/certificate"><i class="fas fa-angle-double-right"></i> {{trans('academic.certificate')}}</router-link></li>
+                <li v-if="hasPermission('list-academic-session') && showMenu('academic_session')"><router-link to="/academic/session"><i class="fas fa-angle-double-right"></i> {{trans('academic.academic_session')}}</router-link></li>
+                <li v-if="hasPermission('list-course') && showMenu('course')"><router-link to="/academic/course"><i class="fas fa-angle-double-right"></i> {{trans('academic.course')}}</router-link></li>
+                <li v-if="hasPermission('list-batch') && showMenu('batch')"><router-link to="/academic/batch"><i class="fas fa-angle-double-right"></i> {{trans('academic.batch')}}</router-link></li>
+                <li v-if="hasPermission('list-class-teacher') && showMenu('class_teacher')"><router-link to="/academic/class/teacher"><i class="fas fa-angle-double-right"></i> {{trans('academic.class_teacher')}}</router-link></li>
+                <li v-if="hasPermission('list-subject') && showMenu('subject')"><router-link to="/academic/subject"><i class="fas fa-angle-double-right"></i> {{trans('academic.subject')}}</router-link></li>
+                <li v-if="hasPermission('list-subject-teacher') && showMenu('subject_teacher')"><router-link to="/academic/subject/teacher"><i class="fas fa-angle-double-right"></i> {{trans('academic.subject_teacher')}}</router-link></li>
+                <li v-if="hasPermission('list-class-timing') && showMenu('class_timing')"><router-link to="/academic/class/timing"><i class="fas fa-angle-double-right"></i> {{trans('academic.class_timing')}}</router-link></li>
+                <li v-if="hasPermission('list-timetable') && showMenu('timetable')"><router-link to="/academic/timetable"><i class="fas fa-angle-double-right"></i> {{trans('academic.timetable')}}</router-link></li>
+                <li v-if="hasPermission('list-certificate') && showMenu('certificate')"><router-link to="/academic/certificate"><i class="fas fa-angle-double-right"></i> {{trans('academic.certificate')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission(['list-registration','list-student','edit-roll-number','generate-student-id-card','list-student-attendance','promote-student','terminate-student'])">
+        <li v-show="moduleMenu && showMenu('student') && hasAnyPermission(['list-registration','list-student','edit-roll-number','generate-student-id-card','list-student-attendance','promote-student','terminate-student'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-graduation-cap fa-fw"></i> <span class="hide-menu">{{trans('student.student')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li v-if="hasPermission('import-student')"><router-link to="/student/import"><i class="fas fa-angle-double-right"></i> {{trans('student.import')}}</router-link></li>
-                <li v-if="hasPermission('list-registration')"><router-link to="/student/registration"><i class="fas fa-angle-double-right"></i> {{trans('student.registration')}}</router-link></li>
-                <li v-if="hasPermission('list-student') || hasPermission('list-class-teacher-wise-student')"><router-link to="/student/admission"><i class="fas fa-angle-double-right"></i> {{trans('student.admission')}}</router-link></li>
-                <li v-if="hasPermission('edit-roll-number')"><router-link to="/student/roll/number"><i class="fas fa-angle-double-right"></i> {{trans('student.roll_number')}}</router-link></li>
-                <li v-if="hasPermission('generate-student-id-card')"><router-link to="/student/id-card"><i class="fas fa-angle-double-right"></i> {{trans('student.id_card')}}</router-link></li>
-                <li v-if="hasPermission('edit-student')"><router-link to="/student/image"><i class="fas fa-angle-double-right"></i> {{trans('student.image_upload')}}</router-link></li>
-                <li v-if="hasPermission('list-student-attendance')"><router-link to="/student/attendance"><i class="fas fa-angle-double-right"></i> {{trans('student.attendance')}}</router-link></li>
-                <li v-if="hasPermission('promote-student')"><router-link to="/student/promotion"><i class="fas fa-angle-double-right"></i> {{trans('student.promotion')}}</router-link></li>
-                <li v-if="hasPermission('terminate-student')"><router-link to="/student/termination"><i class="fas fa-angle-double-right"></i> {{trans('student.termination')}}</router-link></li>
-                <li v-if="hasPermission('edit-student')"><router-link to="/student/parent"><i class="fas fa-angle-double-right"></i> {{trans('student.parent')}}</router-link></li>
+                <li v-if="hasPermission('import-student') && showMenu('student_import')"><router-link to="/student/import"><i class="fas fa-angle-double-right"></i> {{trans('student.import')}}</router-link></li>
+                <li v-if="hasPermission('list-registration') && showMenu('registration')"><router-link to="/student/registration"><i class="fas fa-angle-double-right"></i> {{trans('student.registration')}}</router-link></li>
+                <li v-if="(hasPermission('list-student') || hasPermission('list-class-teacher-wise-student')) && showMenu('admission')"><router-link to="/student/admission"><i class="fas fa-angle-double-right"></i> {{trans('student.admission')}}</router-link></li>
+                <li v-if="hasPermission('edit-roll-number') && showMenu('roll_number')"><router-link to="/student/roll/number"><i class="fas fa-angle-double-right"></i> {{trans('student.roll_number')}}</router-link></li>
+                <li v-if="hasPermission('generate-student-id-card') && showMenu('student_id_card')"><router-link to="/student/id-card"><i class="fas fa-angle-double-right"></i> {{trans('student.id_card')}}</router-link></li>
+                <li v-if="hasPermission('edit-student') && showMenu('student_image_upload')"><router-link to="/student/image"><i class="fas fa-angle-double-right"></i> {{trans('student.image_upload')}}</router-link></li>
+                <li v-if="hasPermission('list-student-attendance') && showMenu('student_attendance')"><router-link to="/student/attendance"><i class="fas fa-angle-double-right"></i> {{trans('student.attendance')}}</router-link></li>
+                <li v-if="hasPermission('promote-student') && showMenu('promotion')"><router-link to="/student/promotion"><i class="fas fa-angle-double-right"></i> {{trans('student.promotion')}}</router-link></li>
+                <li v-if="hasPermission('terminate-student') && showMenu('termination')"><router-link to="/student/termination"><i class="fas fa-angle-double-right"></i> {{trans('student.termination')}}</router-link></li>
+                <li v-if="hasPermission('edit-student') && showMenu('student_parent')"><router-link to="/student/parent"><i class="fas fa-angle-double-right"></i> {{trans('student.parent')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission(['list-employee', 'generate-employee-id-card'])">
+        <li v-show="moduleMenu && showMenu('employee') && hasAnyPermission(['list-employee', 'generate-employee-id-card'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-user-tie fa-fw"></i> <span class="hide-menu">{{trans('employee.employee')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li><router-link to="/employee/list"><i class="fas fa-angle-double-right"></i> {{trans('employee.employee_list')}}</router-link></li>
-                <li v-if="hasPermission('generate-employee-id-card')"><router-link to="/employee/id-card"><i class="fas fa-angle-double-right"></i> {{trans('employee.id_card')}}</router-link></li>
-                <li><router-link to="/employee/attendance"><i class="fas fa-angle-double-right"></i> {{trans('employee.attendance')}}</router-link></li>
-                <li><router-link to="/employee/leave"><i class="fas fa-angle-double-right"></i> {{trans('employee.leave')}}</router-link></li>
-                <li><router-link to="/employee/payroll"><i class="fas fa-angle-double-right"></i> {{trans('employee.payroll')}}</router-link></li>
+                <li v-if="hasPermission('import-employee') && showMenu('employee_import')"><router-link to="/employee/import"><i class="fas fa-angle-double-right"></i> {{trans('employee.import')}}</router-link></li>
+                <li v-if="showMenu('employee_list')"><router-link to="/employee/list"><i class="fas fa-angle-double-right"></i> {{trans('employee.employee_list')}}</router-link></li>
+                <li v-if="hasPermission('generate-employee-id-card') && showMenu('employee_id_card')"><router-link to="/employee/id-card"><i class="fas fa-angle-double-right"></i> {{trans('employee.id_card')}}</router-link></li>
+                <li v-if="showMenu('employee_attendance')"><router-link to="/employee/attendance"><i class="fas fa-angle-double-right"></i> {{trans('employee.attendance')}}</router-link></li>
+                <li v-if="showMenu('employee_leave')"><router-link to="/employee/leave"><i class="fas fa-angle-double-right"></i> {{trans('employee.leave')}}</router-link></li>
+                <li v-if="showMenu('employee_payroll')"><router-link to="/employee/payroll"><i class="fas fa-angle-double-right"></i> {{trans('employee.payroll')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission(['list-exam-schedule','list-exam-mark','access-exam-report','access-class-teacher-wise-exam-report'])">
+        <li v-show="moduleMenu && showMenu('exam') && hasAnyPermission(['list-exam-schedule','list-exam-mark','access-exam-report','access-class-teacher-wise-exam-report','list-online-exam'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-file-alt fa-fw"></i> <span class="hide-menu">{{trans('exam.exam')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li v-if="hasPermission('list-exam-schedule')"><router-link to="/exam/schedule"><i class="fas fa-angle-double-right"></i> {{trans('exam.schedule')}}</router-link></li>
-                <li v-if="hasPermission('list-exam-mark')"><router-link to="/exam/record"><i class="fas fa-angle-double-right"></i> {{trans('exam.record')}}</router-link></li>
-                <li v-if="hasAnyPermission(['access-exam-report','access-class-teacher-wise-exam-report'])"><router-link to="/exam/report"><i class="fas fa-angle-double-right"></i> {{trans('exam.report')}}</router-link></li>
-                <template v-if="hasNotAnyRole(['student','parent'])">
+                <li v-if="hasPermission('list-exam-schedule') && showMenu('exam_schedule')"><router-link to="/exam/schedule"><i class="fas fa-angle-double-right"></i> {{trans('exam.schedule')}}</router-link></li>
+                <li v-if="hasPermission('list-exam-mark') && showMenu('exam_record_mark')"><router-link to="/exam/record"><i class="fas fa-angle-double-right"></i> {{trans('exam.record')}}</router-link></li>
+                <li v-if="hasAnyPermission(['access-exam-report','access-class-teacher-wise-exam-report']) && showMenu('exam_report_card')"><router-link to="/exam/report"><i class="fas fa-angle-double-right"></i> {{trans('exam.report')}}</router-link></li>
+                <template v-if="hasNotAnyRole(['student','parent']) && showMenu('exam_topper_report')">
                     <li v-if="hasAnyPermission(['access-exam-report','access-class-teacher-wise-exam-report'])"><router-link to="/exam/report/topper"><i class="fas fa-angle-double-right"></i> {{trans('exam.topper_report')}}</router-link></li>
                 </template>
+                <li v-if="hasPermission('list-online-exam') && showMenu('online_exam')"><router-link to="/online-exam"><i class="fas fa-angle-double-right"></i> {{trans('exam.online_exam')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission(['list-transport-fee','list-fee-group','list-fee-head','list-fee-allocation','list-fee-concession','list-account','list-income','list-expense','list-account-transfer'])">
+        <li v-show="moduleMenu && showMenu('finance') && hasAnyPermission(['list-transport-fee','list-fee-group','list-fee-head','list-fee-allocation','list-fee-concession','list-account','list-income','list-expense','list-account-transfer'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-money-bill-alt fa-fw"></i> <span class="hide-menu">{{trans('finance.finance')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li v-if="hasPermission('list-fee-group')"><router-link to="/finance/fee/group"><i class="fas fa-angle-double-right"></i> {{trans('finance.fee_group')}}</router-link></li>
-                <li v-if="hasPermission('list-fee-head')"><router-link to="/finance/fee/head"><i class="fas fa-angle-double-right"></i> {{trans('finance.fee_head')}}</router-link></li>
-                <li v-if="hasPermission('list-transport-fee')"><router-link to="/transport/fee"><i class="fas fa-angle-double-right"></i> {{trans('transport.fee')}}</router-link></li>
-                <li v-if="hasPermission('list-fee-concession')"><router-link to="/finance/fee/concession"><i class="fas fa-angle-double-right"></i> {{trans('finance.fee_concession')}}</router-link></li>
-                <li v-if="hasPermission('list-fee-allocation')"><router-link to="/finance/fee/allocation"><i class="fas fa-angle-double-right"></i> {{trans('finance.fee_allocation')}}</router-link></li>
-                <li v-if="hasPermission('list-account')"><router-link to="/finance/account"><i class="fas fa-angle-double-right"></i> {{trans('finance.account')}}</router-link></li>
-                <li v-if="hasPermission('list-income')"><router-link to="/finance/transaction/income"><i class="fas fa-angle-double-right"></i> {{trans('finance.income')}}</router-link></li>
-                <li v-if="hasPermission('list-expense')"><router-link to="/finance/transaction/expense"><i class="fas fa-angle-double-right"></i> {{trans('finance.expense')}}</router-link></li>
-                <li v-if="hasPermission('list-account-transfer')"><router-link to="/finance/transaction/account/transfer"><i class="fas fa-angle-double-right"></i> {{trans('finance.account_transfer')}}</router-link></li>
-                <li><router-link to="/finance/report"><i class="fas fa-angle-double-right"></i> {{trans('general.report')}}</router-link></li>
+                <li v-if="hasPermission('list-fee-group') && showMenu('fee_group')"><router-link to="/finance/fee/group"><i class="fas fa-angle-double-right"></i> {{trans('finance.fee_group')}}</router-link></li>
+                <li v-if="hasPermission('list-fee-head') && showMenu('fee_head')"><router-link to="/finance/fee/head"><i class="fas fa-angle-double-right"></i> {{trans('finance.fee_head')}}</router-link></li>
+                <li v-if="hasPermission('list-transport-fee') && showMenu('transport_fee')"><router-link to="/transport/fee"><i class="fas fa-angle-double-right"></i> {{trans('transport.fee')}}</router-link></li>
+                <li v-if="hasPermission('list-fee-concession') && showMenu('fee_concession')"><router-link to="/finance/fee/concession"><i class="fas fa-angle-double-right"></i> {{trans('finance.fee_concession')}}</router-link></li>
+                <li v-if="hasPermission('list-fee-allocation') && showMenu('fee_allocation')"><router-link to="/finance/fee/allocation"><i class="fas fa-angle-double-right"></i> {{trans('finance.fee_allocation')}}</router-link></li>
+                <li v-if="hasPermission('list-account') && showMenu('account')"><router-link to="/finance/account"><i class="fas fa-angle-double-right"></i> {{trans('finance.account')}}</router-link></li>
+                <li v-if="hasPermission('list-income') && showMenu('income')"><router-link to="/finance/transaction/income"><i class="fas fa-angle-double-right"></i> {{trans('finance.income')}}</router-link></li>
+                <li v-if="hasPermission('list-expense') && showMenu('expense')"><router-link to="/finance/transaction/expense"><i class="fas fa-angle-double-right"></i> {{trans('finance.expense')}}</router-link></li>
+                <li v-if="hasPermission('list-account-transfer') && showMenu('account_transfer')"><router-link to="/finance/transaction/account/transfer"><i class="fas fa-angle-double-right"></i> {{trans('finance.account_transfer')}}</router-link></li>
+                <li v-if="showMenu('finance_report')"><router-link to="/finance/report"><i class="fas fa-angle-double-right"></i> {{trans('general.report')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission(['list-vehicle','list-vehicle-incharge','list-vehicle-document','list-vehicle-log','list-vehicle-service-record','list-vehicle-fuel'])">
+        <li v-show="moduleMenu && showMenu('transport') && hasAnyPermission(['list-vehicle','list-vehicle-incharge','list-vehicle-document','list-vehicle-log','list-vehicle-service-record','list-vehicle-fuel'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-truck fa-fw"></i> <span class="hide-menu">{{trans('transport.transport')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li><router-link to="/transport/route"><i class="fas fa-angle-double-right"></i> {{trans('transport.route')}}</router-link></li>
-                <li v-if="hasPermission('list-vehicle')"><router-link to="/transport/vehicle"><i class="fas fa-angle-double-right"></i> {{trans('transport.vehicle')}}</router-link></li>
-                <li v-if="hasPermission('list-vehicle-incharge')"><router-link to="/transport/vehicle/incharge"><i class="fas fa-angle-double-right"></i> {{trans('transport.vehicle_incharge')}}</router-link></li>
-                <li v-if="hasPermission('list-vehicle-document')"><router-link to="/transport/vehicle/document"><i class="fas fa-angle-double-right"></i> {{trans('transport.document')}}</router-link></li>
-                <li v-if="hasPermission('list-vehicle-fuel')"><router-link to="/transport/vehicle/fuel"><i class="fas fa-angle-double-right"></i> {{trans('transport.fuel')}}</router-link></li>
-                <li v-if="hasPermission('list-vehicle-log')"><router-link to="/transport/vehicle/log"><i class="fas fa-angle-double-right"></i> {{trans('transport.log')}}</router-link></li>
-                <li v-if="hasPermission('list-vehicle-service-record')"><router-link to="/transport/vehicle/service/record"><i class="fas fa-angle-double-right"></i> {{trans('transport.service_record')}}</router-link></li>
-                <li v-if="hasPermission('access-transport-report')"><router-link to="/transport/report"><i class="fas fa-angle-double-right"></i> {{trans('general.report')}}</router-link></li>
+                <li v-if="showMenu('transport_route')"><router-link to="/transport/route"><i class="fas fa-angle-double-right"></i> {{trans('transport.route')}}</router-link></li>
+                <li v-if="hasPermission('list-vehicle') && showMenu('vehicle')"><router-link to="/transport/vehicle"><i class="fas fa-angle-double-right"></i> {{trans('transport.vehicle')}}</router-link></li>
+                <li v-if="hasPermission('list-vehicle-incharge') && showMenu('vehicle_incharge')"><router-link to="/transport/vehicle/incharge"><i class="fas fa-angle-double-right"></i> {{trans('transport.vehicle_incharge')}}</router-link></li>
+                <li v-if="hasPermission('list-vehicle-document') && showMenu('vehicle_document')"><router-link to="/transport/vehicle/document"><i class="fas fa-angle-double-right"></i> {{trans('transport.document')}}</router-link></li>
+                <li v-if="hasPermission('list-vehicle-fuel') && showMenu('vehicle_fuel')"><router-link to="/transport/vehicle/fuel"><i class="fas fa-angle-double-right"></i> {{trans('transport.fuel')}}</router-link></li>
+                <li v-if="hasPermission('list-vehicle-log') && showMenu('vehicle_log')"><router-link to="/transport/vehicle/log"><i class="fas fa-angle-double-right"></i> {{trans('transport.log')}}</router-link></li>
+                <li v-if="hasPermission('list-vehicle-service-record') && showMenu('vehicle_service_record')"><router-link to="/transport/vehicle/service/record"><i class="fas fa-angle-double-right"></i> {{trans('transport.service_record')}}</router-link></li>
+                <li v-if="hasPermission('access-transport-report') && showMenu('vehicle_report')"><router-link to="/transport/report"><i class="fas fa-angle-double-right"></i> {{trans('general.report')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission(['list-holiday','list-event'])">
+        <li v-show="moduleMenu && showMenu('calendar') && hasAnyPermission(['list-holiday','list-event'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-calendar-alt fa-fw"></i> <span class="hide-menu">{{trans('calendar.calendar')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li v-if="hasPermission('list-holiday')"><router-link to="/calendar/holiday"><i class="fas fa-angle-double-right"></i> {{trans('calendar.holiday')}}</router-link></li>
-                <li v-if="hasPermission('list-event')"><router-link to="/calendar/event"><i class="fas fa-angle-double-right"></i> {{trans('calendar.event')}}</router-link></li>
-                <li v-if="hasPermission('list-birthday')"><router-link to="/calendar/celebration/birthday"><i class="fas fa-angle-double-right"></i> {{trans('calendar.celebration')}}</router-link></li>
+                <li v-if="hasPermission('list-holiday') && showMenu('holiday')"><router-link to="/calendar/holiday"><i class="fas fa-angle-double-right"></i> {{trans('calendar.holiday')}}</router-link></li>
+                <li v-if="hasPermission('list-event') && showMenu('event')"><router-link to="/calendar/event"><i class="fas fa-angle-double-right"></i> {{trans('calendar.event')}}</router-link></li>
+                <li v-if="hasPermission('list-birthday') && showMenu('celebration')"><router-link to="/calendar/celebration/birthday"><i class="fas fa-angle-double-right"></i> {{trans('calendar.celebration')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission(['list-assignment','list-notes','list-lesson-plan','list-syllabus'])">
+        <li v-show="moduleMenu && showMenu('resource') && hasAnyPermission(['list-assignment','list-notes','list-lesson-plan','list-syllabus'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-folder fa-fw"></i> <span class="hide-menu">{{trans('resource.resource')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li v-if="hasPermission('list-assignment')"><router-link to="/resource/assignment"><i class="fas fa-angle-double-right"></i> {{trans('resource.assignment')}}</router-link></li>
-                <li v-if="hasPermission('list-notes')"><router-link to="/resource/notes"><i class="fas fa-angle-double-right"></i> {{trans('resource.notes')}}</router-link></li>
-                <li v-if="hasPermission('list-lesson-plan')"><router-link to="/resource/lesson/plan"><i class="fas fa-angle-double-right"></i> {{trans('resource.lesson_plan')}}</router-link></li>
-                <li v-if="hasPermission('list-syllabus')"><router-link to="/resource/syllabus"><i class="fas fa-angle-double-right"></i> {{trans('resource.syllabus')}}</router-link></li>
+                <li v-if="hasPermission('list-assignment') && showMenu('assignment')"><router-link to="/resource/assignment"><i class="fas fa-angle-double-right"></i> {{trans('resource.assignment')}}</router-link></li>
+                <li v-if="hasPermission('list-notes') && showMenu('notes')"><router-link to="/resource/notes"><i class="fas fa-angle-double-right"></i> {{trans('resource.notes')}}</router-link></li>
+                <li v-if="hasPermission('list-lesson-plan') && showMenu('lesson_plan')"><router-link to="/resource/lesson/plan"><i class="fas fa-angle-double-right"></i> {{trans('resource.lesson_plan')}}</router-link></li>
+                <li v-if="hasPermission('list-syllabus') && showMenu('syllabus')"><router-link to="/resource/syllabus"><i class="fas fa-angle-double-right"></i> {{trans('resource.syllabus')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission(['list-book','issue-book','return-book'])">
+        <li v-show="moduleMenu && showMenu('library') && hasAnyPermission(['list-book','issue-book','return-book'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-book fa-fw"></i> <span class="hide-menu">{{trans('library.library')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li v-if="hasPermission('list-book')"><router-link to="/library/book"><i class="fas fa-angle-double-right"></i> {{trans('library.book')}}</router-link></li>
-                <li v-if="hasPermission('issue-book')"><router-link to="/library/issue"><i class="fas fa-angle-double-right"></i> {{trans('library.issue')}}</router-link></li>
-                <li v-if="hasPermission('return-book')"><router-link to="/library/return"><i class="fas fa-angle-double-right"></i> {{trans('library.return')}}</router-link></li>
+                <li v-if="hasPermission('list-book') && showMenu('book')"><router-link to="/library/book"><i class="fas fa-angle-double-right"></i> {{trans('library.book')}}</router-link></li>
+                <li v-if="hasPermission('issue-book') && showMenu('issue_book')"><router-link to="/library/issue"><i class="fas fa-angle-double-right"></i> {{trans('library.issue')}}</router-link></li>
+                <li v-if="hasPermission('return-book') && showMenu('return_book')"><router-link to="/library/return"><i class="fas fa-angle-double-right"></i> {{trans('library.return')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission(['list-stock-category', 'list-stock-item','list-vendor','list-stock-purchase','list-stock-transfer'])">
+        <li v-show="moduleMenu && showMenu('inventory') && hasAnyPermission(['list-stock-category', 'list-stock-item','list-vendor','list-stock-purchase','list-stock-transfer'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-box fa-fw"></i> <span class="hide-menu">{{trans('inventory.inventory')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li><router-link to="/inventory/stock/category"><i class="fas fa-angle-double-right"></i> {{trans('inventory.stock_category')}}</router-link></li>
-                <li><router-link to="/inventory/stock/item"><i class="fas fa-angle-double-right"></i> {{trans('inventory.stock_item')}}</router-link></li>
-                <li><router-link to="/inventory/vendor"><i class="fas fa-angle-double-right"></i> {{trans('inventory.vendor')}}</router-link></li>
-                <li><router-link to="/inventory/stock/purchase"><i class="fas fa-angle-double-right"></i> {{trans('inventory.stock_purchase')}}</router-link></li>
-                <li><router-link to="/inventory/stock/transfer"><i class="fas fa-angle-double-right"></i> {{trans('inventory.stock_transfer')}}</router-link></li>
+                <li v-if="showMenu('stock_category')"><router-link to="/inventory/stock/category"><i class="fas fa-angle-double-right"></i> {{trans('inventory.stock_category')}}</router-link></li>
+                <li v-if="showMenu('stock_item')"><router-link to="/inventory/stock/item"><i class="fas fa-angle-double-right"></i> {{trans('inventory.stock_item')}}</router-link></li>
+                <li v-if="showMenu('vendor')"><router-link to="/inventory/vendor"><i class="fas fa-angle-double-right"></i> {{trans('inventory.vendor')}}</router-link></li>
+                <li v-if="showMenu('stock_purchase')"><router-link to="/inventory/stock/purchase"><i class="fas fa-angle-double-right"></i> {{trans('inventory.stock_purchase')}}</router-link></li>
+                <li v-if="showMenu('stock_transfer')"><router-link to="/inventory/stock/transfer"><i class="fas fa-angle-double-right"></i> {{trans('inventory.stock_transfer')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasPermission('list-article')">
+        <li v-show="moduleMenu && showMenu('post') && hasPermission('list-article')">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-newspaper fa-fw"></i> <span class="hide-menu">{{trans('post.post')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li><router-link to="/post/feed"><i class="fas fa-angle-double-right"></i> {{trans('post.feed')}}</router-link></li>
-                <li><router-link to="/post/article"><i class="fas fa-angle-double-right"></i> {{trans('post.article')}}</router-link></li>
+                <li v-if="showMenu('post_feed')"><router-link to="/post/feed"><i class="fas fa-angle-double-right"></i> {{trans('post.feed')}}</router-link></li>
+                <li v-if="showMenu('article')"><router-link to="/post/article"><i class="fas fa-angle-double-right"></i> {{trans('post.article')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission('send-sms')">
+        <li v-show="moduleMenu && showMenu('communication') && hasAnyPermission(['send-sms','send-email'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-paper-plane fa-fw"></i> <span class="hide-menu">{{trans('communication.communication')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li><router-link to="/communication/sms"><i class="fas fa-angle-double-right"></i> {{trans('communication.sms')}}</router-link></li>
+                <li v-if="showMenu('communication_history')"><router-link to="/communication"><i class="fas fa-angle-double-right"></i> {{trans('communication.history')}}</router-link></li>
+                <li v-if="hasPermission('send-sms') && showMenu('send_sms')"><router-link to="/communication/sms"><i class="fas fa-angle-double-right"></i> {{trans('communication.sms')}}</router-link></li>
+                <li v-if="hasPermission('send-email') && showMenu('send_email')"><router-link to="/communication/email"><i class="fas fa-angle-double-right"></i> {{trans('communication.email')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasPermission('configure-frontend')">
+        <li v-show="moduleMenu && showMenu('frontend') && hasPermission('configure-frontend')">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-suitcase fa-fw"></i> <span class="hide-menu">{{trans('frontend.frontend')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li><router-link to="/frontend/page"><i class="fas fa-angle-double-right"></i> {{trans('frontend.page')}}</router-link></li>
-                <li><router-link to="/frontend/block"><i class="fas fa-angle-double-right"></i> {{trans('frontend.block')}}</router-link></li>
-                <li><router-link to="/frontend/menu"><i class="fas fa-angle-double-right"></i> {{trans('frontend.menu')}}</router-link></li>
+                <li v-if="showMenu('frontend_page')"><router-link to="/frontend/page"><i class="fas fa-angle-double-right"></i> {{trans('frontend.page')}}</router-link></li>
+                <li v-if="showMenu('frontend_block')"><router-link to="/frontend/block"><i class="fas fa-angle-double-right"></i> {{trans('frontend.block')}}</router-link></li>
+                <li v-if="showMenu('frontend_menu')"><router-link to="/frontend/menu"><i class="fas fa-angle-double-right"></i> {{trans('frontend.menu')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleMenu && hasAnyPermission(['access-todo','access-configuration'])">
+        <li v-show="moduleMenu && showMenu('utility') && hasAnyPermission(['access-todo','access-configuration'])">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-puzzle-piece fa-fw"></i> <span class="hide-menu">{{trans('utility.utility')}}</span></a>
             <ul aria-expanded="false" class="collapse">
-                <li v-if="hasPermission('access-todo')"><router-link to="/utility/todo"><i class="fas fa-angle-double-right"></i> {{trans('utility.todo')}}</router-link></li>
+                <li v-if="hasPermission('access-todo') && showMenu('todo')"><router-link to="/utility/todo"><i class="fas fa-angle-double-right"></i> {{trans('utility.todo')}}</router-link></li>
                 <template v-if="hasPermission('access-configuration')">
-                    <li><router-link to="/utility/backup"><i class="fas fa-angle-double-right"></i> {{trans('utility.backup')}}</router-link></li>
-                    <li><router-link to="/utility/ip-filter"><i class="fas fa-angle-double-right"></i> {{trans('utility.ip_filter')}}</router-link></li>
+                    <li v-if="showMenu('backup')"><router-link to="/utility/backup"><i class="fas fa-angle-double-right"></i> {{trans('utility.backup')}}</router-link></li>
+                    <li v-if="showMenu('ip_filter')"><router-link to="/utility/ip-filter"><i class="fas fa-angle-double-right"></i> {{trans('utility.ip_filter')}}</router-link></li>
                     <!-- <li><router-link to="/utility/email-template"><i class="fas fa-angle-double-right"></i> {{trans('utility.email_template')}}</router-link></li>
                     <li><router-link to="/utility/email-log"><i class="fas fa-angle-double-right"></i> {{trans('utility.email_log')}}</router-link></li>
                     <li><router-link to="/utility/activity-log"><i class="fas fa-angle-double-right"></i> {{trans('utility.activity_log')}}</router-link></li>
@@ -306,7 +316,11 @@
             },
 			getConfig(config){
 				return helper.getConfig(config);
-			}
+			},
+            showMenu(menu) {
+                let menus = helper.getConfig('menu');
+                return (Array.isArray(menus) && menus.findIndex(o => o === menu) >= 0 ) ? true : false;
+            }
 		},
         computed: {
             configMenu(){

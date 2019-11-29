@@ -22,6 +22,7 @@
                                 <div :class="['dropdown-menu',getConfig('direction') == 'ltr' ? 'dropdown-menu-right' : '']" aria-labelledby="moreOption">
                                     <button class="dropdown-item custom-dropdown" @click="print"><i class="fas fa-print"></i> {{trans('general.print')}}</button>
                                     <button class="dropdown-item custom-dropdown" @click="pdf"><i class="fas fa-file-pdf"></i> {{trans('general.generate_pdf')}}</button>
+                                    <a class="dropdown-item custom-dropdown" :href="exportExcel()"><i class="fas fa-file-excel"></i> {{trans('general.generate_excel')}}</a>
                                     <button class="dropdown-item custom-dropdown" @click="$router.go(-1)"><i class="fas fa-undo"></i> {{trans('general.back')}}</button>
                                 </div>
                             </div>
@@ -604,6 +605,15 @@
                         loader.hide();
                         helper.showErrorMsg(error);
                     });
+            },
+            exportExcel(){
+                this.filter.date_of_birth_start_date = helper.toDate(this.filter.date_of_birth_start_date);
+                this.filter.date_of_birth_end_date = helper.toDate(this.filter.date_of_birth_end_date);
+                this.filter.date_of_admission_start_date = helper.toDate(this.filter.date_of_admission_start_date);
+                this.filter.date_of_admission_end_date = helper.toDate(this.filter.date_of_admission_end_date);
+
+                let url = helper.getFilterURL(this.filter);
+                return '/api/student?action=excel' + url + '&token=' + this.authToken;
             },
             onBatchSelect(selectedOption){
                 this.filter.batch_id.push(selectedOption.id);

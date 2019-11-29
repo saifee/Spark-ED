@@ -1,17 +1,18 @@
 <?php
 namespace App\Repositories\Frontend;
 
-use App\Models\Academic\AcademicSession;
-use App\Models\Calendar\Event;
-use App\Models\Calendar\Holiday;
-use App\Models\Configuration\Employee\Designation;
-use App\Models\Configuration\Post\ArticleType;
-use App\Models\Employee\Employee;
-use App\Models\Frontend\Block;
-use App\Models\Frontend\Menu;
 use App\Models\Post\Article;
-use App\Repositories\Configuration\Academic\CourseGroupRepository;
+use App\Models\Frontend\Menu;
+use App\Models\Calendar\Event;
+use App\Models\Frontend\Block;
+use App\Models\Calendar\Holiday;
+use App\Models\Employee\Employee;
+use App\Models\Academic\AcademicSession;
+use App\Models\Configuration\Post\ArticleType;
 use Illuminate\Validation\ValidationException;
+use App\Models\Configuration\Employee\Designation;
+use App\Repositories\Configuration\CustomFieldRepository;
+use App\Repositories\Configuration\Academic\CourseGroupRepository;
 
 class FrontendRepository {
 	protected $article_type;
@@ -25,6 +26,7 @@ class FrontendRepository {
 	protected $holiday;
 	protected $academic_session;
 	protected $course_group;
+	protected $custom_field;
 
 	/**
 	 * Instantiate a new instance.
@@ -41,7 +43,8 @@ class FrontendRepository {
 		Employee $employee,
 		Holiday $holiday,
 		AcademicSession $academic_session,
-		CourseGroupRepository $course_group
+		CourseGroupRepository $course_group,
+		CustomFieldRepository $custom_field
 	) {
 		$this->article_type = $article_type;
 		$this->menu = $menu;
@@ -53,6 +56,7 @@ class FrontendRepository {
 		$this->holiday = $holiday;
 		$this->academic_session = $academic_session;
 		$this->course_group = $course_group;
+		$this->custom_field = $custom_field;
 	}
 
 	/**
@@ -171,7 +175,7 @@ class FrontendRepository {
 	 * @return Event
 	 */
 	public function listEvent() {
-		return $this->event->with('eventType')->filterByAudience('everyone')->upcomingAndLive()->latest()->take(5)->get();
+		return $this->event->with('eventType')->filterByAudience('everyone')->upcomingAndLive()->orderBy('start_date','desc')->take(5)->get();
 	}
 
 	/**
@@ -276,6 +280,8 @@ class FrontendRepository {
 
 		$courses = $this->course_group->getCourseOptionWithDetail($academic_session->id);
 
-		return compact('courses', 'genders');
+        $custom_fields = $this->custom_field->listAllByForm('student_online_registration');
+
+		return compact('courses', 'genders','custom_fields');
 	}
 }

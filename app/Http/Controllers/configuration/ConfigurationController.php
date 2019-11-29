@@ -113,6 +113,13 @@ class ConfigurationController extends Controller
             return $this->success(compact('late_fee_frequencies'));
         }
 
+        if ($type === 'menu') {
+            $data = $this->repo->getModules();
+            $modules = gv($data, 'modules', []);
+            $menus = gv($data, 'menus', []);
+            return $this->success(compact('modules','menus'));
+        }
+
         $color_themes = gv($system_variables, 'color_themes', []);
 
         $directions = gv($system_variables, 'directions', []);

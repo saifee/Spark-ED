@@ -758,5 +758,12 @@
         "symbol": "Z$",
         "position": "prefix",
         "decimal_place": 2
+    },
+    {
+        "description": "Kenya Shilling",
+        "name": "Shilling",
+        "symbol": "KES",
+        "position": "suffix",
+        "decimal_place": 2
     }
 ]

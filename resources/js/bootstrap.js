@@ -35,6 +35,7 @@ import fileUploadInput from './components/file-upload-input'
 import htmlEditor from './components/html-editor'
 import rightPanel from './components/right-panel'
 import helpButton from './components/help-button'
+import customField from './components/custom-field'
 import tourNotification from './components/tour-notification'
 import { Bar } from 'vue-chartjs'
 import switches from 'vue-switches'
@@ -43,6 +44,7 @@ import datepicker from 'vuejs-datepicker'
 import draggable from 'vuedraggable'
 import UUID from 'vue-uuid';
 import VueFormWizard from 'vue-form-wizard'
+import VueCountdown from '@chenfengyuan/vue-countdown';
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 
 window.toastr = require('toastr')
@@ -81,6 +83,7 @@ Vue.use(Vuebar);
 Vue.use(Notifications);
 Vue.use(VueCookie);
 Vue.use(UUID);
+Vue.component(VueCountdown.name, VueCountdown);
 Vue.component('show-tip',showTip);
 Vue.component('switches',switches);
 Vue.component('v-select',vSelect);
@@ -98,6 +101,7 @@ Vue.component('currency-input',currencyInput);
 Vue.component('upload-image',uploadImage);
 Vue.component('file-upload-input',fileUploadInput);
 Vue.component('html-editor',htmlEditor);
+Vue.component('custom-field',customField);
 Vue.component('right-panel',rightPanel);
 Vue.component('help-button',helpButton);
 Vue.component('tour-notification',tourNotification);

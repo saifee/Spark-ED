@@ -7,6 +7,7 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
+                        <router-link to="/communication" class="btn btn-info btn-sm"><i class="fas fa-list"></i> <span class="d-none d-sm-inline">{{trans('communication.history')}}</span></router-link>
                     </div>
                 </div>
             </div>
@@ -17,9 +18,16 @@
                     <h4 class="card-title">{{trans('communication.send_sms')}}</h4>
                     <form @submit.prevent="submit" @keydown="sendSMSForm.errors.clear($event.target.name)">
                         <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="">{{trans('communication.subject')}}</label>
+                                    <input class="form-control" type="text" v-model="sendSMSForm.subject" name="subject" :placeholder="trans('communication.subject')">
+                                    <show-error :form-name="sendSMSForm" prop-name="subject"></show-error>
+                                </div>
+                            </div>
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
-                                    <label for="">{{trans('communication.sms_audience')}}</label>
+                                    <label for="">{{trans('communication.audience')}}</label>
                                     <select v-model="sendSMSForm.audience" class="custom-select col-12" name="audience" @change="sendSMSForm.errors.clear('audience')">
                                       <option value=null selected>{{trans('general.select_one')}}</option>
                                       <option v-for="option in audiences" v-bind:value="option.value">
@@ -118,7 +126,9 @@
         data() {
             return {
                 sendSMSForm: new Form({
+                    type: 'sms',
                     audience: null,
+                    subject: '',
                     include_alternate_number: 0,
                     sms: '',
                     course_id: [],
@@ -156,7 +166,7 @@
             },
             getPreRequisite(){
                 let loader = this.$loading.show();
-                axios.get('/api/sms/pre-requisite')
+                axios.get('/api/communication/pre-requisite')
                     .then(response => {
                         this.employee_categories = response.employee_categories;
                         this.departments = response.departments;
@@ -175,6 +185,7 @@
                 this.sendSMSForm.post('/api/sms')
                     .then(response => {
                         toastr.success(response.message);
+                        this.sendSMSForm.type = 'sms';
                         this.sendSMSForm.audience = null;
                         this.sendSMSForm.course_id = [];
                         this.sendSMSForm.batch_id = [];

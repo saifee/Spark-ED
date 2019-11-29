@@ -262,7 +262,7 @@ class CertificateRepository
             }
         }
 
-        $body = gv($params, 'body');
+        $body = clean(gv($params, 'body'));
 
         $formatted = [
             'certificate_template_id' => $certificate_template_id,

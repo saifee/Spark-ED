@@ -62,7 +62,28 @@ class ExamRepository
 
     public function selectAll()
     {
-        return $this->exam->filterBySession()->get(['name', 'id']);
+        // return $this->exam->filterBySession()->get(['name', 'id']);
+        
+        $exams = $this->exam->summary()->filterBySession()->get();
+
+        $data = array();
+
+        foreach ($exams as $exam) {
+            $exam_name = $exam->name;
+
+            if ($exam->exam_term_id) {
+                $exam_name .= ' ('.$exam->term->courseGroup->name.')';
+            }
+
+            $data[] = array(
+                'id' => $exam->id,
+                'name' => $exam_name,
+                'course_group_id' => $exam->exam_term_id ? $exam->term->course_group_id : null,
+                'course_group_name' => $exam->exam_term_id ? $exam->term->courseGroup->name : null,
+            );
+        }
+
+        return $data;
     }
 
     /**
@@ -194,7 +215,7 @@ class ExamRepository
             $exam_term = $this->exam_term->findOrFail($exam_term_id);
         }
 
-        $query = (! $exam_id) ? $this->exam : $this->exam->where('id', '!=', $exam_id);
+        $query = (! $exam_id) ? $this->exam->whereExamTermId($exam_term_id) : $this->exam->whereExamTermId($exam_term_id)->where('id', '!=', $exam_id);
 
         $exam_exists = $query->filterByName($name, 1)->filterBySession()->count();
 
@@ -226,6 +247,25 @@ class ExamRepository
      */
     public function update(Exam $exam, $params)
     {
+        $exam_term_id = gv($params, 'exam_term_id');
+
+        if ($exam_term_id && $exam->exam_term_id != $exam_term_id) {
+            $exam_term = $this->exam_term->findOrFail($exam_term_id);
+            $course_group_id = $exam_term->course_group_id;
+
+            $other_course_group_exam_schedules = $this->exam->whereId($exam->id)->whereHas('schedules', function($q0) use($course_group_id) {
+                $q0->whereHas('batch', function($q) use($course_group_id) {
+                    $q->whereHas('course', function($q1) use($course_group_id) {
+                        $q1->where('course_group_id', '!=', $course_group_id);
+                    });
+                });
+            })->count();
+
+            if ($other_course_group_exam_schedules) {
+                throw ValidationException::withMessages(['message' => trans('exam.exam_has_schedules_of_different_course_group')]);
+            }
+        }
+
         return $exam->forceFill($this->formatParams($params, $exam->id))->save();
     }
 

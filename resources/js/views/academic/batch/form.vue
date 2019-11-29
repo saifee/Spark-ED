@@ -46,6 +46,18 @@
             </div>
             <div class="col-12 col-sm-4">
                 <div class="form-group">
+                    <label for="">{{trans('student.default_attendance_method')}}</label>
+                    <select v-model="batchForm.default_attendance_method" class="custom-select col-12" name="default_attendance_method">
+                      <option value="" selected>{{trans('general.select_one')}}</option>
+                      <option v-for="option in attendance_methods" v-bind:value="option.value">
+                        {{ option.text }}
+                      </option>
+                    </select>
+                    <show-error :form-name="batchForm" prop-name="default_attendance_method"></show-error>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="form-group">
                     <label for="">{{trans('academic.batch_description')}}</label>
                     <autosize-textarea v-model="batchForm.description" rows="1" name="description" :placeholder="trans('academic.batch_description')"></autosize-textarea>
                     <show-error :form-name="batchForm" prop-name="description"></show-error>
@@ -106,8 +118,10 @@
                     max_strength: '',
                     roll_number_prefix: '',
                     roll_number_digit: 0,
+                    default_attendance_method: '',
                     description: ''
                 }),
+                attendance_methods: [],
                 courses: [],
                 selected_course: null,
                 exam_grades: [],
@@ -142,6 +156,7 @@
                         this.courses = response.courses;
                         this.exam_grades = response.exam_grades;
                         this.exam_observations = response.exam_observations;
+                        this.attendance_methods = response.attendance_methods;
                         loader.hide();
                     })
                     .catch(error => {
@@ -174,8 +189,9 @@
                         this.batchForm.exam_observation_id = response.batch.exam_observation_id;
                         this.selected_exam_observation = response.batch.exam_observation_id ? {id: response.batch.exam_observation_id, name: response.batch.observation.name} : null;
                         this.batchForm.description = response.batch.description;
-                        this.batchForm.max_strength = response.batch.options ? response.batch.options.max_strength : helper.getConfig('default_max_strength_per_batch'),
-                        this.batchForm.roll_number_prefix = response.batch.options ? response.batch.options.roll_number_prefix : helper.getConfig('default_roll_number_prefix'),
+                        this.batchForm.max_strength = response.batch.options ? response.batch.options.max_strength : helper.getConfig('default_max_strength_per_batch');
+                        this.batchForm.default_attendance_method = response.batch.options ? response.batch.options.default_attendance_method : '';
+                        this.batchForm.roll_number_prefix = response.batch.options ? response.batch.options.roll_number_prefix : helper.getConfig('default_roll_number_prefix');
                         this.batchForm.roll_number_digit = response.batch.options && response.batch.options.hasOwnProperty('roll_number_digit') ? response.batch.options.roll_number_digit : 0,
                         this.selected_course = response.selected_course;
                         loader.hide();

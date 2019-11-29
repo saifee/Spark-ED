@@ -192,7 +192,7 @@ class PageRepository
 
         $formatted = [
             'title'    => $title,
-            'body'     => stripInlineStyle($body),
+            'body'     => clean($body),
             'is_draft' => $is_draft
         ];
 
@@ -221,6 +221,10 @@ class PageRepository
             return;
 
         $sliders = gv($params, 'sliders', []);
+
+        if (! $sliders) {
+            throw ValidationException::withMessages(['message' => trans('frontend.could_not_find_page_slider_image')]);
+        }
 
         foreach ($sliders as $slider) {
             $title       = gv($slider, 'title');

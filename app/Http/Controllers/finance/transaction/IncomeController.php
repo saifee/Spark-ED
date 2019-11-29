@@ -130,6 +130,23 @@ class IncomeController extends Controller
     }
 
     /**
+     * Used to get Income detail
+     * @get ("/finance/transaction/income/{uuid}/print")
+     * @param ({
+     *      @Parameter("uuid", type="string", required="true", description="Unique Id of Income"),
+     * })
+     * @return Response
+     */
+    public function printIncome($uuid)
+    {
+        $this->authorize('list', Income::class);
+
+        $income = $this->repo->findByUuidOrFail($uuid);
+
+        return view('print.finance.transaction.income-receipt', compact('income'));
+    }
+
+    /**
      * Used to update Income
      * @patch ("/api/income/{uuid}")
      * @param ({

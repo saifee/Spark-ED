@@ -140,6 +140,18 @@ Route::group(['middleware' => ['auth:api']], function () {
 	/*
 		     * Misc Routes Start
 	*/
+
+	Route::get('/custom-field/pre-requisite', 'Configuration\CustomFieldController@preRequisite');
+	Route::get('/custom-field', 'Configuration\CustomFieldController@index');
+	Route::get('/custom-field/fetch', 'Configuration\CustomFieldController@fetch');
+	Route::get('/custom-field/{id}', 'Configuration\CustomFieldController@show');
+	Route::post('/custom-field', 'Configuration\CustomFieldController@store');
+	Route::post('/custom-field/reorder', 'Configuration\CustomFieldController@reorder');
+	Route::post('/custom-field/print', 'Configuration\CustomFieldController@print');
+	Route::post('/custom-field/pdf', 'Configuration\CustomFieldController@pdf');
+	Route::patch('/custom-field/{id}', 'Configuration\CustomFieldController@update');
+	Route::delete('/custom-field/{id}', 'Configuration\CustomFieldController@destroy');
+
 	Route::get('/misc/blood/group', 'Configuration\Misc\BloodGroupController@index');
 	Route::get('/misc/blood/group/{id}', 'Configuration\Misc\BloodGroupController@show');
 	Route::post('/misc/blood/group', 'Configuration\Misc\BloodGroupController@store');
@@ -443,6 +455,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::patch('/reception/calling/purpose/{id}', 'Configuration\Reception\CallingPurposeController@update');
 	Route::delete('/reception/calling/purpose/{id}', 'Configuration\Reception\CallingPurposeController@destroy');
 
+	Route::get('/exam/term/pre-requisite', 'Configuration\Exam\TermController@preRequisite');
 	Route::get('/exam/term', 'Configuration\Exam\TermController@index');
 	Route::get('/exam/term/{id}', 'Configuration\Exam\TermController@show');
 	Route::post('/exam/term', 'Configuration\Exam\TermController@store');
@@ -715,6 +728,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('/student/attendance', 'Student\AttendanceController@store');
 	Route::post('/student/attendance/fetch', 'Student\AttendanceController@fetch');
 	Route::post('/student/attendance/delete', 'Student\AttendanceController@destroy');
+	Route::post('/student/attendance/default', 'Student\AttendanceController@default');
 
 	Route::post('/student/import/start', 'Student\StudentImportController@startImport');
 	Route::post('/student/import/finish', 'Student\StudentImportController@finishImport');
@@ -826,6 +840,24 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('/exam/reorder', 'Exam\ExamController@reorder');
 	Route::patch('/exam/{id}', 'Exam\ExamController@update');
 	Route::delete('/exam/{id}', 'Exam\ExamController@destroy');
+
+	Route::get('/online-exam/pre-requisite', 'Exam\OnlineExamController@preRequisite');
+	Route::get('/online-exam', 'Exam\OnlineExamController@index');
+	Route::get('/online-exam/{uuid}', 'Exam\OnlineExamController@show');
+	Route::get('/online-exam/{uuid}/exam', 'Exam\OnlineExamController@exam');
+	Route::post('/online-exam/{uuid}/exam', 'Exam\OnlineExamController@storeExam');
+	Route::get('/online-exam/{uuid}/exam/{id}', 'Exam\OnlineExamController@getExam');
+	Route::post('/online-exam', 'Exam\OnlineExamController@store');
+	Route::post('/online-exam/{uuid}/question', 'Exam\OnlineExamController@addQuestion');
+	Route::post('/online-exam/{uuid}/status', 'Exam\OnlineExamController@toggleStatus');
+	Route::patch('/online-exam/{uuid}/question/{id}', 'Exam\OnlineExamController@updateQuestion');
+	Route::delete('/online-exam/{uuid}/question/{id}', 'Exam\OnlineExamController@deleteQuestion');
+	Route::post('/online-exam/print', 'Exam\OnlineExamController@print');
+	Route::post('/online-exam/pdf', 'Exam\OnlineExamController@pdf');
+	Route::patch('/online-exam/{uuid}', 'Exam\OnlineExamController@update');
+	Route::delete('/online-exam/{uuid}', 'Exam\OnlineExamController@destroy');
+	Route::post('/online-exam/question/image', 'Exam\OnlineExamController@uploadQuestionImage');
+	Route::delete('/online-exam/question/image', 'Exam\OnlineExamController@removeQuestionImage');
 	/*
 		     * Exam Routes End
 	*/
@@ -952,6 +984,9 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::patch('/employee/{uuid}/user/login', 'Employee\EmployeeController@updateUserLogin');
 
 	Route::get('/employee/id-card/pre-requisite', 'Employee\EmployeeController@idCardPreRequisite');
+	
+	Route::post('/employee/import/start', 'Employee\EmployeeImportController@startImport');
+	Route::post('/employee/import/finish', 'Employee\EmployeeImportController@finishImport');
 
 	Route::post('/employee/{uuid}/photo', 'Employee\EmployeeController@uploadPhoto');
 	Route::delete('/employee/{uuid}/photo/remove', 'Employee\EmployeeController@removePhoto');
@@ -1060,6 +1095,8 @@ Route::group(['middleware' => ['auth:api']], function () {
 	/*
 		     * Library Routes Start
 	*/
+
+	Route::post('/library/barcode', 'Library\BarcodeController@print');
 
 	Route::get('/book/log', 'Library\BookLogController@index');
 	Route::get('/book/log/fee/pre-requisite', 'Library\BookLogController@feePreRequisite');
@@ -1286,6 +1323,15 @@ Route::group(['middleware' => ['auth:api']], function () {
 		     * Frontend Routes End
 	*/
 
+	Route::get('/institute/document/pre-requisite', 'Institute\InstituteDocumentController@preRequisite');
+	Route::get('/institute/document', 'Institute\InstituteDocumentController@index');
+	Route::get('/institute/document/{id}', 'Institute\InstituteDocumentController@show');
+	Route::post('/institute/document', 'Institute\InstituteDocumentController@store');
+	Route::post('/institute/document/print', 'Institute\InstituteDocumentController@print');
+	Route::post('/institute/document/pdf', 'Institute\InstituteDocumentController@pdf');
+	Route::patch('/institute/document/{id}', 'Institute\InstituteDocumentController@update');
+	Route::delete('/institute/document/{id}', 'Institute\InstituteDocumentController@destroy');
+
 	Route::get('/fee/report/summary', 'Finance\Fee\ReportController@feeSummary');
 	Route::post('/fee/report/summary/print', 'Finance\Fee\ReportController@printFeeSummary');
 	Route::post('/fee/report/summary/pdf', 'Finance\Fee\ReportController@pdfFeeSummary');
@@ -1326,8 +1372,14 @@ Route::group(['middleware' => ['auth:api']], function () {
 	/*
 		     * Communication Routes Start
 	*/
-	Route::get('/sms/pre-requisite', 'Communication\SMSController@preRequisite');
+	Route::get('/communication/pre-requisite', 'Communication\CommunicationController@preRequisite');
+	Route::get('/communication', 'Communication\CommunicationController@index');
+	Route::get('/communication/{uuid}', 'Communication\CommunicationController@show');
+	Route::post('/communication/print', 'Communication\CommunicationController@print');
+	Route::post('/communication/pdf', 'Communication\CommunicationController@pdf');
+	Route::delete('/communication/{uuid}', 'Communication\CommunicationController@destroy');
 	Route::post('/sms', 'Communication\SMSController@store');
+	Route::post('/email', 'Communication\EmailController@store');
 	/*
 		     * Communication Routes End
 	*/

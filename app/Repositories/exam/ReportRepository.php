@@ -61,7 +61,24 @@ class ReportRepository
     {
         $batches = $this->course_group->getBatchOption();
 
-        $exams = $this->exam->filterBySession()->get();
+        $exams = $this->exam->summary()->filterBySession()->get();
+
+        $data = array();
+
+        foreach ($exams as $exam) {
+            $exam_name = $exam->name;
+
+            if ($exam->exam_term_id) {
+                $exam_name .= ' ('.$exam->term->courseGroup->name.')';
+            }
+
+            $data[] = array(
+                'id' => $exam->id,
+                'name' => $exam_name,
+                'course_group_id' => $exam->exam_term_id ? $exam->term->course_group_id : null,
+                'course_group_name' => $exam->exam_term_id ? $exam->term->courseGroup->name : null,
+            );
+        }
 
         $term_exam = $exams->where('exam_term_id','!=',null)->count();
 
@@ -79,6 +96,8 @@ class ReportRepository
                 array('text' => trans('exam.no_term_wise_report'), 'value' => 'no_term')
             ];
         }
+
+        $exams = $data;
 
         return compact('batches','types','exams');
     }
@@ -443,29 +462,17 @@ class ReportRepository
             }
         }
 
-
-        // $last_date = (! $last_date) ? config('config.default_academic_session.start_date') : $last_date;
-        // $holidays = $this->holiday->filterBySession()->where('date','<=',$last_date)->count();
-        // $start_date = config('config.default_academic_session.start_date') >= $student_record->date_of_entry ? config('config.default_academic_session.start_date') : $student_record->date_of_entry;
-        // $working_days = $this->attendance->dateOfAttendanceBetween(['start_date' => $start_date, 'end_date' => config('config.default_academic_session.end_date')])->filterByBatchId($batch_id)->count();
-        //// $working_days = dateDiff(config('config.default_academic_session.start_date'), $last_date);
-
-        // $attendances = $this->attendance->dateOfAttendanceBetween(['start_date' => $start_date, 'end_date' => config('config.default_academic_session.end_date')])->filterByBatchId($batch_id)->get();
-
-        // $total_absent = 0;
-        // foreach ($attendances as $attendance) {
-        //     $absentees = $attendance->getAttendance('data');
-        //     if (searchByKey($absentees, 'id', $student_record->id)) {
-        //         $total_absent++;
-        //     }
-        // }
-
-        $last_date = (! $last_date) ? config('config.default_academic_session.start_date') : $last_date;
+        $last_date = (! $last_date) ? config('config.default_academic_session.end_date') : $last_date;
         $start_date = config('config.default_academic_session.start_date') >= $student_record->date_of_entry ? config('config.default_academic_session.start_date') : $student_record->date_of_entry;
         $holidays = $this->holiday->filterBySession()->where('date','<=',$last_date)->count();
         $working_days = dateDiff($start_date, $last_date);
 
-        $attendances = $this->attendance->dateOfAttendanceBetween(['start_date' => $start_date, 'end_date' => $last_date])->filterByBatchId($batch_id)->get();
+        $attendances = $this->attendance->dateOfAttendanceBetween(['start_date' => $start_date, 'end_date' => $last_date])->whereBatchId($batch_id)->where(function($q) {
+            $q->where(function($q1) {
+                $q1->whereNull('subject_id')->whereNull('session')->whereIsDefault(0);
+            })->orWhere('is_default', 1);
+        })->get();
+        $working_days = $attendances->count();
 
         $total_absent = 0;
         foreach ($attendances as $attendance) {
@@ -474,8 +481,6 @@ class ReportRepository
                 $total_absent++;
             }
         }
-
-        $working_days = $attendances->count();
 
         $summary['observation_term_header'] = $observation_term_header;
         $summary['observation_header'] = $observation_header;

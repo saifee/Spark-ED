@@ -28,5 +28,20 @@
 		"quarterly",
 		"bi_annually",
 		"annually"
+	],
+	"input_type_width": [
+		"full",
+		"half",
+		"one_third",
+		"one_fourth"
+	],
+	"input_type": [
+		"text_input",
+		"numeric_input",
+		"multi_line_input",
+		"datepicker_input",
+		"checkbox_input",
+		"radio_input",
+		"dropdown_input"
 	]
 }

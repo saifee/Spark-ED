@@ -1,12 +1,14 @@
 <?php
 namespace App\Repositories\Configuration\Exam;
 
-use Illuminate\Validation\ValidationException;
 use App\Models\Configuration\Exam\Term;
+use Illuminate\Validation\ValidationException;
+use App\Repositories\Configuration\Academic\CourseGroupRepository;
 
 class TermRepository
 {
     protected $exam_term;
+    private $course_group;
 
     /**
      * Instantiate a new instance.
@@ -14,9 +16,11 @@ class TermRepository
      * @return void
      */
     public function __construct(
-        Term $exam_term
+        Term $exam_term,
+        CourseGroupRepository $course_group
     ) {
         $this->exam_term = $exam_term;
+        $this->course_group = $course_group;
     }
 
     /**
@@ -57,7 +61,19 @@ class TermRepository
 
     public function selectAll()
     {
-        return $this->exam_term->filterBySession()->get(['name', 'id']);
+        // return $this->exam_term->filterBySession()->get(['name', 'id']);
+
+        $exam_terms = $this->exam_term->with('courseGroup')->filterBySession()->get();
+
+        $data = array();
+        foreach ($exam_terms as $exam_term) {
+            $data[] = array(
+                'name' => $exam_term->name.' ('.$exam_term->courseGroup->name.')',
+                'id' => $exam_term->id
+            );
+        }
+
+        return $data;
     }
 
     /**
@@ -116,10 +132,20 @@ class TermRepository
      */
     public function getData($params)
     {
-        $sort_by     = gv($params, 'sort_by', 'position');
-        $order       = gv($params, 'order', 'asc');
+        $sort_by         = gv($params, 'sort_by', 'position');
+        $order           = gv($params, 'order', 'asc');
+        $name            = gv($params, 'name');
+        $course_group_id = gv($params, 'course_group_id');
 
-        return $this->exam_term->info()->filterBySession()->orderBy($sort_by, $order);
+        $course_group_id = is_array($course_group_id) ? $course_group_id : ($course_group_id ? explode(',', $course_group_id) : []);
+
+        $query = $this->exam_term->info()->filterBySession()->filterByName($name);
+
+        if (count($course_group_id)) {
+            $query->whereIn('course_group_id', $course_group_id);
+        }
+
+        return $query->orderBy($sort_by, $order);
     }
 
     /**
@@ -144,6 +170,27 @@ class TermRepository
     public function print($params)
     {
         return $this->getData($params)->get();
+    }
+
+    /**
+     * Get course pre requisite.
+     *
+     * @return Array
+     */
+    public function getPreRequisite()
+    {
+        return $this->course_group->selectAll();
+    }
+
+    /**
+     * Get course filters.
+     *
+     * @return Array
+     */
+    public function getFilters()
+    {
+        $course_groups = $this->course_group->selectAll();
+        return compact('course_groups');
     }
 
     /**
@@ -181,15 +228,23 @@ class TermRepository
      */
     private function formatParams($params, $exam_term_id = null)
     {
-        $exam_term_exist_query = ($exam_term_id) ? $this->exam_term->filterBySession()->where('id', '!=', $exam_term_id) : $this->exam_term->filterBySession();
+        $course_group_id = gv($params, 'course_group_id');
+        $course_group = $this->course_group->findOrFail($course_group_id);
 
-        if ($exam_term_exist_query->filterByName(gv($params, 'name'), 1)->count()) {
+        $query = $this->exam_term->whereCourseGroupId($course_group->id)->filterBySession();
+
+        if ($exam_term_id) {
+            $query->where('id', '!=', $exam_term_id);
+        }
+
+        if ($query->filterByName(gv($params, 'name'), 1)->count()) {
             throw ValidationException::withMessages(['name' => trans('validation.unique', ['attribute' => trans('exam.term_name')])]);
         }
 
         $formatted = [
-            'name'        => gv($params, 'name'),
-            'description' => gv($params, 'description')
+            'name'            => gv($params, 'name'),
+            'course_group_id' => gv($params, 'course_group_id'),
+            'description'     => gv($params, 'description')
         ];
 
         if (! $exam_term_id) {
@@ -211,6 +266,10 @@ class TermRepository
      */
     public function update(Term $exam_term, $params)
     {
+        if ($exam_term->exams->count()) {
+            throw ValidationException::withMessages(['message' => trans('user.permission_denied')]);
+        }
+
         return $exam_term->forceFill($this->formatParams($params, $exam_term->id))->save();
     }
 
@@ -223,6 +282,10 @@ class TermRepository
     public function deletable($id)
     {
         $exam_term = $this->findOrFail($id);
+
+        if ($exam_term->exams->count()) {
+            throw ValidationException::withMessages(['message' => trans('user.permission_denied')]);
+        }
 
         return $exam_term;
     }

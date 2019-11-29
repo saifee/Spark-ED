@@ -239,9 +239,9 @@
                 this.stockTransferForm.post('/api/stock/transfer')
                     .then(response => {
                         toastr.success(response.message);
-                        this.stockTransferForm.selected_room = null;
-                        this.stockTransferForm.selected_student = null;
-                        this.stockTransferForm.selected_employee = null;
+                        this.selected_room = null;
+                        this.selected_student = null;
+                        this.selected_employee = null;
                         this.stockTransferForm.details = [];
                         this.clearAttachment = !this.clearAttachment;
                         this.stockTransferForm.upload_token = this.$uuid.v4();

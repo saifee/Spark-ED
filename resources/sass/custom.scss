@@ -393,6 +393,7 @@ Install page
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  background: url('/images/background.jpg');
   height:100%;
   width: 100%;
   padding:10% 0;
@@ -630,12 +631,10 @@ Install page
 .table-sm th.select-all {padding-left:40px;}
 
 .guest-page {
-  background-position: center bottom;
-  background: rgb(64,0,116);
-  background: -moz-linear-gradient(-45deg, rgba(64,0,116,1) 15%, rgba(206,0,92,1) 85%, rgba(255,0,93,1) 100%);
-  background: -webkit-linear-gradient(-45deg, rgba(64,0,116,1) 15%,rgba(206,0,92,1) 85%,rgba(255,0,93,1) 100%);
-  background: linear-gradient(135deg, rgba(64,0,116,1) 15%,rgba(206,0,92,1) 85%,rgba(255,0,93,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#400074', endColorstr='#ff005d',GradientType=1 );
+  // background-position: center center;
+  // background-size:  cover;
+  // background: url('/images/background.jpg');
+  // background-attachment: fixed;
 
   &:before {
     content: "";
@@ -644,10 +643,6 @@ Install page
     height: 100%;
     top: 0;
     left: 0;
-    background: linear-gradient(135deg, #400074 22px, #ff005d 22px, #ff005d 24px, transparent 24px, transparent 67px, #ff005d 67px, #ff005d 69px, transparent 69px),
-    linear-gradient(225deg, #400074 22px, #ff005d 22px, #ff005d 24px, transparent 24px, transparent 67px, #ff005d 67px, #ff005d 69px, transparent 69px)0 64px;
-    background-color:#400074;
-    background-size: 64px 128px;
     opacity: 0.05;
   }
 
@@ -969,4 +964,32 @@ footer.footer {
     opacity: 1;
     box-shadow: 0 4px 15px 0 rgba(0,0,0,0.35);
     border-color: #d1d2d3;
+}
+
+.slimScrollBar {
+  background: #54667a !important;
+  width: 6px !important;
+}
+
+.upload-file-list{
+    list-style: none;
+    padding:0px;
+}
+.upload-file-list-item {
+    border:1px solid #e5e6e7;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+}
+.upload-file-list-item-size {
+  font-size: 80%; margin-right: 10px;
+}
+.file-icon {
+    margin-right: 10px;
+}
+.no-link-color {
+  color:inherit;
+}
+.no-link-color:hover {
+  color:inherit;
 }

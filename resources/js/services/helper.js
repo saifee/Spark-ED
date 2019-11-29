@@ -25,7 +25,7 @@ export default {
                     })
                 .catch(error => {
                     reject(error)
-                })  
+                })
             }
         })
     },
@@ -309,13 +309,43 @@ export default {
         }
     },
 
+    // returns vehicle document status
+    getInstituteDocumentStatus(document){
+        if (moment(document.date_of_expiry,'YYYY-MM-DD').startOf('day') < moment().startOf('day'))
+            return {status: 'document_status_expired', color:'danger', day: 0};
+        else {
+            let today = moment().startOf('day');
+            let expiry_date = moment(document.date_of_expiry,'YYYY-MM-DD').startOf('day');
+            let day = expiry_date.diff(today, 'days');
+
+            let color = '';
+            if (day < 15) {
+                color = 'warning';
+            } else {
+                color = 'success';
+            }
+
+            return {status: 'document_status_expire_in_day', color:color, day: day};
+        }
+    },
+
     getDateDiff(date1, date2){
-        if (date2 == 'undefined') 
+        if (date2 == 'undefined')
             date2 = moment().startOf('day');
 
         date1 = moment(date1,'YYYY-MM-DD').startOf('day');
         let day = date1.diff(date2, 'days');
         return Math.abs(day);
+    },
+
+    getCustomFieldValue(custom_values, id) {
+        let custom_value = custom_values.find(o => o.id == id);
+
+        if (typeof custom_value == 'undefined') {
+            return;
+        }
+
+        return custom_value.value;
     },
 
     getLateFee(fee_installment, late_day){
@@ -412,7 +442,7 @@ export default {
     },
 
     toTime(time){
-        return (time.hour && time.minute) ? helper.formatWithPadding(time.hour,2)+':'+helper.formatWithPadding(time.minute,2)+' '+time.meridiem : '';
+        return (time.hour >=0 && time.minute >= 0) ? helper.formatWithPadding(time.hour,2)+':'+helper.formatWithPadding(time.minute,2)+' '+time.meridiem : '';
     },
 
     // to change first character of every word to upper case
@@ -657,16 +687,16 @@ export default {
     getRollNumber(student_record){
         if (! student_record.roll_number)
             return;
-        
+
         let roll_number = '';
         if (student_record.batch.options.hasOwnProperty('roll_number_digit')) {
-            roll_number = this.formatWithPadding(student_record.roll_number,student_record.batch.options.roll_number_digit);    
+            roll_number = this.formatWithPadding(student_record.roll_number,student_record.batch.options.roll_number_digit);
         } else {
             roll_number = student_record.roll_number;
         }
 
         let prefix = student_record.batch.options.roll_number_prefix;
-        
+
         return prefix ? prefix+''+roll_number : roll_number;
     },
 
@@ -718,38 +748,38 @@ export default {
     },
 
     showDemoNotification(items){
-        if(this.getConfig('mode'))
-            return;
+        // if(this.getConfig('mode'))
+        //     return;
 
-        if(Vue.cookie.get('hide_instikit_tour'))
-            return;
+        // if(Vue.cookie.get('hide_spark_tour'))
+        //     return;
 
-        for (let i = 0; i < items.length; i++) {
-            let item = items[i];
+        // for (let i = 0; i < items.length; i++) {
+        //     let item = items[i];
 
-            let cookie_name = 'instikit_notification_' + item;
+        //     let cookie_name = 'spark_notification_' + item;
 
-            if (Vue.cookie.get(cookie_name))
-                continue;
+        //     if (Vue.cookie.get(cookie_name))
+        //         continue;
 
-            if(!notificationJSON.hasOwnProperty(item))
-                continue;
+        //     if(!notificationJSON.hasOwnProperty(item))
+        //         continue;
 
-            Vue.notify({
-              group: 'demo',
-              clean: true
-            });
-            
-            Vue.notify({
-              group: 'demo',
-              title: notificationJSON[item].title,
-              nextUrl: '/student/admission',
-              text: notificationJSON[item].message,
-              duration: 120000
-            })
+        //     Vue.notify({
+        //       group: 'demo',
+        //       clean: true
+        //     });
 
-            Vue.cookie.set(cookie_name, this.randomString(20) , {expires: '30m'});
-            break;
-        }
+        //     Vue.notify({
+        //       group: 'demo',
+        //       title: notificationJSON[item].title,
+        //       nextUrl: '/student/admission',
+        //       text: notificationJSON[item].message,
+        //       duration: 120000
+        //     })
+
+        //     Vue.cookie.set(cookie_name, this.randomString(20) , {expires: '30m'});
+        //     break;
+        // }
     }
 }

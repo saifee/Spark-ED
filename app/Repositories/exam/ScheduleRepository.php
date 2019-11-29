@@ -145,7 +145,7 @@ class ScheduleRepository
             $student_batch_ids = $this->student->getAuthParentStudentsBatch();
 
             if ($student_batch_ids) {
-                $batch_id = array_unique(array_merge($batch_id, $student_batch_ids));
+                $batch_id = array_diff($student_batch_ids, $batch_id);
             }
         }
 
@@ -153,11 +153,11 @@ class ScheduleRepository
             $student_batch_id = $this->student->getAuthStudentBatch();
 
             if ($student_batch_id) {
-                array_push($batch_id, $student_batch_id);
-                $batch_id = array_unique($batch_id);
+                $batch_id = [$student_batch_id];
             }
         }
 
+        $batch_id = array_unique($batch_id);
         if (count($batch_id)) {
             $query->whereIn('batch_id', $batch_id);
         }
@@ -265,6 +265,10 @@ class ScheduleRepository
         $batch           = $this->batch->findOrFail($batch_id);
         $exam            = $this->exam->findOrFail($exam_id);
         $exam_assessment = $this->exam_assessment->findOrFail($exam_assessment_id);
+
+        if ($exam->exam_term_id && $batch->course->course_group_id != $exam->term->courseGroup->id) {
+            throw ValidationException::withMessages(['message' => trans('exam.batch_course_group_is_different_than_exam_course_group')]);
+        }
 
         if ($exam_grade_id) {
             $exam_grade = $this->exam_grade->findOrFail($exam_grade_id);

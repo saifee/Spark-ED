@@ -216,6 +216,7 @@
                     })
             },  
             store(){
+                this.visitorLogForm.date_of_visit = helper.toDate(this.visitorLogForm.date_of_visit);
             	this.visitorLogForm.entry_time = (this.entry_time.hour && this.entry_time.minute) ? helper.formatWithPadding(this.entry_time.hour,2)+':'+helper.formatWithPadding(this.entry_time.minute,2)+' '+this.entry_time.meridiem : '';
                 let loader = this.$loading.show();
                 this.visitorLogForm.post('/api/visitor/log')
@@ -272,6 +273,7 @@
                     });
             },
             update(){
+                this.visitorLogForm.date_of_visit = helper.toDate(this.visitorLogForm.date_of_visit);
             	this.visitorLogForm.entry_time = (this.entry_time.hour && this.entry_time.minute) ? helper.formatWithPadding(this.entry_time.hour,2)+':'+helper.formatWithPadding(this.entry_time.minute,2)+' '+this.entry_time.meridiem : '';
             	this.visitorLogForm.exit_time = (this.exit_time.hour && this.exit_time.minute) ? helper.formatWithPadding(this.exit_time.hour,2)+':'+helper.formatWithPadding(this.exit_time.minute,2)+' '+this.exit_time.meridiem : '';
                 let loader = this.$loading.show();

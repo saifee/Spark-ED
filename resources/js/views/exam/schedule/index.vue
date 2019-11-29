@@ -74,7 +74,12 @@
                             </thead>
                             <tbody>
                                 <tr v-for="exam_schedule in exam_schedules.data">
-                                    <td v-text="exam_schedule.exam.name"></td>
+                                    <td>
+                                        {{exam_schedule.exam.name}}
+                                        <span v-if="exam_schedule.exam.exam_term_id">
+                                            ({{exam_schedule.exam.term.course_group.name}})
+                                        </span>
+                                    </td>
                                     <td v-text="exam_schedule.batch.course.name+' '+exam_schedule.batch.name"></td>
                                     <td>
                                         <span v-if="! showDetail">

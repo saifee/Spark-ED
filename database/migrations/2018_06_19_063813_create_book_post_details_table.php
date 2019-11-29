@@ -17,7 +17,7 @@ class CreateBookPostDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('book_post_id')->unsigned()->nullable();
             $table->foreign('book_post_id')->references('id')->on('book_posts')->onDelete('cascade');
-            $table->string('number',20)->nullable();
+            $table->bigInteger('number')->nullable();
             $table->string('location')->nullable();
             $table->boolean('is_not_available')->default(0);
             $table->bigInteger('book_condition_id')->unsigned()->nullable();

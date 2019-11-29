@@ -284,7 +284,7 @@ class CourseRepository
         }
 
         $registration_fee                   = gbv($params, 'enable_registration_fee');
-        $options['attendance_type']         = gv($params, 'attendance_type', config('config.default_attendance_type'));
+        // $options['attendance_type']         = gv($params, 'attendance_type', config('config.default_attendance_type'));
         $options['enable_registration']     = gbv($params, 'enable_registration');
         $options['enable_registration_fee'] = $registration_fee;
         $options['registration_fee']        = $registration_fee ? gv($params, 'registration_fee') : 0;

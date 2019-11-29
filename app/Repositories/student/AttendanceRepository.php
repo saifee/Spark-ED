@@ -53,22 +53,27 @@ class AttendanceRepository
     public function getPreRequisite()
     {
         $batches = $this->course_group->getBatchOption();
+        $batch_with_subjects = $this->batch->getAllBatchWithSubjects();
 
         $holiday_lists = $this->holiday->filterBySession()->get();
         $holidays = $holiday_lists->pluck('date')->all();
 
-        return compact('batches', 'holidays','holiday_lists');
+        $attendance_methods = getStudentAttendanceMethods();
+
+        $attendance_method_more_than_once_types = getStudentAttendanceMoreThanOnceTypes();
+
+        return compact('batches', 'holidays','holiday_lists','attendance_methods','batch_with_subjects','attendance_method_more_than_once_types');
     }
 
     /**
-     * Fetch student record and their attenance.
+     * Fetch student record and their attendance.
      *
      * @return Array
      */
     public function fetch($params)
     {
         $batch_id = gv($params, 'batch_id');
-        $date = gv($params, 'date');
+        $date = gv($params, 'date_of_attendance');
 
         $query = $this->student_record->with('student', 'student.parent', 'admission','batch')->filterBySession()->filterByBatchId($batch_id);
 
@@ -86,23 +91,114 @@ class AttendanceRepository
 
         $student_records = $query->get();
 
+        if (! $batch_id) {
+            throw ValidationException::withMessages(['message' => trans('academic.could_not_find_batch')]);
+        }
+
         $batch = $this->batch->findOrFail($batch_id);
         $course = $batch->Course;
+        $subjects = $batch->subjects->pluck('id')->all();
 
         $date = ($date) ? : date('Y-m-d');
         $days = Carbon::parse($date)->daysInMonth;
+
+        $this->validateAttendance($subjects, $params);
 
         $start_date = date('Y-m', strtotime($date)).'-01';
         $end_date = date('Y-m', strtotime($date)).'-'.$days;
 
         $class_teachers = $this->getClassTeachers($batch_id);
 
-        $attendances = $this->student_attendance->filterbyBatchId($batch_id)->dateOfAttendanceBetween([
-            'start_date' => $start_date,
-            'end_date' => $end_date
-        ])->get();
+        $params['start_date'] = $start_date;
+        $params['end_date'] = $end_date;
+        $attendances = $this->getAttendances($params);
 
-        return compact('student_records', 'batch', 'attendances','course','class_teachers');
+        $attendance = $this->student_attendance->whereBatchId($batch_id)->whereDateOfAttendance($date)->whereSubjectId(gv($params, 'subject_id'))->whereSession(gv($params, 'session'))->first();
+
+        return compact('student_records', 'batch', 'attendances','course','class_teachers','attendance');
+    }
+
+    /**
+     * Get attendances
+     * @param  array  $params
+     * @return Array
+     */
+    private function getAttendances($params = array())
+    {
+        $query = $this->student_attendance->filterbyBatchId(gv($params, 'batch_id'))->dateOfAttendanceBetween([
+            'start_date' => gv($params, 'start_date'),
+            'end_date' => gv($params, 'end_date')
+        ]);
+
+        $attendance_method = gv($params, 'attendance_method', 'once');
+
+        if ($attendance_method == 'once') {
+            $query->whereNull('subject_id')->whereNull('session');
+        } else if ($attendance_method == 'more_than_once') {
+            $query->whereNull('subject_id')->whereSession(gv($params, 'session'));
+        } else if ($attendance_method == 'subject_wise') {
+            $query->whereSubjectId(gv($params, 'subject_id'))->whereNull('session');
+        }
+
+        return $query->get();
+    }
+
+    /**
+     * Validate attendance
+     * @param  array $subjects
+     * @param  array $params
+     * @return void
+     */
+    private function validateAttendance($subjects, $params = array())
+    {
+        $attendance_method = gv($params, 'attendance_method', 'once');
+        $batch_id = gv($params, 'batch_id');
+        $date = gv($params, 'date_of_attendance', date('Y-m-d'));
+
+        if (! in_array($attendance_method, ['once', 'more_than_once', 'subject_wise'])) {
+            throw ValidationException::withMessages(['message' => trans('validation.exists', ['attribute' => trans('student.attendance_method')])]);
+        }
+
+        $subject_id = gv($params, 'subject_id');
+        $session = gv($params, 'session');
+
+        if ($attendance_method == 'subject_wise' && ! in_array($subject_id, $subjects)) {
+            throw ValidationException::withMessages(['message' => trans('academic.could_not_find_subject')]);
+        }
+
+        if ($attendance_method == 'more_than_once' && ! in_array($session, [1,2,3,4,5])) {
+            throw ValidationException::withMessages(['message' => trans('validation.exists', ['attribute' => trans('student.attendance_session')])]);
+        }
+
+        $attendance = $this->student_attendance->filterByBatchId($batch_id)->filterByDateOfAttendance($date, 1)->first();
+
+        if (! $attendance) {
+            return;
+        }
+
+        if ($attendance_method == 'once' && $attendance->subject_id) {
+            throw ValidationException::withMessages(['message' => trans('student.attendance_method_subject_wise_marked')]);
+        }
+
+        if ($attendance_method == 'once' && $attendance->session) {
+            throw ValidationException::withMessages(['message' => trans('student.attendance_method_more_than_once_marked')]);
+        }
+
+        if ($attendance_method == 'subject_wise' && $attendance->session) {
+            throw ValidationException::withMessages(['message' => trans('student.attendance_method_more_than_once_marked')]);
+        }
+
+        if ($attendance_method == 'subject_wise' && ! $attendance->subject_id) {
+            throw ValidationException::withMessages(['message' => trans('student.attendance_method_once_marked')]);
+        }
+
+        if ($attendance_method == 'more_than_once' && $attendance->subject_id) {
+            throw ValidationException::withMessages(['message' => trans('student.attendance_method_subject_wise_marked')]);
+        }
+
+        if ($attendance_method == 'more_than_once' && ! $attendance->session) {
+            throw ValidationException::withMessages(['message' => trans('student.attendance_method_once_marked')]);
+        }
     }
 
     /**
@@ -130,7 +226,18 @@ class AttendanceRepository
     public function store($params = array())
     {
         $batch_id = gv($params, 'batch_id');
-        $date_of_attendance = gv($params, 'date_of_attendance');
+        $date_of_attendance = gv($params, 'date_of_attendance', date('Y-m-d'));
+        $attendance_method = gv($params, 'attendance_method', 'once');
+        $is_default = gbv($params, 'is_default');
+
+        if (! $batch_id) {
+            throw ValidationException::withMessages(['message' => trans('academic.could_not_find_batch')]);
+        }
+
+        $batch = $this->batch->findOrFail($batch_id);
+        $subjects = $batch->subjects->pluck('id')->all();
+
+        $this->validateAttendance($subjects, $params);
 
         $class_teachers = $this->getClassTeachers($batch_id);
 
@@ -151,10 +258,7 @@ class AttendanceRepository
         })->get();
 
         $subject_id = gv($params, 'subject_id');
-
-        if ($subject_id) {
-            $subject = $this->subject->findOrFail($subject_id);
-        }
+        $session = gv($params, 'session');
 
         if (! config('config.allow_to_modify_student_attendance') && $date_of_attendance < date('Y-m-d')) {
             throw ValidationException::withMessages(['message' => trans('student.cannot_modify_attendance_of_previous_dates')]);
@@ -195,18 +299,93 @@ class AttendanceRepository
             if (($status == 'absent' || $status == 'unmarked') && $status != 'unavailable') {
                 $attendances[] = array('id' => $id);
             }
+
+            if ($attendance_method != 'once' && $status == 'half_day') {
+                throw ValidationException::withMessages(['message' => trans('student.half_day_supported_only_attendance_method_once')]);
+            }
         }
 
         $attendance['data'] = $attendances;
+        
+        $attendances = array();
+        foreach ($students as $student) {
+            $id     = gv($student, 'id');
+            $status = gv($student, 'attendance');
+
+            if ($status == 'late') {
+                $attendances[] = array('id' => $id);
+            }
+        }
+
+        $attendance['late'] = $attendances;
+
+        $attendances = array();
+        foreach ($students as $student) {
+            $id     = gv($student, 'id');
+            $status = gv($student, 'attendance');
+
+            if ($status == 'half_day') {
+                $attendances[] = array('id' => $id);
+            }
+        }
+
+        $attendance['half_day'] = $attendances;
 
         $student_attendance = $this->student_attendance->firstOrCreate([
             'date_of_attendance' => $date_of_attendance,
             'batch_id' => $batch_id,
-            'subject_id' => $subject_id
+            'subject_id' => $attendance_method == 'subject_wise' ? $subject_id : null,
+            'session' => $attendance_method == 'more_than_once' ? $session : null
         ]);
 
         $student_attendance->attendance = $attendance;
         $student_attendance->save();
+
+        $this->makeDefault($student_attendance, $params);
+    }
+
+    /**
+     * Make attendance default for day
+     * @param  StudentAttendance $student_attendance
+     * @param  array $params             
+     * @return void
+     */
+    private function makeDefault($student_attendance, $params = array())
+    {
+        $date_of_attendance = gv($params, 'date_of_attendance');
+        $batch_id = gv($params, 'batch_id');
+
+        if (gbv($params, 'is_default')) {
+            $this->student_attendance->whereDateOfAttendance($date_of_attendance)->whereBatchId($batch_id)->update(['is_default' => 0]);
+            $student_attendance->is_default = 1;
+            $student_attendance->save();
+            return;
+        }
+        
+        $attendance_count = $this->student_attendance->whereDateOfAttendance($date_of_attendance)->whereBatchId($batch_id)->count();
+
+        if ($attendance_count === 1) {
+            $student_attendance->is_default = 1;
+            $student_attendance->save();
+        }
+    }
+
+    public function default($params = array())
+    {
+        $batch_id = gv($params, 'batch_id');
+        $date_of_attendance = gv($params, 'date_of_attendance');
+        $subject_id = gv($params, 'subject_id');
+        $session = gv($params, 'session');
+
+        $student_attendance = $this->student_attendance->whereBatchId($batch_id)->whereDateOfAttendance($date_of_attendance)->whereSubjectId($subject_id)->whereSession($session)->first();
+
+        if (! $student_attendance) {
+            throw ValidationException::withMessages(['message' => trans('general.invalid_action')]);
+        }
+
+        $params['is_default'] = 1;
+
+        $this->makeDefault($student_attendance, $params);
     }
 
     /**
@@ -217,8 +396,12 @@ class AttendanceRepository
     public function getAbsenteeFilters()
     {
         $batches = $this->course_group->getBatchOption();
+        $batch_with_subjects = $this->batch->getAllBatchWithSubjects();
+        $attendance_methods = getStudentAttendanceMethods();
 
-        return compact('batches');
+        $attendance_method_more_than_once_types = getStudentAttendanceMoreThanOnceTypes();
+
+        return compact('batches','batch_with_subjects','attendance_methods','attendance_method_more_than_once_types');
     }
 
     /**
@@ -228,23 +411,32 @@ class AttendanceRepository
      */
     public function getAbsenteeData($params = array())
     {
-        $date        = gv($params, 'date', date('Y-m-d'));
-        $batch_id    = gv($params, 'batch_id');
-        $first_name  = gv($params, 'first_name');
-        $last_name   = gv($params, 'last_name');
-        $father_name = gv($params, 'father_name');
-        $mother_name = gv($params, 'mother_name');
+        $date              = gv($params, 'date', date('Y-m-d'));
+        $batch_id          = gv($params, 'batch_id');
+        $first_name        = gv($params, 'first_name');
+        $last_name         = gv($params, 'last_name');
+        $father_name       = gv($params, 'father_name');
+        $mother_name       = gv($params, 'mother_name');
+        $subject_id        = gv($params, 'subject_id');
+        $attendance_method = gv($params, 'attendance_method');
+        $session           = gv($params, 'session');
 
-        $batch_id = is_array($batch_id) ? $batch_id : ($batch_id ? explode(',', $batch_id) : $this->batch->listId());
-
-        $student_attendances = $this->student_attendance->filterByDateOfAttendance($date)->whereIn('batch_id', $batch_id)->get();
+        $student_attendances = $this->student_attendance->filterByDateOfAttendance($date)
+                ->when($subject_id, function ($query, $subject_id) {
+                    return $query->where('subject_id', $subject_id);
+                })->when($session, function ($query, $session) {
+                    return $query->where('session', $session);
+                })->when($batch_id, function ($query, $batch_id) {
+                    return $query->where('batch_id', $batch_id);
+                })->get();
 
         $student_record_ids = array();
 
         foreach ($student_attendances as $student_attendance) {
-            foreach ($student_attendance->attendance as $attendances) {
+            $data = $student_attendance->attendance ? $student_attendance->attendance['data'] : [];
+            foreach ($data as $attendances) {
                 foreach ($attendances as $attendance) {
-                    $student_record_ids[] = array_get($attendance, 'id');
+                    $student_record_ids[] = $attendance;
                 }
             }
         }
@@ -348,6 +540,7 @@ class AttendanceRepository
         }
 
         $subject_id = gv($params, 'subject_id');
+        $session = gv($params, 'session');
 
         if ($subject_id) {
             $subject = $this->subject->findOrFail($subject_id);
@@ -369,7 +562,7 @@ class AttendanceRepository
             throw ValidationException::withMessages(['message' => trans('student.can_mark_advance_attendance_of_days', ['day' => config('config.days_allowed_to_mark_student_advance_attendance')] )]);
         }
 
-        $student_attendance = $this->student_attendance->filterByBatchId($batch_id)->filterBySubjectId($subject_id)->filterByDateOfAttendance($date_of_attendance)->first();
+        $student_attendance = $this->student_attendance->whereBatchId($batch_id)->whereSubjectId($subject_id)->whereDateOfAttendance($date_of_attendance)->whereSession($session)->first();
 
         if (! $student_attendance) {
             throw ValidationException::withMessages(['message' => trans('student.could_not_find_attendance')]);

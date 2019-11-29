@@ -162,7 +162,7 @@ class SyllabusRepository
             $student_batch_ids = $this->student->getAuthParentStudentsBatch();
 
             if ($student_batch_ids) {
-                $batch_id = array_unique(array_merge($batch_id, $student_batch_ids));
+                $batch_id = array_diff($student_batch_ids, $batch_id);
             }
         }
 
@@ -170,11 +170,11 @@ class SyllabusRepository
             $student_batch_id = $this->student->getAuthStudentBatch();
 
             if ($student_batch_id) {
-                array_push($batch_id, $student_batch_id);
-                $batch_id = array_unique($batch_id);
+                $batch_id = [$student_batch_id];
             }
         }
 
+        $batch_id = array_unique($batch_id);
         if (count($batch_id)) {
             $query->whereHas('subject',function($q) use($batch_id){
                 $q->whereIn('batch_id', $batch_id);
@@ -307,7 +307,7 @@ class SyllabusRepository
                 throw ValidationException::withMessages([$index.'_topic_description' => trans('validation.required', ['attribute' => trans('resource.syllabus_topic_description')])]);
             }
 
-            if ($start_date && $end_date && $end_date < $start_date) {
+            if ($start_date && $end_date && toDate($end_date) < toDate($start_date)) {
                 throw ValidationException::withMessages(['message' => trans('resource.syllabus_topic_start_date_greater_than_end_date')]);
             }
 
@@ -434,8 +434,8 @@ class SyllabusRepository
 
             $titles[] = $title;
             $syllabus_topic->syllabus_id = $syllabus->id;
-            $syllabus_topic->start_date = gv($topic, 'start_date');
-            $syllabus_topic->end_date = gv($topic, 'end_date');
+            $syllabus_topic->start_date = toDate(gv($topic, 'start_date'));
+            $syllabus_topic->end_date = toDate(gv($topic, 'end_date'));
             $syllabus_topic->description = gv($topic, 'description');
             $syllabus_topic->save();
         }

@@ -146,6 +146,7 @@
                     description: '',
                     records: []
                 }),
+                all_batches: [],
                 batches: [],
                 selected_batch: null,
                 exams: [],
@@ -184,7 +185,7 @@
                 let loader = this.$loading.show();
                 axios.get('/api/exam/schedule/pre-requisite')
                     .then(response => {
-                        this.batches = response.batches;
+                        this.all_batches = response.batches;
                         this.exams = response.exams;
                         this.exam_grades = response.exam_grades;
                         this.exam_assessments = response.exam_assessments;
@@ -258,11 +259,18 @@
                 let loader = this.$loading.show();
                 axios.get('/api/exam/schedule/'+this.id)
                     .then(response => {
+                        this.selected_exam = response.selected_exam;
+                        response = response.exam_schedule;
+
+                        if (this.selected_exam && this.selected_exam.course_group_id)
+                            this.batches = this.all_batches.filter(o => o.course_group === this.selected_exam.course_group_name);
+                        else
+                            this.batches = this.all_batches;
+
                         this.scheduleForm.batch_id = response.batch_id;
                         this.selected_batch = this.scheduleForm.batch_id ? {id: response.batch_id, name: response.batch.course.name+' '+response.batch.name} : null;
 
                         this.scheduleForm.exam_id = response.exam_id;
-                        this.selected_exam = this.scheduleForm.exam_id ? {id: response.exam_id, name: response.exam.name} : null;
 
                         this.scheduleForm.exam_grade_id = response.exam_grade_id;
                         this.selected_exam_grade = this.scheduleForm.exam_grade_id ? {id: response.exam_grade_id, name: response.grade.name} : null;
@@ -321,7 +329,7 @@
                     .catch(error => {
                         loader.hide();
                         helper.showErrorMsg(error);
-                        this.$router.push('/exam/schedule');
+                        // this.$router.push('/exam/schedule');
                     });
             },
             update(){
@@ -341,6 +349,13 @@
                 this.scheduleForm.batch_id = selectedOption.id;
             },
             onExamSelect(selectedOption){
+                this.scheduleForm.batch_id = '';
+                this.selected_batch = null;
+                this.scheduleForm.records = [];
+                if (selectedOption.course_group_id)
+                    this.batches = this.all_batches.filter(o => o.course_group === selectedOption.course_group_name);
+                else
+                    this.batches = this.all_batches;
                 this.scheduleForm.exam_id = selectedOption.id;
             },
             onExamGradeSelect(selectedOption){

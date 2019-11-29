@@ -20,5 +20,28 @@
 				"remarks"
 			]
 		}
+	],
+	"custom_field_forms": [
+		"student_basic",
+		"employee_basic",
+		"student_parent",
+		"student_contact",
+		"employee_contact",
+		"student_registration",
+		"student_online_registration"
+	],
+	"student_attendance_methods": [
+		"once",
+		"more_than_once",
+		"subject_wise"
+	],
+	"online_exam_types": [
+		"mcq",
+		"mixed"
+	],
+	"online_exam_question_types": [
+		"mcq",
+		"single_line",
+		"multiple_line"
 	]
 }

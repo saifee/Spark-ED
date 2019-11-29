@@ -121,7 +121,9 @@ class CertificateTemplateRepository
             'MOTHER_NAME',
             'CURRENT_DATE',
             'CURRENT_TIME',
-            'CURRENT_DATE_TIME'
+            'CURRENT_DATE_TIME',
+            'PRESENT_ADDRESS',
+            'PERMANENT_ADDRESS'
         ];
     }
 
@@ -140,7 +142,9 @@ class CertificateTemplateRepository
             'EMPLOYEE_CODE',
             'CURRENT_DATE',
             'CURRENT_TIME',
-            'CURRENT_DATE_TIME'
+            'CURRENT_DATE_TIME',
+            'PRESENT_ADDRESS',
+            'PERMANENT_ADDRESS'
         ];
     }
 
@@ -246,7 +250,7 @@ class CertificateTemplateRepository
         $formatted = [
 			'name' => gv($params, 'name'),
 			'type' => gv($params, 'type'),
-            'body' => gv($params, 'body')
+            'body' => clean(gv($params, 'body'))
         ];
         
         $formatted['options'] = ['custom_fields' => $custom_field_values];

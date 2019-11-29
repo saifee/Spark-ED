@@ -64,6 +64,11 @@ class StudentParent extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function getOption(string $option)
+    {
+        return array_get($this->options, $option);
+    }
     
     public function scopeFilterById($q, $id)
     {

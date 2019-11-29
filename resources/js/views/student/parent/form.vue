@@ -156,6 +156,8 @@
 	            	<upload-image id="mother_photo" :upload-path="`/student/mother/photo/${student.uuid}`" :remove-path="`/student/mother/photo/remove/${student.uuid}`" :image-source="mother_photo" @uploaded="updateMother" @removed="updateMother"></upload-image>
 	            </div>
 	        </div>
+
+	        <custom-field :fields="custom_fields" :customValues="custom_values" :clear="clearCustomField" :formErrors="customFieldFormErrors" @updateCustomValues="updateCustomValues"></custom-field>
             <div class="card-footer text-right">
         		<button type="submit" class="btn btn-info waves-effect waves-light">{{trans('general.save')}}</button>
             </div>
@@ -188,7 +190,8 @@
 		          	mother_contact_number_2: null,
 		          	father_unique_identification_number: null,
 		          	mother_unique_identification_number: null,
-					type: 'parent'
+					type: 'parent',
+                    custom_values: []
 				},false),
 				father_photo: '',
 				mother_photo: '',
@@ -196,7 +199,11 @@
 				editParentForm: new Form({
 					student_parent_id: ''
 				}),
-                selected_student_parent: null
+                selected_student_parent: null,
+                custom_fields: [],
+                custom_values: [],
+                clearCustomField: false,
+                customFieldFormErrors: {}
 			}
 		},
 		mounted(){
@@ -205,19 +212,22 @@
                 this.$router.push('/dashboard');
             }
 
-            this.get(this.student);
-
             this.getParents();
 		},
 		methods: {
+            updateCustomValues(value) {
+                this.parentForm.custom_values = value;
+            },
             onStudentParentSelect(selectedOption){
                 this.editParentForm.student_parent_id = selectedOption.id;
             },
 			getParents(){
 				let loader = this.$loading.show();
-				axios.get('/api/student/pre-requisite')
+				axios.get('/api/student/pre-requisite?form_type=student_parent')
 					.then(response => {
+						this.custom_fields = response.custom_fields;
 						this.student_parents = response.student_parents;
+						this.get(this.student);
 						loader.hide();
 					})
 					.catch(error => {
@@ -248,6 +258,7 @@
 		          	this.parentForm.mother_unique_identification_number = parent.mother_unique_identification_number;
 		          	this.father_photo = parent.father_photo;
 		          	this.mother_photo = parent.mother_photo;
+		          	this.custom_values = parent.options.hasOwnProperty('custom_values') ? parent.options.custom_values : [];
 				}
 	          },
 			submit(){
@@ -262,6 +273,7 @@
 					})
 					.catch(error => {
 						loader.hide();
+						this.customFieldFormErrors = error;
 						helper.showErrorMsg(error);
 					})
 			},

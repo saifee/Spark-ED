@@ -176,6 +176,8 @@
                     </div>
                 </div>
             </div>
+            <custom-field :fields="custom_fields" :customValues="custom_values" :clear="clearCustomField" :formErrors="customFieldFormErrors" @updateCustomValues="updateCustomValues"></custom-field>
+
             <div class="card-footer text-right">
                 <button type="button" class="btn btn-danger waves-effect waves-light " @click="$emit('cancel')">{{trans('general.cancel')}}</button>
                 <button type="submit" class="btn btn-info waves-effect waves-light">{{trans('general.save')}}</button>
@@ -213,7 +215,8 @@
                 	contact_number: '',
                     date_of_registration: '',
                     registration_remarks: '',
-                    previous_institute_id: ''
+                    previous_institute_id: '',
+                    custom_values: [],
                 }),
                 courses: [],
                 course_details: [],
@@ -226,7 +229,11 @@
                 registration_fee: 0,
                 enable_registration_fee: 0,
                 selected_parent: {},
-                selected_student: {}
+                selected_student: {},
+                custom_fields: [],
+                custom_values: [],
+                clearCustomField: false,
+                customFieldFormErrors: {}
             };
         },
         mounted() {
@@ -244,12 +251,16 @@
                         this.genders = response.genders;
                         this.course_details = response.course_details;
                         this.previous_institutes = response.previous_institutes;
+                        this.custom_fields = response.custom_fields;
                         loader.hide();
                     })
                     .catch(error => {
                         loader.hide();
                         helper.showErrorMsg(error);
                     })
+            },
+            updateCustomValues(value) {
+                this.registrationForm.custom_values = value;
             },
             submit(){
                 let loader = this.$loading.show();
@@ -263,10 +274,13 @@
                         this.selected_parent = {};
                         this.selected_previous_institute = null;
                         this.registrationForm.parent_type = 'new';
+                        this.registrationForm.student_type = 'new';
+                        this.clearCustomField = true;
                         loader.hide();
                     })
                     .catch(error => {
                         loader.hide();
+                        this.customFieldFormErrors = error;
                         helper.showErrorMsg(error);
                     });
             },

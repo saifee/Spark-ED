@@ -20,6 +20,7 @@
                             <div :class="['dropdown-menu',getConfig('direction') == 'ltr' ? 'dropdown-menu-right' : '']" aria-labelledby="moreOption">
                                 <button class="dropdown-item custom-dropdown" @click="print"><i class="fas fa-print"></i> {{trans('general.print')}}</button>
                                 <button class="dropdown-item custom-dropdown" @click="pdf"><i class="fas fa-file-pdf"></i> {{trans('general.generate_pdf')}}</button>
+                                <a class="dropdown-item custom-dropdown" :href="exportExcel()"><i class="fas fa-file-excel"></i> {{trans('general.generate_excel')}}</a>
                             </div>
                         </div>
                         <help-button @clicked="help_topic = 'employee'"></help-button>
@@ -375,6 +376,10 @@
                         loader.hide();
                         helper.showErrorMsg(error);
                     });
+            },
+            exportExcel(){
+                let url = helper.getFilterURL(this.filter);
+                return '/api/employee?action=excel' + url + '&token=' + this.authToken;
             },
             onDepartmentSelect(selectedOption){
                 this.filter.department_id.push(selectedOption.id);

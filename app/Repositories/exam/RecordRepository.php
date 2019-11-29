@@ -108,6 +108,12 @@ class RecordRepository
         $exam = $this->exam->findOrFail($exam_id);
         $batch = $this->batch->findOrFail($batch_id);
 
+        $course_group_id = $exam->exam_term_id ? $exam->term->course_group_id : null;
+
+        if ($course_group_id && $batch->course->course_group_id != $course_group_id) {
+            throw ValidationException::withMessages(['message' => trans('academic.could_not_find_batch')]);
+        }
+
         if (! in_array($subject_id, $batch->Subjects->pluck('id')->all())) {
             throw ValidationException::withMessages(['message' => trans('academic.could_not_find_subject')]);
         }
@@ -170,6 +176,12 @@ class RecordRepository
 
         $exam = $this->exam->findOrFail($exam_id);
         $batch = $this->batch->findOrFail($batch_id);
+        
+        $course_group_id = $exam->exam_term_id ? $exam->term->course_group_id : null;
+
+        if ($course_group_id && $batch->course->course_group_id != $course_group_id) {
+            throw ValidationException::withMessages(['message' => trans('academic.could_not_find_batch')]);
+        }
 
         $exam_schedule = $this->exam_schedule->filterByExamId($exam_id)->filterByBatchId($batch_id)->first();
 

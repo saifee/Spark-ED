@@ -374,7 +374,7 @@ class EventRepository
             'end_date'      => $end_date,
             'start_time'    => (! $no_time) ? toTime($start_time) : null,
             'end_time'      => (! $no_time) ? toTime($end_time) : null,
-            'description'   => stripInlineStyle($description),
+            'description'   => clean($description),
             'audience'      => $audience,
             'options'       => []
         ];

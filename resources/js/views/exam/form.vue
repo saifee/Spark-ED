@@ -105,7 +105,7 @@
                     .then(response => {
                         this.examForm.name = response.name;
                         this.examForm.exam_term_id = response.exam_term_id;
-                        this.selected_exam_term = response.exam_term_id ? {id:response.exam_term_id, name:response.term.name} : null;
+                        this.selected_exam_term = response.exam_term_id ? {id:response.exam_term_id, name:response.term.name+' ('+response.term.course_group.name+')'} : null;
                         this.examForm.description = response.description;
                         loader.hide();
                     })

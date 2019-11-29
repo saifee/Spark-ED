@@ -64,7 +64,7 @@
                                     <datepicker v-model="filter.date" :bootstrapStyling="true" :placeholder="trans('student.date_of_attendance')"></datepicker>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-4">
+                            <div class="col-12 col-sm-3">
                                 <div class="form-group">
                                     <label for="">{{trans('academic.batch')}}</label>
                                     <v-select label="name" track-by="id" group-values="batches" group-label="course_group" :group-select="false" v-model="selected_batch" name="batch_id" id="batch_id" :options="batches" :placeholder="trans('academic.select_batch')" @select="onBatchSelect" @remove="filter.batch_id = ''">
@@ -74,6 +74,39 @@
                                     </v-select>
                                 </div>
                             </div>
+                            <div class="col-12 col-sm-3" v-if="filter.batch_id">
+                                <div class="form-group">
+                                    <label for="">{{trans('academic.subject')}} </label>
+                                    <select v-model="filter.subject_id" class="custom-select col-12" name="subject_id">
+                                      <option value="" selected>{{trans('general.select_one')}}</option>
+                                      <option v-for="option in subjects" v-bind:value="option.id">
+                                        {{ option.name }}
+                                      </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-3">
+                                <div class="form-group">
+                                    <label for="">{{trans('student.attendance_session')}}</label>
+                                    <select v-model="filter.session" class="custom-select col-12" name="session">
+                                      <option value="" selected>{{trans('general.select_one')}}</option>
+                                      <option v-for="option in attendance_method_more_than_once_types" v-bind:value="option.value">
+                                        {{ option.text }}
+                                      </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- <div class="col-12 col-sm-3">
+                                <div class="form-group">
+                                    <label for="">{{trans('student.attendance_method')}}</label>
+                                    <select v-model="filter.attendance_method" class="custom-select col-12" name="attendance_method">
+                                      <option value="" selected>{{trans('general.select_one')}}</option>
+                                      <option v-for="option in attendance_methods" v-bind:value="option.value">
+                                        {{ option.text }}
+                                      </option>
+                                    </select>
+                                </div>
+                            </div> -->
                         </div>
                         <div class="card-footer text-right">
                             <button type="button" @click="showFilterPanel = false" class="btn btn-danger">{{trans('general.cancel')}}</button>
@@ -175,6 +208,9 @@
                     order: 'asc',
                     date: moment().format('YYYY-MM-DD'),
                     batch_id: '',
+                    subject_id: '',
+                    attendance_method: '',
+                    session: '',
                     first_name: '',
                     last_name: '',
                     father_name: '',
@@ -188,6 +224,10 @@
                     }
                 ],
                 batches: [],
+                subjects: [],
+                batch_with_subjects: [],
+                attendance_methods: [],
+                attendance_method_more_than_once_types: [],
                 selected_batch: null,
                 showFilterPanel: true
             };
@@ -219,6 +259,9 @@
                 axios.get('/api/student/attendance/absentee?page=' + page + url)
                     .then(response => {
                         this.batches = response.filters.batches;
+                        this.attendance_method_more_than_once_types = response.filters.attendance_method_more_than_once_types;
+                        this.attendance_methods = response.filters.attendance_methods;
+                        this.batch_with_subjects = response.filters.batch_with_subjects;
                         this.student_records = response.student_records;
                         let ids = [];
                         this.student_records.data.forEach(student_record => {
@@ -277,6 +320,21 @@
             },
             onBatchSelect(selectedOption){
                 this.filter.batch_id = selectedOption.id;
+                let batch = this.batch_with_subjects.find(o => o.id == this.filter.batch_id);
+
+                if (typeof batch == 'undefined') {
+                    return;
+                }
+
+                this.filter.subject_id = '';
+                this.subjects = [];
+
+                batch.subjects.forEach(subject => {
+                    this.subjects.push({
+                        id: subject.id,
+                        name: subject.name+' ('+subject.code+')'
+                    });
+                });
             },
             onBatchRemove(removedOption){
                 this.filter.batch_id.splice(this.filter.batch_id.indexOf(removedOption.id), 1);

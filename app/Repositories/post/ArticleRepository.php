@@ -268,7 +268,7 @@ class ArticleRepository
             'article_type_id' => $article_type_id,
             'title'           => $title,
             'date_of_article' => $date_of_article,
-            'description'     => stripInlineStyle($description),
+            'description'     => clean($description),
             'is_public'       => $is_public,
             'options'         => []
         ];

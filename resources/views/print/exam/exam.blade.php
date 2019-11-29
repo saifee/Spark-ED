@@ -13,7 +13,13 @@
         	@foreach($exams as $exam)
         		<tr>
                     <td valign="top">{{$exam->name}}</td>
-        			<td valign="top">{{$exam->term->name}}</td>
+        			<td valign="top">
+                        @if($exam->exam_term_id)
+                            {{$exam->term->name}} ({{$exam->term->courseGroup->name}})
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td valign="top">{{$exam->description}}</td>
         		</tr>
         	@endforeach

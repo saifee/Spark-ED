@@ -318,7 +318,9 @@
             		.replace("#ROLL_NUMBER#", helper.getRollNumber(student_record))
             		.replace("#CURRENT_DATE#", helper.defaultDate())
             		.replace("#CURRENT_TIME#", helper.defaultTime())
-            		.replace("#CURRENT_DATE_TIME#", helper.defaultDateTime());
+            		.replace("#CURRENT_DATE_TIME#", helper.defaultDateTime())
+            		.replace("#PRESENT_ADDRESS#", student.present_address)
+            		.replace("#PERMANENT_ADDRESS#", student.permanent_address);
 
 			},
 			updateEmployeeRecord(body) {
@@ -336,6 +338,8 @@
             		.replace("#CURRENT_DATE#", helper.defaultDate())
             		.replace("#CURRENT_TIME#", helper.defaultTime())
             		.replace("#CURRENT_DATE_TIME#", helper.defaultDateTime())
+            		.replace("#PRESENT_ADDRESS#", student.present_address)
+            		.replace("#PERMANENT_ADDRESS#", student.permanent_address);
 			},
 			updateCustomFields(body) {
 				this.certificateForm.custom_fields.forEach(custom_field => {

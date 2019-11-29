@@ -245,7 +245,9 @@ class BatchRepository
         $exam_grades = $this->exam_grade->filterBySession()->get(['name','id']);
         $exam_observations = $this->exam_observation->filterBySession()->get(['name','id']);
 
-        return compact('courses','exam_grades','exam_observations');
+        $attendance_methods = getStudentAttendanceMethods();
+
+        return compact('courses','exam_grades','exam_observations','attendance_methods');
     }
 
     /**
@@ -313,6 +315,7 @@ class BatchRepository
 
         $options['max_strength']       = gv($params, 'max_strength', config('config.default_max_strength_per_batch'));
         $options['roll_number_prefix'] = gv($params, 'roll_number_prefix', config('config.default_roll_number_prefix'));
+        $options['default_attendance_method'] = gv($params, 'default_attendance_method');
         $options['roll_number_digit']  = gv($params, 'roll_number_digit', 0);
 
         $formatted = [

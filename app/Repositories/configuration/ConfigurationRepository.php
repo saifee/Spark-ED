@@ -110,6 +110,7 @@ class ConfigurationRepository
         $config['post_max_size']    = getPostMaxSize();
         $config['show_footer_credit'] = gbv($config_variables, "show_footer_credit");
         $config['pb'] = gbv($config_variables, "pb");
+        $config['menu'] = explode(',', array_key_exists('menu', $config) ? $config['menu'] : '');
 
         $auth_user = auth()->user();
         $user_preference = $auth_user->userPreference;
@@ -122,7 +123,6 @@ class ConfigurationRepository
         }
 
         $config['authenticated'] = true;
-        $config['made'] = env('MADE', null);
         return $config;
     }
 
@@ -167,6 +167,11 @@ class ConfigurationRepository
     {
         $config_type = gv($params, 'config_type');
 
+        if ($config_type === 'menu') {
+            $this->updateMenu($params);
+            return;
+        }
+
         $this->testModeOperation($params);
 
         $this->smsConfiguration($params);
@@ -203,6 +208,40 @@ class ConfigurationRepository
         if ($config_type == 'system') {
             $this->checkSymlink();
         }
+    }
+
+    private function updateMenu($params = array())
+    {
+        $modules = gv($params, 'modules', []);
+
+        $data = array();
+        foreach ($modules as $module) {
+            $menu = gv($module, 'menu');
+            if (gbv($menu, 'visibility'))
+                array_push($data, gv($menu, 'name'));
+
+            $submenu = gv($menu, 'submenu', []);
+
+            foreach ($submenu as $sbmenu) {
+                if (gbv($sbmenu, 'visibility'))
+                    array_push($data, gv($sbmenu, 'name'));
+            }
+        }
+
+        $config = $this->firstOrCreate('menu');
+        $config->text_value = implode(',',$data);
+        $config->save();
+    }
+
+    public function getModules()
+    {
+        $modules = getVar('modules');
+
+        $menu = $this->config->whereName('menu')->first();
+
+        $menus = $menu ? explode(',',$menu->text_value) : [];
+
+        return compact('modules','menus');
     }
 
     /**

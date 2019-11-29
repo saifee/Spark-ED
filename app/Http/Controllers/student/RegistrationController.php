@@ -124,7 +124,10 @@ class RegistrationController extends Controller
 
         $this->authorize('show', Registration::class);
 
-        return $this->ok($registration);
+        $registration_custom_fields = $this->repo->getRegistrationCustomField();
+        $online_registration_custom_fields = $this->repo->getOnlineRegistrationCustomField();
+        
+        return $this->success(compact('registration','registration_custom_fields','online_registration_custom_fields'));
     }
 
     /**

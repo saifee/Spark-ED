@@ -30,13 +30,26 @@ class TermController extends Controller
     }
 
     /**
+     * Used to get pre requisites
+     * @get ("/api/exam/term/pre-requisite")
+     * @return Response
+     */
+    public function preRequisite()
+    {
+        return $this->ok($this->repo->getPreRequisite());
+    }
+
+    /**
      * Used to get all Exam Terms
      * @get ("/api/exam/term")
      * @return Response
      */
     public function index()
     {
-        return $this->ok($this->repo->paginate($this->request->all()));
+        $exam_terms = $this->repo->paginate($this->request->all());
+        $filters = $this->repo->getFilters();
+
+        return $this->success(compact('exam_terms','filters'));
     }
  
      /**

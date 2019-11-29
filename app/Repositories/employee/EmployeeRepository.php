@@ -1,21 +1,22 @@
 <?php
 namespace App\Repositories\Employee;
 
+use App\User;
+use Illuminate\Support\Str;
 use App\Models\Employee\Employee;
-use App\Models\Employee\EmployeeDesignation;
 use App\Models\Employee\EmployeeTerm;
-use App\Repositories\Configuration\Academic\IdCardTemplateRepository;
+use App\Models\Employee\EmployeeDesignation;
+use Illuminate\Validation\ValidationException;
+use App\Repositories\Configuration\RoleRepository;
+use App\Repositories\Configuration\Misc\CasteRepository;
+use App\Repositories\Configuration\CustomFieldRepository;
+use App\Repositories\Configuration\Misc\CategoryRepository;
+use App\Repositories\Configuration\Misc\ReligionRepository;
+use App\Repositories\Configuration\Misc\BloodGroupRepository;
 use App\Repositories\Configuration\Employee\DepartmentRepository;
 use App\Repositories\Configuration\Employee\DesignationRepository;
 use App\Repositories\Configuration\Employee\EmployeeGroupRepository;
-use App\Repositories\Configuration\Misc\BloodGroupRepository;
-use App\Repositories\Configuration\Misc\CasteRepository;
-use App\Repositories\Configuration\Misc\CategoryRepository;
-use App\Repositories\Configuration\Misc\ReligionRepository;
-use App\Repositories\Configuration\RoleRepository;
-use App\User;
-use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
+use App\Repositories\Configuration\Academic\IdCardTemplateRepository;
 
 class EmployeeRepository {
 	protected $employee;
@@ -31,6 +32,7 @@ class EmployeeRepository {
 	protected $employee_group;
 	protected $role;
 	protected $id_card_template;
+	protected $custom_field;
 
 	/**
 	 * Instantiate a new instance.
@@ -50,7 +52,8 @@ class EmployeeRepository {
 		User $user,
 		EmployeeGroupRepository $employee_group,
 		RoleRepository $role,
-		IdCardTemplateRepository $id_card_template
+		IdCardTemplateRepository $id_card_template,
+		CustomFieldRepository $custom_field
 	) {
 		$this->employee = $employee;
 		$this->designation = $designation;
@@ -65,6 +68,7 @@ class EmployeeRepository {
 		$this->employee_group = $employee_group;
 		$this->role = $role;
 		$this->id_card_template = $id_card_template;
+		$this->custom_field = $custom_field;
 	}
 
 	/**
@@ -291,8 +295,70 @@ class EmployeeRepository {
 	public function paginate($params) {
 		$page_length = gv($params, 'page_length', config('config.page_length'));
 
-		return $this->getData($params)->paginate($page_length);
+        $query = $this->getData($params);
+
+        if (request('action') == 'excel') {
+            return $this->exportExcel($query->get());
+        }
+
+        return $query->paginate($page_length);
 	}
+
+    /**
+     * Export employee data
+     * @param  array  $employees
+     * @return array
+     */
+    private function exportExcel($employees = array())
+    {
+        $data = array();
+        $data[] = array(
+                trans('employee.code'),
+                trans('employee.name'),
+                trans('employee.status'),
+                trans('employee.father_name'),
+                trans('employee.date_of_birth'),
+                trans('employee.contact_number'),
+                trans('employee.department'),
+                trans('employee.designation'),
+                trans('employee.date_of_joining')
+        );
+        foreach ($employees as $employee) {
+			$employee_term = $employee->EmployeeTerms->first();
+            if($employee_term && $employee_term->date_of_joining <= date('Y-m-d') && (! $employee_term->date_of_leaving || $employee->date_of_leaving >= date('Y-m-d'))) {
+                $status = trans('employee.status_active');
+            } else {
+                $status = trans('employee.status_inactive');
+            }
+            $employee_designation = $employee->EmployeeDesignations->first();
+            if($employee_designation && $employee_designation->department_id) {
+                $department = $employee_designation->Department->name;
+            } else {
+            	$department = '-';
+            }
+            if($employee_designation && $employee_designation->designation_id) {
+                $designation = $employee_designation->Designation->designation_with_category;
+            } else {
+            	$designation = '-';
+            }
+
+            $date_of_joining = ($employee_term) ? showDate($employee_term->date_of_joining) : '-';
+
+            $data[] = array(
+                $employee->employee_code,
+                $employee->name,
+                $status,
+                $employee->father_name,
+                showDate($employee->date_of_birth),
+                $employee->contact_number,
+                $department,
+                $designation,
+                $date_of_joining
+            );
+        }
+
+        return $data;
+    }
 
 	/**
 	 * Get all filtered data for printing
@@ -404,7 +470,11 @@ class EmployeeRepository {
 		$genders = generateTranslatedSelectOption(isset($list['gender']) ? $list['gender'] : []);
 		$marital_statuses = generateTranslatedSelectOption(isset($list['marital_status']) ? $list['marital_status'] : []);
 
-		return compact('castes', 'categories', 'religions', 'blood_groups', 'genders', 'marital_statuses');
+        $form_type = in_array(request('form_type'), ['employee_basic', 'employee_contact']) ? request('form_type') : 'employee_basic';
+
+        $custom_fields = $this->custom_field->listAllByForm($form_type);
+
+		return compact('castes', 'categories', 'religions', 'blood_groups', 'genders', 'marital_statuses','custom_fields');
 	}
 
 	/**
@@ -639,12 +709,27 @@ class EmployeeRepository {
 		$type = gv($params, 'type', 'basic');
 
 		if ($type == 'basic') {
-			return $employee->forceFill($this->updateBasic($employee, $params))->save();
+			$custom_values = $this->custom_field->validateCustomValues('employee_basic', gv($params, 'custom_values', []));
+
+			$employee->forceFill($this->updateBasic($employee, $params))->save();
+
+            $options = $employee->options;
+            $options['custom_values'] = mergeByKey($employee->getOption('custom_values'), $custom_values);
+            $employee->options = $options;
+            $employee->save();
+
 		} elseif ($type == 'contact') {
-			return $employee->forceFill($this->updateContact($employee, $params))->save();
-		} else {
-			return $employee;
+			$custom_values = $this->custom_field->validateCustomValues('employee_contact', gv($params, 'custom_values', []));
+
+			$employee->forceFill($this->updateContact($employee, $params))->save();
+
+            $options = $employee->options;
+            $options['custom_values'] = mergeByKey($employee->getOption('custom_values'), $custom_values);
+            $employee->options = $options;
+            $employee->save();
 		}
+		
+		return $employee;
 	}
 
 	/**

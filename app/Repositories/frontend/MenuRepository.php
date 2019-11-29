@@ -305,12 +305,14 @@ class MenuRepository
         foreach ($sub_menus as $index => $sub_menu) {
             $sub_menu_names[] = gv($sub_menu, 'name');
 
-            $this->menu->firstOrCreate([
+            $sub_menu = $this->menu->firstOrCreate([
                 'name'             => gv($sub_menu, 'name'),
-                'slug'             => createSlug(gv($sub_menu, 'name')),
                 'frontend_page_id' => gv($sub_menu, 'page_id'),
                 'parent_id'        => $menu->id
             ]);
+
+            $sub_menu->slug = createSlug(gv($sub_menu, 'name'));
+            $sub_menu->save();
         }
 
         $this->menu->whereParentId($menu->id)->whereNotIn('name', $sub_menu_names)->delete();

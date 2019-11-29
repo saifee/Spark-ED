@@ -24,7 +24,8 @@ class TermRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required'
+            'name' => 'required',
+            'course_group_id' => 'required'
         ];
     }
 
@@ -36,7 +37,8 @@ class TermRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => trans('exam.term_name')
+            'name' => trans('exam.term_name'),
+            'course_group_id' => trans('academic.course_group')
         ];
     }
 

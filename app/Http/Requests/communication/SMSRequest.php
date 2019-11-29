@@ -24,6 +24,7 @@ class SMSRequest extends FormRequest
     public function rules()
     {
         return [
+            'subject' => 'required',
             'sms' => 'required|max:320'
         ];
     }
@@ -36,6 +37,7 @@ class SMSRequest extends FormRequest
     public function attributes()
     {
         return [
+            'subject' => trans('communication.subject'),
             'sms' => trans('communication.sms')
         ];
     }

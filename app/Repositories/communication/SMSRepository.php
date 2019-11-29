@@ -5,7 +5,9 @@ use Carbon\Carbon;
 use App\Jobs\SendSMS;
 use App\Models\Employee\Employee;
 use App\Models\Student\StudentRecord;
+use App\Models\Communication\Communication;
 use Illuminate\Validation\ValidationException;
+use App\Repositories\Communication\CommunicationRepository;
 use App\Repositories\Configuration\Employee\DepartmentRepository;
 use App\Repositories\Configuration\Academic\CourseGroupRepository;
 use App\Repositories\Configuration\Employee\EmployeeCategoryRepository;
@@ -17,6 +19,7 @@ class SMSRepository
     protected $course_group;
     protected $student_record;
     protected $employee;
+    protected $communication;
 
     /**
      * Instantiate a new instance.
@@ -28,35 +31,15 @@ class SMSRepository
         DepartmentRepository $department,
         CourseGroupRepository $course_group,
         StudentRecord $student_record,
-        Employee $employee
+        Employee $employee,
+        CommunicationRepository $communication
     ) {
         $this->employee_category = $employee_category;
         $this->department = $department;
         $this->course_group = $course_group;
         $this->student_record = $student_record;
         $this->employee = $employee;
-    }
-
-    /**
-     * Get pre requisite
-     *
-     * @return Array
-     */
-    public function getPreRequisite()
-    {
-        $employee_categories = $this->employee_category->selectAllExludingDefault();
-        $departments = $this->department->selectAll();
-        $courses = $this->course_group->getCourseOption();
-        $batches = $this->course_group->getBatchOption();
-        $audiences = [
-            array('value' => 'everyone'                  , 'text' => trans('communication.sms_audience_everyone')),
-            array('value' => 'selected_course'           , 'text' => trans('communication.sms_audience_selected_course')),
-            array('value' => 'selected_batch'            , 'text' => trans('communication.sms_audience_selected_batch')),
-            array('value' => 'selected_department'       , 'text' => trans('communication.sms_audience_selected_department')),
-            array('value' => 'selected_employee_category', 'text' => trans('communication.sms_audience_selected_employee_category'))
-        ];
-
-        return compact('employee_categories','departments','courses','batches','audiences');
+        $this->communication = $communication;
     }
 
     /**
@@ -83,13 +66,17 @@ class SMSRepository
             $numbers[] = $include;
         } 
 
+        $numbers = array_filter($numbers);
         $numbers = array_diff($numbers, $excludes);
 
         if (! $numbers) {
             throw ValidationException::withMessages(['message' => trans('communication.could_not_find_any_audience')]);
         }
 
-        $numbers = array_filter($numbers);
+        $params['recipient_numbers'] = $numbers;
+        $params['included_numbers'] = $includes;
+        $params['excluded_numbers'] = $excludes;
+        $communication = $this->communication->create($params);
 
         $numbers = collect($numbers);
 

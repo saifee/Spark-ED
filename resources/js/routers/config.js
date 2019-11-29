@@ -75,6 +75,11 @@ export default [
         meta: { menu: 'configuration'}
     },
     {
+        path: '/configuration/menu',
+        component: () => import(/* webpackChunkName: "js/configuration/menu/index" */ '@views/configuration/menu/index'),
+        meta: { menu: 'configuration'}
+    },
+    {
         path: '/configuration/module',
         component: () => import(/* webpackChunkName: "js/configuration/module/index" */ '@views/configuration/module/index'),
         meta: { menu: 'module-configuration'}
@@ -527,6 +532,21 @@ export default [
     {
         path: '/configuration/reception/calling/purpose/:id/edit',
         component: () => import(/* webpackChunkName: "js/configuration/reception/callingPurpose/edit" */ '@views/configuration/reception/calling-purpose/edit'),
+        meta: { menu: 'module-configuration'}
+    },
+    {
+        path: '/configuration/custom-field',
+        component: () => import(/* webpackChunkName: "js/configuration/customField/index" */ '@views/configuration/custom-field/index'),
+        meta: { menu: 'module-configuration'}
+    },
+    {
+        path: '/configuration/custom-field',
+        component: () => import(/* webpackChunkName: "js/configuration/customField/index" */ '@views/configuration/custom-field/index'),
+        meta: { menu: 'module-configuration'}
+    },
+    {
+        path: '/configuration/custom-field/:id/edit',
+        component: () => import(/* webpackChunkName: "js/configuration/customField/edit" */ '@views/configuration/custom-field/edit'),
         meta: { menu: 'module-configuration'}
     }
 ]

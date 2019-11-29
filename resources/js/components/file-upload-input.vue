@@ -9,9 +9,11 @@
     <button type="button" class="btn btn-danger btn-sm m-t-10" @click="cancelUpload" v-tooltip="trans('upload.cancel_upload')" v-if="progress || isFileSelected"><i class="fas fa-times"></i></button>
 
     <ul class="upload-file-list m-t-20" v-if="uploaded_files">
-        <li v-for="uploaded_file in uploaded_files">
-            <i class="fas fa-file"></i> {{uploaded_file.user_filename}}
-            <span class="btn btn-danger btn-xs" :key="uploaded_file.id" v-confirm="{ok: confirmDelete(uploaded_file)}" v-tooltip="trans('general.delete_upload')"><i class="fas fa-trash"></i></span>
+        <li class="upload-file-list-item" v-for="uploaded_file in uploaded_files">
+            <span style="margin-right: 20px;" :key="uploaded_file.id" v-confirm="{ok: confirmDelete(uploaded_file)}" v-tooltip="trans('general.delete_upload')">
+                <i class="fas fa-times pointer text-danger"></i>
+            </span>
+            <i :class="['file-icon', 'fas', 'fa-lg', uploaded_file.file_info.icon]"></i> <span class="upload-file-list-item-size">{{uploaded_file.file_info.size}}</span> {{uploaded_file.user_filename}}
         </li>
     </ul>
   </div>
@@ -168,8 +170,4 @@
 </script>
 
 <style>
-    .upload-file-list{
-        list-style: none;
-        padding:0px;
-    }
 </style>

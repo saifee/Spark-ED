@@ -130,6 +130,23 @@ class ExpenseController extends Controller
     }
 
     /**
+     * Used to get Expense detail
+     * @get ("/finance/transaction/expense/{uuid}/print")
+     * @param ({
+     *      @Parameter("uuid", type="string", required="true", description="Unique Id of Expense"),
+     * })
+     * @return Response
+     */
+    public function printExpense($uuid)
+    {
+        $this->authorize('list', Expense::class);
+
+        $expense = $this->repo->findByUuidOrFail($uuid);
+
+        return view('print.finance.transaction.expense-receipt', compact('expense'));
+    }
+
+    /**
      * Used to update Expense
      * @patch ("/api/expense/{uuid}")
      * @param ({

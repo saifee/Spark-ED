@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Employee;
 
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\Employee\Employee;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Employee\EmployeeDetailRequest;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\Employee\ExportEmployees;
 use App\Http\Requests\Employee\EmployeeRequest;
 use App\Http\Requests\Employee\UserLoginRequest;
-use App\Models\Employee\Employee;
 use App\Repositories\Employee\EmployeeRepository;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use App\Http\Requests\Employee\EmployeeDetailRequest;
 
 class EmployeeController extends Controller {
 	protected $request;
@@ -59,6 +61,12 @@ class EmployeeController extends Controller {
 	 */
 	public function index() {
 		$this->authorize('list', Employee::class);
+
+        if (request('action') == 'excel') {
+            $employees = $this->repo->paginate($this->request->all());
+
+            return Excel::download(new ExportEmployees($employees), 'Employees.xlsx');
+        }
 
 		$employees = $this->repo->paginate($this->request->all());
 

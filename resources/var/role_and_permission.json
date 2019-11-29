@@ -16,7 +16,15 @@
 			"import-previous-session-data": []
 		},
 		"communication": {
-			"send-sms": ["manager","accountant","principal"]
+			"send-sms": ["manager","accountant","principal"],
+			"send-email": ["manager","accountant","principal"],
+			"delete-communication-history": ["manager"]
+		},
+		"general": {
+			"create-institute-document": ["manager"],
+			"edit-institute-document": ["manager"],
+			"list-institute-document": ["manager"],
+			"delete-institute-document": ["manager"]
 		},
 		"utility": {
 			"access-todo": ["manager","principal","staff","librarian","accountant","student","parent"]
@@ -134,7 +142,11 @@
 			"store-class-teacher-wise-exam-mark": [],
 			"store-subject-teacher-wise-exam-mark": [],
 			"access-exam-report": ["manager","principal","student","parent"],
-			"access-class-teacher-wise-exam-report": ["manager","principal","staff"]
+			"access-class-teacher-wise-exam-report": ["manager","principal","staff"],
+			"list-online-exam": ["manager","principal"],
+			"create-online-exam": ["manager","principal"],
+			"edit-online-exam": ["manager"],
+			"delete-online-exam": ["manager"]
 		},
 		"transport": {
 			"list-transport-circle": ["manager"],
@@ -203,7 +215,8 @@
 			"create-payroll-transaction": ["manager","principal"],
 			"edit-payroll-transaction": ["manager"],
 			"cancel-payroll-transaction": ["manager"],
-			"generate-employee-id-card": ["manager","principal"]
+			"generate-employee-id-card": ["manager","principal"],
+			"import-employee": ["manager"]
 		},
 		"library": {
 			"create-book": ["manager","librarian"],

@@ -142,7 +142,22 @@ class ScheduleController extends Controller
     {
         $this->authorize('list', Schedule::class);
 
-        return $this->ok($this->repo->findOrFail($id));
+        $exam_schedule = $this->repo->findOrFail($id);
+
+        $exam_name = $exam_schedule->exam->name;
+
+        if ($exam_schedule->exam->exam_term_id) {
+            $exam_name .= ' ('.$exam_schedule->exam->term->courseGroup->name.')';
+        }
+
+        $selected_exam = array(
+            'id' => $exam_schedule->exam_id,
+            'name' => $exam_name,
+            'course_group_id' => $exam_schedule->exam->exam_term_id ? $exam_schedule->exam->term->course_group_id : null,
+            'course_group_name' => $exam_schedule->exam->exam_term_id ? $exam_schedule->exam->term->courseGroup->name : null
+        );
+
+        return $this->success(compact('exam_schedule','selected_exam'));
     }
 
     /**

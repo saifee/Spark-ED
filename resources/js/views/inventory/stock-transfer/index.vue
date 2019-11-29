@@ -35,7 +35,7 @@
                         <div class="row">
                             <div class="col-12 col-sm-3">
                                 <div class="form-group">
-                                    <label for="">{{trans('inventory.room')}}</label>
+                                    <label for="">{{trans('asset.room')}}</label>
                                     <v-select label="name" track-by="id" v-model="selected_rooms" name="room_id" id="room_id" :options="rooms" :placeholder="trans('inventory.select_room')" @select="onRoomSelect" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" @remove="onRoomRemove" :selected="selected_rooms">
                                         <div class="multiselect__option" slot="afterList" v-if="!rooms.length">
                                             {{trans('general.no_option_found')}}

@@ -111,6 +111,7 @@
                                     <td>{{expense.created_at | momentDateTime}}</td>
                                     <td class="table-option">
                                         <div class="btn-group">
+                                            <a :href="`/finance/transaction/expense/${expense.uuid}/print?token=${authToken}`" target="_blank" class="btn btn-success btn-sm" v-tooltip="trans('general.print')"><i class="fas fa-print"></i></a>
                                             <button class="btn btn-success btn-sm" v-tooltip="trans('general.view_detail')" @click.prevent="showAction(expense)"><i class="fas fa-arrow-circle-right"></i></button>
                                             <template v-if="!expense.is_cancelled">
                                                 <button class="btn btn-info btn-sm" v-if="hasPermission('edit-expense')" v-tooltip="trans('finance.edit_expense')" @click.prevent="editExpense(expense)"><i class="fas fa-edit"></i></button>

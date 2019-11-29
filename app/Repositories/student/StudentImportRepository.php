@@ -130,6 +130,11 @@ class StudentImportRepository
         $path = request()->file('file')->getRealPath();
         $items = array_map('str_getcsv', file($path));
 
+        if (count($items) <= 1) {
+            $this->deleteFile($uuid);
+            throw ValidationException::withMessages(['message' => trans('student.no_import_data_found')]);
+        }
+
         if (count($items) > 500) {
             $this->deleteFile($uuid);
             throw ValidationException::withMessages(['message' => trans('student.max_import_limit', ['number' => 500])]);
@@ -162,7 +167,6 @@ class StudentImportRepository
             $column_value = gv($value, 'name');
 
             if (! $column_value) {
-                $this->deleteFile($uuid);
                 throw ValidationException::withMessages(['message' => trans('student.null_column_found')]);
             }
 
@@ -175,17 +179,14 @@ class StudentImportRepository
     	}
 
     	if (count($columns) != count(array_unique($columns))) {
-            $this->deleteFile($uuid);
     		throw ValidationException::withMessages(['message' => trans('student.column_contains_duplicate_field')]);
     	}
 
     	if (count(array_diff($options, $columns))) {
-            $this->deleteFile($uuid);
     		throw ValidationException::withMessages(['message' => trans('student.invalid_column_found')]);
     	}
 
         if (! \Storage::exists($this->path.$uuid.'.csv')) {
-            $this->deleteFile($uuid);
             throw ValidationException::withMessages(['message' => trans('student.could_not_find_import_file')]);
         }
 
@@ -227,7 +228,6 @@ class StudentImportRepository
         $missing_father_contact_number      = [];
         $unknown_courses                    = [];
         $unknown_batches                    = [];
-        $duplicate_admission_numbers        = [];
         $unknown_blood_groups               = [];
         $unknown_religions                  = [];
         $unknown_categories                 = [];
@@ -235,6 +235,7 @@ class StudentImportRepository
         $unknown_genders                    = [];
         $unknown_fee_concessions            = [];
         $unknown_transport_circles          = [];
+        $admission_numbers                  = [];
 
         foreach ($items as $index => $item) {
             if ($index == 0) {
@@ -264,6 +265,14 @@ class StudentImportRepository
         	$name = $first_name.' '.($middle_name ? ($middle_name.' ') : '').$last_name;
         	$student_names[] = $name.' '.$contact_number;
         	$student_batches[] = $batch; 
+
+            $admission = $admission_number_prefix.str_pad($admission_number, config('config.admission_number_digit'), '0', STR_PAD_LEFT);
+            $admission_numbers[] = $admission;
+
+            if (in_array($admission, $existing_admission_numbers)) {
+                 $this->deleteFile($uuid);
+                throw ValidationException::withMessages(['message' => trans('student.admission_number_already_registered', ['name' => $name])]);
+            }
 
         	if (in_array($name.' '.$contact_number, $existing_student_names)) {
                 $this->deleteFile($uuid);
@@ -320,7 +329,7 @@ class StudentImportRepository
                 array_push($unknown_castes, $caste);
             }
 
-            if ($gender && ! in_array($gender, $genders)) {
+            if ($gender && ! in_array(strtolower($gender), $genders)) {
                 array_push($unknown_genders, $gender);
             }
 
@@ -331,101 +340,114 @@ class StudentImportRepository
             if ($transport_circle && ! in_array($transport_circle, $transport_circles->pluck('name')->all())) {
                 array_push($unknown_transport_circles, $transport_circle);
             }
+        }
 
-	    	$admission = $admission_number_prefix.str_pad($admission_number, config('config.admission_number_digit'), '0', STR_PAD_LEFT);
-	    	if (in_array($admission, $existing_admission_numbers)) {
-	    		array_push($duplicate_admission_numbers, $admission);
-	    	}
+        $student_names = array_count_values($student_names);
+
+        $duplicate_records = array();
+        foreach($student_names as $key => $value) {
+            if ($value > 1) {
+                $duplicate_records[] = $key;
+            }
+        }
+
+        $admission_numbers = array_count_values($admission_numbers);
+
+        $duplicate_admission_numbers = array();
+        foreach($admission_numbers as $key => $value) {
+            if ($value > 1) {
+                $duplicate_admission_numbers[] = $key;
+            }
         }
 
         if ($unknown_courses) {
             $this->deleteFile($uuid);
-        	throw ValidationException::withMessages(['message' => trans('student.unknown_course_found', ['name' => implode(',', array_unique($unknown_courses))])]);
+        	throw ValidationException::withMessages(['message' => trans('student.unknown_course_found', ['name' => moreThanErrorMsg($unknown_courses)])]);
         }
 
     	if ($unknown_batches) {
             $this->deleteFile($uuid);
-    		throw ValidationException::withMessages(['message' => trans('student.unknown_batch_found', ['name' => implode(',', array_unique($unknown_batches))])]);
+    		throw ValidationException::withMessages(['message' => trans('student.unknown_batch_found', ['name' => moreThanErrorMsg($unknown_batches)])]);
     	}
 
         if ($unknown_blood_groups) {
             $this->deleteFile($uuid);
-            throw ValidationException::withMessages(['message' => trans('student.unknown_blood_group_found', ['name' => implode(',', array_unique($unknown_blood_groups))])]);
+            throw ValidationException::withMessages(['message' => trans('student.unknown_blood_group_found', ['name' => moreThanErrorMsg($unknown_blood_groups)])]);
         }
 
         if ($unknown_religions) {
             $this->deleteFile($uuid);
-            throw ValidationException::withMessages(['message' => trans('student.unknown_religion_found', ['name' => implode(',', array_unique($unknown_religions))])]);
+            throw ValidationException::withMessages(['message' => trans('student.unknown_religion_found', ['name' => moreThanErrorMsg($unknown_religions)])]);
         }
 
         if ($unknown_categories) {
             $this->deleteFile($uuid);
-            throw ValidationException::withMessages(['message' => trans('student.unknown_category_found', ['name' => implode(',', array_unique($unknown_categories))])]);
+            throw ValidationException::withMessages(['message' => trans('student.unknown_category_found', ['name' => moreThanErrorMsg($unknown_categories)])]);
         }
 
         if ($unknown_castes) {
             $this->deleteFile($uuid);
-            throw ValidationException::withMessages(['message' => trans('student.unknown_caste_found', ['name' => implode(',', array_unique($unknown_castes))])]);
+            throw ValidationException::withMessages(['message' => trans('student.unknown_caste_found', ['name' => moreThanErrorMsg($unknown_castes)])]);
         }
 
         if ($unknown_fee_concessions) {
             $this->deleteFile($uuid);
-            throw ValidationException::withMessages(['message' => trans('student.unknown_fee_concession_found', ['name' => implode(',', array_unique($unknown_fee_concessions))])]);
+            throw ValidationException::withMessages(['message' => trans('student.unknown_fee_concession_found', ['name' => moreThanErrorMsg($unknown_fee_concessions)])]);
         }
 
         if ($unknown_transport_circles) {
             $this->deleteFile($uuid);
-            throw ValidationException::withMessages(['message' => trans('student.unknown_transport_circle_found', ['name' => implode(',', array_unique($unknown_transport_circles))])]);
+            throw ValidationException::withMessages(['message' => trans('student.unknown_transport_circle_found', ['name' => moreThanErrorMsg($unknown_transport_circles)])]);
         }
 
         if ($unknown_castes) {
             $this->deleteFile($uuid);
-            throw ValidationException::withMessages(['message' => trans('student.unknown_caste_found', ['name' => implode(',', array_unique($unknown_castes))])]);
+            throw ValidationException::withMessages(['message' => trans('student.unknown_caste_found', ['name' => moreThanErrorMsg($unknown_castes)])]);
         }
 
         if ($unknown_genders) {
             $this->deleteFile($uuid);
-            throw ValidationException::withMessages(['message' => trans('student.unknown_gender_found', ['name' => implode(',', array_unique($unknown_genders))])]);
+            throw ValidationException::withMessages(['message' => trans('student.unknown_gender_found', ['name' => moreThanErrorMsg($unknown_genders)])]);
         }
 
-    	if (count($student_names) != count(array_unique($student_names))) {
+    	if ($duplicate_records) {
             $this->deleteFile($uuid);
-    		throw ValidationException::withMessages(['message' => trans('student.duplicate_student_found')]);
+    		throw ValidationException::withMessages(['message' => trans('student.duplicate_record', ['name' => moreThanErrorMsg($duplicate_records)])]);
     	}
 
     	if ($invalid_date_of_birth) {
             $this->deleteFile($uuid);
-    		throw ValidationException::withMessages(['message' => trans('student.invalid_date_of_birth_found', ['name' => implode(',', array_unique($invalid_date_of_birth))])]);
+    		throw ValidationException::withMessages(['message' => trans('student.invalid_date_of_birth_found', ['name' => moreThanErrorMsg($invalid_date_of_birth)])]);
     	}
 
     	if ($invalid_date_of_admission) {
             $this->deleteFile($uuid);
-    		throw ValidationException::withMessages(['message' => trans('student.invalid_date_of_admission_found', ['name' => implode(',', array_unique($invalid_date_of_admission))])]);
+    		throw ValidationException::withMessages(['message' => trans('student.invalid_date_of_admission_found', ['name' => moreThanErrorMsg($invalid_date_of_admission)])]);
     	}
 
     	if ($date_of_birth_gt_date_of_admission) {
             $this->deleteFile($uuid);
-    		throw ValidationException::withMessages(['message' => trans('student.date_of_birth_gt_date_of_admission', ['name' => implode(',', array_unique($date_of_birth_gt_date_of_admission))])]);
+    		throw ValidationException::withMessages(['message' => trans('student.date_of_birth_gt_date_of_admission', ['name' => moreThanErrorMsg($date_of_birth_gt_date_of_admission)])]);
     	}
 
     	if ($date_of_admission_gt_session_end) {
             $this->deleteFile($uuid);
-    		throw ValidationException::withMessages(['message' => trans('student.date_of_admission_gt_session_end', ['name' => implode(',', array_unique($date_of_admission_gt_session_end))])]);
+    		throw ValidationException::withMessages(['message' => trans('student.date_of_admission_gt_session_end', ['name' => moreThanErrorMsg($date_of_admission_gt_session_end)])]);
     	}
 
     	if ($missing_father_name) {
             $this->deleteFile($uuid);
-    		throw ValidationException::withMessages(['message' => trans('student.missing_father_name', ['name' => implode(',', array_unique($missing_father_name))])]);
+    		throw ValidationException::withMessages(['message' => trans('student.missing_father_name', ['name' => moreThanErrorMsg($missing_father_name)])]);
     	}
 
     	if ($missing_father_contact_number) {
             $this->deleteFile($uuid);
-    		throw ValidationException::withMessages(['message' => trans('student.missing_father_contact_number', ['name' => implode(',', array_unique($missing_father_contact_number))])]);
+    		throw ValidationException::withMessages(['message' => trans('student.missing_father_contact_number', ['name' => moreThanErrorMsg($missing_father_contact_number)])]);
     	}
 
     	if ($duplicate_admission_numbers) {
             $this->deleteFile($uuid);
-    		throw ValidationException::withMessages(['message' => trans('student.duplicate_admission_numbers', ['number' => implode(',', array_unique($duplicate_admission_numbers))])]);
+    		throw ValidationException::withMessages(['message' => trans('student.duplicate_admission_numbers', ['number' => moreThanErrorMsg($duplicate_admission_numbers)])]);
     	}
 
         activity()->disableLogging();
@@ -507,7 +529,7 @@ class StudentImportRepository
                 'last_name'                    => $last_name,
                 'date_of_birth'                => toDate($date_of_birth),
                 'contact_number'               => $contact_number,
-                'gender'                       => $gender,
+                'gender'                       => strtolower($gender),
                 'nationality'                  => $nationality,
                 'blood_group_id'               => optional($blood_groups->firstWhere('name', $blood_group))->id,
                 'religion_id'                  => optional($religions->firstWhere('name', $religion))->id,

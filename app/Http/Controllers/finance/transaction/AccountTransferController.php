@@ -130,6 +130,23 @@ class AccountTransferController extends Controller
     }
 
     /**
+     * Used to get Account Transfer detail
+     * @get ("/finance/transaction/account/transfer/{uuid}/print")
+     * @param ({
+     *      @Parameter("uuid", type="string", required="true", description="Unique Id of Account Transfer"),
+     * })
+     * @return Response
+     */
+    public function printAccountTransfer($uuid)
+    {
+        $this->authorize('list', AccountTransfer::class);
+
+        $account_transfer = $this->repo->findByUuidOrFail($uuid);
+
+        return view('print.finance.transaction.account-transfer-receipt', compact('account_transfer'));
+    }
+
+    /**
      * Used to update Account Transfer
      * @patch ("/api/account/transfer/{uuid}")
      * @param ({

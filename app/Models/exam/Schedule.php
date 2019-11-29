@@ -65,6 +65,8 @@ class Schedule extends Model
             'assessment',
             'assessment.details',
             'exam',
+            'exam.term',
+            'exam.term.courseGroup',
             'records' => function($q1) {
                 $q1->orderBy('date','asc');
             },

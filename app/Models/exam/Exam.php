@@ -10,7 +10,7 @@ class Exam extends Model
     use LogsActivity;
 
     protected $fillable = [
-                            'academic_sesesion_id',
+                            'academic_session_id',
                             'name',
                             'description',
                             'options'
@@ -47,6 +47,7 @@ class Exam extends Model
     {
         return $q->with([
             'term',
+            'term.courseGroup',
             'schedules',
             'schedules.grade',
             'schedules.assessment',
@@ -54,6 +55,14 @@ class Exam extends Model
             'schedules.batch.course',
             'schedules.records',
             'schedules.records.subject'
+        ]);
+    }
+
+    public function scopeSummary($q)
+    {
+        return $q->with([
+            'term',
+            'term.courseGroup'
         ]);
     }
 

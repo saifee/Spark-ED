@@ -13,9 +13,6 @@ class UpdateBookPostDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::table('book_post_details', function ($table) {
-            $table->bigInteger('number')->nullable()->change();
-        });
     }
 
     /**
@@ -25,8 +22,5 @@ class UpdateBookPostDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::table('book_post_details', function ($table) {
-            $table->string('number',20)->nullable()->change();
-        });
     }
 }

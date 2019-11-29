@@ -60,6 +60,7 @@
                     type: ''
                 },false),
                 types: [],
+                all_batches: [],
                 batches: [],
                 selected_batch: null,
                 exams: [],
@@ -87,7 +88,7 @@
                 let loader = this.$loading.show();
                 axios.get('/api/exam/report/pre-requisite')
                     .then(response => {
-                        this.batches = response.batches;
+                        this.all_batches = response.batches;
                         this.exams = response.exams;
                         loader.hide();
                     })
@@ -116,6 +117,13 @@
                 this.reportForm.batch_id = selectedOption.id;
             },
             onExamSelect(selectedOption){
+                this.reportForm.batch_id = '';
+                this.selected_batch = null;
+                if (selectedOption.course_group_id)
+                    this.batches = this.all_batches.filter(o => o.course_group === selectedOption.course_group_name);
+                else
+                    this.batches = this.all_batches;
+
                 this.reportForm.exam_id = selectedOption.id;
             }
         },

@@ -12,6 +12,7 @@ class Term extends Model
     protected $fillable = [
                             'academic_session_id',
                             'name',
+                            'course_group_id',
                             'description',
                             'options'
                         ];
@@ -28,6 +29,11 @@ class Term extends Model
         return $this->belongsTo('App\Models\Academic\AcademicSession');
     }
 
+    public function courseGroup()
+    {
+        return $this->belongsTo('App\Models\Configuration\Academic\CourseGroup');
+    }
+
     public function exams()
     {
         return $this->hasMany('App\Models\Exam\Exam', 'exam_term_id');
@@ -41,7 +47,8 @@ class Term extends Model
     public function scopeInfo($q)
     {
         return $q->with([
-            'exams'
+            'exams',
+            'courseGroup'
         ]);
     }
     

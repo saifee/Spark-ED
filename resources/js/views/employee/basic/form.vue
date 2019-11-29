@@ -141,6 +141,7 @@
 	                </div>
 	            </div>
     		</div>
+    		<custom-field :fields="custom_fields" :customValues="custom_values" :formErrors="customFieldFormErrors" @updateCustomValues="updateCustomValues"></custom-field>
             <div class="card-footer text-right">
                 <button type="submit" class="btn btn-info waves-effect waves-light">{{trans('general.save')}}</button>
             </div>
@@ -171,8 +172,11 @@
 					category_id: '',
 					religion_id: '',
 					blood_group_id: '',
+					custom_values: [],
 					type: 'basic'
 				},false),
+				custom_fields: [],
+				custom_values: [],
 				castes: [],
                 selected_caste: null,
 				religions: [],
@@ -182,7 +186,8 @@
 				categories: [],
                 selected_category: null,
 				genders: [],
-				marital_statuses: []
+				marital_statuses: [],
+				customFieldFormErrors: {}
 			}
 		},
 		mounted(){
@@ -197,7 +202,7 @@
 		methods: {
 			getPreRequisite(){
 	            let loader = this.$loading.show();
-	            axios.get('/api/employee/basic/pre-requisite')
+	            axios.get('/api/employee/basic/pre-requisite?form_type=employee_basic')
 	            	.then(response => {
 	            		this.castes = response.castes;
 	            		this.religions = response.religions;
@@ -205,12 +210,16 @@
 	            		this.categories = response.categories;
 	            		this.genders = response.genders;
 	            		this.marital_statuses = response.marital_statuses;
+	            		this.custom_fields = response.custom_fields;
 	            		loader.hide();
 	            	})
 	            	.catch(error => {
 	            		loader.hide();
 	            		helper.showErrorMsg(error);
 	            	});	
+			},
+			updateCustomValues(value) {
+				this.basicForm.custom_values = value;
 			},
 			get(employee){
 	          	this.basicForm.first_name = employee.first_name;
@@ -233,11 +242,12 @@
 	          	this.selected_category = employee.category_id ? {id: employee.category_id, name: employee.category.name} : null;
 	          	this.selected_religion = employee.religion_id ? {id: employee.religion_id, name: employee.religion.name} : null;
 	          	this.selected_blood_group = employee.blood_group_id ? {id: employee.blood_group_id, name: employee.blood_group.name} : null;
+	          	this.custom_values = employee.options.hasOwnProperty('custom_values') ? employee.options.custom_values : [];
 	        },
 			submit(){
 				let loader = this.$loading.show();
-                this.basicForm.date_of_birth = moment(this.basicForm.date_of_birth).format('YYYY-MM-DD');
-                this.basicForm.date_of_anniversary = moment(this.basicForm.date_of_anniversary).format('YYYY-MM-DD');
+                this.basicForm.date_of_birth = helper.toDate(this.basicForm.date_of_birth);
+                this.basicForm.date_of_anniversary = helper.toDate(this.basicForm.date_of_anniversary);
 				this.basicForm.patch('/api/employee/'+this.employee.uuid)
 					.then(response => {
 						this.$emit('complete');
@@ -246,6 +256,7 @@
 					})
 					.catch(error => {
 						loader.hide();
+						this.customFieldFormErrors = error;
 						helper.showErrorMsg(error);
 					})
 			},

@@ -20,7 +20,7 @@
 				            <div class="col-12 col-sm-3">
 				                <div class="form-group">
 				                    <label for="">{{trans('academic.batch')}}</label>
-				                    <v-select label="name" v-model="selected_batch" group-values="batches" group-label="course_group" :group-select="false" name="batch_id" id="batch_id" :options="batches" :placeholder="trans('academic.select_batch')" @select="onBatchSelect" @close="attendanceForm.errors.clear('batch_id')" @remove="onBatchRemove">
+				                    <v-select :disabled="disable_filter" label="name" v-model="selected_batch" group-values="batches" group-label="course_group" :group-select="false" name="batch_id" id="batch_id" :options="batches" :placeholder="trans('academic.select_batch')" @select="onBatchSelect" @close="attendanceForm.errors.clear('batch_id')" @remove="onBatchRemove">
 				                        <div class="multiselect__option" slot="afterList" v-if="!batches.length">
 				                            {{trans('general.no_option_found')}}
 				                        </div>
@@ -28,14 +28,55 @@
 				                    <show-error :form-name="attendanceForm" prop-name="batch_id"></show-error>
 				                </div>
 				            </div>
-				            <div class="col-12 col-sm-3" v-if="attendanceForm.students.length">
+	                        <div class="col-12 col-sm-3">
+	                            <div class="form-group">
+	                                <label for="">{{trans('student.attendance_method')}}</label>
+	                                <select :disabled="disable_filter" v-model="attendanceForm.attendance_method" class="custom-select col-12" name="attendance_method">
+	                                  <option value="" selected>{{trans('general.select_one')}}</option>
+	                                  <option v-for="option in attendance_methods" v-bind:value="option.value">
+	                                    {{ option.text }}
+	                                  </option>
+	                                </select>
+	                                <show-error :form-name="attendanceForm" prop-name="attendance_method"></show-error>
+	                            </div>
+	                        </div>
+	                        <div class="col-12 col-sm-3" v-if="attendanceForm.attendance_method == 'more_than_once'">
+	                            <div class="form-group">
+	                                <label for="">{{trans('student.attendance_session')}}</label>
+	                                <select :disabled="disable_filter" v-model="attendanceForm.session" class="custom-select col-12" name="session">
+	                                  <option value="" selected>{{trans('general.select_one')}}</option>
+	                                  <option v-for="option in attendance_method_more_than_once_types" v-bind:value="option.value">
+	                                    {{ option.text }}
+	                                  </option>
+	                                </select>
+	                                <show-error :form-name="attendanceForm" prop-name="session"></show-error>
+	                            </div>
+	                        </div>
+			                <div class="col-12 col-sm-3" v-if="attendanceForm.attendance_method == 'subject_wise'">
+			                    <div class="form-group">
+			                        <label for="">{{trans('academic.subject')}} </label>
+	                                <select :disabled="disable_filter" v-model="attendanceForm.subject_id" class="custom-select col-12" name="subject_id">
+	                                  <option value="" selected>{{trans('general.select_one')}}</option>
+	                                  <option v-for="option in subjects" v-bind:value="option.id">
+	                                    {{ option.name }}
+	                                  </option>
+	                                </select>
+			                        <show-error :form-name="attendanceForm" prop-name="subject_id"></show-error>
+			                    </div>
+			                </div>
+				            <div class="col-12 col-sm-3">
 				                <div class="form-group">
 				                    <label for="">{{trans('student.date_of_attendance')}}</label>
-				                    <datepicker v-model="attendanceForm.date_of_attendance" :bootstrapStyling="true" @selected="dateSelected" :disabledDates="disabled" :placeholder="trans('student.date_of_attendance')"></datepicker>
+				                    <datepicker :disabled="disable_filter" v-model="attendanceForm.date_of_attendance" :bootstrapStyling="true" @selected="dateSelected" :disabledDates="disabled" :placeholder="trans('student.date_of_attendance')"></datepicker>
 				                    <show-error :form-name="attendanceForm" prop-name="date_of_attendance"></show-error>
 				                </div>
 				            </div>
 				        </div>
+			            <div class="text-right">
+			                <button type="button" v-if="! disable_filter" @click="getStudent" class="btn btn-info waves-effect waves-light">{{trans('general.proceed')}}</button>
+                            <button type="button" v-else @click="resetFilter" class="btn btn-danger m-r-10">{{trans('general.reset')}}</button>
+			            </div>
+
 				        <div class="row" v-if="attendanceForm.students.length">
 				            <div class="col-12">
 				            	<div class="table-responsive font-90pc p-2">
@@ -57,10 +98,14 @@
 				            						<span class="marking-cell" v-else-if="isHoliday(student_attendance.day)" v-tooltip="getHolidayName(student_attendance.day)"><i class="fas fa-hospital-symbol"></i></span>
 				            						<span :class="['marking-cell', isEditable ? 'pointer' : '']" v-else-if="currentDate(student_attendance.day)" @click="toggleAttendance(student)">
 				            							<i class="fas fa-check text-success" v-if="student.attendance == 'present'"></i>
+				            							<i class="fas fa-history text-info" v-if="student.attendance == 'late'"></i>
+				            							<i class="fas fa-coffee text-warning" v-if="student.attendance == 'half_day'"></i>
 				            							<i class="fas fa-times text-danger" v-if="student.attendance == 'unmarked' || student.attendance == 'absent'"></i>
 				            						</span>
 				            						<span class="marking-cell" v-else>
 				            							<i class="fas fa-check text-success" v-if="student_attendance.attendance == 'present'"></i>
+				            							<i class="fas fa-history text-info" v-if="student_attendance.attendance == 'late'"></i>
+				            							<i class="fas fa-coffee text-warning" v-if="student_attendance.attendance == 'half_day'"></i>
 				            							<i class="fas fa-times text-danger" v-if="student_attendance.attendance == 'absent'"></i>
 				            						</span>
 				            					</td>
@@ -82,8 +127,14 @@
 				            	</div>
 				            </div>
 				        </div>
+				        <div class="row mt-2" v-if="!attendanceForm.students.length && disable_filter">
+							<div class="col-12">
+								<p class="alert alert-danger">{{trans('general.no_data_found', {data: trans('student.student')})}}</p>
+							</div>
+				        </div>
 				        <div class="form-group" v-if="attendanceForm.students.length && isEditable">
-				        	<button type="submit" class="btn btn-info pull-right">{{trans('general.save')}}</button>
+				        	<button type="submit" class="btn btn-success pull-right">{{trans('general.save')}}</button>
+				        	<button type="button" class="btn btn-info pull-right m-r-10" v-if="isEditable && attendance && ! attendance.is_default" key="make-attendance-default" v-tooltip="trans('student.attendance_default_description')" v-confirm="{ok: confirmDefault()}">{{trans('student.attendance_default')}}</button>
 				        	<button type="button" class="btn btn-danger pull-right m-r-10" v-if="isEditable && isDeletable" key="delete-attendance" v-confirm="{ok: confirmDelete()}">{{trans('general.delete')}}</button>
 				        	<button type="button" @click="markAllPresent" class="btn btn-info btn-sm">{{trans('student.attendance_mark_all_present')}}</button>
 				        	<button type="button" @click="markAllAbsent" class="btn btn-info btn-sm">{{trans('student.attendance_mark_all_absent')}}</button>
@@ -102,22 +153,31 @@
 			return {
 				attendanceForm: new Form({
 					batch_id: '',
+					attendance_method: '',
+					subject_id: '',
+					session: '',
 					date_of_attendance: '',
 					students: []
 				},false),
+                disable_filter: false,
 				class_teachers: [],
 				previous_date: '',
 				holidays: [],
 				holiday_lists: [],
+				attendance: {},
 				attendances: [],
 				disabled: {
 					dates:[]
 				},
 				days: 0,
+				subjects: [],
 				batches: [],
 				selected_batch: null,
 				selected_batch_detail: {},
-				student_records: []
+				student_records: [],
+				batch_with_subjects: [],
+				attendance_methods: [],
+				attendance_method_more_than_once_types: []
 			}
 		},
 		mounted(){
@@ -135,11 +195,18 @@
 			hasPermission(permission){
 				return helper.hasPermission(permission);
 			},
+            resetFilter(){
+            	this.attendanceForm.students = [];
+                this.disable_filter = false;
+            },
 			getPreRequisite(){
 				let loader = this.$loading.show();
 				axios.get('/api/student/attendance/pre-requisite')
 					.then(response => {
+						this.attendance_methods = response.attendance_methods;
+						this.attendance_method_more_than_once_types = response.attendance_method_more_than_once_types;
 						this.batches = response.batches;
+						this.batch_with_subjects = response.batch_with_subjects;
 						this.holidays = response.holidays;
 						this.holiday_lists = response.holiday_lists;
 		                response.holidays.forEach(date => {
@@ -155,17 +222,26 @@
 			dateSelected(){
 			},
 			getStudent(){
+				this.disable_filter = true;
 				let loader = this.$loading.show();
-				axios.post('/api/student/attendance/fetch', {batch_id: this.attendanceForm.batch_id, date: helper.toDate(this.attendanceForm.date_of_attendance)})
+				axios.post('/api/student/attendance/fetch', {
+					batch_id: this.attendanceForm.batch_id, 
+					date_of_attendance: helper.toDate(this.attendanceForm.date_of_attendance),
+					subject_id: this.attendanceForm.subject_id,
+					session: this.attendanceForm.session,
+					attendance_method: this.attendanceForm.attendance_method
+				})
 					.then(response => {
 						this.student_records = response.student_records;
 						this.class_teachers = response.class_teachers;
 						this.selected_batch_detail = response.batch;
+						this.attendance = response.attendance;
 						this.attendances = response.attendances;
 						this.loadData();
 						loader.hide();
 					})
 					.catch(error => {
+						this.disable_filter = false;
 						loader.hide();
 						helper.showErrorMsg(error);
 					})
@@ -180,12 +256,14 @@
 						let daily_attendance = '';
 						let date = moment(this.attendanceForm.date_of_attendance).format('YYYY-MM')+'-'+helper.formatWithPadding(i,2);
 
-
-
 						let student_attendance = this.attendances.find(o => o.date_of_attendance == date);
 						if (typeof student_attendance == 'object') {
-							if(student_attendance.attendance.data.findIndex(o => o.id == student_record.id) >= 0)
+							if(student_attendance.attendance.data && student_attendance.attendance.data.findIndex(o => o.id == student_record.id) >= 0)
 								daily_attendance = 'absent';
+							else if(student_attendance.attendance.late && student_attendance.attendance.late.findIndex(o => o.id == student_record.id) >= 0)
+								daily_attendance = 'late';
+							else if(student_attendance.attendance.half_day && student_attendance.attendance.half_day.findIndex(o => o.id == student_record.id) >= 0)
+								daily_attendance = 'half_day';
 							else if (this.holidays.indexOf(date) >= 0)
 								daily_attendance = 'holiday';
 							else
@@ -243,7 +321,25 @@
 			onBatchSelect(selectedOption){
 				let loader = this.$loading.show();
 				this.attendanceForm.batch_id = selectedOption.id;
-				this.getStudent();
+                let batch = this.batch_with_subjects.find(o => o.id == this.attendanceForm.batch_id);
+
+                if (typeof batch == 'undefined') {
+                	return;
+                }
+
+				this.attendanceForm.attendance_method = batch.options && batch.options.default_attendance_method ? batch.options.default_attendance_method : 'once';
+
+				this.attendanceForm.subject_id = '';
+                this.subjects = [];
+
+                batch.subjects.forEach(subject => {
+                	this.subjects.push({
+                		id: subject.id,
+                		name: subject.name+' ('+subject.code+')'
+                	});
+                });
+
+				// this.getStudent();
 				loader.hide();
 			},
 			onBatchRemove(removedOption){
@@ -278,7 +374,10 @@
 					return;
 				}
 				
-				let options = ['present','absent'];
+				let options = ['present','absent','late'];
+				if (this.attendanceForm.attendance_method == 'once') {
+					options.push('half_day');
+				}
 				let record = this.attendanceForm.students.find(o => o.id == student.id);
 				let index = options.indexOf(record.attendance);
 				index = ++index%options.length; 
@@ -321,9 +420,10 @@
 				this.attendanceForm.students.forEach(student => {
 					if (date != moment(this.attendanceForm.date_of_attendance).format("YYYY-MM-DD")) {
 						let attendance = student.student_attendances.find(o => o.day == day);
-						total += (typeof attendance != 'undefined' && attendance.attendance == 'present') ? 1 : 0;
+						total += (typeof attendance != 'undefined' && (attendance.attendance == 'present' || attendance.attendance == 'late')) ? 1 : 0;
 					} else {
-						total += student.attendance == 'present' ? 1 : 0;
+						total += student.attendance == 'present' || student.attendance == 'late' ? 1 : 0;
+
 					}
 				})
 
@@ -337,7 +437,7 @@
 
 				let total = 0;
 				student.student_attendances.forEach(attendance => {
-					total += (typeof attendance != 'undefined' && attendance.attendance == 'present') ? 1 : 0;
+					total += (typeof attendance != 'undefined' && (attendance.attendance == 'present' || attendance.attendance == 'late')) ? 1 : 0;
 				})
 				return total;
 			},
@@ -348,7 +448,29 @@
                 let loader = this.$loading.show();
                 axios.post('/api/student/attendance/delete', {
                 		batch_id: this.attendanceForm.batch_id,
-                		date_of_attendance: this.attendanceForm.date_of_attendance
+                		date_of_attendance: this.attendanceForm.date_of_attendance,
+                		subject_id: this.attendanceForm.subject_id,
+                		session: this.attendanceForm.session
+                	})
+                    .then(response => {
+                        toastr.success(response.message);
+                        this.getStudent();
+                        loader.hide();
+                    }).catch(error => {
+                        loader.hide();
+                        helper.showErrorMsg(error);
+                    });
+            },
+            confirmDefault(){
+                return dialog => this.defaultAttendance();
+            },
+            defaultAttendance(){
+                let loader = this.$loading.show();
+                axios.post('/api/student/attendance/default', {
+                		batch_id: this.attendanceForm.batch_id,
+                		date_of_attendance: this.attendanceForm.date_of_attendance,
+                		subject_id: this.attendanceForm.subject_id,
+                		session: this.attendanceForm.session
                 	})
                     .then(response => {
                         toastr.success(response.message);
@@ -401,10 +523,10 @@
         	'attendanceForm.date_of_attendance': function(val){
 				this.days = moment(val, "YYYY-MM").daysInMonth();
 
-				if (moment(val).format('M') != moment(this.previous_date).format('M'))
-					this.getStudent();
-				else
-					this.loadData();
+				// if (moment(val).format('M') != moment(this.previous_date).format('M'))
+				// 	this.getStudent();
+				// else
+				// 	this.loadData();
 
 				this.previous_date = moment(val).format('YYYY-MM-DD');
         	}
@@ -418,7 +540,7 @@
 	}
 	.current {
 		font-weight: 500;
-		font-size: 150%;
+		font-size: 120%;
 	}
 	.attendance-table tr th.date-cell{
 		text-align: center;

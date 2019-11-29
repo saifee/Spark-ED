@@ -29,16 +29,6 @@ class SMSController extends Controller
     }
 
     /**
-     * Used to get pre requisite
-     * @get ("/api/sms/pre-requisite")
-     * @return Response
-     */
-    public function preRequisite()
-    {
-        return $this->success($this->repo->getPreRequisite());
-    }
-
-    /**
      * Used to submit SMS
      * @post ("/api/sms")
      * @return Response
@@ -47,6 +37,6 @@ class SMSController extends Controller
     {
         $count = $this->repo->submit($this->request->all());
 
-        return $this->success(['message' => trans('communication.number_sms_submitted', ['number' => $count])]);
+        return $this->success(['message' => trans('communication.number_sms_submitted', ['count' => $count])]);
     }
 }

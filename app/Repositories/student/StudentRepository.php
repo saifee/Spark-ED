@@ -3,6 +3,7 @@
 namespace App\Repositories\Student;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use App\Models\Academic\Batch;
 use App\Models\Student\Student;
@@ -11,6 +12,7 @@ use App\Models\Academic\ClassTeacher;
 use App\Models\Student\StudentParent;
 use Illuminate\Validation\ValidationException;
 use App\Repositories\Configuration\Misc\CasteRepository;
+use App\Repositories\Configuration\CustomFieldRepository;
 use App\Repositories\Configuration\Misc\CategoryRepository;
 use App\Repositories\Configuration\Misc\ReligionRepository;
 use App\Repositories\Configuration\Misc\BloodGroupRepository;
@@ -31,6 +33,7 @@ class StudentRepository
     protected $batch;
     protected $admission;
     protected $class_teacher;
+    protected $custom_field;
 
     /**
      * Instantiate a new instance.
@@ -49,7 +52,8 @@ class StudentRepository
         StudentGroupRepository $student_group,
         Batch $batch,
         Admission $admission,
-        ClassTeacher $class_teacher
+        ClassTeacher $class_teacher,
+        CustomFieldRepository $custom_field
     ) {
         $this->student = $student;
         $this->caste = $caste;
@@ -63,6 +67,7 @@ class StudentRepository
         $this->batch = $batch;
         $this->admission = $admission;
         $this->class_teacher = $class_teacher;
+        $this->custom_field = $custom_field;
     }
 
     /**
@@ -190,7 +195,11 @@ class StudentRepository
             $student_parents[] = array('id' => $parent->id, 'name' => $parent->father_name.' ('.$parent->father_contact_number_1.')');
         }
 
-        return compact('castes', 'categories', 'religions', 'blood_groups', 'genders', 'student_parents');
+        $form_type = in_array(request('form_type'), ['student_basic', 'student_parent', 'student_contact']) ? request('form_type') : 'student_basic';
+
+        $custom_fields = $this->custom_field->listAllByForm($form_type);
+
+        return compact('castes', 'categories', 'religions', 'blood_groups', 'genders', 'student_parents', 'custom_fields');
     }
 
     /**
@@ -309,7 +318,83 @@ class StudentRepository
     {
         $page_length = gv($params, 'page_length', config('config.page_length'));
 
-        return $this->getData($params)->paginate($page_length);
+        $query = $this->getData($params);
+
+        if (request('action') == 'excel') {
+            return $this->exportExcel($query->get());
+        }
+
+        return $query->paginate($page_length);
+    }
+
+    /**
+     * Export student data
+     * @param  array  $students
+     * @return array
+     */
+    private function exportExcel($students = array())
+    {
+        $data = array();
+        $data[] = array(
+            trans('student.admission_number_short'),
+            trans('student.roll_number'),
+            trans('student.first_name'),
+            trans('student.middle_name'),
+            trans('student.last_name'),
+            trans('student.gender'),
+            trans('student.father_name'),
+            trans('student.mother_name'),
+            trans('student.date_of_birth'),
+            trans('student.date_of_admission'),
+            trans('student.date_of_promotion'),
+            trans('student.contact_number'),
+            trans('academic.course'),
+            trans('academic.batch'),
+            trans('student.nationality'),
+            trans('misc.blood_group'),
+            trans('misc.religion'),
+            trans('misc.caste'),
+            trans('misc.category'),
+            trans('student.unique_identification_number'),
+            trans('student.father_contact_number_1'),
+            trans('student.mother_contact_number_1'),
+            trans('student.emergency_contact_name'),
+            trans('student.emergency_contact_number'),
+            trans('student.present_address'),
+            trans('student.permanent_address')
+        );
+        foreach ($students as $student) {
+            $data[] = array(
+                getStudentRecordForSession($student->StudentRecords, config('config.default_academic_session.id'), 'admission_number'),
+                getRollNumber(getStudentRecordForSession($student->StudentRecords, config('config.default_academic_session.id'))),
+                $student->first_name,
+                $student->middle_name,
+                $student->last_name,
+                trans('list.'.$student->gender),
+                optional($student->Parent)->father_name,
+                optional($student->Parent)->mother_name,
+                showDate($student->date_of_birth),
+                getStudentRecordForSession($student->StudentRecords, config('config.default_academic_session.id'), 'date_of_admission'),
+                getStudentRecordForSession($student->StudentRecords, config('config.default_academic_session.id'), 'date_of_entry'),
+                $student->contact_number,
+                getStudentRecordForSession($student->StudentRecords, config('config.default_academic_session.id'), 'course'),
+                getStudentRecordForSession($student->StudentRecords, config('config.default_academic_session.id'), 'batch'),
+                $student->nationality,
+                optional($student->BloodGroup)->name,
+                optional($student->Religion)->name,
+                optional($student->Caste)->name,
+                optional($student->Category)->name,
+                $student->unique_identification_number,
+                $student->father_contact_number_1,
+                $student->mother_contact_number_1,
+                $student->emergency_contact_name,
+                $student->emergency_contact_number,
+                $student->present_address,
+                $student->permanent_address,
+            );
+        }
+
+        return $data;
     }
 
     /**
@@ -435,8 +520,18 @@ class StudentRepository
         $type = gv($params, 'type', 'basic');
 
         if ($type == 'basic') {
+            $custom_values = $this->custom_field->validateCustomValues('student_basic', gv($params, 'custom_values', []));
+
             $student->forceFill($this->updateBasic($student, $params))->save();
+
+            $options = $student->options;
+            $options['custom_values'] = mergeByKey($student->getOption('custom_values'), $custom_values);
+            $student->options = $options;
+            $student->save();
+
         } elseif ($type == 'parent') {
+            $custom_values = $this->custom_field->validateCustomValues('student_parent', gv($params, 'custom_values', []));
+
             $parent = $student->Parent;
 
             if (! $parent) {
@@ -446,8 +541,20 @@ class StudentRepository
             } else {
                 $parent->forceFill($this->updateParent($params))->save();
             }
+            
+            $options = $parent->options;
+            $options['custom_values'] = mergeByKey($parent->getOption('custom_values'), $custom_values);
+            $parent->options = $options;
+            $parent->save();
         } elseif ($type == 'contact') {
+            $custom_values = $this->custom_field->validateCustomValues('student_contact', gv($params, 'custom_values', []));
+
             $student->forceFill($this->updateContact($params))->save();
+
+            $options = $student->options;
+            $options['custom_values'] = mergeByKey($student->getOption('custom_values'), $custom_values);
+            $student->options = $options;
+            $student->save();
         } else {
         }
 
@@ -504,7 +611,7 @@ class StudentRepository
         return [
             'first_name'                   => gv($params, 'first_name'),
             'last_name'                    => gv($params, 'last_name'),
-            'date_of_birth'                => gv($params, 'date_of_birth'),
+            'date_of_birth'                => toDate(gv($params, 'date_of_birth')),
             'middle_name'                  => gv($params, 'middle_name'),
             'gender'                       => gv($params, 'gender'),
             'mother_tongue'                => gv($params, 'mother_tongue'),
@@ -830,6 +937,22 @@ class StudentRepository
         }
 
         return optional($student->studentRecords->where('academic_session_id', config('config.default_academic_session.id'))->sortByDesc('date_of_entry')->first())->batch_id;
+    }
+
+    /**
+     * Get authenticated student's record
+     *
+     * @return StudentRecord $student_record
+     */
+    public function getAuthStudentRecord()
+    {
+        $student = $this->student->with('studentRecords')->filterById(\Auth::user()->Student->id)->first();
+
+        if (! $student) {
+            return null;
+        }
+
+        return $student->studentRecords->where('academic_session_id', config('config.default_academic_session.id'))->sortByDesc('date_of_entry')->first();
     }
 
     /**

@@ -16,8 +16,11 @@ Route::get('/cache', 'Configuration\ConfigurationController@clearCache');
 Route::group(['middleware' => ['auth:api']], function () {
 	Route::get('/backup/{id}/download', 'Utility\BackupController@download');
 
+	Route::get('/finance/transaction/income/{uuid}/print', 'Finance\Transaction\IncomeController@printIncome');
 	Route::get('/finance/transaction/income/{uuid}/attachment/{attachment_uuid}/download', 'Finance\Transaction\IncomeController@download');
+	Route::get('/finance/transaction/expense/{uuid}/print', 'Finance\Transaction\ExpenseController@printExpense');
 	Route::get('/finance/transaction/expense/{uuid}/attachment/{attachment_uuid}/download', 'Finance\Transaction\ExpenseController@download');
+	Route::get('/finance/transaction/account/transfer/{uuid}/print', 'Finance\Transaction\AccountTransferController@printAccountTransfer');
 	Route::get('/finance/transaction/account/transfer/{uuid}/attachment/{attachment_uuid}/download', 'Finance\Transaction\AccountTransferController@download');
 
 	Route::get('/student/id-card/print', 'Student\StudentRecordController@generateIdCard');
@@ -37,6 +40,8 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::get('/transport/vehicle/document/{id}/attachment/{attachment_uuid}/download', 'Transport\Vehicle\VehicleDocumentController@download');
 	Route::get('/transport/vehicle/service/record/{id}/attachment/{attachment_uuid}/download', 'Transport\Vehicle\VehicleServiceRecordController@download');
 	Route::get('/transport/vehicle/fuel/{id}/attachment/{attachment_uuid}/download', 'Transport\Vehicle\VehicleFuelController@download');
+
+	Route::get('/institute/document/{id}/attachment/{attachment_uuid}/download', 'Institute\InstituteDocumentController@download');
 
 	Route::get('/academic/timetable/batch/{uuid}/print', 'Academic\TimetableController@printBatchTimetable');
 	Route::get('/academic/certificate/{uuid}/print', 'Academic\CertificateController@printCertificate');

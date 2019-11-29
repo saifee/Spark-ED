@@ -126,12 +126,12 @@ const store = new Vuex.Store({
         },
         hasAnyRole: (state) => (roles) => {
             return (state.auth.roles.some(role => {
-                return roles.indexOf(role) > -1; 
+                return roles.indexOf(role) > -1;
             })) ? true : false;
         },
         hasNotAnyRole: (state) => (roles) => {
             return (state.auth.roles.every(role => {
-                return roles.indexOf(role) < 0; 
+                return roles.indexOf(role) < 0;
             })) ? true : false;
         },
         getConfig: (state) => (name) => {
@@ -142,7 +142,7 @@ const store = new Vuex.Store({
         },
         hasAnyPermission: (state) => (permissions) => {
             return (state.auth.permissions.some(permission => {
-                return permissions.indexOf(permission) > -1; 
+                return permissions.indexOf(permission) > -1;
             })) ? true : false;
         },
         getLastActivity: (state) => {

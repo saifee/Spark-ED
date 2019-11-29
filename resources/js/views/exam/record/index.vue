@@ -134,6 +134,7 @@
                     subject_id: '',
                     marks: []
                 },false),
+                all_batches: [],
                 batches: [],
                 selected_batch: null,
                 exams: [],
@@ -171,7 +172,7 @@
                 let loader = this.$loading.show();
                 axios.get('/api/exam/record/pre-requisite')
                     .then(response => {
-                        this.batches = response.batches;
+                        this.all_batches = response.batches;
                         this.exams = response.exams;
                         this.batch_with_subjects = response.batch_with_subjects;
 
@@ -379,6 +380,13 @@
                 this.recordForm.batch_id = selectedOption.id;
             },
             onExamSelect(selectedOption){
+                this.recordForm.batch_id = '';
+                this.selected_batch = null;
+                if (selectedOption.course_group_id)
+                    this.batches = this.all_batches.filter(o => o.course_group === selectedOption.course_group_name);
+                else
+                    this.batches = this.all_batches;
+                
                 this.recordForm.exam_id = selectedOption.id;
             },
             onSubjectSelect(selectedOption){

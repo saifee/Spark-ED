@@ -126,7 +126,7 @@ class TimetableRepository
             $student_batch_ids = $this->student->getAuthParentStudentsBatch();
 
             if ($student_batch_ids) {
-                $batch_id = array_unique(array_merge($batch_id, $student_batch_ids));
+                $batch_id = array_diff($student_batch_ids, $batch_id);
             }
         }
 
@@ -134,11 +134,11 @@ class TimetableRepository
             $student_batch_id = $this->student->getAuthStudentBatch();
 
             if ($student_batch_id) {
-                array_push($batch_id, $student_batch_id);
-                $batch_id = array_unique($batch_id);
+                $batch_id = [$student_batch_id];
             }
         }
         
+        $batch_id = array_unique($batch_id);
         if (count($batch_id)) {
             $query->whereIn('batch_id', $batch_id);
         }

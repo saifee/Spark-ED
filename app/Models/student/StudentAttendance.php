@@ -12,6 +12,7 @@ class StudentAttendance extends Model
     protected $fillable = [
                             'batch_id',
                             'subject_id',
+                            'session',
                             'date_of_attendance',
                             'attendance',
                             'options'

@@ -16,16 +16,17 @@
         "laravel/helpers": "^1.1",
         "laravel/socialite": "^4.1",
         "laravel/tinker": "~1.0",
+        "maatwebsite/excel": "^3.1",
         "mews/purifier": "^3.1",
         "milon/barcode": "^6.0.1",
         "mint/service": "dev-master",
+        "nexmo/laravel": "^2.0",
         "paypal/rest-api-sdk-php": "^1.13",
         "razorpay/razorpay": "^2.2",
         "spatie/laravel-activitylog": "^3.8.0",
         "spatie/laravel-permission": "^3.0",
         "stripe/stripe-php": "^6.1",
-        "tymon/jwt-auth": "1.0.0-rc.5",
-        "nexmo/laravel": "^2.0"
+        "tymon/jwt-auth": "1.0.0-rc.5"
     },
     "require-dev": {
         "laravel/telescope": "^2.1",

@@ -165,7 +165,7 @@ class AssignmentRepository
             $student_batch_ids = $this->student->getAuthParentStudentsBatch();
 
             if ($student_batch_ids) {
-                $batch_id = array_unique(array_merge($batch_id, $student_batch_ids));
+                $batch_id = array_diff($student_batch_ids, $batch_id);
             }
         }
 
@@ -173,11 +173,11 @@ class AssignmentRepository
             $student_batch_id = $this->student->getAuthStudentBatch();
 
             if ($student_batch_id) {
-                array_push($batch_id, $student_batch_id);
-                $batch_id = array_unique($batch_id);
+                $batch_id = [$student_batch_id];
             }
         }
 
+        $batch_id = array_unique($batch_id);
         if (count($batch_id)) {
             $query->whereHas('subject',function($q) use($batch_id){
                 $q->whereIn('batch_id', $batch_id);
@@ -260,7 +260,7 @@ class AssignmentRepository
         $title              = gv($params, 'title');
         $date_of_assignment = gv($params, 'date_of_assignment');
         $due_date           = gv($params, 'due_date');
-        $description        = stripInlineStyle(gv($params, 'description'));
+        $description        = clean(gv($params, 'description'));
         $subject_id         = gv($params, 'subject_id');
 
         if (! dateBetweenSession($date_of_assignment)) {
@@ -272,7 +272,7 @@ class AssignmentRepository
             'title'              => $title,
             'date_of_assignment' => $date_of_assignment,
             'due_date'           => $due_date,
-            'description'        => stripInlineStyle($description),
+            'description'        => clean($description),
             'options'            => []
         ];
 

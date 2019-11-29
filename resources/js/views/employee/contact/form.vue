@@ -144,6 +144,7 @@
 	                </div>
 	            </div>
 	        </div>
+	        <custom-field :fields="custom_fields" :customValues="custom_values" :formErrors="customFieldFormErrors" @updateCustomValues="updateCustomValues"></custom-field>
             <div class="card-footer text-right">
         		<button type="submit" class="btn btn-info waves-effect waves-light">{{trans('general.save')}}</button>
             </div>
@@ -175,8 +176,12 @@
 					permanent_country: '',
 					emergency_contact_name: '',
 					emergency_contact_number: '',
+					custom_values: [],
 					type: 'contact'
-				},false)
+				},false),
+				custom_fields: [],
+				custom_values: [],
+				customFieldFormErrors: {}
 			}
 		},
 		mounted(){
@@ -185,9 +190,25 @@
                 this.$router.push('/dashboard');
             }
 
-            this.get(this.employee);
+            this.getPreRequisite();
 		},
 		methods: {
+			getPreRequisite(){
+	            let loader = this.$loading.show();
+	            axios.get('/api/employee/basic/pre-requisite?form_type=employee_contact')
+	            	.then(response => {
+	            		this.custom_fields = response.custom_fields;
+	            		this.get(this.employee);
+	            		loader.hide();
+	            	})
+	            	.catch(error => {
+	            		loader.hide();
+	            		helper.showErrorMsg(error);
+	            	});	
+			},
+			updateCustomValues(value) {
+				this.contactForm.custom_values = value;
+			},
 			updatePermanentAddress(){
 	          	this.contactForm.permanent_address_line_1 = this.contactForm.present_address_line_1;
 	          	this.contactForm.permanent_address_line_2 = this.contactForm.present_address_line_2;
@@ -214,6 +235,7 @@
 	          	this.contactForm.permanent_country = employee.permanent_country;
 	          	this.contactForm.emergency_contact_name = employee.emergency_contact_name;
 	          	this.contactForm.emergency_contact_number = employee.emergency_contact_number;
+	          	this.custom_values = employee.options.hasOwnProperty('custom_values') ? employee.options.custom_values : [];
 			},
 			submit(){
 				let loader = this.$loading.show();
@@ -225,6 +247,7 @@
 					})
 					.catch(error => {
 						loader.hide();
+						this.customFieldFormErrors = error;
 						helper.showErrorMsg(error);
 					})
 			}

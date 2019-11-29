@@ -115,6 +115,7 @@
 	                </div>
 	            </div>
     		</div>
+    		<custom-field :fields="custom_fields" :customValues="custom_values" :formErrors="customFieldFormErrors" @updateCustomValues="updateCustomValues"></custom-field>
             <div class="card-footer text-right">
                 <button type="submit" class="btn btn-info waves-effect waves-light">{{trans('general.save')}}</button>
             </div>
@@ -142,8 +143,11 @@
 					category_id: '',
 					religion_id: '',
 					blood_group_id: '',
+					custom_values: [],
 					type: 'basic'
 				},false),
+				custom_fields: [],
+				custom_values: [],
 				castes: [],
                 selected_caste: null,
 				religions: [],
@@ -152,7 +156,8 @@
                 selected_blood_group: null,
 				categories: [],
                 selected_category: null,
-				genders: []
+				genders: [],
+				customFieldFormErrors: {}
 			}
 		},
 		mounted(){
@@ -167,19 +172,23 @@
 		methods: {
 			getPreRequisite(){
 	            let loader = this.$loading.show();
-	            axios.get('/api/student/pre-requisite')
+	            axios.get('/api/student/pre-requisite?form_type=student_basic')
 	            	.then(response => {
 	            		this.castes = response.castes;
 	            		this.religions = response.religions;
 	            		this.blood_groups = response.blood_groups;
 	            		this.categories = response.categories;
 	            		this.genders = response.genders;
+	            		this.custom_fields = response.custom_fields;
 	            		loader.hide();
 	            	})
 	            	.catch(error => {
 	            		loader.hide();
 	            		helper.showErrorMsg(error);
 	            	});	
+			},
+			updateCustomValues(value) {
+				this.basicForm.custom_values = value;
 			},
 			get(student){
 	          	this.basicForm.first_name = student.first_name;
@@ -199,6 +208,7 @@
 	          	this.selected_category = student.category_id ? {id: student.category_id, name: student.category.name} : null;
 	          	this.selected_religion = student.religion_id ? {id: student.religion_id, name: student.religion.name} : null;
 	          	this.selected_blood_group = student.blood_group_id ? {id: student.blood_group_id, name: student.blood_group.name} : null;
+	          	this.custom_values = student.options.hasOwnProperty('custom_values') ? student.options.custom_values : [];
 	        },
 			submit(){
 				let loader = this.$loading.show();
@@ -210,6 +220,7 @@
 					})
 					.catch(error => {
 						loader.hide();
+						this.customFieldFormErrors = error;
 						helper.showErrorMsg(error);
 					})
 			},

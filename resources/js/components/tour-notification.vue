@@ -1,7 +1,7 @@
 <template>
-  <notifications  group="demo"  
-                  position="top right" 
-                  class="tour-notification" 
+  <notifications  group="demo"
+                  position="top right"
+                  class="tour-notification"
                   width="370px" >
     <template slot="body" slot-scope="props">
       <div>
@@ -102,7 +102,7 @@
           margin-top: 5px;
           background: #535456;
           transition: all 0.2s ease-in-out;
-            
+
           i {
             margin-right: 5px;
           }

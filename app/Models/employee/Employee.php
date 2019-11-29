@@ -54,6 +54,7 @@ class Employee extends Model
     protected static $logFillable = true;
     protected static $logOnlyDirty = true;
     protected static $ignoreChangedAttributes = ['updated_at'];
+    protected $appends = ['present_address','permanent_address'];
     
     public function user()
     {
@@ -123,6 +124,38 @@ class Employee extends Model
     public function getNameWithCodeAttribute()
     {
         return $this->name.' ('.$this->employee_code.')';
+    }
+
+    public function getPresentAddressAttribute()
+    {
+        $data= array(
+            $this->present_address_line_1,
+            $this->present_address_line_2,
+            $this->present_city,
+            $this->present_state,
+            $this->present_zipcode,
+            $this->present_country
+        );
+
+        $data = array_filter($data);
+
+        return implode(', ', $data);
+    }
+
+    public function getPermanentAddressAttribute()
+    {
+        $data= array(
+            $this->permanent_address_line_1,
+            $this->permanent_address_line_2,
+            $this->permanent_city,
+            $this->permanent_state,
+            $this->permanent_zipcode,
+            $this->permanent_country
+        );
+
+        $data = array_filter($data);
+
+        return implode(', ', $data);
     }
 
     public function scopeInfo($q)

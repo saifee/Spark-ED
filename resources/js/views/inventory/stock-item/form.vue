@@ -104,6 +104,7 @@
                 this.stockItemForm.post('/api/stock/item')
                     .then(response => {
                         toastr.success(response.message);
+                        this.selected_stock_category = null;
                         this.$emit('completed');
                         loader.hide();
                     })

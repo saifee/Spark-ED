@@ -13,7 +13,12 @@
         <tbody>
         	@foreach($exam_schedules as $exam_schedule)
         		<tr>
-                    <td valign="top">{{$exam_schedule->exam->name}}</td>
+                    <td valign="top">
+                        {{$exam_schedule->exam->name}}
+                        @if($exam_schedule->exam->exam_term_id)
+                            <br /><small>({{$exam_schedule->exam->term->courseGroup->name}})</small>
+                        @endif
+                    </td>
         			<td valign="top">{{$exam_schedule->batch->name}}</td>
                     <td>
                         <ul style="list-style:none;padding:0;margin:0;">

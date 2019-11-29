@@ -72,9 +72,9 @@
                         		</table>	
                         	</div>
                             <div v-if="attachments.length">
-                                <ul style="list-style: none;padding: 0;" class="m-t-10">
-                                    <li v-for="attachment in attachments">
-                                        <a :href="`/finance/transaction/income/${income.uuid}/attachment/${attachment.uuid}/download?token=${authToken}`"><i class="fas fa-paperclip"></i> {{attachment.user_filename}}</a>
+                                <ul class="m-t-10 upload-file-list">
+                                    <li class="upload-file-list-item" v-for="attachment in attachments">
+                                        <a :href="`/finance/transaction/income/${income.uuid}/attachment/${attachment.uuid}/download?token=${authToken}`" class="no-link-color"><i :class="['file-icon', 'fas', 'fa-lg', attachment.file_info.icon]"></i> <span class="upload-file-list-item-size">{{attachment.file_info.size}}</span> {{attachment.user_filename}}</a>
                                     </li>
                                 </ul>
                             </div>

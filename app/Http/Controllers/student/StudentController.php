@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Exports\Student\ExportStudents;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\Student\StudentRequest;
 use App\Http\Requests\Student\UserLoginRequest;
 use App\Models\Student\Student;
@@ -48,6 +50,12 @@ class StudentController extends Controller {
 	 */
 	public function index() {
 		$this->authorize('list', StudentRecord::class);
+
+        if (request('action') == 'excel') {
+            $students = $this->repo->paginate($this->request->all());
+
+            return Excel::download(new ExportStudents($students), 'Students.xlsx');
+        }
 
 		$students = $this->repo->paginate($this->request->all());
 

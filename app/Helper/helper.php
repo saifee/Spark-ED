@@ -407,6 +407,36 @@ function formatNumber($number, $decimal_place = 2)
     return round($number, $decimal_place);
 }
 
+function formatSizeUnits($bytes)
+{
+    if ($bytes >= 1073741824)
+    {
+        $bytes = number_format($bytes / 1073741824, 2) . ' GB';
+    }
+    elseif ($bytes >= 1048576)
+    {
+        $bytes = number_format($bytes / 1048576, 2) . ' MB';
+    }
+    elseif ($bytes >= 1024)
+    {
+        $bytes = number_format($bytes / 1024, 2) . ' KB';
+    }
+    elseif ($bytes > 1)
+    {
+        $bytes = $bytes . ' bytes';
+    }
+    elseif ($bytes == 1)
+    {
+        $bytes = $bytes . ' byte';
+    }
+    else
+    {
+        $bytes = '0 bytes';
+    }
+
+    return $bytes;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////// IP helper function starts
 
 /*
@@ -695,6 +725,27 @@ function gkv($data, $key)
 function gbv($params, $key)
 {
     return (isset($params[$key]) && $params[$key]) ? 1 : 0;
+}
+
+function gnv($params, $key, $default = null)
+{
+    return isset($params[$key]) ? $params[$key] : $default;
+}
+
+function mergeByKey($array1,$array2) {
+    $array1 = ! is_array($array1) ? [] : $array1;
+    $array2 = ! is_array($array2) ? [] : $array2;
+
+    $data = array();
+    $arrayAB = array_merge($array1,$array2);
+    foreach ($arrayAB as $value) {
+      $id = $value['id'];
+      if (!isset($data[$id])) {
+        $data[$id] = array();
+      }
+      $data[$id] = array_merge($data[$id],$value);
+    }
+    return array_values($data);
 }
 
 function dateBetweenSession($date)
@@ -1198,6 +1249,17 @@ function searchByKey($data, $key, $value)
     return ($index === FALSE) ? [] : $data[$index];
 }
 
+function moreThanErrorMsg($data, $count = 2)
+{
+    $data = array_unique($data);
+    $error = implode(',', $data);
+    if (count($data) > $count) {
+        $error = implode(', ', array_slice($data,0,$count)).' '.trans('general.and_count_other', ['count' => count($data) - 2]);
+    }
+
+    return $error;
+}
+
 function dateToWord($date)
 {
     $dates = [
@@ -1284,7 +1346,7 @@ function numberToWord($num = false)
     if ($commas > 1) {
         $commas = $commas - 1;
     }
-    return implode(' ', $words);
+    return ucwords(implode(' ', $words));
 }
 
 function currencyInWord(float $number)
@@ -1341,4 +1403,65 @@ function currencyInWord(float $number)
 
     // $paise = ($decimal) ? ($words[floor($decimal / 10)] . " " . $words[$decimal % 10]) . ' Paise' : '';
     return ucwords(($Rupees ? $Rupees . $number_value." " : '') . $paise);
+}
+
+function getStudentAttendanceMethods()
+{
+    $data = getVar('data');
+    $student_attendance_methods = gv($data, 'student_attendance_methods', []);
+
+    $attendance_methods = array();
+    foreach ($student_attendance_methods as $student_attendance_method) {
+        $attendance_methods[] = array(
+            'text' => trans('student.attendance_method_'.$student_attendance_method),
+            'value' => $student_attendance_method
+        );
+    }
+
+    return $attendance_methods;
+}
+
+function getOnlineExamTypes()
+{
+    $data = getVar('data');
+    $online_exam_types = gv($data, 'online_exam_types', []);
+
+    $types = array();
+    foreach ($online_exam_types as $online_exam_type) {
+        $types[] = array(
+            'text' => trans('exam.online_exam_type_'.$online_exam_type),
+            'value' => $online_exam_type
+        );
+    }
+
+    return $types;
+}
+
+function getOnlineExamQuestionTypes()
+{
+    $data = getVar('data');
+    $online_exam_question_types = gv($data, 'online_exam_question_types', []);
+
+    $types = array();
+    foreach ($online_exam_question_types as $online_exam_question_type) {
+        $types[] = array(
+            'text' => trans('exam.online_exam_question_type_'.$online_exam_question_type),
+            'value' => $online_exam_question_type
+        );
+    }
+
+    return $types;
+}
+
+function getStudentAttendanceMoreThanOnceTypes()
+{
+    $data = array(
+        array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.first')]), 'value' => 1),
+        array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.second')]), 'value' => 2),
+        array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.third')]), 'value' => 3),
+        array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.fourth')]), 'value' => 4),
+        array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.fifth')]), 'value' => 5)
+    );
+
+    return $data;
 }

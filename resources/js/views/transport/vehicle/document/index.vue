@@ -149,9 +149,9 @@
                                 </div>
                                 <div class="m-t-20" v-html="vehicle_document.description"></div>
                                 <div v-if="documents.length">
-                                    <ul style="list-style: none;padding: 0;" class="m-t-10">
-                                        <li v-for="document in documents">
-                                            <a :href="`/transport/vehicle/document/${vehicle_document.id}/attachment/${document.uuid}/download?token=${authToken}`"><i class="fas fa-paperclip"></i> {{document.user_filename}}</a>
+                                    <ul class="m-t-10 upload-file-list">
+                                        <li class="upload-file-list-item" v-for="document in documents">
+                                            <a :href="`/transport/vehicle/document/${vehicle_document.id}/attachment/${document.uuid}/download?token=${authToken}`" class="no-link-color"><i :class="['file-icon', 'fas', 'fa-lg', document.file_info.icon]"></i> <span class="upload-file-list-item-size">{{document.file_info.size}}</span> {{document.user_filename}}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -277,7 +277,7 @@
                 this.$router.push('/transport/vehicle/document/'+vehicle_document.id+'/edit');
             },
             confirmDelete(vehicle_document){
-                return diadocument => this.deleteVehicleLog(vehicle_document);
+                return dialog => this.deleteVehicleLog(vehicle_document);
             },
             deleteVehicleLog(vehicle_document){
                 let loader = this.$loading.show();

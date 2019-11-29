@@ -87,6 +87,8 @@ class StockTransferRepository
     {
         $sort_by = gv($params, 'sort_by', 'date');
         $order   = gv($params, 'order', 'desc');
+        $room_id = gv($params, 'room_id');
+        $room_id = is_array($room_id) ? $room_id : ($room_id ? explode(',', $room_id) : []);
 
         $date_start_date = gv($params, 'date_start_date');
         $date_end_date   = gv($params, 'date_end_date');
@@ -95,6 +97,12 @@ class StockTransferRepository
             'start_date' => $date_start_date,
             'end_date' => $date_end_date
         ]);
+
+        if (count($room_id)) {
+            $query->whereHas('room', function ($q) use ($room_id) {
+                $q->whereIn('id', $room_id);
+            });
+        }
 
         return $query->orderBy($sort_by, $order);
     }
@@ -310,6 +318,7 @@ class StockTransferRepository
 
         foreach ($params['details'] as $detail) {
             $stock_transfer_detail = $this->stock_transfer_detail->firstOrCreate([
+                'stock_transfer_id' => $stock_transfer->id,
                 'stock_item_id' => gv($detail, 'stock_item_id')
             ]);
 

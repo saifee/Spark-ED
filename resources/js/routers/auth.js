@@ -93,6 +93,10 @@ export default [
         component: () => import(/* webpackChunkName: "js/employee/index" */ '@views/employee/index')
     },
     {
+        path: '/employee/import',
+        component: () => import(/* webpackChunkName: "js/employee/import/index" */ '@views/employee/import/index')
+    },
+    {
         path: '/employee/id-card',
         component: () => import(/* webpackChunkName: "js/employee/idCard/index" */ '@views/employee/id-card/index')
     },
@@ -463,5 +467,17 @@ export default [
     {
         path: '/communication/sms',
         component: () => import(/* webpackChunkName: "js/communication/sms/index" */ '@views/communication/sms/index')
+    },
+    {
+        path: '/communication/email',
+        component: () => import(/* webpackChunkName: "js/communication/email/index" */ '@views/communication/email/index')
+    },
+    {
+        path: '/institute/document',
+        component: () => import(/* webpackChunkName: "js/institute/document/index" */ '@views/institute/document/index')
+    },
+    {
+        path: '/institute/document/:id/edit',
+        component: () => import(/* webpackChunkName: "js/institute/document/edit" */ '@views/institute/document/edit')
     }
 ]

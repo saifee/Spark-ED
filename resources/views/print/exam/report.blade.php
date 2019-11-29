@@ -159,19 +159,19 @@
 							@endforeach
 						</tbody>
 					</table>
-				    <table class="report-card" style="margin-top:10px;">
-				        <tbody>
-							<tr>
-								<td style="font-weight: bold;">{{trans('exam.total_working_days')}}</td>
-								<td style="text-align: right;">{{gv($summary, 'working_days')}}</td>
-							</tr>
-							<tr>
-								<td style="font-weight: bold;">{{trans('exam.total_attendances')}}</td>
-								<td style="text-align: right;">{{gv($summary, 'attendance')}}</td>
-							</tr>
-				        </tbody>
-				    </table>
 				@endif
+			    <table class="report-card" style="margin-top:10px;">
+			        <tbody>
+						<tr>
+							<td style="font-weight: bold;">{{trans('exam.total_working_days')}}</td>
+							<td style="text-align: right;">{{gv($summary, 'working_days')}}</td>
+						</tr>
+						<tr>
+							<td style="font-weight: bold;">{{trans('exam.total_attendances')}}</td>
+							<td style="text-align: right;">{{gv($summary, 'attendance')}}</td>
+						</tr>
+			        </tbody>
+			    </table>
 			</td>
 			<td style="width: 35%;" valign="top">
 				@if ($summary['grade'])

@@ -68,7 +68,7 @@
 						                
 						                <div class="form-group">
 							            	<div class="input-group mb-3">
-												<input class="form-control" type="text" v-model="book_number" name="book_number" :placeholder="trans('library.book_search_by_number')">
+												<input class="form-control" type="text" v-model="book_number" name="book_number" @keypress.13.prevent="searchBook" :placeholder="trans('library.book_search_by_number')">
 												<div class="input-group-append">
 													<button type="button" class="btn btn-info pull-right" @click="searchBook"><i class="fas fa-search"></i> {{trans('general.search')}}</button>
 												</div>
@@ -265,6 +265,8 @@
 		},
 		mounted(){
             helper.showDemoNotification(['library']);
+
+            this.issueForm.date_of_issue = moment().format('YYYY-MM-DD');
 		},
 		methods: {
             getStudentName(student){

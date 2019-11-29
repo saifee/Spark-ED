@@ -1,25 +1,26 @@
 <?php
 namespace App\Repositories\Student;
 
-use App\Models\Academic\AcademicSession;
-use App\Models\Finance\Fee\FeeAllocation;
-use App\Models\Finance\Transaction\Transaction;
+use Illuminate\Support\Str;
 use App\Models\Student\Admission;
 use App\Models\Student\Registration;
-use App\Models\Student\StudentFeeRecord;
 use App\Models\Student\StudentRecord;
+use App\Models\Academic\AcademicSession;
+use App\Models\Student\StudentFeeRecord;
+use App\Models\Finance\Fee\FeeAllocation;
 use App\Repositories\Academic\BatchRepository;
-use App\Repositories\Academic\CourseRepository;
-use App\Repositories\Configuration\Academic\CourseGroupRepository;
-use App\Repositories\Configuration\Academic\InstituteRepository;
-use App\Repositories\Configuration\Finance\Transaction\PaymentMethodRepository;
-use App\Repositories\Finance\AccountRepository;
-use App\Repositories\Finance\Fee\FeeConcessionRepository;
-use App\Repositories\Student\StudentParentRepository;
-use App\Repositories\Student\StudentRepository;
-use App\Repositories\Transport\TransportCircleRepository;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use App\Models\Finance\Transaction\Transaction;
+use App\Repositories\Academic\CourseRepository;
+use App\Repositories\Finance\AccountRepository;
+use App\Repositories\Student\StudentRepository;
+use App\Repositories\Student\StudentParentRepository;
+use App\Repositories\Configuration\CustomFieldRepository;
+use App\Repositories\Finance\Fee\FeeConcessionRepository;
+use App\Repositories\Transport\TransportCircleRepository;
+use App\Repositories\Configuration\Academic\InstituteRepository;
+use App\Repositories\Configuration\Academic\CourseGroupRepository;
+use App\Repositories\Configuration\Finance\Transaction\PaymentMethodRepository;
 
 class RegistrationRepository
 {
@@ -40,6 +41,7 @@ class RegistrationRepository
     protected $student_parent;
     protected $institute;
     protected $academic_session;
+    protected $custom_field;
 
     /**
      * Instantiate a new instance.
@@ -63,7 +65,8 @@ class RegistrationRepository
         PaymentMethodRepository $payment_method,
         StudentParentRepository $student_parent,
         InstituteRepository $institute,
-        AcademicSession $academic_session
+        AcademicSession $academic_session,
+        CustomFieldRepository $custom_field
     ) {
         $this->registration = $registration;
         $this->course = $course;
@@ -82,6 +85,7 @@ class RegistrationRepository
         $this->student_parent = $student_parent;
         $this->institute = $institute;
         $this->academic_session = $academic_session;
+        $this->custom_field = $custom_field;
     }
 
     /**
@@ -234,6 +238,16 @@ class RegistrationRepository
         return compact('courses','previous_institutes','registration_types');
     }
 
+    public function getRegistrationCustomField()
+    {
+        return $this->custom_field->listAllByForm('student_registration');
+    }
+
+    public function getOnlineRegistrationCustomField()
+    {
+        return $this->custom_field->listAllByForm('student_online_registration');
+    }
+
     /**
      * Get registration pre requisite.
      *
@@ -251,7 +265,9 @@ class RegistrationRepository
 
         $previous_institutes = $this->institute->selectAll();
 
-        return compact('courses', 'genders', 'course_details', 'previous_institutes');
+        $custom_fields = $this->getRegistrationCustomField();
+
+        return compact('courses', 'genders', 'course_details', 'previous_institutes','custom_fields');
     }
 
     /**
@@ -297,6 +313,8 @@ class RegistrationRepository
         $parent_type = gv($params, 'parent_type');
         $student_type = gv($params, 'student_type');
 
+        $custom_values = $this->custom_field->validateCustomValues('student_registration', gv($params, 'custom_values', []));
+
         if ($student_type == 'new') {
             $student = $this->student->create($params);
 
@@ -314,7 +332,12 @@ class RegistrationRepository
             $this->student->validateStudentForRegistration($student);
         }
 
-        return $this->registration->forceCreate($this->formatParams($params, $student));
+        $registration = $this->registration->forceCreate($this->formatParams($params, $student));
+
+        $options = $registration->options;
+        $options['custom_values'] = mergeByKey($registration->getOption('custom_values'), $custom_values);
+        $registration->options = $options;
+        $registration->save();
     }
 
     /**
@@ -406,6 +429,8 @@ class RegistrationRepository
             throw ValidationException::withMessages(['course_id' => trans('student.course_registration_disabled')]);
         }
 
+        $custom_values = $this->custom_field->validateCustomValues('student_online_registration', gv($params, 'custom_values', []));
+
         $params['registration_fee'] = ($course_options && $enable_registration_fee) ? (gv($course_options, 'registration_fee')) : 0;
 
         beginTransaction();
@@ -419,6 +444,11 @@ class RegistrationRepository
 
         $registration = $this->registration->forceCreate($this->formatParams($params, $student));
         $registration->registration_key = randomString(15);
+        $registration->save();
+        
+        $options = $registration->options;
+        $options['custom_values'] = mergeByKey($registration->getOption('custom_values'), $custom_values);
+        $registration->options = $options;
         $registration->save();
 
         commitTransaction();
@@ -706,6 +736,8 @@ class RegistrationRepository
             }
         }
 
+        $custom_values = $this->custom_field->validateCustomValues('student_registration', gv($params, 'custom_values', []));
+
         $registration->date_of_registration  = $date_of_registration;
         $registration->course_id             = $course_id;
         $registration->previous_institute_id = $previous_institute_id;
@@ -717,6 +749,12 @@ class RegistrationRepository
         }
 
         $registration->save();
+
+        $options = $registration->options;
+        $options['custom_values'] = mergeByKey($registration->getOption('custom_values'), $custom_values);
+        $registration->options = $options;
+        $registration->save();
+        
         return $registration;
     }
 

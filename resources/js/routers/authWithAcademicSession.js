@@ -152,6 +152,34 @@ export default [
         component: () => import(/* webpackChunkName: "js/student/fee/create" */ '@views/student/fee/create')
     },
     {
+        path: '/online-exam',
+        component: () => import(/* webpackChunkName: "js/exam/online-exam/index" */ '@views/exam/online-exam/index')
+    },
+    {
+        path: '/online-exam/create',
+        component: () => import(/* webpackChunkName: "js/exam/online-exam/create" */ '@views/exam/online-exam/create')
+    },
+    {
+        path: '/online-exam/:uuid/edit',
+        component: () => import(/* webpackChunkName: "js/exam/online-exam/edit" */ '@views/exam/online-exam/edit')
+    },
+    {
+        path: '/online-exam/:uuid/questions',
+        component: () => import(/* webpackChunkName: "js/exam/online-exam/questions" */ '@views/exam/online-exam/questions')
+    },
+    {
+        path: '/online-exam/:uuid/records',
+        component: () => import(/* webpackChunkName: "js/exam/online-exam/records" */ '@views/exam/online-exam/records')
+    },
+    {
+        path: '/online-exam/:uuid/records/:id/report',
+        component: () => import(/* webpackChunkName: "js/exam/online-exam/report" */ '@views/exam/online-exam/report')
+    },
+    {
+        path: '/online-exam/:uuid/exam',
+        component: () => import(/* webpackChunkName: "js/exam/online-exam/exam" */ '@views/exam/online-exam/exam')
+    },
+    {
         path: '/exam/schedule',
         component: () => import(/* webpackChunkName: "js/exam/schedule/index" */ '@views/exam/schedule/index')
     },
@@ -314,6 +342,10 @@ export default [
     {
         path: '/library',
         component: () => import(/* webpackChunkName: "js/library/index" */ '@views/library/index')
+    },
+    {
+        path: '/library/barcode',
+        component: () => import(/* webpackChunkName: "js/library/barcode/index" */ '@views/library/barcode/index')
     },
     {
         path: '/library/book',
