@@ -33,7 +33,7 @@
   export default {
     methods: {
       closeForever() {
-        this.$cookie.set('hide_instikit_tour',helper.randomString(20) , 1);
+        this.$cookie.set('hide_spark_tour',helper.randomString(20) , 1);
         this.$notify({
           group: 'demo',
           clean: true
