@@ -17,10 +17,10 @@
                 </ul>
                 <ul class="navbar-nav flex-filler"></ul>
                 <ul class="navbar-nav my-lg-0">
-                    <li class="nav-item hidden-sm-down d-none d-md-inline">
+                    <li class="nav-item hidden-sm-down d-none d-md-inline" v-if="getConfig('made') === 'saudi'">
                         <global-search></global-search>
                     </li>
-                    <li class="nav-item dropdown" v-if="getAcademicSessions.length && hasPermission('change-academic-session')">
+                    <li class="nav-item dropdown" v-if="getAcademicSessions.length && hasPermission('change-academic-session') && getConfig('made') === 'saudi'">
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-tooltip.bottom="trans('academic_session.academic_session')">{{getDefaultAcademicSession ? getDefaultAcademicSession.name : trans('academic_session.choose_session')}} <i class="fa fa-chevron-down"></i> </a>
                         <div :class="['dropdown-menu', getConfig('direction') != 'rtl' ? 'dropdown-menu-right' : '']">
                             <ul class="dropdown-user" style="padding-bottom:10px;">
@@ -32,13 +32,13 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item dropdown" v-if="getAcademicSessions.length && !hasPermission('change-academic-session')">
+                    <li class="nav-item dropdown" v-if="getAcademicSessions.length && !hasPermission('change-academic-session') && getConfig('made') === 'saudi'"">
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#">{{getDefaultAcademicSession ? getDefaultAcademicSession.name : ''}}</a>
                     </li>
-                    <li class="nav-item d-none d-sm-inline" v-tooltip.bottom="trans('todo.todo')" v-if="getConfig('todo') && hasPermission('access-todo')">
+                    <li class="nav-item d-none d-sm-inline" v-tooltip.bottom="trans('todo.todo')" v-if="getConfig('todo') && hasPermission('access-todo') && getConfig('made') === 'saudi'"">
                         <router-link class="nav-link" to="/utility/todo"><i class="far fa-check-circle"></i></router-link>
                     </li>
-                    <li class="nav-item" v-tooltip.bottom="trans('configuration.configuration')" v-if="hasPermission('access-configuration')">
+                    <li class="nav-item" v-tooltip.bottom="trans('configuration.configuration')" v-if="hasPermission('access-configuration') && getConfig('made') === 'saudi'"">
                         <router-link class="nav-link" to="/configuration"><i class="fas fa-cogs"></i></router-link>
                     </li>
                     <li class="nav-item dropdown">
@@ -56,9 +56,9 @@
                                 </li>
                                 <li><router-link to="/change/password"><i class="fas fa-key"></i> {{trans('user.change_password')}}</router-link></li>
                                 <template v-if="getConfig('pb')">
-                                    <li v-if="hasRole('admin')"><router-link to="/product/about"><i class="fas fa-user-tie"></i> {{trans('general.about')}}</router-link></li>
-                                    <li v-if="hasRole('admin')"><router-link to="/product/support"><i class="fas fa-life-ring"></i> {{trans('general.support')}}</router-link></li>
-                                    <li v-if="hasRole('admin')"><router-link to="/product/update"><i class="fas fa-download"></i> {{trans('general.update')}}</router-link></li>
+                                    <li v-if="hasRole('admin') && getConfig('made') === 'saudi'"><router-link to="/product/about"><i class="fas fa-user-tie"></i> {{trans('general.about')}}</router-link></li>
+                                    <li v-if="hasRole('admin') && getConfig('made') === 'saudi'"><router-link to="/product/support"><i class="fas fa-life-ring"></i> {{trans('general.support')}}</router-link></li>
+                                    <li v-if="hasRole('admin') && getConfig('made') === 'saudi'"><router-link to="/product/update"><i class="fas fa-download"></i> {{trans('general.update')}}</router-link></li>
                                 </template>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#" @click.prevent="logout"><i class="fas fa-power-off"></i> {{trans('auth.logout')}}</a></li>
