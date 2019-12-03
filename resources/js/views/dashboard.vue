@@ -5,7 +5,7 @@
                 <div class="col-12 col-sm-6">
                     <h3 class="text-themecolor">{{trans('general.home')}}</h3>
                 </div>
-                <div class="col-12 col-sm-6">
+                <div class="col-12 col-sm-6" v-if="getConfig('made') === 'saudi'">
                     <div class="action-buttons pull-right">
                         <button class="btn btn-info btn-sm right-sidebar-toggle " v-tooltip="trans('user.user_preference')"><i class="fas fa-cog"></i></button>
                         <button class="btn btn-danger btn-sm" @click.prevent="logout"><i class="fas fa-power-off"></i> <span class="d-none d-sm-inline">{{trans('auth.logout')}}</span></button>
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" v-if="getConfig('made') === 'saudi'">
             <div class="row">
                 <div class="col-12 col-md-8">
                     <notice-highlight class="border-right border-bottom p-4" v-if="showTourVideo && !getConfig('mode')">
@@ -97,7 +97,7 @@
                 </div>
             </div>
         </div>
-        <div class="right-sidebar">
+        <div class="right-sidebar" v-if="getConfig('made') === 'saudi'">
             <div class="slimscrollright">
                 <div class="rpanel-title"> 
                     {{trans('user.user_preference')}} 
