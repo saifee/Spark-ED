@@ -6,7 +6,7 @@
                     <!-- <img :src="getLogo" class="org-logo" /> -->
                     <form class="form-horizontal form-material" id="loginform" @submit.prevent="process" @keydown="loginForm.errors.clear($event.target.name)">
                         <h3 class="box-title m-t-20 m-b-10">{{trans('auth.login')}}</h3>
-                        <social-login />
+                        <social-login v-if="getConfig('made') === 'saudi'" />
                         <div v-if="! login_with_otp">
                             <div class="form-group ">
                                 <input type="text" name="email_or_username" class="form-control" :placeholder="trans('auth.email_or_username')" v-model="loginForm.email_or_username">
