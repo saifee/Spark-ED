@@ -119,6 +119,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <authentication-social :config-form="configForm"  v-if="getConfig('made') === 'saudi'" />
                                 <button type="submit" class="btn btn-info waves-effect waves-light m-t-10 pull-right">{{trans('general.save')}}</button>
                             </div>
                             <div class="col-12 col-sm-6">
@@ -134,8 +135,12 @@
 
 
 <script>
+    import authenticationSocial from '@views/configuration/authentication/social.vue'
+
     export default {
-        components : {  },
+        components : {
+            authenticationSocial
+        },
         data() {
             return {
                 configForm: new Form({
