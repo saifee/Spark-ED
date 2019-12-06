@@ -169,8 +169,10 @@ class StockTransferRepository
         beginTransaction();
 
         $type = gv($params, 'type');
+        $transfer_type = gv($params, 'transfer_type');
 
         $stock_transfer = $this->stock_transfer->forceCreate([
+            'transfer_type'   => $transfer_type,
             'type'            => $type,
             'room_id'         => $type == 'room' ? gv($params, 'room_id') : null,
             'student_id'      => $type == 'student' ? gv($params, 'student_id') : null,
