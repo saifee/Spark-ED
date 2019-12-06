@@ -102,9 +102,6 @@
             }
         },
         mounted(){
-            if(!this.id)
-                this.addRow();
-
             if(this.id)
                 this.get();
             else
@@ -184,7 +181,6 @@
                         this.selected_student = null;
                         this.stockSaleForm.details = [];
                         this.clearAttachment = !this.clearAttachment;
-                        this.addRow();
                         this.$emit('completed');
                         loader.hide();
                     })
