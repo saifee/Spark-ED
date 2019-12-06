@@ -457,6 +457,18 @@ export default [
         component: () => import(/* webpackChunkName: "js/inventory/stock-transfer/show" */ '@views/inventory/stock-transfer/show')
     },
     {
+        path: '/inventory/stock/sale',
+        component: () => import(/* webpackChunkName: "js/inventory/stock-sale/index" */ '@views/inventory/stock-sale/index')
+    },
+    {
+        path: '/inventory/stock/sale/:id/edit',
+        component: () => import(/* webpackChunkName: "js/inventory/stock-sale/edit" */ '@views/inventory/stock-sale/edit')
+    },
+    {
+        path: '/inventory/stock/sale/:id',
+        component: () => import(/* webpackChunkName: "js/inventory/stock-sale/show" */ '@views/inventory/stock-sale/show')
+    },
+    {
         path: '/inventory/vendor',
         component: () => import(/* webpackChunkName: "js/inventory/vendor/index" */ '@views/inventory/vendor/index')
     },
