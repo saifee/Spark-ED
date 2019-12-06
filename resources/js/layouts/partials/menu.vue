@@ -256,7 +256,7 @@
                 <li v-if="showMenu('vendor')"><router-link to="/inventory/vendor"><i class="fas fa-angle-double-right"></i> {{trans('inventory.vendor')}}</router-link></li>
                 <li v-if="showMenu('stock_purchase')"><router-link to="/inventory/stock/purchase"><i class="fas fa-angle-double-right"></i> {{trans('inventory.stock_purchase')}}</router-link></li>
                 <li v-if="showMenu('stock_transfer')"><router-link to="/inventory/stock/transfer"><i class="fas fa-angle-double-right"></i> {{trans('inventory.stock_transfer')}}</router-link></li>
-                <li v-if="showMenu('stock_sale')"><router-link to="/inventory/stock/sale"><i class="fas fa-angle-double-right"></i> {{trans('inventory_sale.stock_sale')}}</router-link></li>
+                <li v-if="showMenu('stock_sale') && getConfig('made') === 'saudi'"><router-link to="/inventory/stock/sale"><i class="fas fa-angle-double-right"></i> {{trans('inventory_sale.stock_sale')}}</router-link></li>
             </ul>
         </li>
         <li v-show="moduleMenu && showMenu('post') && hasPermission('list-article')">
