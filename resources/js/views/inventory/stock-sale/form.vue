@@ -3,13 +3,6 @@
         <form @submit.prevent="proceed" @keydown="stockSaleForm.errors.clear($event.target.name)">
             <div class="row">
                 <div class="col-12">
-                    <div class="form-group">
-                        <label for="">{{trans('inventory_sale.stock_sale_date')}}</label>
-                        <datepicker v-model="stockSaleForm.date" :bootstrapStyling="true" @selected="stockSaleForm.errors.clear('date')" :placeholder="trans('inventory_sale.stock_sale_date')"></datepicker>
-                        <show-error :form-name="stockSaleForm" prop-name="date"></show-error>
-                    </div>
-                </div>
-                <div class="col-12">
                     <div class="form-group" v-if="stockSaleForm.type == 'student'">
                         <label for="">{{trans('student.student')}}</label>
                         <v-select label="name" v-model="selected_student" name="student_id" id="student_id" :options="students" :placeholder="trans('student.select_student')" @select="onStudentSelect" @close="stockSaleForm.errors.clear('student_id')" @remove="stockSaleForm.student_id = ''">
@@ -18,6 +11,13 @@
                             </div>
                         </v-select>
                         <show-error :form-name="stockSaleForm" prop-name="student_id"></show-error>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="">{{trans('inventory_sale.stock_sale_date')}}</label>
+                        <datepicker v-model="stockSaleForm.date" :bootstrapStyling="true" @selected="stockSaleForm.errors.clear('date')" :placeholder="trans('inventory_sale.stock_sale_date')"></datepicker>
+                        <show-error :form-name="stockSaleForm" prop-name="date"></show-error>
                     </div>
                 </div>
                 <div class="col-12">
