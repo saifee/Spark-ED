@@ -10,6 +10,7 @@ class StockTransfer extends Model
     use LogsActivity;
 
     protected $fillable = [
+                            'transfer_type',
                             'room_id',
                             'student_record_id',
                             'employee_id',
