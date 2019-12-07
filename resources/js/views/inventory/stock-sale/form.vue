@@ -25,7 +25,7 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label for="">{{trans('inventory.add_new_stock_item')}}</label>
-                        <v-select label="name" v-model="addStockItem" :options="stock_items" :close-on-select="false" :placeholder="trans('inventory.select_stock_item')" @input="addRow">
+                        <v-select label="name" :custom-label="stockItemCustomLabel" v-model="addStockItem" :options="stock_items" :close-on-select="false" :placeholder="trans('inventory.select_stock_item')" @input="addRow">
                             <div class="multiselect__option" slot="afterList" v-if="!stock_items.length">
                                 {{trans('general.no_option_found')}}
                             </div>
@@ -262,6 +262,9 @@
                 var total = 0
                 total += this.getSubTotal();
                 return total
+            },
+            stockItemCustomLabel({ name, code }){
+                return `${name} [${code}]`
             },
         },
         computed:{
