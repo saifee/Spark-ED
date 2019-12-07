@@ -25,7 +25,7 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label for="">{{trans('inventory.add_new_stock_item')}}</label>
-                        <v-select label="name" v-model="add_stock_item" :options="stock_items" :placeholder="trans('inventory.select_stock_item')" @select="addRow">
+                        <v-select label="name" v-model="add_stock_item" :options="stock_items" :placeholder="trans('inventory.select_stock_item')" @input="addRow">
                             <div class="multiselect__option" slot="afterList" v-if="!stock_items.length">
                                 {{trans('general.no_option_found')}}
                             </div>
