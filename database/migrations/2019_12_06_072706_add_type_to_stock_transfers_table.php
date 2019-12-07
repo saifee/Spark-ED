@@ -14,7 +14,7 @@ class AddTypeToStockTransfersTable extends Migration
     public function up()
     {
         Schema::table('stock_transfers', function (Blueprint $table) {
-            $table->string('transfer_type')->default('transfer');
+            $table->string('transfer_type')->default('transfer')->nullable();
         });
     }
 
