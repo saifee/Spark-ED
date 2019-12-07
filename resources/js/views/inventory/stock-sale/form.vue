@@ -145,6 +145,10 @@
                     })
             },
             addRow(selectedOption){
+                const item = this.stockSaleForm.details.find(x => x.stock_item_id === selectedOption.id)
+                if (item) {
+                    item.quantity++
+                } else {
                 let new_index = this.stockSaleForm.details.push({
                     quantity: 1,
                     price: selectedOption.price,
@@ -152,6 +156,7 @@
                     description: '',
                     selected_stock_item: this.add_stock_item
                 })
+                }
                 this.add_stock_item = null
             },
             getStockItemName(index){
