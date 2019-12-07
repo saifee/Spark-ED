@@ -64,7 +64,14 @@
                             <show-error :form-name="stockSaleForm" :prop-name="getQuantityName(index)"></show-error>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-sm-3">
+                        <div class="form-group">
+                            <label for="">{{trans('inventory_sale.stock_sale_price')}}</label>
+                            <input class="form-control" type="text" v-model="detail.price" :name="getPriceName(index)" :placeholder="trans('inventory_sale.stock_sale_price')">
+                            <show-error :form-name="stockSaleForm" :prop-name="getPriceName(index)"></show-error>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-3">
                         <div class="form-group">
                             <label for="">
                                 {{trans('inventory.stock_item_description')}}
@@ -140,6 +147,7 @@
             addRow(selectedOption){
                 let new_index = this.stockSaleForm.details.push({
                     quantity: 1,
+                    price: selectedOption.price,
                     stock_item_id: selectedOption.id,
                     description: '',
                     selected_stock_item: this.add_stock_item
@@ -155,6 +163,9 @@
             getQuantityName(index){
                 return index+'_quantity';
             },
+            getPriceName(index){
+                return index+'_price';
+            },
             get(){
                 let loader = this.$loading.show();
                 axios.get('/api/stock/transfer/'+this.id)
@@ -169,6 +180,7 @@
                         response.stock_transfer.details.forEach(detail => {
                             this.stockSaleForm.details.push({
                                 quantity: detail.quantity,
+                                price: detail.price,
                                 stock_item_id: detail.stock_item_id,
                                 selected_stock_item: (detail.stock_item_id) ? {id: detail.stock_item_id, name: detail.item.name} : null,
                                 description: detail.description
