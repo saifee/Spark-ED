@@ -151,7 +151,7 @@
                 } else {
                 let new_index = this.stockSaleForm.details.push({
                     quantity: 1,
-                    price: selectedOption.price,
+                    price: selectedOption.sale_price,
                     stock_item_id: selectedOption.id,
                     description: '',
                     selected_stock_item: Object.assign({}, this.addStockItem),

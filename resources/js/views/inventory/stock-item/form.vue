@@ -75,6 +75,7 @@
                     opening_quantity: '',
                     stock_category_id: '',
                     description : '',
+                    sale_price : '',
                 }),
                 stock_categories: [],
                 selected_stock_category: null
