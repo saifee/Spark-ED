@@ -14,7 +14,7 @@
                 <div class="col-12">
                     <div class="form-group" v-if="stockSaleForm.type == 'student'">
                         <label for="">{{trans('student.student')}}</label>
-                        <v-select label="name" v-model="selected_student" name="student_id" id="student_id" :options="students" :placeholder="trans('student.select_student')" @select="onStudentSelect" @close="stockSaleForm.errors.clear('student_id')" @remove="stockSaleForm.student_id = ''">
+                        <v-select label="name" v-model="selected_student" name="student_id" id="student_id" :options="students" :close-on-select="false" :placeholder="trans('student.select_student')" @select="onStudentSelect" @close="stockSaleForm.errors.clear('student_id')" @remove="stockSaleForm.student_id = ''">
                             <div class="multiselect__option" slot="afterList" v-if="!students.length">
                                 {{trans('general.no_option_found')}}
                             </div>
