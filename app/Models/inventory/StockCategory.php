@@ -12,6 +12,7 @@ class StockCategory extends Model
     protected $fillable = [
                             'name',
                             'description',
+                            'saleable',
                             'options'
                         ];
     protected $casts = ['options' => 'array'];

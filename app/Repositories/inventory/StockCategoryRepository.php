@@ -170,10 +170,12 @@ class StockCategoryRepository
     private function formatParams($params, $stock_category_id = null)
     {
         $name        = gv($params, 'name');
+        $saleable    = gv($params, 'saleable') ? 1 : 0;
         $description = gv($params, 'description');
 
         $formatted = [
             'name'        => $name,
+            'saleable'    => $saleable,
             'description' => $description
         ];
 

@@ -16,6 +16,13 @@
                         <show-error :form-name="stockCategoryForm" prop-name="description"></show-error>
                     </div>
                 </div>
+                <div class="col-12 col-sm-6">
+                    <div class="form-group">
+                        <label for="">{{trans('inventory_sale.stock_category_saleable')}}</label>
+                        <div><switches v-model="stockCategoryForm.saleable" theme="bootstrap" color="success"></switches></div>
+                        <show-error :form-name="stockCategoryForm" prop-name="saleable"></show-error>
+                    </div>
+                </div>
             </div>
             <div class="card-footer text-right">
                 <router-link to="/inventory/stock/category" class="btn btn-danger waves-effect waves-light " v-show="id">{{trans('general.cancel')}}</router-link>
@@ -40,6 +47,7 @@
                 stockCategoryForm: new Form({
                     name : '',
                     description : '',
+                    saleable : '',
                 })
             };
         },
@@ -74,6 +82,7 @@
                     .then(response => {
                         this.stockCategoryForm.name = response.name;
                         this.stockCategoryForm.description = response.description;
+                        this.stockCategoryForm.saleable = response.saleable;
                         loader.hide();
                     })
                     .catch(error => {

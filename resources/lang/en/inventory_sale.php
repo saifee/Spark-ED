@@ -30,4 +30,5 @@
   'stock_sale_return_type_returned' => 'Returned',
   'stock_sale_type' => 'Type',
   'stock_sale_updated' => 'Sale updated.',
+  'stock_category_saleable' => 'Saleable',
 );
