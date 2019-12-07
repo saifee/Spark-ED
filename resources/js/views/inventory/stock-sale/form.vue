@@ -49,6 +49,7 @@
                                 {{trans('inventory.stock_item')}}
                                 <button type="button" class="btn btn-xs btn-danger" :key="`${index}_delete_detail`" v-confirm="{ok: confirmDelete(index)}" v-tooltip="trans('general.delete')"><i class="fas fa-times"></i></button>
                             </label>
+                            <input class="form-control" type="text" :value="getStockItemTitle(detail.stock_item_id)" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-sm-3">
@@ -152,6 +153,12 @@
                 })
                 }
                 this.add_stock_item = null
+            },
+            getStockItemTitle(stockItemID){
+                const item = this.stock_items.find((si) => si.id === stockItemID)
+                if (item) {
+                    return item.name
+                }
             },
             getDescriptionName(index){
                 return index+'_description';
