@@ -2,6 +2,8 @@
 	<div>
         <form @submit.prevent="proceed" @keydown="stockSaleForm.errors.clear($event.target.name)">
             <div class="row">
+                <div class="col-12 col-lg-5">
+                    <div class="row">
                 <div class="col-12">
                     <div class="form-group" v-if="stockSaleForm.type == 'student'">
                         <label for="">{{trans('student.student')}}</label>
@@ -27,8 +29,9 @@
                         <show-error :form-name="stockSaleForm" prop-name="description"></show-error>
                     </div>
                 </div>
+                </div>
             </div>
-            <div class="p-t-20 border-top">
+            <div class="col-12 col-lg-7">
                 <div class="row" v-for="(detail, index) in stockSaleForm.details">
                     <div class="col-12 col-sm-3">
                         <div class="form-group">
@@ -68,6 +71,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
             <div class="card-footer text-right">
                 <button v-show="id" type="button" class="btn btn-danger " @click="$router.push('/inventory/stock/sale')">{{trans('general.cancel')}}</button>
