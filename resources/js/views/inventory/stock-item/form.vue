@@ -158,7 +158,6 @@
                     return false
                 }
                 const stockCategory = this.stock_categories.find(sc => sc.id === this.stockItemForm.stock_category_id)
-                console.log('call', this.stockItemForm.stock_category_id, stockCategory)
                 return (stockCategory) ? stockCategory.saleable : false
             },
             onStockCategorySelect(selectedOption){
