@@ -61,7 +61,7 @@ class StockItemRepository
 
     public function selectAll()
     {
-        return $this->stock_item->get(['name', 'id', 'code', 'sale_price']);
+        return $this->stock_item->get(['name', 'id', 'sale_price']);
     }
 
     /**
