@@ -42,6 +42,11 @@
                 </div>
             </div>
             <div class="col-12 col-lg-7">
+                <div class="row" v-if="stockSaleForm.details.length === 0">
+                    <div class="col-12">
+                        <p class="text-center font-italic shadow-none p-3 mb-5 bg-light rounded">no selected items</p>
+                    </div>
+                </div>
                 <div class="row" v-for="(detail, index) in stockSaleForm.details">
                     <div class="col-12 col-sm-3">
                         <div class="form-group">
