@@ -25,7 +25,7 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label for="">{{trans('inventory.add_new_stock_item')}}</label>
-                        <v-select label="name" v-model="add_stock_item" :options="stock_items" :placeholder="trans('inventory.select_stock_item')" @input="addRow">
+                        <v-select label="name" v-model="addStockItem" :options="stock_items" :placeholder="trans('inventory.select_stock_item')" @input="addRow">
                             <div class="multiselect__option" slot="afterList" v-if="!stock_items.length">
                                 {{trans('general.no_option_found')}}
                             </div>
@@ -99,7 +99,7 @@
         props: ['id'],
         data(){
             return {
-                add_stock_item: null,
+                addStockItem: null,
                 stockSaleForm: new Form({
                     transfer_type: 'sale',
                     type: 'student',
@@ -154,10 +154,10 @@
                     price: selectedOption.price,
                     stock_item_id: selectedOption.id,
                     description: '',
-                    selected_stock_item: this.add_stock_item
+                    selected_stock_item: Object.assign({}, this.addStockItem),
                 })
                 }
-                this.add_stock_item = null
+                this.addStockItem = null
             },
             getStockItemTitle(stockItemID){
                 const item = this.stock_items.find((si) => si.id === stockItemID)
