@@ -19,6 +19,8 @@
   'stock_sale_module_title' => 'Listing all Stock Sales here!',
   'stock_sale_quantity' => 'Quantity',
   'stock_sale_price' => 'Price',
+  'stock_sale_sub_total' => 'Sub Total',
+  'stock_sale_total' => 'Total',
   'stock_sale_return' => 'Return',
   'stock_sale_return_date' => 'Date',
   'stock_sale_return_deleted' => 'Return deleted.',

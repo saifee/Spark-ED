@@ -81,6 +81,20 @@
                         </div>
                     </div>
                 </div>
+                <div class="table-responsive" v-if="stockSaleForm.details.length > 0">
+                    <table class="table table-sm custom-show-table">
+                        <tbody>
+                            <tr>
+                                <td>{{trans('inventory_sale.stock_sale_sub_total')}}</td>
+                                <td>{{getSubTotal()}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{trans('inventory_sale.stock_sale_total')}}</td>
+                                <td>{{getTotal()}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             </div>
             <div class="card-footer text-right">
@@ -240,6 +254,14 @@
             },
             deleteDetail(index){
                 this.stockSaleForm.details.splice(index, 1);
+            },
+            getSubTotal(){
+                return this.stockSaleForm.details.map(d => d.price * d.quantity).reduce((a,b) => a+b, 0);
+            },
+            getTotal(){
+                var total = 0
+                total += this.getSubTotal();
+                return total
             },
         },
         computed:{
