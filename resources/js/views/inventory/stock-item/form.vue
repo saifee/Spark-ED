@@ -34,6 +34,13 @@
                         <show-error :form-name="stockItemForm" prop-name="opening_quantity"></show-error>
                     </div>
                 </div>
+                <div class="col-12 col-sm-4">
+                    <div class="form-group">
+                        <label for="">{{trans('inventory_sale.stock_item_sale_price')}}</label>
+                        <input class="form-control" type="text" v-model="stockItemForm.sale_price" name="sale_price" :placeholder="trans('inventory_sale.stock_item_sale_price')">
+                        <show-error :form-name="stockItemForm" prop-name="sale_price"></show-error>
+                    </div>
+                </div>
                 <div class="col-12 col-sm-12">
                     <div class="form-group">
                         <label for="">{{trans('inventory.stock_item_description')}}</label>
@@ -122,6 +129,7 @@
                         this.stockItemForm.opening_quantity = response.stock_item.opening_quantity;
                         this.stockItemForm.description = response.stock_item.description;
                         this.stockItemForm.stock_category_id = response.stock_item.stock_category_id;
+                        this.stockItemForm.sale_price = response.stock_item.sale_price;
                         this.selected_stock_category = response.selected_stock_category;
                         loader.hide();
                     })

@@ -1,4 +1,5 @@
 <?php return array (
+  'stock_item_sale_price' => 'Sale Price',
   'add_new_stock_sale' => 'Add New Sale',
   'could_not_find_stock_sale' => 'Could not find selected sale.',
   'could_not_find_stock_sale_return' => 'Could not find return.',

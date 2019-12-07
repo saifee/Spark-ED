@@ -198,6 +198,7 @@ class StockItemRepository
         $code              = gv($params, 'code');
         $opening_quantity  = gv($params, 'opening_quantity', 0);
         $description       = gv($params, 'description');
+        $sale_price        = gv($params, 'sale_price');
         $stock_category_id = gv($params, 'stock_category_id');
 
         $stock_category = $this->stock_category->findOrFail($stock_category_id);
@@ -207,6 +208,7 @@ class StockItemRepository
             'code'              => $code,
             'opening_quantity'  => $opening_quantity,
             'stock_category_id' => $stock_category_id,
+            'sale_price'        => $sale_price,
             'description'       => $description
         ];
 

@@ -16,6 +16,7 @@ class StockItem extends Model
                             'quantity',
                             'stock_category_id',
                             'description',
+                            'sale_price',
                             'options'
                         ];
     protected $casts = ['options' => 'array'];
