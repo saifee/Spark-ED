@@ -24,6 +24,16 @@
                 </div>
                 <div class="col-12">
                     <div class="form-group">
+                        <label for="">{{trans('inventory.add_new_stock_item')}}</label>
+                        <v-select label="name" v-model="add_stock_item" :options="stock_items" :placeholder="trans('inventory.select_stock_item')" @select="addRow">
+                            <div class="multiselect__option" slot="afterList" v-if="!stock_items.length">
+                                {{trans('general.no_option_found')}}
+                            </div>
+                        </v-select>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
                         <label for="">{{trans('inventory_sale.stock_sale_description')}}</label>
                         <autosize-textarea v-model="stockSaleForm.description" rows="1" name="description" :placeholder="trans('inventory_sale.stock_sale_description')"></autosize-textarea>
                         <show-error :form-name="stockSaleForm" prop-name="description"></show-error>
@@ -64,13 +74,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <button type="button" @click="addRow" class="btn btn-info btn-sm waves-effect waves-light">{{trans('inventory.add_new_stock_item')}}</button>
-                        </div>
-                    </div>
-                </div>
             </div>
             </div>
             <div class="card-footer text-right">
@@ -89,6 +92,7 @@
         props: ['id'],
         data(){
             return {
+                add_stock_item: null,
                 stockSaleForm: new Form({
                     transfer_type: 'sale',
                     type: 'student',
@@ -133,13 +137,14 @@
                         helper.showErrorMsg(error);
                     })
             },
-            addRow(){
+            addRow(selectedOption){
                 let new_index = this.stockSaleForm.details.push({
-                    quantity: '',
-                    stock_item_id: '',
+                    quantity: 1,
+                    stock_item_id: selectedOption.id,
                     description: '',
-                    selected_stock_item: null
+                    selected_stock_item: this.add_stock_item
                 })
+                this.add_stock_item = null
             },
             getStockItemName(index){
                 return index+'_stock_item_id';
