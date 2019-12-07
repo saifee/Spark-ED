@@ -34,7 +34,7 @@
                         <show-error :form-name="stockItemForm" prop-name="opening_quantity"></show-error>
                     </div>
                 </div>
-                <div class="col-12 col-sm-4">
+                <div class="col-12 col-sm-4" v-if="checkStockCategorySaleable()">
                     <div class="form-group">
                         <label for="">{{trans('inventory_sale.stock_item_sale_price')}}</label>
                         <input class="form-control" type="text" v-model="stockItemForm.sale_price" name="sale_price" :placeholder="trans('inventory_sale.stock_item_sale_price')">
@@ -151,6 +151,14 @@
                         loader.hide();
                         helper.showErrorMsg(error);
                     });
+            },
+            checkStockCategorySaleable(){
+                if (!this.stockItemForm.stock_category_id) {
+                    return false
+                }
+                const stockCategory = this.stock_categories.find(sc => sc.id === this.stockItemForm.stock_category_id)
+                console.log('call', this.stockItemForm.stock_category_id, stockCategory)
+                return (stockCategory) ? stockCategory.saleable : false
             },
             onStockCategorySelect(selectedOption){
                 this.stockItemForm.stock_category_id = selectedOption.id;

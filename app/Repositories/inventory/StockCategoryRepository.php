@@ -57,7 +57,7 @@ class StockCategoryRepository
 
     public function selectAll()
     {
-        return $this->stock_category->get(['name', 'id']);
+        return $this->stock_category->get(['name', 'id', 'saleable']);
     }
 
     /**
