@@ -14,6 +14,7 @@ class StockTransferDetail extends Model
                             'stock_item_id',
                             'quantity',
                             'description',
+                            'price',
                             'options'
                         ];
     protected $casts = ['options' => 'array'];

@@ -191,6 +191,7 @@ class StockTransferRepository
                 'quantity'      => gv($detail, 'quantity', 0),
                 'stock_item_id' => gv($detail, 'stock_item_id'),
                 'description'   => gv($detail, 'description'),
+                'price'         => gv($detail, 'price'),
                 'options'       => []
             ]);
 
@@ -328,6 +329,7 @@ class StockTransferRepository
 
             $stock_transfer_detail->quantity    = gv($detail, 'quantity', 0);
             $stock_transfer_detail->description = gv($detail, 'description');
+            $stock_transfer_detail->price       = gv($detail, 'price');
             $stock_transfer_detail->options     = [];
             $stock_transfer_detail->save();
 
