@@ -49,12 +49,6 @@
                                 {{trans('inventory.stock_item')}}
                                 <button type="button" class="btn btn-xs btn-danger" :key="`${index}_delete_detail`" v-confirm="{ok: confirmDelete(index)}" v-tooltip="trans('general.delete')"><i class="fas fa-times"></i></button>
                             </label>
-                            <v-select label="name" v-model="detail.selected_stock_item" :name="getStockItemName(index)" :id="getStockItemName(index)" :options="stock_items" :placeholder="trans('inventory.select_stock_item')" @select="onStockItemSelect" @close="stockSaleForm.errors.clear(getStockItemName(index))" @remove="onStockItemRemove">
-                                <div class="multiselect__option" slot="afterList" v-if="!stock_items.length">
-                                    {{trans('general.no_option_found')}}
-                                </div>
-                            </v-select>
-                            <show-error :form-name="stockSaleForm" :prop-name="getStockItemName(index)"></show-error>
                         </div>
                     </div>
                     <div class="col-12 col-sm-3">
@@ -159,9 +153,6 @@
                 }
                 this.add_stock_item = null
             },
-            getStockItemName(index){
-                return index+'_stock_item_id';
-            },
             getDescriptionName(index){
                 return index+'_description';
             },
@@ -238,16 +229,6 @@
             deleteDetail(index){
                 this.stockSaleForm.details.splice(index, 1);
             },
-            onStockItemSelect(selectedOption, id){
-                let index = id.split("_")[0];
-                let detail = this.stockSaleForm.details[index];
-                detail.stock_item_id = selectedOption.id;
-            },
-            onStockItemRemove(removedOption, id){
-                let index = id.split("_")[0];
-                let detail = this.stockSaleForm.details[index];
-                detail.stock_item_id = '';
-            }
         },
         computed:{
         }
