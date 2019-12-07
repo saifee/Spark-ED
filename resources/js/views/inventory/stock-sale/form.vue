@@ -136,7 +136,7 @@
                 axios.get('/api/stock/transfer/pre-requisite')
                     .then(response => {
                         this.students = response.students;
-                        this.stock_items = response.stock_items;
+                        this.stock_items = response.stock_items.filter(si => si.sale_price !== null);
                         loader.hide();
                     })
                     .catch(error => {
