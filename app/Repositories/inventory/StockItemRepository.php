@@ -61,7 +61,18 @@ class StockItemRepository
 
     public function selectAll()
     {
-        return $this->stock_item->get(['name', 'id', 'sale_price']);
+        $stock_items = $this->stock_item->get(['name', 'id', 'code', 'sale_price']);
+
+        $data = array();
+        foreach ($stock_items as $stock_item) {
+            $data[] = array(
+                'name' => ($stock_item->code) ? $stock_item->name.' ('.$stock_item->code.')' : $stock_item->name,
+                'sale_price' => $stock_item->sale_price,
+                'id' => $stock_item->id,
+            );
+        }
+
+        return $data;
     }
 
     /**
