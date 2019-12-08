@@ -165,8 +165,18 @@
                 this.stockSaleForm.upload_token = this.$uuid.v4();
 
             this.getPreRequisite();
+
+            document.getElementById('student_id').autofocus = true
+
+            this.focusField('student_id')
         },
         methods: {
+            focusField(field){
+                document.getElementById(field).style.display = 'none'
+                setTimeout(() => {
+                    document.getElementById(field).style.display = 'block'
+                }, 300)
+            },
             proceed(){
                 if(this.id)
                     this.update();
