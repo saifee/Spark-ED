@@ -39,6 +39,23 @@
                         <show-error :form-name="stockSaleForm" prop-name="description"></show-error>
                     </div>
                 </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="">{{trans('inventory_sale.stock_sale_payment_method')}}</label>
+                        <div class="radio radio-info p-l-0">
+                            <div class="form-check form-check-inline " v-for="(payment_method, i) in payment_methods" :key="`payment_method${i}`">
+                                <input class="form-check-input" type="radio" :value="payment_method" :id="`payment_method${i}`" v-model="selected_payment_method" :checked="stockSaleForm.payment_method == payment_method" name="payment_method" @click="stockSaleForm.errors.clear('payment_method')">
+                                <label class="form-check-label" :for="`payment_method${i}`"> {{trans('inventory_sale.'+payment_method)}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12" v-if="selected_payment_method === 'cash'">
+                    <div class="form-group">
+                        <label for="">{{trans('inventory_sale.stock_sale_paid_amount')}}</label>
+                        <input class="form-control" type="text" v-model="paid_amount" name="paid_amount" :placeholder="trans('inventory_sale.stock_sale_paid_amount')">
+                    </div>
+                </div>
                 </div>
             </div>
             <div class="col-12 col-lg-7">
@@ -92,6 +109,14 @@
                                 <td>{{trans('inventory_sale.stock_sale_total')}}</td>
                                 <td>{{getTotal()}}</td>
                             </tr>
+                            <tr>
+                                <td>{{trans('inventory_sale.stock_sale_paid')}}</td>
+                                <td>{{getPaid()}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{trans('inventory_sale.stock_sale_balance')}}</td>
+                                <td>{{getBalance()}}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -126,6 +151,9 @@
                 stock_items: [],
                 students: [],
                 selected_student: null,
+                payment_methods: ['wallet', 'cash'],
+                selected_payment_method: 'wallet',
+                paid_amount: '',
                 module_id: '',
                 clearAttachment: true
             }
@@ -262,6 +290,17 @@
                 var total = 0
                 total += this.getSubTotal();
                 return total
+            },
+            getPaid(){
+                if (this.selected_payment_method === 'wallet') {
+                    return this.getTotal()
+                } else if (this.selected_payment_method === 'cash') {
+                    return this.paid_amount
+                }
+            },
+            getBalance(){
+                var balance = this.getTotal() - this.getPaid()
+                return balance
             },
         },
         computed:{

@@ -21,6 +21,8 @@
   'stock_sale_price' => 'Price',
   'stock_sale_sub_total' => 'Sub Total',
   'stock_sale_total' => 'Total',
+  'stock_sale_paid' => 'Paid',
+  'stock_sale_balance' => 'Balance',
   'stock_sale_return' => 'Return',
   'stock_sale_return_date' => 'Date',
   'stock_sale_return_deleted' => 'Return deleted.',
@@ -35,4 +37,8 @@
   'stock_sale_type' => 'Type',
   'stock_sale_updated' => 'Sale updated.',
   'stock_category_saleable' => 'Saleable',
+  'stock_sale_payment_method' => 'Payment Method',
+  'stock_sale_paid_amount' => 'Amount',
+  'wallet' => 'Wallet',
+  'cash' => 'Cash',
 );
