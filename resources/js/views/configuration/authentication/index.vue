@@ -157,6 +157,10 @@
                     login_throttle: 0,
                     login_throttle_attempt: '',
                     login_throttle_timeout: '',
+                    social_login_google: 0,
+                    social_login_google_client_id: '',
+                    social_login_microsoft: 0,
+                    social_login_microsoft_client_id: '',
                     providers: []
                 },false),
                 social_login_providers: [],
@@ -190,6 +194,8 @@
                 this.configForm.two_factor_security = (this.configForm.two_factor_security) ? 1 : 0;
                 this.configForm.lock_screen = (this.configForm.lock_screen) ? 1 : 0;
                 this.configForm.login_throttle = (this.configForm.login_throttle) ? 1 : 0;
+                this.configForm.social_login_google = (this.configForm.social_login_google) ? 1 : 0;
+                this.configForm.social_login_microsoft = (this.configForm.social_login_microsoft) ? 1 : 0;
                 this.configForm.post('/api/configuration')
                     .then(response => {
                         this.$store.dispatch('setConfig',{loaded: false});
