@@ -663,6 +663,12 @@
 					"translation": "utility.ip_filter",
 					"visibility": true,
 					"submenu": []
+				},
+				{
+					"name": "activity_log",
+					"translation": "utility.activity_log",
+					"visibility": true,
+					"submenu": []
 				}
 			]
 		}

@@ -1,5 +1,13 @@
 <?php return array (
   'activity_log' => 'Enable Activity Log',
+  'activity_log_activity_id' => 'Log ID',
+  'activity_log_event_time' => 'Event Time',
+  'activity_log_user_id' => 'UserID',
+  'activity_log_user_name' => 'User Name',
+  'activity_log_ip_address' => 'IP',
+  'activity_log_log_name' => 'Subject',
+  'activity_log_subject_id' => 'Subject ID',
+  'activity_log_description' => 'Subject Action',
   'add_new_email_template' => 'Add New Email Template',
   'add_new_ip_filter' => 'Add New IP Filter',
   'add_new_todo' => 'Add New Todo',

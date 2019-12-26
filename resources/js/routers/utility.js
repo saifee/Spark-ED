@@ -36,6 +36,10 @@ export default [
         component: () => import(/* webpackChunkName: "js/utility/emailLog/index" */ '@views/utility/email-log/index')
     },
     {
+        path: 'activity-log',
+        component: () => import(/* webpackChunkName: "js/utility/activityLog/index" */ '@views/utility/activity-log/index')
+    },
+    {
         path: 'scheduled-job',
         component: () => import(/* webpackChunkName: "js/utility/scheduledJob/index" */ '@views/utility/scheduled-job/index')
     }

@@ -127,6 +127,8 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::delete('/todo/{id}', 'Utility\TodoController@destroy');
 	Route::post('/todo/{id}/status', 'Utility\TodoController@toggleStatus');
 
+	Route::get('/activity-log', 'Utility\ActivityLogController@index');
+
 	Route::get('/email-log', 'Utility\EmailLogController@index');
 	Route::get('/email-log/{id}', 'Utility\EmailLogController@show');
 	Route::delete('/email-log/{id}', 'Utility\EmailLogController@destroy');
