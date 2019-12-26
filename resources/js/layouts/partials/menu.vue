@@ -25,7 +25,7 @@
                 <li><router-link to="/configuration/reception/complaint/type"><i class="fas fa-angle-double-right"></i> {{trans('reception.complaint_type')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-school fa-fw"></i> <span class="hide-menu">{{trans('academic.academic_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/academic/course/group"><i class="fas fa-angle-double-right"></i> {{trans('academic.course_group')}}</router-link></li>
@@ -34,14 +34,14 @@
                 <li><router-link to="/configuration/academic/id-card/template"><i class="fas fa-angle-double-right"></i> <span class="font-90pc">{{trans('academic.id_card_template')}}</span></router-link></li>
             </ul>
         </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-money-bill-alt fa-fw"></i> <span class="hide-menu">{{trans('finance.finance_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/finance/transaction/category"><i class="fas fa-angle-double-right"></i> <span class="font-90pc">{{trans('finance.transaction_category')}}</span></router-link></li>
                 <li><router-link to="/configuration/finance/payment/method"><i class="fas fa-angle-double-right"></i> {{trans('finance.payment_method')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-graduation-cap fa-fw"></i> <span class="hide-menu">{{trans('student.student_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/student"><i class="fas fa-angle-double-right"></i> {{trans('general.general')}}</router-link></li>
@@ -49,7 +49,7 @@
                 <li><router-link to="/configuration/student/document/type"><i class="fas fa-angle-double-right"></i> {{trans('student.document_type_only')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-file-alt fa-fw"></i> <span class="hide-menu">{{trans('exam.configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/exam/term"><i class="fas fa-angle-double-right"></i> {{trans('exam.term')}}</router-link></li>
@@ -58,7 +58,7 @@
                 <li><router-link to="/configuration/exam/grade"><i class="fas fa-angle-double-right"></i> {{trans('exam.grade')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-user-tie fa-fw"></i> <span class="hide-menu">{{trans('employee.employee_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/employee"><i class="fas fa-angle-double-right"></i> {{trans('general.general')}}</router-link></li>
@@ -72,7 +72,7 @@
                 <li><router-link to="/configuration/employee/pay/head"><i class="fas fa-angle-double-right"></i> {{trans('employee.pay_head')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-truck fa-fw"></i> <span class="hide-menu">{{trans('transport.transport_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/transport/vehicle/document/type"><i class="fas fa-angle-double-right"></i> {{trans('transport.vehicle_document_type_only')}}</router-link></li>
@@ -80,7 +80,7 @@
                 <li><router-link to="/configuration/transport/vehicle/service/center"><i class="fas fa-angle-double-right"></i> {{trans('transport.vehicle_service_center_only')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-book fa-fw"></i> <span class="hide-menu">{{trans('library.library_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/library"><i class="fas fa-angle-double-right"></i> {{trans('general.general')}}</router-link></li>
@@ -119,7 +119,7 @@
         <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <router-link class="has-arrow" to="/configuration/custom-field" aria-expanded="false"><i class="fas fa-cubes fa-fw"></i> <span class="hide-menu">{{trans('configuration.custom_field')}}</span></router-link>
         </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-align-justify fa-fw"></i> <span class="hide-menu">{{trans('misc.misc_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/misc/religion"><i class="fas fa-angle-double-right"></i> {{trans('misc.religion')}}</router-link></li>
