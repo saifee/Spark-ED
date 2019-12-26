@@ -15,7 +15,7 @@
         <li v-show="configMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'"><router-link to="/configuration/menu" exact><i class="fas fa-ellipsis-h fa-fw"></i> <span class="hide-menu">{{trans('configuration.menu')}}</span></router-link></li>
         <li v-show="configMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'"><router-link to="/configuration/module" exact><i class="fas fa-boxes fa-fw"></i> <span class="hide-menu">{{trans('configuration.module_configuration')}}</span></router-link></li>
 
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-user-circle fa-fw"></i> <span class="hide-menu">{{trans('reception.reception_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/reception/enquiry/type"><i class="fas fa-angle-double-right"></i> {{trans('reception.enquiry_type')}}</router-link></li>
@@ -91,32 +91,32 @@
                 <li><router-link to="/configuration/library/book/condition"><i class="fas fa-angle-double-right"></i> {{trans('library.book_condition')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-calendar-alt fa-fw"></i> <span class="hide-menu">{{trans('calendar.calendar_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/calendar/event/type"><i class="fas fa-angle-double-right"></i> {{trans('calendar.event_type')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-newspaper fa-fw"></i> <span class="hide-menu">{{trans('post.post_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/post/article/type"><i class="fas fa-angle-double-right"></i> {{trans('post.article_type')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-building fa-fw"></i> <span class="hide-menu">{{trans('asset.asset_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/asset/building"><i class="fas fa-angle-double-right"></i> {{trans('asset.building')}}</router-link></li>
                 <li><router-link to="/configuration/asset/room"><i class="fas fa-angle-double-right"></i> {{trans('asset.room')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fas fa-suitcase fa-fw"></i> <span class="hide-menu">{{trans('frontend.frontend_configuration')}}</span></a>
             <ul aria-expanded="false" class="collapse">
                 <li><router-link to="/configuration/frontend/index"><i class="fas fa-angle-double-right"></i> {{trans('frontend.frontend')}}</router-link></li>
             </ul>
         </li>
-        <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
+        <li v-show="moduleConfigMenu && hasPermission('access-configuration')" v-if="getConfig('made') === 'saudi'">
             <router-link class="has-arrow" to="/configuration/custom-field" aria-expanded="false"><i class="fas fa-cubes fa-fw"></i> <span class="hide-menu">{{trans('configuration.custom_field')}}</span></router-link>
         </li>
         <li v-show="moduleConfigMenu && hasPermission('access-configuration')">
