@@ -10,7 +10,7 @@
                 <ul class="navbar-nav mt-md-0 ">
                     <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="fas fa-bars"></i></a> </li>
                     <template v-if="getConfig('replace_sidebar_menu_with_top_menu') != 1">
-                    <li class="nav-item" v-tooltip.right="trans('general.toggle_sidebar')"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="icon-arrow-left-circle fas"></i></a> </li>
+                    <li class="nav-item" v-tooltip.right="trans('general.toggle_sidebar')"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="icon-arrow-left-circle fas fa-arrow-circle-left"></i></a> </li>
                     </template>
                     <template v-else>
                     <li class="flattened"><main-menu v-if="getConfig('replace_sidebar_menu_with_top_menu') == 1" /></li>
