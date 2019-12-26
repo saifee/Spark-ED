@@ -242,6 +242,7 @@
                                 </div>
                             </div>
                         </div>
+                        <configuration-spark :config-form="configForm"  v-if="getConfig('made') === 'saudi'" />
                     </div>
                 </div>
                 <button type="submit" v-if="!setupWizard" class="btn btn-info waves-effect waves-light pull-right m-t-10">{{trans('general.save')}}</button>
@@ -251,6 +252,8 @@
 </template>
 
 <script>
+    import configurationSpark from '@views/configuration/system/spark.vue'
+
     export default {
         props: {
             setupWizard: {
@@ -260,7 +263,9 @@
                 required: false
             }
         },
-        components : { },
+        components : {
+            configurationSpark
+        },
         data() {
             return {
                 configForm: new Form({
@@ -287,6 +292,7 @@
                     backup: 0,
                     maintenance_mode: 0,
                     maintenance_mode_message: '',
+                    replace_sidebar_menu_with_top_menu: 0,
                     online_registration_header: '',
                     online_registration_success_message: '',
                     config_type: ''
@@ -365,6 +371,7 @@
                 this.configForm.todo = (this.configForm.todo) ? 1 : 0;
                 this.configForm.backup = (this.configForm.backup) ? 1 : 0;
                 this.configForm.maintenance_mode = (this.configForm.maintenance_mode) ? 1 : 0;
+                this.configForm.replace_sidebar_menu_with_top_menu = (this.configForm.replace_sidebar_menu_with_top_menu) ? 1 : 0;
                 return this.configForm.post('/api/configuration')
                     .then(response => {
                         this.$store.dispatch('setConfig',{loaded: false});
