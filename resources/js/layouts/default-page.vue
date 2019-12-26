@@ -4,7 +4,7 @@
         <app-header></app-header>
         <app-sidebar></app-sidebar>
 
-        <div class="page-wrapper page-wrapper-header">
+        <div class="page-wrapper page-wrapper-header" v-bind:style="[getConfig('replace_sidebar_menu_with_top_menu') == 1 ? {marginLeft: 0} : {}]">
             <!-- <div v-html="message" v-if="!getConfig('mode')"></div> -->
             <router-view></router-view>
         	<app-footer></app-footer>

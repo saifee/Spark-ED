@@ -1,7 +1,7 @@
 <template>
     <header class="topbar">
         <nav class="navbar top-navbar navbar-expand-md navbar-light">
-            <div class="navbar-header white-sm">
+            <div class="navbar-header white-sm" v-if="getConfig('replace_sidebar_menu_with_top_menu') != 1">
                 <router-link class="navbar-brand" to="/">
                     <img :src="getIcon" />
                 </router-link>
@@ -9,7 +9,12 @@
             <div class="navbar-collapse">
                 <ul class="navbar-nav mt-md-0 ">
                     <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="fas fa-bars"></i></a> </li>
+                    <template v-if="getConfig('replace_sidebar_menu_with_top_menu') != 1">
                     <li class="nav-item" v-tooltip.right="trans('general.toggle_sidebar')"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="icon-arrow-left-circle fas"></i></a> </li>
+                    </template>
+                    <template v-else>
+                    <li class="flattened"><main-menu v-if="getConfig('replace_sidebar_menu_with_top_menu') == 1" /></li>
+                    </template>
 
                     <li class="nav-item d-none d-sm-inline" v-if="getConfig('maintenance_mode')"><span class="mt-4 badge badge-danger m-b-10">{{trans('configuration.under_maintenance')}}</span></li>
                     <li class="nav-item d-none d-sm-inline" v-if="!getConfig('mode')"><span class="mt-4 badge badge-danger m-b-10">{{trans('configuration.test_mode')}}</span></li>
@@ -73,9 +78,10 @@
 
 <script>
     import globalSearch from './global-search'
+    import mainMenu from './menu'
 
     export default {
-        components: {globalSearch},
+        components: {globalSearch, mainMenu},
         mounted() {
         },
         methods : {
@@ -120,3 +126,33 @@
         }
     }
 </script>
+
+<style>
+.flattened ul#sidebarnav {
+    height: auto;
+    padding: 0;
+    list-style: none;
+}
+.flattened > ul#sidebarnav > li {
+    display: inline;
+}
+.flattened ul#sidebarnav li a {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    font-size: 17px;
+    line-height: 50px;
+    color: #fffc !important;
+}
+.flattened ul#sidebarnav li a .hide-menu {
+    display: none;
+}
+.flattened ul#sidebarnav li.active {
+    position: relative;
+}
+.flattened ul#sidebarnav li > .collapse {
+    position: absolute;
+    list-style: none;
+    background: #ccc;
+    padding:0;
+}
+</style>
