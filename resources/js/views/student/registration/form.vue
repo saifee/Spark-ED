@@ -2,7 +2,7 @@
     <div>
         <form @submit.prevent="submit" @keydown="registrationForm.errors.clear($event.target.name)">
             <div class="row">
-                <div class="col-12 col-sm-6">
+                <div class="col-12 col-sm-6" v-if="getConfig('made') === 'saudi'">
                     <div class="form-group">
                         <label for="">{{trans('student.student_type')}}</label>
                         <div class="radio radio-info p-l-0">
@@ -240,6 +240,9 @@
             this.getPreRequisite();
         },
         methods: {
+            getConfig(config){
+                return helper.getConfig(config);
+            }
             getStudentName(student){
                 return helper.getStudentName(student);
             },
