@@ -185,8 +185,10 @@ class FeeGroupRepository
             throw ValidationException::withMessages(['name' => trans('finance.fee_group_exists')]);
         }
 
+        if ($fee_group_id !== null) {
         if ($this->fee_allocation->filterBySession()->count()) {
             throw ValidationException::withMessages(['message' => trans('finance.no_update_after_fee_allocation')]);
+        }
         }
 
         if ($has_transport) {
