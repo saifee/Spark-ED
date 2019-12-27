@@ -374,9 +374,8 @@
 					return;
 				}
 				
-				let options = ['present','absent','late'];
+				let options = ['present','absent'];
 				if (this.attendanceForm.attendance_method == 'once') {
-					options.push('half_day');
 				}
 				let record = this.attendanceForm.students.find(o => o.id == student.id);
 				let index = options.indexOf(record.attendance);
