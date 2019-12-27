@@ -29,7 +29,7 @@
                     <show-error :form-name="academicSessionForm" prop-name="description"></show-error>
                 </div>
             </div>
-            <div class="col-12 col-sm-3">
+            <div class="col-12 col-sm-3" v-if="getConfig('made') === 'saudi'">
                 <div class="form-group">
                     <label for="">{{trans('academic.transfer_certificate_format')}}</label>
                     <v-select label="name" v-model="selected_transfer_certificate_format" name="transfer_certificate_format" id="transfer_certificate_format" :options="transfer_certificate_formats" :placeholder="trans('academic.select_transfer_certificate_format')" @select="onTransferCertificateFormatSelect" @close="academicSessionForm.errors.clear('transfer_certificate_format')" @remove="academicSessionForm.transfer_certificate_format = ''">
@@ -95,6 +95,9 @@
             this.getPreRequisite();
         },
         methods: {
+            getConfig(config){
+                return helper.getConfig(config);
+            },
             proceed(){
                 if(this.id)
                     this.update();
