@@ -25,7 +25,7 @@
                     <li class="nav-item hidden-sm-down d-none d-md-inline" v-if="getConfig('made') === 'saudi'">
                         <global-search></global-search>
                     </li>
-                    <li class="nav-item dropdown" v-if="getAcademicSessions.length && hasPermission('change-academic-session') && getConfig('made') === 'saudi'">
+                    <li class="nav-item dropdown" v-if="getAcademicSessions.length && hasPermission('change-academic-session')">
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-tooltip.bottom="trans('academic_session.academic_session')">{{getDefaultAcademicSession ? getDefaultAcademicSession.name : trans('academic_session.choose_session')}} <i class="fa fa-chevron-down"></i> </a>
                         <div :class="['dropdown-menu', getConfig('direction') != 'rtl' ? 'dropdown-menu-right' : '']">
                             <ul class="dropdown-user" style="padding-bottom:10px;">
@@ -37,7 +37,7 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item dropdown" v-if="getAcademicSessions.length && !hasPermission('change-academic-session') && getConfig('made') === 'saudi'"">
+                    <li class="nav-item dropdown" v-if="getAcademicSessions.length && !hasPermission('change-academic-session')"">
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#">{{getDefaultAcademicSession ? getDefaultAcademicSession.name : ''}}</a>
                     </li>
                     <li class="nav-item d-none d-sm-inline" v-tooltip.bottom="trans('todo.todo')" v-if="getConfig('todo') && hasPermission('access-todo') && getConfig('made') === 'saudi'"">
