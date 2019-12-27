@@ -45,7 +45,7 @@
                         <show-error :form-name="courseForm" prop-name="enable_registration"></show-error>
                     </div>
                 </div>
-                <div class="col-12 col-sm-3">
+                <div class="col-12 col-sm-3" v-if="getConfig('made') === 'saudi'">
                     <div class="form-group">
                         <div>{{trans('student.enable_registration_fee')}}</div>
                         <switches class="m-t-10" v-model="courseForm.enable_registration_fee" theme="bootstrap" color="success"></switches> 
@@ -140,6 +140,9 @@
             this.getPreRequisite();
         },
         methods: {
+            getConfig(config){
+                return helper.getConfig(config);
+            },
             hasPermission(permission){
                 return helper.hasPermission(permission);
             },
