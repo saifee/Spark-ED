@@ -61,6 +61,7 @@
                                 		<tr>
                                 			<th class="p-l-20">{{trans('inventory.stock_item')}}</th>
                                 			<th>{{trans('inventory_sale.stock_sale_quantity')}}</th>
+                                			<th>{{trans('inventory_sale.stock_sale_price')}}</th>
                                 			<th>{{trans('inventory.stock_item_description')}}</th>
                                 		</tr>
                                 	</thead>
@@ -68,6 +69,7 @@
                                 		<tr v-for="detail in stock_sale.details">
                                 			<td class="p-l-20">{{detail.item.name}}</td>
                                 			<td>{{detail.quantity}}</td>
+                                			<td>{{detail.price}}</td>
                                 			<td>{{detail.description}}</td>
                                 		</tr>
                                 	</tbody>
