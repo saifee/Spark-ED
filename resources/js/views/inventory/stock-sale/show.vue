@@ -84,10 +84,7 @@
 </template>
 
 <script>
-    import returnForm from './return-form'
-
 	export default {
-        components: {returnForm},
         data(){
         	return {
                 id:this.$route.params.id,
