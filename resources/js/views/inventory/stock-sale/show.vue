@@ -120,25 +120,9 @@
                 return helper.formatCurrency(amount);
             },
             deleteReturn(return_detail){
-                let loader = this.$loading.show();
-                axios.delete('/api/stock/transfer/'+this.stock_sale.id+'/return/'+return_detail.id)
-                    .then(response => {
-                        toastr.success(response.message);
-                        this.get();
-                        loader.hide();
-                    }).catch(error => {
-                        loader.hide();
-                        helper.showErrorMsg(error);
-                    });
             },
             getCount(item, status) {
                 let count = 0;
-                this.stock_sale.return_details.forEach(return_detail => {
-                    if (return_detail.stock_item_id == item.id && return_detail.type == status) {
-                        count = count + 1;
-                    }
-                })
-
                 return count;
             }
         },
