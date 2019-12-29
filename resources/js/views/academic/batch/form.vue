@@ -44,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-4">
+            <div class="col-12 col-sm-4" v-if="getConfig('made') === 'saudi'">
                 <div class="form-group">
                     <label for="">{{trans('student.default_attendance_method')}}</label>
                     <select v-model="batchForm.default_attendance_method" class="custom-select col-12" name="default_attendance_method">
@@ -143,6 +143,9 @@
             this.getPreRequisite();
         },
         methods: {
+            getConfig(config){
+                return helper.getConfig(config);
+            },
             proceed(){
                 if(this.id)
                     this.update();
