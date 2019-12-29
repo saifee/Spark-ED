@@ -242,7 +242,7 @@
         methods: {
             getConfig(config){
                 return helper.getConfig(config);
-            }
+            },
             getStudentName(student){
                 return helper.getStudentName(student);
             },
