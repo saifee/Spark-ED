@@ -91,10 +91,9 @@
                     <div class="col-12 col-sm-3">
                         <div class="form-group">
                             <label for="">
-                                {{trans('inventory.stock_item_description')}}
+                                {{trans('inventory_sale.stock_sale_total')}}
                             </label>
-                            <input class="form-control" type="text" v-model="detail.description" :name="getDescriptionName(index)" :placeholder="trans('inventory.stock_item_description')">
-                            <show-error :form-name="stockSaleForm" :prop-name="getDescriptionName(index)"></show-error>
+                            <input class="form-control" type="text" :value="detail.price * detail.quantity">
                         </div>
                     </div>
                 </div>
