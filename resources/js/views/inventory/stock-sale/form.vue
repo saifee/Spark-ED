@@ -64,28 +64,22 @@
                         <p class="text-center font-italic shadow-none p-3 mb-5 bg-light rounded">no selected items</p>
                     </div>
                 </div>
-                <div class="row" v-for="(detail, index) in stockSaleForm.details" :key="`stockSaleFormDetail${index}`">
+                <div class="row">
                     <div class="col-12 col-sm-3">
                         <div class="form-group">
                             <label for="">
                                 {{trans('inventory.stock_item')}}
-                                <button type="button" class="btn btn-xs btn-danger" :key="`${index}_delete_detail`" v-confirm="{ok: confirmDelete(index)}" v-tooltip="trans('general.delete')"><i class="fas fa-times"></i></button>
                             </label>
-                            <input class="form-control" type="text" :value="getStockItemTitle(detail.stock_item_id)" readonly>
                         </div>
                     </div>
                     <div class="col-12 col-sm-3">
                         <div class="form-group">
                             <label for="">{{trans('inventory_sale.stock_sale_quantity')}}</label>
-                            <input class="form-control" type="text" v-model="detail.quantity" :name="getQuantityName(index)" :placeholder="trans('inventory_sale.stock_sale_quantity')">
-                            <show-error :form-name="stockSaleForm" :prop-name="getQuantityName(index)"></show-error>
                         </div>
                     </div>
                     <div class="col-12 col-sm-3">
                         <div class="form-group">
                             <label for="">{{trans('inventory_sale.stock_sale_price')}}</label>
-                            <input class="form-control" type="text" v-model="detail.price" :name="getPriceName(index)" :placeholder="trans('inventory_sale.stock_sale_price')">
-                            <show-error :form-name="stockSaleForm" :prop-name="getPriceName(index)"></show-error>
                         </div>
                     </div>
                     <div class="col-12 col-sm-3">
@@ -93,6 +87,30 @@
                             <label for="">
                                 {{trans('inventory_sale.stock_sale_total')}}
                             </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" v-for="(detail, index) in stockSaleForm.details" :key="`stockSaleFormDetail${index}`">
+                    <div class="col-12 col-sm-3">
+                        <div class="form-group">
+                            <input class="form-control" type="text" :value="getStockItemTitle(detail.stock_item_id)" readonly>
+                            <button type="button" class="btn btn-xs btn-danger" :key="`${index}_delete_detail`" v-confirm="{ok: confirmDelete(index)}" v-tooltip="trans('general.delete')"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <div class="form-group">
+                            <input class="form-control" type="text" v-model="detail.quantity" :name="getQuantityName(index)" :placeholder="trans('inventory_sale.stock_sale_quantity')">
+                            <show-error :form-name="stockSaleForm" :prop-name="getQuantityName(index)"></show-error>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <div class="form-group">
+                            <input class="form-control" type="text" v-model="detail.price" :name="getPriceName(index)" :placeholder="trans('inventory_sale.stock_sale_price')">
+                            <show-error :form-name="stockSaleForm" :prop-name="getPriceName(index)"></show-error>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <div class="form-group">
                             <input class="form-control" type="text" :value="detail.price * detail.quantity">
                         </div>
                     </div>
