@@ -28,14 +28,14 @@
             </div>
             <div class="col-12 col-sm-4">
                 <div class="row">
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-sm-6" v-if="getConfig('made') === 'saudi'">
                         <div class="form-group">
                             <label for="">{{trans('academic.roll_number_prefix')}}</label>
                             <input class="form-control" type="text" v-model="batchForm.roll_number_prefix" name="roll_number_prefix" :placeholder="trans('academic.roll_number_prefix')">
                             <show-error :form-name="batchForm" prop-name="roll_number_prefix"></show-error>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6">
+                    <div class="col-12 col-sm-6" v-if="getConfig('made') === 'saudi'">
                         <div class="form-group">
                             <label for="">{{trans('academic.roll_number_digit')}}</label>
                             <input class="form-control" type="text" v-model="batchForm.roll_number_digit" name="roll_number_digit" :placeholder="trans('academic.roll_number_digit')">
