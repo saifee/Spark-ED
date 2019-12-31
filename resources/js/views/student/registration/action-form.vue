@@ -36,7 +36,7 @@
 			                <div class="form-group">
 			                    <label for="">{{trans('student.admission_number')}}</label>
 				                <div class="row">
-						            <div class="col-12 col-sm-4">
+						            <div class="col-12 col-sm-4" v-if="getConfig('made') === 'saudi'">
 			                    		<input class="form-control" type="text" v-model="actionForm.admission_number_prefix" name="admission_number_prefix" :placeholder="trans('student.admission_number_prefix')">
 			                    	</div>
 						            <div class="col-12 col-sm-8">
@@ -152,6 +152,9 @@
 			this.getPreRequisite();
 		},
 		methods: {
+      getConfig(config){
+          return helper.getConfig(config);
+      },
 			getPreRequisite(){
 				let loader = this.$loading.show();
 				axios.get('/api/registration/status/pre-requisite')
