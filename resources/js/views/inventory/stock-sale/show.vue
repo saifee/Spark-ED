@@ -72,6 +72,30 @@
                                 			<td>{{detail.price}}</td>
                                 			<td>{{detail.price*detail.quantity}}</td>
                                 		</tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{trans('inventory_sale.stock_sale_sub_total')}}</td>
+                                            <td>{{getSubTotal()}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{trans('inventory_sale.stock_sale_total')}}</td>
+                                            <td>{{getTotal()}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{trans('inventory_sale.stock_sale_paid')}}</td>
+                                            <td>{{getPaid()}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{trans('inventory_sale.stock_sale_balance')}}</td>
+                                            <td>{{getBalance()}}</td>
+                                        </tr>
                                 	</tbody>
                                 </table>
                             </div>
@@ -120,6 +144,21 @@
                 return helper.formatCurrency(amount);
             },
             deleteReturn(return_detail){
+            },
+            getSubTotal(){
+                return this.stock_sale.details.map(d => d.price * d.quantity).reduce((a,b) => a+b, 0);
+            },
+            getTotal(){
+                var total = 0
+                total += this.getSubTotal();
+                return total
+            },
+            getPaid(){
+                return 0
+            },
+            getBalance(){
+                var balance = this.getTotal() - this.getPaid()
+                return balance
             },
             getCount(item, status) {
                 let count = 0;
