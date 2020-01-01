@@ -198,6 +198,7 @@ class StockTransferRepository
             $stock_transfer->transaction()->create([
                 'description' => gv($params, 'description'),
                 'credit' => $total,
+                'date' => toDate(gv($params, 'date')),
             ]);
         }
 
