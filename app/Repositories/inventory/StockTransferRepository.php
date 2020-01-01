@@ -199,10 +199,6 @@ class StockTransferRepository
 
             $stock_item = $stock_transfer_detail->item;
             $stock_item->decrement('quantity', $stock_transfer_detail->quantity);
-
-            if(gv($params, 'payment_method') === 'wallet') {
-                //
-            }
         }
         
         $this->processUpload($stock_transfer, $params);
