@@ -184,6 +184,7 @@ class StockTransferRepository
             'upload_token'    => gv($params, 'upload_token') ? : Str::uuid(),
             'payment_method'  => gv($params, 'payment_method'),
             'cash_paid'       => gv($params, 'cash_paid'),
+            'discount'        => gv($params, 'discount'),
             'options'         => []
         ]);
 

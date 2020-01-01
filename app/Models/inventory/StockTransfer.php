@@ -23,6 +23,7 @@ class StockTransfer extends Model
                             'user_id',
                             'payment_method',
                             'cash_paid',
+                            'discount',
                             'options'
                         ];
     protected $casts = ['options' => 'array'];

@@ -23,6 +23,7 @@
   'stock_sale_total' => 'Total',
   'stock_sale_paid' => 'Paid',
   'stock_sale_balance' => 'Balance',
+  'stock_sale_discount' => 'Discount',
   'stock_sale_return' => 'Return',
   'stock_sale_return_date' => 'Date',
   'stock_sale_return_deleted' => 'Return deleted.',
