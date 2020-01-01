@@ -63,6 +63,11 @@ class StockTransfer extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function transaction()
+    {
+        return $this->morphOne('App\Models\Student\StudentWalletTransaction', 'transactionable');
+    }
+
     public function getOption(string $option)
     {
         return array_get($this->options, $option);
