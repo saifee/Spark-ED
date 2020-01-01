@@ -48,7 +48,7 @@
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="">{{trans('finance.fee_installment_due_date')}}</label>
-                                                <datepicker v-model="installment.due_date" :bootstrapStyling="true" :placeholder="trans('finance.fee_installment_due_date')" @selected="feeAllocationForm.errors.clear(getDueDateName(fee_group.fee_group_id,index))" :name="getDueDateName(fee_group.fee_group_id,index)"></datepicker>
+                                                <datepicker v-model="installment.due_date" :bootstrapStyling="true" :placeholder="trans('finance.fee_installment_due_date')" @selected="feeAllocationForm.errors.clear(getDueDateName(fee_group.fee_group_id,index))" :name="getDueDateName(fee_group.fee_group_id,index)" typeable></datepicker>
                                                 <show-error :form-name="feeAllocationForm" :prop-name="getDueDateName(fee_group.fee_group_id,index)"></show-error>
                                             </div>
                                         </div>
