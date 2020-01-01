@@ -182,6 +182,8 @@ class StockTransferRepository
             'description'     => gv($params, 'description'),
             'user_id'         => \Auth::user()->id,
             'upload_token'    => gv($params, 'upload_token') ? : Str::uuid(),
+            'payment_method'  => gv($params, 'payment_method'),
+            'cash_paid'       => gv($params, 'cash_paid'),
             'options'         => []
         ]);
 
@@ -197,6 +199,10 @@ class StockTransferRepository
 
             $stock_item = $stock_transfer_detail->item;
             $stock_item->decrement('quantity', $stock_transfer_detail->quantity);
+
+            if(gv($params, 'payment_method') === 'wallet') {
+                //
+            }
         }
         
         $this->processUpload($stock_transfer, $params);
@@ -302,6 +308,8 @@ class StockTransferRepository
         $stock_transfer->date            = gv($params, 'date');
         $stock_transfer->return_due_date = gv($params, 'return_due_date');
         $stock_transfer->description     = gv($params, 'description');
+        $stock_transfer->payment_method  = gv($params, 'payment_method');
+        $stock_transfer->cash_paid       = gv($params, 'cash_paid');
         $stock_transfer->save();
 
         $stock_item_id = array();
