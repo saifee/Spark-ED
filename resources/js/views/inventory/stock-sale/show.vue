@@ -154,7 +154,11 @@
                 return total
             },
             getPaid(){
-                return 0
+                if (this.stock_sale.payment_method === 'wallet') {
+                    return this.getTotal()
+                } else if (this.stock_sale.payment_method === 'cash') {
+                    return this.stock_sale.cash_paid
+                }
             },
             getBalance(){
                 var balance = this.getTotal() - this.getPaid()
