@@ -11,6 +11,7 @@ class StudentWalletTransaction extends Model
                             'transactionable_type',
                             'debit',
                             'credit',
+                            'date',
                             'description',
                         ];
     protected $primaryKey = 'id';
