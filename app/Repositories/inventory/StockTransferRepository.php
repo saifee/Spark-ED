@@ -187,6 +187,20 @@ class StockTransferRepository
             'options'         => []
         ]);
 
+        if(gv($params, 'payment_method') === 'wallet') {
+            $total = array_sum(array_map(function($detail) {
+                return gv($detail, 'price');
+            }, gv($params, 'details')));
+
+            $student = $this->student->findorFail(gv($params, 'student_id'));
+            $student->decrement('wallet', $total);
+
+            $stock_transfer->transaction()->create([
+                'description' => gv($params, 'description'),
+                'credit' => $total,
+            ]);
+        }
+
         foreach (gv($params, 'details') as $detail) {
             $stock_transfer_detail = $this->stock_transfer_detail->forceCreate([
                 'stock_transfer_id' => $stock_transfer->id,
