@@ -44,16 +44,16 @@
                         <label for="">{{trans('inventory_sale.stock_sale_payment_method')}}</label>
                         <div class="radio radio-info p-l-0">
                             <div class="form-check form-check-inline " v-for="(payment_method, i) in payment_methods" :key="`payment_method${i}`">
-                                <input class="form-check-input" type="radio" :value="payment_method" :id="`payment_method${i}`" v-model="selected_payment_method" :checked="stockSaleForm.payment_method == payment_method" name="payment_method" @click="stockSaleForm.errors.clear('payment_method')">
+                                <input class="form-check-input" type="radio" :value="payment_method" :id="`payment_method${i}`" v-model="stockSaleForm.payment_method" :checked="stockSaleForm.payment_method == payment_method" name="payment_method" @click="stockSaleForm.errors.clear('payment_method')">
                                 <label class="form-check-label" :for="`payment_method${i}`"> {{trans('inventory_sale.'+payment_method)}}</label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12" v-if="selected_payment_method === 'cash'">
+                <div class="col-12" v-if="stockSaleForm.payment_method === 'cash'">
                     <div class="form-group">
                         <label for="">{{trans('inventory_sale.stock_sale_paid_amount')}}</label>
-                        <input class="form-control" type="text" v-model="paid_amount" name="paid_amount" :placeholder="trans('inventory_sale.stock_sale_paid_amount')">
+                        <input class="form-control" type="text" v-model="stockSaleForm.cash_paid" name="cash_paid" :placeholder="trans('inventory_sale.stock_sale_paid_amount')">
                     </div>
                 </div>
                 </div>
@@ -163,14 +163,14 @@
                     student_id: '',
                     description: '',
                     details: [],
+                    payment_method: 'wallet',
+                    cash_paid: '',
                     upload_token: ''
                 }),
                 stock_items: [],
                 students: [],
                 selected_student: null,
                 payment_methods: ['wallet', 'cash'],
-                selected_payment_method: 'wallet',
-                paid_amount: '',
                 module_id: '',
                 clearAttachment: true
             }
@@ -319,10 +319,10 @@
                 return total
             },
             getPaid(){
-                if (this.selected_payment_method === 'wallet') {
+                if (this.stockSaleForm.payment_method === 'wallet') {
                     return this.getTotal()
-                } else if (this.selected_payment_method === 'cash') {
-                    return this.paid_amount
+                } else if (this.stockSaleForm.payment_method === 'cash') {
+                    return this.stockSaleForm.cash_paid
                 }
             },
             getBalance(){
