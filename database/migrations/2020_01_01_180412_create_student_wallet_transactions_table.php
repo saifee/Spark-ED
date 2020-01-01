@@ -19,6 +19,7 @@ class CreateStudentWalletTransactionsTable extends Migration
             $table->string('transactionable_type')->nullable();
             $table->decimal('debit', 25, 5)->nullable();
             $table->decimal('credit', 25, 5)->nullable();
+            $table->date('date')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });
