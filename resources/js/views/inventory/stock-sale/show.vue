@@ -88,7 +88,10 @@
                                             <td></td>
                                             <td></td>
                                             <td>{{trans('inventory_sale.stock_sale_paid')}}</td>
-                                            <td>{{getPaid()}}</td>
+                                            <td>
+                                                {{getPaid()}}
+                                                <i>({{stock_sale.payment_method}})</i>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td></td>
