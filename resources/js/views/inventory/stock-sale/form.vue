@@ -56,6 +56,12 @@
                         <input class="form-control" type="text" v-model="stockSaleForm.cash_paid" name="cash_paid" :placeholder="trans('inventory_sale.stock_sale_paid_amount')">
                     </div>
                 </div>
+                <div class="col-12" v-if="stockSaleForm.payment_method === 'cash'">
+                    <div class="form-group">
+                        <label for="">{{trans('inventory_sale.stock_sale_discount')}}</label>
+                        <input class="form-control" type="text" v-model="stockSaleForm.discount" name="discount" :placeholder="trans('inventory_sale.stock_sale_discount')">
+                    </div>
+                </div>
                 </div>
             </div>
             <div class="col-12 col-lg-7">
@@ -123,6 +129,10 @@
                                 <td>{{getSubTotal()}}</td>
                             </tr>
                             <tr>
+                                <td>{{trans('inventory_sale.stock_sale_discount')}}</td>
+                                <td>{{stockSaleForm.discount}}</td>
+                            </tr>
+                            <tr>
                                 <td>{{trans('inventory_sale.stock_sale_total')}}</td>
                                 <td>{{getTotal()}}</td>
                             </tr>
@@ -165,6 +175,7 @@
                     details: [],
                     payment_method: 'wallet',
                     cash_paid: '',
+                    discount: '',
                     upload_token: ''
                 }),
                 stock_items: [],
@@ -316,6 +327,7 @@
             getTotal(){
                 var total = 0
                 total += this.getSubTotal();
+                total -= this.stockSaleForm.discount;
                 return total
             },
             getPaid(){

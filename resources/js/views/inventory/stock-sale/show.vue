@@ -81,6 +81,12 @@
                                         <tr>
                                             <td></td>
                                             <td></td>
+                                            <td>{{trans('inventory_sale.stock_discount')}}</td>
+                                            <td>{{stock_sale.discount || 0}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
                                             <td>{{trans('inventory_sale.stock_sale_total')}}</td>
                                             <td>{{getTotal()}}</td>
                                         </tr>
@@ -154,6 +160,7 @@
             getTotal(){
                 var total = 0
                 total += this.getSubTotal();
+                total -= this.stock_sale.discount;
                 return total
             },
             getPaid(){

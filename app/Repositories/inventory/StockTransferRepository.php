@@ -322,6 +322,7 @@ class StockTransferRepository
         $stock_transfer->description     = gv($params, 'description');
         $stock_transfer->payment_method  = gv($params, 'payment_method');
         $stock_transfer->cash_paid       = gv($params, 'cash_paid');
+        $stock_transfer->discount        = gv($params, 'discount');
         $stock_transfer->save();
 
         $stock_item_id = array();
