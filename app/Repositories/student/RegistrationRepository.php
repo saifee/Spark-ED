@@ -17,6 +17,7 @@ use App\Repositories\Student\StudentRepository;
 use App\Repositories\Student\StudentParentRepository;
 use App\Repositories\Configuration\CustomFieldRepository;
 use App\Repositories\Finance\Fee\FeeConcessionRepository;
+use App\Repositories\Finance\Fee\FeeHeadRepository;
 use App\Repositories\Transport\TransportCircleRepository;
 use App\Repositories\Configuration\Academic\InstituteRepository;
 use App\Repositories\Configuration\Academic\CourseGroupRepository;
@@ -36,6 +37,7 @@ class RegistrationRepository
     protected $batch;
     protected $transport_circle;
     protected $fee_concession;
+    protected $fee_head;
     protected $course_group;
     protected $payment_method;
     protected $student_parent;
@@ -61,6 +63,7 @@ class RegistrationRepository
         BatchRepository $batch,
         TransportCircleRepository $transport_circle,
         FeeConcessionRepository $fee_concession,
+        FeeHeadRepository $fee_head,
         CourseGroupRepository $course_group,
         PaymentMethodRepository $payment_method,
         StudentParentRepository $student_parent,
@@ -80,6 +83,7 @@ class RegistrationRepository
         $this->batch = $batch;
         $this->transport_circle = $transport_circle;
         $this->fee_concession = $fee_concession;
+        $this->fee_head = $fee_head;
         $this->course_group = $course_group;
         $this->payment_method = $payment_method;
         $this->student_parent = $student_parent;
@@ -295,9 +299,10 @@ class RegistrationRepository
     {
         $transport_circles = $this->transport_circle->selectAll();
         $fee_concessions = $this->fee_concession->selectAll();
+        $fee_heads = $this->fee_head->getAll();
         $admission_numbers = $this->admission->groupBy('prefix')->get(['prefix', \DB::raw('MAX(number) as number')]);
 
-        return compact('transport_circles', 'fee_concessions', 'admission_numbers');
+        return compact('transport_circles', 'fee_concessions', 'fee_heads', 'admission_numbers');
     }
 
     /**
@@ -657,6 +662,16 @@ class RegistrationRepository
 
         if ($fee_concession_id && ! $this->fee_concession->find($fee_concession_id)) {
             throw ValidationException::withMessages(['fee_concession_id' => trans('finance.could_not_find_fee_concession')]);
+        }
+
+        $fee_concession = gv($params, 'fee_concession');
+
+        if ($fee_concession) {
+            $name = date('Y-m-d H:i:s');
+            $description = 'Auto-generated';
+            $fee_heads = gv($params, 'fee_heads');
+            $new_fee_concession = $this->fee_concession->create(compact('name', 'description', 'fee_heads'));
+            $fee_concession_id = $new_fee_concession->id;
         }
 
         $admission = $this->admission->forceCreate([

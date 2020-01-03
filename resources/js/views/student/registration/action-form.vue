@@ -73,6 +73,9 @@
 			            </div>
 	                    <div class="col-12 col-sm-6">
 			                <div class="form-group">
+			                    <div>{{trans('finance.fee_concession')}}</div>
+			                    <switches class="m-t-10" v-model="actionForm.fee_concession" theme="bootstrap" color="success"></switches>
+			                    <template v-if="false">
 			                    <label for="">{{trans('finance.fee_concession')}}</label>
 	                            <select v-model="actionForm.fee_concession_id" class="custom-select col-12" name="fee_concession_id" @change="actionForm.errors.clear('fee_concession_id')">
 	                            	<option value=null selected>{{trans('finance.no_fee_concession')}}</option>
@@ -81,8 +84,41 @@
 									</option>
 	                            </select>
 	                            <show-error :form-name="actionForm" prop-name="fee_concession_id"></show-error>
+	                          </template>
 			                </div>
 			            </div>
+	                    <div class="col-12" v-if="actionForm.fee_concession">
+	                    	<div class="border px-3 pt-3 mb-3">
+								        <div class="row" v-for="fee_head in actionForm.fee_heads">
+								            <div class="col-12 col-sm-4">
+								                <div class="form-group">
+								                    <label for="" class="m-t-10">{{fee_head.fee_head_name}}</label>
+								                </div>
+								            </div>
+								            <div class="col-12 col-sm-4">
+								                <div class="form-group">
+								                    <template v-if="fee_head.type">
+								                        <currency-input :position="default_currency.position" :symbol="default_currency.symbol" :name="`discount_${fee_head.fee_head_id}`" :placeholder="trans('finance.fee_concession_discount')" v-model="fee_head.amount"></currency-input>
+								                    </template>
+								                    <template v-else>
+								                        <div class="input-group mb-3">
+								                            <input class="form-control" type="text" v-model="fee_head.amount" :name="`discount_${fee_head.fee_head_id}`" :placeholder="trans('finance.fee_concession_discount')">
+								                            <div class="input-group-append">
+								                                <span class="input-group-text" id="basic-addon1">%</span>
+								                            </div>
+								                        </div>
+								                    </template>
+								                    <show-error :form-name="actionForm" :prop-name="`discount_${fee_head.fee_head_id}`"></show-error>
+								                </div>
+								            </div>
+								            <div class="col-12 col-sm-2">
+								                <div class="form-group">
+								                    <switches class="m-l-20 m-t-10" v-model="fee_head.type" theme="bootstrap" color="success" v-tooltip="fee_head.type ? trans('finance.turn_off_for_discount_in_percent') : trans('finance.turn_on_for_discount_in_amount')"></switches>
+								                </div>
+								            </div>
+								        </div>
+								        </div>
+					            </div>
 	                    <div class="col-12 col-sm-6">
 			                <div class="form-group">
 			                    <label for="">{{trans('student.date_of_admission')}}</label>
@@ -113,6 +149,7 @@
 		props: ['registration'],
 		data() {
 			return {
+                default_currency: helper.getConfig('default_currency'),
 				actionForm: new Form({
 					status: '',
 					batch_id: null,
@@ -122,6 +159,8 @@
 					rejection_remarks: '',
 					admission_remarks: '',
 					transport_circle_id: null,
+					fee_concession: null,
+					fee_heads: [],
 					fee_concession_id: null
 				}),
 				admission_numbers: [],
@@ -141,6 +180,7 @@
 					}
 				],
 				transport_circles: [],
+				fee_heads: [],
 				fee_concessions: [],
 				batches: []	
 			}
@@ -161,6 +201,7 @@
 					.then(response => {
 						this.transport_circles = response.transport_circles;
 						this.fee_concessions = response.fee_concessions;
+						this.fee_heads = response.fee_heads;
 						this.admission_numbers = response.admission_numbers;
 						this.actionForm.admission_number_prefix = helper.getConfig('admission_number_prefix');
 						loader.hide();
@@ -208,6 +249,19 @@
 		watch: {
 			registration(registration) {
 				this.actionForm.status = registration.status;
+			},
+			'actionForm.fee_concession': function(val) {
+				this.actionForm.fee_heads = []
+				if (val) {
+          this.fee_heads.forEach(fee_head => {
+              this.actionForm.fee_heads.push({
+                  fee_head_id: fee_head.id,
+                  fee_head_name: fee_head.name+' ('+fee_head.fee_group.name+')',
+                  amount: 0,
+                  type: 0
+              })
+          })
+				}
 			},
 			'actionForm.admission_number_prefix': function(val) {
 				let admission = this.admission_numbers.find(o => o.prefix == val);
