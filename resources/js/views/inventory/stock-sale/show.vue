@@ -75,25 +75,25 @@
                                         <tr>
                                             <td></td>
                                             <td></td>
-                                            <td>{{trans('inventory_sale.stock_sale_sub_total')}}</td>
+                                            <td><span class="font-weight-bold">{{trans('inventory_sale.stock_sale_sub_total')}}</span></td>
                                             <td>{{getSubTotal()}}</td>
                                         </tr>
                                         <tr>
                                             <td></td>
                                             <td></td>
-                                            <td>{{trans('inventory_sale.stock_discount')}}</td>
+                                            <td><span class="font-weight-bold">{{trans('inventory_sale.stock_sale_discount')}}</span></td>
                                             <td>{{stock_sale.discount || 0}}</td>
                                         </tr>
                                         <tr>
                                             <td></td>
                                             <td></td>
-                                            <td>{{trans('inventory_sale.stock_sale_total')}}</td>
+                                            <td><span class="font-weight-bold">{{trans('inventory_sale.stock_sale_total')}}</span></td>
                                             <td>{{getTotal()}}</td>
                                         </tr>
                                         <tr>
                                             <td></td>
                                             <td></td>
-                                            <td>{{trans('inventory_sale.stock_sale_paid')}}</td>
+                                            <td><span class="font-weight-bold">{{trans('inventory_sale.stock_sale_paid')}}</span></td>
                                             <td>
                                                 {{getPaid()}}
                                                 <i>({{stock_sale.payment_method}})</i>
@@ -102,7 +102,7 @@
                                         <tr>
                                             <td></td>
                                             <td></td>
-                                            <td>{{trans('inventory_sale.stock_sale_balance')}}</td>
+                                            <td><span class="font-weight-bold">{{trans('inventory_sale.stock_sale_balance')}}</span></td>
                                             <td>{{getBalance()}}</td>
                                         </tr>
                                 	</tbody>
