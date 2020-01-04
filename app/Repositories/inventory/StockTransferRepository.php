@@ -204,6 +204,7 @@ class StockTransferRepository
             $student->decrement('wallet', $total);
 
             $stock_transfer->transaction()->create([
+                'student_id' => gv($params, 'student_id'),
                 'description' => gv($params, 'description'),
                 'credit' => $total,
                 'date' => toDate(gv($params, 'date')),
