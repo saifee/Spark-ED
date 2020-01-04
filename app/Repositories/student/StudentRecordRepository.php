@@ -12,6 +12,7 @@ use App\Models\Student\StudentFeeRecordDetail;
 use App\Models\Student\StudentOptionalFeeRecord;
 use App\Models\Student\StudentRecord;
 use App\Models\Student\StudentWalletTransaction;
+use App\Models\Student\StudentWalletPayment;
 use App\Models\Transport\TransportCircle;
 use App\Repositories\Academic\BatchRepository;
 use App\Repositories\Configuration\Academic\CourseGroupRepository;
@@ -50,6 +51,7 @@ class StudentRecordRepository {
 		StudentRecord $student_record,
 		StudentFeeRecord $student_fee_record,
 		StudentWalletTransaction $student_wallet_transaction,
+		StudentWalletPayment $student_wallet_payment,
 		TransportCircle $transport_circle,
 		FeeConcession $fee_concession,
 		StudentOptionalFeeRecord $student_optional_fee_record,
@@ -68,6 +70,7 @@ class StudentRecordRepository {
 		$this->student_record = $student_record;
 		$this->student_fee_record = $student_fee_record;
 		$this->student_wallet_transaction = $student_wallet_transaction;
+		$this->student_wallet_payment = $student_wallet_payment;
 		$this->transport_circle = $transport_circle;
 		$this->fee_concession = $fee_concession;
 		$this->student_optional_fee_record = $student_optional_fee_record;
@@ -456,6 +459,41 @@ class StudentRecordRepository {
 		$student_wallet_transactions = $this->student_wallet_transaction->filterByStudentId($student_record->student_id)->get();
 
 		return compact('student_record', 'student_wallet_transactions');
+	}
+
+	/**
+	 * Make wallet payment.
+	 *
+	 * @param StudentRecord $student_record
+	 * @return Array $params
+	 */
+	public function walletPayment(StudentRecord $student_record, $params = array()) {
+		$amount = gv($params, 'amount', 0);
+		$student_id = $student_record->student_id;
+
+		if (!$amount) {
+			throw ValidationException::withMessages(['message' => trans('finance.cannot_process_if_amount_is_zero')]);
+		}
+
+    beginTransaction();
+
+    $student_wallet_payment = $this->student_wallet_payment->forceCreate([
+        'student_id' => $student_id,
+        'date' => toDate(gv($params, 'date')),
+        'remarks' => gv($params, 'remarks'),
+        'amount' => $amount,
+    ]);
+
+    $student_record->student->increment('wallet', $amount);
+
+    $student_wallet_payment->transaction()->create([
+        'student_id' => $student_id,
+        'description' => gv($params, 'remarks'),
+        'debit' => $amount,
+        'date' => toDate(gv($params, 'date')),
+    ]);
+
+    commitTransaction();
 	}
 
 	/**
