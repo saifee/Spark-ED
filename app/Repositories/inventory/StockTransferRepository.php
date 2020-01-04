@@ -104,6 +104,13 @@ class StockTransferRepository
             });
         }
 
+        $transfer_type = gv($params, 'transfer_type');
+        if ($transfer_type) {
+            $query = $query->where('transfer_type', $transfer_type);
+        } else {
+            $query = $query->where('transfer_type', 'wallet');
+        }
+
         return $query->orderBy($sort_by, $order);
     }
 
