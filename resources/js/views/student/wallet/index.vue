@@ -55,7 +55,7 @@
 			},
 			updateWalletForm(student){
 				this.walletForm.enable_student_wallet = (student.options && student.options.enable_student_wallet == 1) ? true : false;
-				this.walletForm.student_wallet_limit = student.options.student_wallet_limit;
+				this.walletForm.student_wallet_limit = (student.options && student.options.student_wallet_limit) ? student.options.student_wallet_limit : helper.getConfig('student_wallet_limit');
 			}
 		},
 		watch: {
