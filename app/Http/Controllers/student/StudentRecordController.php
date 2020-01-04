@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Student\FeePaymentRequest;
+use App\Http\Requests\Student\WalletPaymentRequest;
 use App\Http\Requests\Student\RecordUpdateRequest;
 use App\Models\Student\StudentRecord;
 use App\Repositories\Student\StudentRecordRepository;
@@ -79,6 +80,21 @@ class StudentRecordController extends Controller {
 		$record = $this->repo->findByUuidOrFail($uuid, $record_id);
 
 		return $this->success($this->repo->wallet($record));
+	}
+
+	/**
+	 * Used to make fee payment
+	 * @post ("/api/student/{uuid}/payment/{record_id}")
+	 * @return Response
+	 */
+	public function walletPayment(WalletPaymentRequest $request, $uuid, $record_id) {
+		$this->authorize('makePayment', StudentRecord::class);
+
+		$student_record = $this->repo->findByUuidOrFail($uuid, $record_id);
+
+		$this->repo->walletPayment($student_record, $this->request->all());
+
+		return $this->success(['message' => trans('finance.fee_paid')]);
 	}
 
 	/**
