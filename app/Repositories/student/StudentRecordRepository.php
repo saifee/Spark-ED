@@ -445,6 +445,20 @@ class StudentRecordRepository {
 	}
 
 	/**
+	 * Get wallet detail.
+	 *
+	 * @param StudentRecord $student_record
+	 * @return Array
+	 */
+	public function wallet(StudentRecord $student_record) {
+		$student_record = $this->loadFeeData($student_record);
+
+		$student_wallet_transactions = $this->student_wallet_transaction->filterByStudentId($student_record->student_id)->get();
+
+		return compact('student_record', 'student_wallet_transactions');
+	}
+
+	/**
 	 * Get fee requisite.
 	 *
 	 * @return Array
