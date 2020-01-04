@@ -760,6 +760,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('/student/action/group', 'Student\StudentController@groupAction');
 	Route::patch('/student/{uuid}', 'Student\StudentController@update');
 	Route::patch('/student/{uuid}/user/login', 'Student\StudentController@updateUserLogin');
+	Route::patch('/student/{uuid}/wallet/status', 'Student\StudentController@updateWalletStatus');
 
 	Route::get('/student/fee/pre-requisite', 'Student\StudentRecordController@feePreRequisite');
 	Route::get('/student/record/pre-requisite', 'Student\StudentRecordController@recordPreRequisite');
