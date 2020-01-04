@@ -767,6 +767,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::get('/student/{uuid}/record/{record_id}', 'Student\StudentRecordController@index');
 	Route::post('/student/{uuid}/fee/{record_id}', 'Student\StudentRecordController@store');
 	Route::get('/student/{uuid}/fee/{record_id}', 'Student\StudentRecordController@fee');
+	Route::get('/student/{uuid}/wallet/{record_id}', 'Student\StudentRecordController@wallet');
 	Route::get('/student/{uuid}/fee/{record_id}/{fee_record_id}', 'Student\StudentRecordController@getPaymentDetail');
 	Route::post('/student/{uuid}/payment/{record_id}', 'Student\StudentRecordController@makePayment');
 	Route::post('/student/{uuid}/payment/{record_id}/rzp', 'Student\StudentFeePaymentController@razorpayPayment');
