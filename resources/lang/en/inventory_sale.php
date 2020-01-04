@@ -40,6 +40,7 @@
   'stock_category_saleable' => 'Saleable',
   'stock_sale_payment_method' => 'Payment Method',
   'stock_sale_paid_amount' => 'Amount',
+  'stock_sale_added_to_wallet' => 'added to wallet',
   'wallet' => 'Wallet',
   'cash' => 'Cash',
 );
