@@ -166,10 +166,9 @@
                     page = 1;
                 }
                 let url = helper.getFilterURL(this.filter);
-                axios.get('/api/stock/transfer?page=' + page + url)
+                axios.get('/api/stock/transfer?transfer_type=sale&page=' + page + url)
                     .then(response => {
                         this.stock_sales = response.stock_transfers;
-                        this.stock_sales.data = this.stock_sales.data.filter(stock_sale => stock_sale.transfer_type === 'sale');
                         loader.hide();
                     })
                     .catch(error => {
