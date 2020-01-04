@@ -84,7 +84,7 @@
                             <div class="col-12 col-sm-3">
                                 <div class="form-group">
                                     <label for="">{{trans('student_wallet.student_wallet_limit')}}</label>
-                                       <input class="form-control" type="number" v-model="configForm.student_wallet_limit" name="student_wallet_limit" :placeholder="trans('student_wallet.student_wallet_limit')">
+                                        <currency-input :position="default_currency.position" :symbol="default_currency.symbol" name="student_wallet_limit" :placeholder="trans('finance.student_wallet_limit')" v-model="configForm.student_wallet_limit"></currency-input>
                                     <show-error :form-name="configForm" prop-name="student_wallet_limit"></show-error>
                                 </div>
                             </div>
@@ -105,6 +105,7 @@
         components : { },
         data() {
             return {
+                default_currency: helper.getConfig('default_currency'),
                 configForm: new Form({
                     admission_number_prefix: '',
                     admission_number_digit: '',
