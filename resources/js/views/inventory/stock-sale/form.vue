@@ -43,7 +43,7 @@
                     <div class="form-group">
                         <label for="">{{trans('inventory_sale.stock_sale_payment_method')}}</label>
                         <div class="radio radio-info p-l-0">
-                            <div class="form-check form-check-inline " v-for="(payment_method, i) in payment_methods" :key="`payment_method${i}`">
+                            <div class="form-check form-check-inline " v-for="(payment_method, i) in available_payment_methods" :key="`payment_method${i}`">
                                 <input class="form-check-input" type="radio" :value="payment_method" :id="`payment_method${i}`" v-model="stockSaleForm.payment_method" :checked="stockSaleForm.payment_method == payment_method" name="payment_method" @click="stockSaleForm.errors.clear('payment_method')">
                                 <label class="form-check-label" :for="`payment_method${i}`"> {{trans('inventory_sale.'+payment_method)}}</label>
                             </div>
@@ -349,6 +349,14 @@
             },
         },
         computed:{
+            available_payment_methods() {
+                let student = this.getStudent(this.stockSaleForm.student_id)
+                if (student && student.options && student.options.enable_student_wallet && student.options.enable_student_wallet === 1) {
+                    return this.payment_methods
+                } else {
+                    return this.payment_methods.filter(pm => pm !== 'wallet')
+                }
+            },
         }
     }
 </script>
