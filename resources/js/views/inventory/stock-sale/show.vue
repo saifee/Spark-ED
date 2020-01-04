@@ -54,6 +54,12 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 p-0">
+                    <div class="card card-form">
+                        <div class="card-body">
                             <h4 class="card-title px-3">{{trans('inventory.stock_item')}}</h4>
                             <div class="table-responsive px-2">
                                 <table class="table table-sm">
