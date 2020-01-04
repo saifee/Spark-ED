@@ -123,6 +123,7 @@ class StudentRepository
         foreach ($students as $student) {
             $data[] = array(
                 'name' => ($student->Parent) ? $student->name.' ('.$student->Parent->father_name.' '.$student->contact_number.')' : $student->name,
+                'options' => $student->options,
                 'id' => $student->id
             );
         }
