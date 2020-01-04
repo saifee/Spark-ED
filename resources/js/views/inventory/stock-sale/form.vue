@@ -214,9 +214,9 @@
             getPreRequisite(){
                 let loader = this.$loading.show();
                 axios.get('/api/stock/transfer/pre-requisite')
-                    .then(response => {
-                        this.students = response.students;
-                        this.stock_items = response.stock_items.filter(si => si.sale_price !== null);
+                    .then(({students, stock_items}) => {
+                        this.students = students;
+                        this.stock_items = stock_items.filter(si => si.sale_price !== null);
                         loader.hide();
                     })
                     .catch(error => {
