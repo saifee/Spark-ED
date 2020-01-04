@@ -22,4 +22,9 @@ class StudentWalletTransaction extends Model
     {
         return $this->morphTo();
     }
+
+    public function scopeFilterByStudentId($q, $student_id = null)
+    {
+        return $q->where('student_id', $student_id);
+    }
 }
