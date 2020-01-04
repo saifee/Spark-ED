@@ -18,6 +18,9 @@
                             </button>
                             <div :class="['dropdown-menu',getConfig('direction') == 'ltr' ? 'dropdown-menu-right' : '']" aria-labelledby="moreOption">
                                 <button class="dropdown-item custom-dropdown" @click="$router.push('/student/'+student.uuid+'/fee/'+getStudentRecordId)"><i class="fas fa-file"></i> {{trans('finance.view_fee_allocation')}}</button>
+                                <button class="dropdown-item custom-dropdown-menu" v-tooltip="trans('student_wallet.view_student_wallet')" @click="$router.push('/student/'+student.uuid+'/wallet/'+getStudentRecordId)">
+                                    <i class="fas fa-wallet"></i> {{trans('student_wallet.view_student_wallet')}}
+                                </button>
                             </div>
                         </div>
                     </div>
