@@ -11,6 +11,7 @@ use App\Models\Student\StudentFeeRecord;
 use App\Models\Student\StudentFeeRecordDetail;
 use App\Models\Student\StudentOptionalFeeRecord;
 use App\Models\Student\StudentRecord;
+use App\Models\Student\StudentWalletTransaction;
 use App\Models\Transport\TransportCircle;
 use App\Repositories\Academic\BatchRepository;
 use App\Repositories\Configuration\Academic\CourseGroupRepository;
@@ -24,6 +25,7 @@ use Illuminate\Validation\ValidationException;
 class StudentRecordRepository {
 	protected $student_record;
 	protected $student_fee_record;
+	protected $student_wallet_transaction;
 	protected $transport_circle;
 	protected $fee_concession;
 	protected $student_optional_fee_record;
@@ -47,6 +49,7 @@ class StudentRecordRepository {
 	public function __construct(
 		StudentRecord $student_record,
 		StudentFeeRecord $student_fee_record,
+		StudentWalletTransaction $student_wallet_transaction,
 		TransportCircle $transport_circle,
 		FeeConcession $fee_concession,
 		StudentOptionalFeeRecord $student_optional_fee_record,
@@ -64,6 +67,7 @@ class StudentRecordRepository {
 	) {
 		$this->student_record = $student_record;
 		$this->student_fee_record = $student_fee_record;
+		$this->student_wallet_transaction = $student_wallet_transaction;
 		$this->transport_circle = $transport_circle;
 		$this->fee_concession = $fee_concession;
 		$this->student_optional_fee_record = $student_optional_fee_record;
