@@ -81,6 +81,13 @@
                                     <show-error :form-name="configForm" prop-name="days_allowed_to_mark_student_advance_attendance"></show-error>
                                 </div>
                             </div>
+                            <div class="col-12 col-sm-3">
+                                <div class="form-group">
+                                    <label for="">{{trans('student_wallet.student_wallet_limit')}}</label>
+                                       <input class="form-control" type="number" v-model="configForm.student_wallet_limit" name="student_wallet_limit" :placeholder="trans('student_wallet.student_wallet_limit')">
+                                    <show-error :form-name="configForm" prop-name="student_wallet_limit"></show-error>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group text-right">
                             <button type="submit" class="btn btn-info waves-effect waves-light">{{trans('general.save')}}</button>
@@ -101,6 +108,7 @@
                 configForm: new Form({
                     admission_number_prefix: '',
                     admission_number_digit: '',
+                    student_wallet_limit: '',
                     transfer_certificate_prefix: '',
                     transfer_certificate_digit: '',
                     allow_to_modify_student_attendance: '',
