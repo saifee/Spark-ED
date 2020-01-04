@@ -61,6 +61,10 @@
                                     <th>{{trans('inventory_sale.stock_sale_detail')}}</th>
                                     <th>{{trans('inventory_sale.stock_sale_date')}}</th>
                                     <th>{{trans('inventory_sale.stock_sale_description')}}</th>
+                                    <th>{{trans('inventory_sale.stock_sale_payment_method')}}</th>
+                                    <th>{{trans('inventory_sale.stock_sale_total')}}</th>
+                                    <th>{{trans('inventory_sale.stock_sale_paid')}}</th>
+                                    <th>{{trans('inventory_sale.stock_sale_discount')}}</th>
                                     <th class="table-option">{{trans('general.action')}}</th>
                                 </tr>
                             </thead>
@@ -76,6 +80,13 @@
                                     </td>
                                     <td>{{stock_sale.date | moment}}</td>
                                     <td v-text="stock_sale.description"></td>
+                                    <td v-text="stock_sale.payment_method"></td>
+                                    <td>{{getStockSaleTotal(stock_sale)}}</td>
+                                    <td>
+                                        <span v-if="stock_sale.payment_method === 'cash'">{{getStockSaleTotal(stock_sale)}}</span>
+                                        <span v-else class="label label-info">{{trans('inventory_sale.stock_sale_added_to_wallet')}}</span>
+                                    </td>
+                                    <td v-text="stock_sale.discount"></td>
                                     <td class="table-option">
                                         <div class="btn-group">
                                             <button class="btn btn-success btn-sm" v-tooltip="trans('inventory_sale.stock_sale_detail')" @click="$router.push('/inventory/stock/sale/'+stock_sale.id)"><i class="fas fa-arrow-circle-right"></i></button>
@@ -165,6 +176,9 @@
                         loader.hide();
                         helper.showErrorMsg(error);
                     });
+            },
+            getStockSaleTotal(stock_sale) {
+                return stock_sale.details.map(ss => ss.quantity*ss.price).reduce((a,b) => a+b, 0)
             },
             editStockSale(stock_sale){
                 this.$router.push('/inventory/stock/sale/'+stock_sale.id+'/edit');
