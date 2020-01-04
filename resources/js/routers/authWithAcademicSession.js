@@ -140,6 +140,10 @@ export default [
         component: () => import(/* webpackChunkName: "js/student" */ '@views/student/show')
     },
     {
+        path: '/student/:uuid/wallet/:record_id',
+        component: () => import(/* webpackChunkName: "js/student/fee/wallet" */ '@views/student/fee/wallet')
+    },
+    {
         path: '/student/:uuid/fee/:record_id',
         component: () => import(/* webpackChunkName: "js/student/fee/index" */ '@views/student/fee/index')
     },
