@@ -15,6 +15,8 @@ class CreateStudentWalletTransactionsTable extends Migration
     {
         Schema::create('student_wallet_transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('student_id')->unsigned()->nullable();
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->bigInteger('transactionable_id')->unsigned()->nullable();
             $table->string('transactionable_type')->nullable();
             $table->decimal('debit', 25, 5)->nullable();
@@ -32,6 +34,11 @@ class CreateStudentWalletTransactionsTable extends Migration
      */
     public function down()
     {
+        Schema::table('student_wallet_transactions', function(Blueprint $table)
+        {
+            $table->dropForeign('student_wallet_transactions_student_id_foreign');
+        });
+
         Schema::dropIfExists('student_wallet_transactions');
     }
 }
