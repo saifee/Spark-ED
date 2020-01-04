@@ -69,6 +69,19 @@ class StudentRecordController extends Controller {
 	}
 
 	/**
+	 * Used to get student fee record
+	 * @get ("/api/student/{uuid}/fee/{record_id}")
+	 * @return Response
+	 */
+	public function wallet($uuid, $record_id) {
+		$this->authorize('listFee', StudentRecord::class);
+
+		$record = $this->repo->findByUuidOrFail($uuid, $record_id);
+
+		return $this->success($this->repo->wallet($record));
+	}
+
+	/**
 	 * Used to print student fee
 	 * @post ("/api/students/{uuid}/fee/{record_id}/print")
 	 * @return Response
