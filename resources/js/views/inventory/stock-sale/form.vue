@@ -173,7 +173,7 @@
                     student_id: '',
                     description: '',
                     details: [],
-                    payment_method: 'wallet',
+                    payment_method: '',
                     cash_paid: '',
                     discount: '',
                     upload_token: ''
@@ -312,8 +312,14 @@
                         helper.showErrorMsg(error);
                     })
             },
+            getStudent(student_id){
+                return (student_id) ? this.students.find(s => s.id === student_id) : null
+            },
             onStudentSelect(selectedOption){
+                if (!selectedOption) return
                 this.stockSaleForm.student_id = selectedOption.id;
+                let student = this.getStudent(selectedOption.id)
+                this.stockSaleForm.payment_method = (student && student.options && student.options.enable_student_wallet && student.options.enable_student_wallet === 1) ? 'wallet' : 'cash'
             },
             confirmDelete(index){
                 return dialog => this.deleteDetail(index);
