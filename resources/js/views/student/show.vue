@@ -111,6 +111,17 @@
                                     </div>
                                 </div>
                                 <div class="card">
+                                    <div class="card-header collapsed" id="wallet" @click="tab = 'wallet'" data-toggle="collapse" data-target="#collapseUserWallet" aria-expanded="false" aria-controls="collapseUserWallet">
+                                        <h5><i class="fas fa-lg fa-wallet fa-fix-w-32"></i> {{trans('student_wallet.student_wallet')}}</h5>
+                                    </div>
+
+                                    <div id="collapseUserWallet" class="collapse" aria-labelledby="wallet" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <wallet-detail :student="student" v-if="tab == 'wallet'" @completed="getStudent"></wallet-detail>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
                                     <div class="card-header collapsed" id="login" @click="tab = 'login'" data-toggle="collapse" data-target="#collapseUserLogin" aria-expanded="false" aria-controls="collapseUserLogin">
                                         <h5><i class="fas fa-lg fa-sign-in-alt fa-fix-w-32"></i> {{trans('auth.user_login')}}</h5>
                                     </div>
@@ -230,9 +241,10 @@
     import promotionDetail from './promotion/detail'
     import siblingDetail from './sibling/index'
     import loginDetail from './login/index'
+    import walletDetail from './wallet/index'
 
 	export default {
-        components : { basicForm,parentForm,contactForm,documentDetail,accountDetail,qualificationDetail,terminationDetail,siblingDetail,promotionDetail,loginDetail },
+        components : { basicForm,parentForm,contactForm,documentDetail,accountDetail,qualificationDetail,terminationDetail,siblingDetail,promotionDetail,loginDetail,walletDetail },
         data() {
             return {
                 uuid:this.$route.params.uuid,
