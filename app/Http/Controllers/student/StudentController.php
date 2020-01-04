@@ -288,6 +288,24 @@ class StudentController extends Controller {
 	}
 
 	/**
+	 * Used to update wallet status for student
+	 * @patch ("/api/student/{uuid}/wallet/status")
+	 * @param ({
+	 *      @Parameter("uuid", type="string", required="true", description="Unique Id of User"),
+	 * })
+	 * @return Response
+	 */
+	public function updateWalletStatus(UserLoginRequest $request, $uuid) {
+		$this->authorize('updateUserLogin', Student::class);
+
+		$student = $this->repo->findByUuidOrFail($uuid);
+
+		$student = $this->repo->updateWalletStatus($student, $this->request->all());
+
+		return $this->success(['message' => trans('student.updated')]);
+	}
+
+	/**
 	 * Used to get siblings
 	 * @patch ("/api/student/{uuid}/sibling")
 	 * @param ({
