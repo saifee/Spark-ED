@@ -270,6 +270,9 @@
                                                     <button class="dropdown-item custom-dropdown-menu" v-tooltip="trans('student.view_student_fee')" @click="$router.push('/student/'+student.uuid+'/fee/'+getStudentRecordId(student))">
                                                         <i class="fas fa-file"></i> {{trans('finance.view_fee_allocation')}}
                                                     </button>
+                                                    <button class="dropdown-item custom-dropdown-menu" v-tooltip="trans('student_wallet.view_student_wallet')" @click="$router.push('/student/'+student.uuid+'/wallet/'+getStudentRecordId(student))">
+                                                        <i class="fas fa-wallet"></i> {{trans('student_wallet.view_student_wallet')}}
+                                                    </button>
                                                 </div>
                                             </template>
                                         </div>
