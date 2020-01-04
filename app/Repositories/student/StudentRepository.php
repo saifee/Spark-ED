@@ -806,6 +806,24 @@ class StudentRepository
     }
 
     /**
+     * Update wallet status
+     *
+     * @param Student $student
+     * @param array $params
+     * @return Student
+     */
+    public function updateWalletStatus(Student $student, $params)
+    {
+        $options = $student->options;
+        $options['enable_student_wallet'] = gbv($params, 'enable_student_wallet');
+        $options['student_wallet_limit'] = gv($params, 'student_wallet_limit', 0);
+        $student->options = $options;
+        $student->save();
+
+        return $student;
+    }
+
+    /**
      * Search student by name
      *
      * @param array $params
