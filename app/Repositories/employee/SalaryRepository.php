@@ -267,7 +267,7 @@ class SalaryRepository
         $id = array();
         $variables = [];
         foreach ($payroll_template_details as $index => $payroll_template_detail) {
-            $amount = gv($payroll_template_detail, 'amount');
+            $amount = gnv($payroll_template_detail, 'amount');
 
             if (! isInteger($amount)) {
                 throw ValidationException::withMessages(['amount_'.$index => trans('validation.required', ['attribute' => trans('employee.salary_structure_amount')])]);
