@@ -319,7 +319,7 @@ class PayrollRepository
 
         $attendance = $attendance_types->whereIn('type',['present','holiday'])->sum('count');
 
-        $half_day = $attendance_types->firstWhere('type','half_day')->count;
+        $half_day = optional($attendance_types->firstWhere('type','half_day'))->count;
 
         $leave = $attendance_types->firstWhere('type','leave')['count'];
 
