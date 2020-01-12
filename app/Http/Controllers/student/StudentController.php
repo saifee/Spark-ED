@@ -295,7 +295,7 @@ class StudentController extends Controller {
 	 * })
 	 * @return Response
 	 */
-	public function updateWalletStatus(UserLoginRequest $request, $uuid) {
+	public function updateWalletStatus(WalletStatusRequest $request, $uuid) {
 		$this->authorize('updateUserLogin', Student::class);
 
 		$student = $this->repo->findByUuidOrFail($uuid);
