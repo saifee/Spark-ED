@@ -5,7 +5,7 @@
                 <div class="form-group">
                     <label for="">{{trans('employee.code')}}</label>
                     <div class="row">
-                        <div class="col-12 col-sm-4">
+                        <div class="col-12 col-sm-4" v-if="getConfig('made') === 'saudi'">
                             <input class="form-control" type="text" v-model="employeeForm.prefix" name="prefix" :placeholder="trans('employee.employee_code_prefix')">
                         </div>
                         <div class="col-12 col-sm-8">
