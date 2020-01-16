@@ -169,6 +169,10 @@
                                             <td>{{employee.date_of_birth | moment}}</td>
                                         </tr>
                                         <tr>
+                                            <td>{{trans('employee.next_of_kin')}}</td>
+                                            <td>{{employee.next_of_kin}}</td>
+                                        </tr>
+                                        <tr>
                                             <td>{{trans('general.created_at')}}</td>
                                             <td>{{employee.created_at | momentDateTime}}</td>
                                         </tr>
