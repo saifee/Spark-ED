@@ -30,6 +30,7 @@ class Employee extends Model
                             'mother_tongue',
                             'unique_identification_number',
                             'father_name',
+                            'next_of_kin',
                             'mother_name',
                             'emergency_contact_name',
                             'emergency_contact_number',
