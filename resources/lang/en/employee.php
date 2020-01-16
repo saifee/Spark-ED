@@ -251,6 +251,7 @@
   'existing_employee' => ':name employee already exists into the system.',
   'existing_employee_code' => 'Employee code already exists for :name.',
   'father_name' => 'Father/Husband Name',
+  'next_of_kin' => 'Next of Kin',
   'first_designation_date_should_be_date_of_joining' => 'First date of effective should be date of joining :date.',
   'first_name' => 'First Name',
   'gender' => 'Gender',
