@@ -109,6 +109,13 @@
                     <show-error :form-name="employeeForm" prop-name="date_of_joining"></show-error>
                 </div>
             </div>
+            <div class="col-12 col-sm-3">
+                <div class="form-group">
+                    <label for="">{{trans('employee.next_of_kin')}}</label>
+                    <input class="form-control" type="text" v-model="employeeForm.next_of_kin" name="next_of_kin" :placeholder="trans('employee.next_of_kin')">
+                    <show-error :form-name="employeeForm" prop-name="next_of_kin"></show-error>
+                </div>
+            </div>
         </div>
         <div class="card-footer text-right">
             <button type="button" class="btn btn-danger waves-effect waves-light " @click="$emit('cancel')">{{trans('general.cancel')}}</button>
@@ -129,6 +136,7 @@
 					last_name: '',
 					father_name: '',
 					mother_name: '',
+                    next_of_kin: '',
 					contact_number: '',
 					date_of_joining: '',
 					date_of_birth: '',
