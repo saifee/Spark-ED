@@ -82,6 +82,13 @@
 	                    <show-error :form-name="basicForm" prop-name="mother_name"></show-error>
                     </div>
     			</div>
+          <div class="col-12 col-sm-4">
+                    <div class="form-group">
+                  <label for="">{{trans('employee.next_of_kin')}}</label>
+                      <input class="form-control" type="text" v-model="basicForm.next_of_kin" name="next_of_kin" :placeholder="trans('employee.next_of_kin')">
+                      <show-error :form-name="basicForm" prop-name="next_of_kin"></show-error>
+                    </div>
+          </div>
     			<div class="col-12 col-sm-4">
                     <div class="form-group">
             			<label for="">{{trans('employee.nationality')}}</label>
