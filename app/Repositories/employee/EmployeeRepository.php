@@ -191,6 +191,7 @@ class EmployeeRepository {
 		$middle_name = gv($params, 'middle_name');
 		$last_name = gv($params, 'last_name');
 		$father_name = gv($params, 'father_name');
+		$next_of_kin = gv($params, 'next_of_kin');
 		$status = gv($params, 'status');
 		$designation_id = gv($params, 'designation_id');
 		$department_id = gv($params, 'department_id');
@@ -552,6 +553,7 @@ class EmployeeRepository {
 			'middle_name' => gv($params, 'middle_name'),
 			'last_name' => gv($params, 'last_name'),
 			'father_name' => gv($params, 'father_name'),
+			'next_of_kin' => gv($params, 'next_of_kin'),
 			'mother_name' => gv($params, 'mother_name'),
 			'contact_number' => gv($params, 'contact_number'),
 			'date_of_birth' => gv($params, 'date_of_birth'),
@@ -764,6 +766,7 @@ class EmployeeRepository {
 			'marital_status' => gv($params, 'marital_status'),
 			'middle_name' => gv($params, 'middle_name'),
 			'father_name' => gv($params, 'father_name'),
+			'next_of_kin' => gv($params, 'next_of_kin'),
 			'mother_name' => gv($params, 'mother_name'),
 			'gender' => gv($params, 'gender'),
 			'mother_tongue' => gv($params, 'mother_tongue'),
