@@ -28,10 +28,10 @@ class EmployeeRequest extends FormRequest
             'last_name'       => 'required|min:2',
             'date_of_birth'   => 'required|date',
             'date_of_joining' => 'required|date|after:date_of_birth',
-            'contact_number'  => 'required',
+            // 'contact_number'  => 'required',
             'gender'          => 'required',
-            'father_name'     => 'required|min:5',
-            'mother_name'     => 'required|min:5',
+            // 'father_name'     => 'required|min:5',
+            // 'mother_name'     => 'required|min:5',
             'designation_id'  => 'required',
             'code'            => 'required|numeric|min:0'
         ];
