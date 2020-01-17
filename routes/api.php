@@ -987,6 +987,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('/employee/action/group', 'Employee\EmployeeController@groupAction');
 	Route::patch('/employee/{uuid}', 'Employee\EmployeeController@update');
 	Route::patch('/employee/{uuid}/user/login', 'Employee\EmployeeController@updateUserLogin');
+	Route::delete('/employee/{id}', 'Employee\EmployeeController@destroy');
 
 	Route::get('/employee/id-card/pre-requisite', 'Employee\EmployeeController@idCardPreRequisite');
 	
