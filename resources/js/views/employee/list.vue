@@ -142,7 +142,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="employee in employees.data">
+                                <template v-for="employee in employees.data">
+                                <tr v-if="!employees.options.deleted && employees.options.deleted != 1" :key="employee.id">
                                     <td class="select-all" v-if="hasPermission('edit-employee')">
                                         <label class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" :value="employee.id" v-model="employeeGroupForm.ids">
@@ -172,9 +173,11 @@
                                     <td class="table-option">
                                         <div class="btn-group">
                                             <router-link :to="`/employee/${employee.uuid}`" class="btn btn-info btn-sm" v-tooltip="trans('employee.view_detail')" ><i class="fas fa-arrow-circle-right"></i></router-link>
+                                            <button class="btn btn-danger btn-sm" v-if="hasPermission('edit-employee')" :key="employee.id" v-confirm="{ok: confirmDelete(employee)}" v-tooltip="trans('employee.delete_employee')"><i class="fas fa-trash"></i></button>
                                         </div>
                                     </td>
                                 </tr>
+                                </template>
                             </tbody>
                         </table>
                     </div>
@@ -420,6 +423,21 @@
                         loader.hide();
                         helper.showErrorMsg(error);
                     })
+            },
+            confirmDelete(employee){
+                return dialog => this.deleteEmployee(employee);
+            },
+            deleteEmployee(employee){
+                let loader = this.$loading.show();
+                axios.delete('/api/employee/'+employee.id)
+                    .then(response => {
+                        toastr.success(response.message);
+                        this.getEmployees();
+                        loader.hide();
+                    }).catch(error => {
+                        loader.hide();
+                        helper.showErrorMsg(error);
+                    });
             }
         },
         filters: {
