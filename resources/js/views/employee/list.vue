@@ -143,7 +143,7 @@
                             </thead>
                             <tbody>
                                 <template v-for="employee in employees.data">
-                                <tr v-if="!employees.options.deleted && employees.options.deleted != 1" :key="employee.id">
+                                <tr v-if="!employee.options.deleted && employee.options.deleted != 1" :key="employee.id">
                                     <td class="select-all" v-if="hasPermission('edit-employee')">
                                         <label class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" :value="employee.id" v-model="employeeGroupForm.ids">
