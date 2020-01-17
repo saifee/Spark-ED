@@ -315,4 +315,15 @@ class EmployeeController extends Controller {
 
 		return view()->first(['custom-print.employee.id-card', 'print.employee.id-card'], $data);
 	}
+
+  public function destroy($id)
+  {
+    $this->authorize('update', Employee::class);
+
+    $registration = $this->repo->deletable($id);
+
+    $this->repo->delete($registration);
+
+    return $this->success(['message' => trans('employee.employee_deleted')]);
+  }
 }
