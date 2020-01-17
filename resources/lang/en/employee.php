@@ -143,6 +143,8 @@
   'delete_document' => 'Delete Document',
   'delete_document_type' => 'Delete Employee Document Type',
   'delete_employee_group' => 'Delete Employee Group',
+  'delete_employee' => 'Delete Employee',
+  'employee_deleted' => 'Employee Deleted.',
   'delete_leave_allocation' => 'Delete Leave Allocation',
   'delete_leave_request' => 'Delete Leave Request',
   'delete_leave_type' => 'Delete Leave Type',
