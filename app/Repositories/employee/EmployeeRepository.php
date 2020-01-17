@@ -1003,4 +1003,20 @@ class EmployeeRepository {
 			}
 		}
 	}
+
+  public function deletable($id)
+  {
+    $employee = $this->findOrFail($id);
+
+    return $employee;
+  }
+
+  public function delete(Employee $employee)
+  {
+    $options = $employee->options;
+    $options['deleted'] = 1;
+    $employee->options = $options;
+    $employee->save();
+    // return $employee->delete();
+  }
 }
