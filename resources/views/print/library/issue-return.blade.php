@@ -26,7 +26,7 @@
                         @if($book_log->student_record_id)
                             <span>{{trans('student.name').': '.$book_log->StudentRecord->Student->name}}</span> <br />
                             <span>{{trans('academic.batch').': '.$book_log->StudentRecord->Batch->batch_with_course}}</span><br />
-                            <span>{{trans('student.father_name').': '.$book_log->StudentRecord->Student->Parent->father_name}}</span><br />
+                            <span>{{trans('student.first_guardian_name').': '.$book_log->StudentRecord->Student->Parent->first_guardian_name}}</span><br />
                         @endif
 
                         @if($book_log->employee_id)

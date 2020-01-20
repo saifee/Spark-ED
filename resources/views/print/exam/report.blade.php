@@ -108,7 +108,14 @@
 				@foreach ($summary['header'] as $header)
 					<td colspan="{{count($header['assessment_details'])}}" style="text-align: center; font-weight: bold; font-size: 120%">
 						@if (is_numeric($summary['exam_total'][$header['schedule_id']]))
-							{{formatNumber(($summary['exam_total'][$header['schedule_id']] / $summary['exam_assessment_total'][$header['schedule_id']] ) * 100)}}%
+							@php
+								$percentage = formatNumber(($summary['exam_total'][$header['schedule_id']] / $summary['exam_assessment_total'][$header['schedule_id']] ) * 100);
+								$overall_pass_percentage = gv($header, 'overall_pass_percentage');
+							@endphp
+							{{$percentage}}% 
+							@if ($overall_pass_percentage)
+								<span style="text-transform: uppercase;"> {{$percentage >= $overall_pass_percentage ? trans('exam.exam_result_passed') : trans('exam.exam_result_failed') }}</span>
+							@endif
 						@endif
 					</td>
 				@endforeach
@@ -170,6 +177,10 @@
 							<td style="font-weight: bold;">{{trans('exam.total_attendances')}}</td>
 							<td style="text-align: right;">{{gv($summary, 'attendance')}}</td>
 						</tr>
+						<tr>
+							<td style="font-weight: bold;">{{trans('exam.attendance_percentage')}}</td>
+							<td style="text-align: right;">{{gv($summary, 'attendance_percentage')}}</td>
+						</tr>
 			        </tbody>
 			    </table>
 			</td>
@@ -177,11 +188,12 @@
 				@if ($summary['grade'])
 				    <table class="report-card" style="margin-top: 20px;">
 						<tr>
-							<td colspan="2" style="text-align: center; font-weight: bold; font-size: 120%">{{trans('exam.grade')}}</td>
+							<td colspan="3" style="text-align: center; font-weight: bold; font-size: 120%">{{trans('exam.grade')}}</td>
 						</tr>
 						@foreach ($summary['grade']->details as $detail)
 							<tr>
 								<td style="text-align: center;">{{$detail->name}}</td>
+								<td style="text-align: center;">{{$detail->description}}</td>
 								<td style="text-align: center;">{{trans('exam.grade_detail', ['min_percentage' => formatNumber($detail->min_percentage), 'max_percentage' => formatNumber($detail->max_percentage)])}}</td>
 							</tr>
 						@endforeach

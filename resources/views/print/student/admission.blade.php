@@ -1,6 +1,6 @@
 @include('print.print-layout.header')
     <h2 style="text-align: center;">{{config('config.default_academic_session.name')}}</h2>
-    <h2>{{trans('student.admission').' '.trans('general.total_result_count',['count' => count($students)])}}</h2>
+    <h2>{{trans('student.student_list').' '.trans('general.total_result_count',['count' => count($student_records)])}}</h2>
     <table class="fancy-detail">
         <thead>
             <tr>
@@ -56,11 +56,11 @@
                 @if(isColumnVisible('unique_identification_number', $filter))
                     <th>{{trans('student.unique_identification_number')}}</th>
                 @endif
-                @if(isColumnVisible('father_contact_number_1', $filter))
-                    <th>{{trans('student.father_contact_number_1')}}</th>
+                @if(isColumnVisible('first_guardian_contact_number_1', $filter))
+                    <th>{{trans('student.first_guardian_contact_number_1')}}</th>
                 @endif
-                @if(isColumnVisible('mother_contact_number_1', $filter))
-                    <th>{{trans('student.mother_contact_number_1')}}</th>
+                @if(isColumnVisible('second_guardian_contact_number_1', $filter))
+                    <th>{{trans('student.second_guardian_contact_number_1')}}</th>
                 @endif
                 @if(isColumnVisible('emergency_contact_name', $filter))
                     <th>{{trans('student.emergency_contact_name')}}</th>
@@ -77,114 +77,114 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($students as $student)
+            @foreach($student_records as $student_record)
                 <tr>
                     @if(isColumnVisible('admission_number', $filter))
-                        <td>{{getStudentRecordForSession($student->StudentRecords, config('config.default_academic_session.id'), 'admission_number')}}</td>
+                        <td>{{$student_record->admission->admission_number}}</td>
                     @endif
                     @if(isColumnVisible('roll_number', $filter))
-                        <td>{{getRollNumber(getStudentRecordForSession($student->StudentRecords, config('config.default_academic_session.id')))}}</td>
+                        <td>{{getRollNumber($student_record)}}</td>
                     @endif
-                    <td>{{$student->first_name}}</td>
+                    <td>{{$student_record->student->first_name}}</td>
                     @if(isColumnVisible('middle_name', $filter))
-                        <td>{{$student->middle_name}}</td>
+                        <td>{{$student_record->student->middle_name}}</td>
                     @endif
-                    <td>{{$student->last_name}}</td>
+                    <td>{{$student_record->student->last_name}}</td>
                     @if(isColumnVisible('gender', $filter))
-                        <td>{{trans('list.'.$student->gender)}}</td>
+                        <td>{{trans('list.'.$student_record->student->gender)}}</td>
                     @endif
                     @if(isColumnVisible('father_name', $filter))
-                        <td>{{optional($student->Parent)->father_name}}</td>
+                        <td>{{optional($student_record->student->parent)->father_name}}</td>
                     @endif
                     @if(isColumnVisible('mother_name', $filter))
-                        <td>{{optional($student->Parent)->mother_name}}</td>
+                        <td>{{optional($student_record->student->parent)->mother_name}}</td>
                     @endif
                     @if(isColumnVisible('date_of_birth', $filter))
-                        <td>{{showDate($student->date_of_birth)}}</td>
+                        <td>{{showDate($student_record->student->date_of_birth)}}</td>
                     @endif
                     @if(isColumnVisible('date_of_admission', $filter))
-                        <td>{{getStudentRecordForSession($student->StudentRecords, config('config.default_academic_session.id'), 'date_of_admission')}}</td>
+                        <td>{{$student_record->admission->date_of_admission}}</td>
                     @endif
                     @if(isColumnVisible('date_of_promotion', $filter))
                         <td>
-                            <td>{{getStudentRecordForSession($student->StudentRecords, config('config.default_academic_session.id'), 'date_of_entry')}}</td>
+                            <td>{{$student_record->date_of_entry}}</td>
                         </td>
                     @endif
                     @if(isColumnVisible('contact_number', $filter))
-                        <td>{{$student->contact_number}}</td>
+                        <td>{{$student_record->student->contact_number}}</td>
                     @endif
-                        <td>{{getStudentRecordForSession($student->StudentRecords, config('config.default_academic_session.id'), 'course')}}</td>
-                        <td>{{getStudentRecordForSession($student->StudentRecords, config('config.default_academic_session.id'), 'batch')}}</td>
+                        <td>{{$student_record->batch->course->name}}</td>
+                        <td>{{$student_record->batch->name}}</td>
                     @if(isColumnVisible('nationality', $filter))
-                        <td>{{$student->nationality}}</td>
+                        <td>{{$student_record->student->nationality}}</td>
                     @endif
                     @if(isColumnVisible('blood_group', $filter))
-                        <td>{{$student->BloodGroup ? $student->BloodGroup->name : ''}}</td>
+                        <td>{{$student_record->student->bloodGroup ? $student_record->student->bloodGroup->name : ''}}</td>
                     @endif
                     @if(isColumnVisible('religion', $filter))
-                        <td>{{$student->Religion ? $student->Religion->name : ''}}</td>
+                        <td>{{$student_record->student->religion ? $student_record->student->religion->name : ''}}</td>
                     @endif
                     @if(isColumnVisible('caste', $filter))
-                        <td>{{$student->Caste ? $student->Caste->name : ''}}</td>
+                        <td>{{$student_record->student->caste ? $student_record->student->caste->name : ''}}</td>
                     @endif
                     @if(isColumnVisible('category', $filter))
-                        <td>{{$student->Category ? $student->Category->name : ''}}</td>
+                        <td>{{$student_record->student->category ? $student_record->student->category->name : ''}}</td>
                     @endif
                     @if(isColumnVisible('unique_identification_number', $filter))
-                        <td>{{$student->unique_identification_number}}</td>
+                        <td>{{$student_record->student->unique_identification_number}}</td>
                     @endif
-                    @if(isColumnVisible('father_contact_number_1', $filter))
-                        <td>{{$student->father_contact_number_1}}</td>
+                    @if(isColumnVisible('first_guardian_contact_number_1', $filter))
+                        <td>{{$student_record->student->parent->first_guardian_contact_number_1}}</td>
                     @endif
-                    @if(isColumnVisible('mother_contact_number_1', $filter))
-                        <td>{{$student->mother_contact_number_1}}</td>
+                    @if(isColumnVisible('second_guardian_contact_number_1', $filter))
+                        <td>{{$student_record->student->parent->second_guardian_contact_number_1}}</td>
                     @endif
                     @if(isColumnVisible('emergency_contact_name', $filter))
-                        <td>{{$student->emergency_contact_name}}</td>
+                        <td>{{$student_record->student->emergency_contact_name}}</td>
                     @endif
                     @if(isColumnVisible('emergency_contact_number', $filter))
-                        <td>{{$student->emergency_contact_number}}</td>
+                        <td>{{$student_record->student->emergency_contact_number}}</td>
                     @endif
                     @if(isColumnVisible('present_address', $filter))
                         <td>
-                            {{$student->present_address_line_1}}
-                            @if($student->present_address_line_2)
-                                <span>, {{$student->present_address_line_2}}</span>
+                            {{$student_record->student->present_address_line_1}}
+                            @if($student_record->student->present_address_line_2)
+                                <span>, {{$student_record->student->present_address_line_2}}</span>
                             @endif
-                            @if($student->present_city)
-                                <span><br /> {{$student->present_city}}</span>
+                            @if($student_record->student->present_city)
+                                <span><br /> {{$student_record->student->present_city}}</span>
                             @endif
-                            @if($student->present_state)
-                                <span>, {{$student->present_state}}</span>
+                            @if($student_record->student->present_state)
+                                <span>, {{$student_record->student->present_state}}</span>
                             @endif
-                            @if($student->present_zipcode)
-                                <span>, {{$student->present_zipcode}}</span>
+                            @if($student_record->student->present_zipcode)
+                                <span>, {{$student_record->student->present_zipcode}}</span>
                             @endif
-                            @if($student->present_country)
-                                <span><br /> {{$student->present_country}}</span>
+                            @if($student_record->student->present_country)
+                                <span><br /> {{$student_record->student->present_country}}</span>
                             @endif
                         </td>
                     @endif
                     @if(isColumnVisible('permanent_address', $filter))
                         <td>
-                            @if($student->same_as_present_address)
+                            @if($student_record->student->same_as_present_address)
                                 {{trans('student.same_as_present_address')}}
                             @else
-                                {{$student->permanent_address_line_1}}
-                                @if($student->permanent_address_line_2)
-                                    <span>, {{$student->permanent_address_line_2}}</span>
+                                {{$student_record->student->permanent_address_line_1}}
+                                @if($student_record->student->permanent_address_line_2)
+                                    <span>, {{$student_record->student->permanent_address_line_2}}</span>
                                 @endif
-                                @if($student->permanent_city)
-                                    <span><br /> {{$student->permanent_city}}</span>
+                                @if($student_record->student->permanent_city)
+                                    <span><br /> {{$student_record->student->permanent_city}}</span>
                                 @endif
-                                @if($student->permanent_state)
-                                    <span>, {{$student->permanent_state}}</span>
+                                @if($student_record->student->permanent_state)
+                                    <span>, {{$student_record->student->permanent_state}}</span>
                                 @endif
-                                @if($student->permanent_zipcode)
-                                    <span>, {{$student->permanent_zipcode}}</span>
+                                @if($student_record->student->permanent_zipcode)
+                                    <span>, {{$student_record->student->permanent_zipcode}}</span>
                                 @endif
-                                @if($student->permanent_country)
-                                    <span><br /> {{$student->permanent_country}}</span>
+                                @if($student_record->student->permanent_country)
+                                    <span><br /> {{$student_record->student->permanent_country}}</span>
                                 @endif
                             @endif
                         </td>

@@ -20,9 +20,9 @@
         		<tr>
                     <td>{{$enquiry->id}}</td>
                     <td>
-                        @if($enquiry->father_name) {{trans('student.father_name').': '.$enquiry->father_name}} <br /> @endif
-                        @if($enquiry->mother_name) {{trans('student.mother_name').': '.$enquiry->mother_name}} <br /> @endif
-                        @if($enquiry->guardian_name) {{trans('student.guardian_name').': '.$enquiry->guardian_name}} <br /> @endif
+                        @if($enquiry->first_guardian_name && $enquiry->first_guardian_relation) {{trans('list.'.$enquiry->first_guardian_relation).': '.$enquiry->first_guardian_name}} <br /> @endif
+                        @if($enquiry->second_guardian_name && $enquiry->second_guardian_relation) {{trans('list.'.$enquiry->second_guardian_relation).': '.$enquiry->second_guardian_name}} <br /> @endif
+                        @if($enquiry->third_guardian_name && $enquiry->third_guardian_relation) {{trans('list.'.$enquiry->third_guardian_relation).': '.$enquiry->third_guardian_name}} <br /> @endif
                     </td>
                     <td>{{$enquiry->EnquiryType->name}}</td>
                     <td>{{$enquiry->EnquirySource->name}}</td>

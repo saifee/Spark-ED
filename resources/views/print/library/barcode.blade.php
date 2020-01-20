@@ -12,8 +12,9 @@
     <div style="margin-top: 10px;">
         <div style="padding:10px;background: #ffffff;">
         	@foreach($items as $item)
-	        	<div style="width: {{request('width')}}mm; height: {{request('height')}}mm; float: left; margin: 0px 10px 20px; border: 1px solid black; padding: 10px 5px;">
-					<center>{!! DNS1D::getBarcodeSVG($item, "C128A"); !!}</center>
+	        	<div style="height: {{request('height')}}mm; float: left; margin: 0px 10px 20px; border: 0px solid black; padding: 10px 5px;">
+					<center>{!! DNS1D::getBarcodeHTML($item, "C39"); !!}</center>
+					<center>{{$item}}</center>
 	        	</div>
 
 	        	@if($loop->iteration % request('per_page_limit') === 0)

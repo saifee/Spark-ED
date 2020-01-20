@@ -6,8 +6,8 @@
             <tr>
                 <td><strong>{{trans('student.name')}}</strong></td>
                 <td>{{$record->Student->name}}</td>
-                <td><strong>{{trans('student.father_name')}}</strong></td>
-                <td>{{optional($record->Student->Parent)->father_name}}</td>
+                <td><strong>{{trans('student.first_guardian_name')}}</strong></td>
+                <td>{{optional($record->Student->Parent)->first_guardian_name}}</td>
             </tr>
             <tr>
                 <td><strong>{{trans('student.admission_number')}}</strong></td>

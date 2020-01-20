@@ -5,7 +5,7 @@
         <thead>
             <tr>
                 <th>{{trans('student.name')}}</th>
-                <th>{{trans('student.father_name')}}</th>
+                <th>{{trans('student.first_guardian_name')}}</th>
                 <th>{{trans('student.date_of_birth')}}</th>
                 <th>{{trans('student.contact_number')}}</th>
                 <th>{{trans('academic.course')}}</th>
@@ -18,7 +18,7 @@
         	@foreach($registrations as $registration)
         		<tr>
         			<td>{{$registration->Student->name}}</td>
-                    <td>{{optional($registration->Student->Parent)->father_name}}</td>
+                    <td>{{optional($registration->Student->Parent)->first_guardian_name}}</td>
                     <td>{{showDate($registration->Student->date_of_birth)}}</td>
                     <td>{{$registration->Student->contact_number}}</td>
                     <td>{{$registration->Course->name.' ('.$registration->Course->CourseGroup->name.')'}}</td>

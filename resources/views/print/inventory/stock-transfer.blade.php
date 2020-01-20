@@ -18,7 +18,7 @@
                             {{trans('asset.room')}}: {{$stock_transfer->room->name}}
                         @elseif($stock_transfer->type == 'student')
                             {{trans('student.student_name').': '.$stock_transfer->Student->name}} <br />
-                            {{trans('student.father_name').': '.$stock_transfer->Student->Parent->father_name}} <br />
+                            {{trans('student.first_guardian_name').': '.$stock_transfer->Student->Parent->first_guardian_name}} <br />
                             {{trans('student.contact_number').': '.$stock_transfer->Student->contact_number}}
                         @else
                             {{trans('employee.employee_name').': '.$stock_transfer->Employee->name}} <br />
