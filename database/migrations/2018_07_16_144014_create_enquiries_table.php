@@ -16,9 +16,12 @@ class CreateEnquiriesTable extends Migration
         Schema::create('enquiries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->nullable();
-            $table->string('father_name')->nullable();
-            $table->string('mother_name')->nullable();
-            $table->string('guardian_name')->nullable();
+            $table->string('first_guardian_name')->nullable();
+            $table->string('first_guardian_relation')->default('father');
+            $table->string('second_guardian_name')->nullable();
+            $table->string('second_guardian_relation')->default('mother');
+            $table->string('third_guardian_name')->nullable();
+            $table->string('third_guardian_relation')->nullable();
             $table->string('email')->nullable();
             $table->string('contact_number',20)->nullable();
             $table->string('alternate_contact_number',20)->nullable();
