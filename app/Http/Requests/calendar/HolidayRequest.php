@@ -30,7 +30,7 @@ class HolidayRequest extends FormRequest
         if ($this->method() === 'POST') {
             $rules ['dates'] = 'required|array|min:1';
         } elseif ($this->method() === 'PATCH') {
-            $rules ['date'] = 'required|date_format:Y-m-d';
+            $rules ['date'] = 'required|date';
         }
 
         return $rules;

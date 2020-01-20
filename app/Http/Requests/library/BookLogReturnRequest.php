@@ -25,7 +25,7 @@ class BookLogReturnRequest extends FormRequest
     {
         return [
             'return_remarks'         => 'required_if:is_non_returnable,0',
-            'date_of_return'         => 'required_if:is_non_returnable,0|date_format:Y-m-d',
+            'date_of_return'         => 'required_if:is_non_returnable,0|date',
             'non_returnable_remarks' => 'required_if:is_non_returnable,1|min:20',
             'non_returnable_charge'  => 'required_if:non_returnable_charge_applicable,1|integer'
         ];

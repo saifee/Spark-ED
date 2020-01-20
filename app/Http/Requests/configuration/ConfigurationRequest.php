@@ -74,6 +74,7 @@ class ConfigurationRequest extends FormRequest
             'employee_code_digit'                 => 'sometimes|integer|min:1',
             'days_allowed_to_modify_student_attendance' => 'required_if:allow_to_modify_student_attendance,1|integer|min:1',
             'days_allowed_to_mark_student_advance_attendance' => 'required_if:allow_to_mark_student_advance_attendance,1|integer|min:1',
+            'student_late_attendance_time' => 'sometimes|integer|min:1',
             'facebook_link'    => 'sometimes|url',
             'twitter_link'     => 'sometimes|url',
             'linkedin_link'    => 'sometimes|url',

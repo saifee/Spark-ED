@@ -24,8 +24,8 @@ class TransferCertificateRequest extends FormRequest
     public function rules()
     {
         return [
-            'date_of_application' => 'required|date_format:Y-m-d',
-            'date_of_issue' => 'required|date_format:Y-m-d',
+            'date_of_application' => 'required|date',
+            'date_of_issue' => 'required|date',
             'transfer_certificate_format' => 'required',
             'number' => 'required'
         ];

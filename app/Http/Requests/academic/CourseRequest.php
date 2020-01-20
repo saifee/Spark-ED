@@ -26,6 +26,7 @@ class CourseRequest extends FormRequest
         return [
             'name'             => 'required|min:2',
             'course_group_id'  => 'required',
+            'attendance_type'  => 'required|in:daily,subject_wise',
             'registration_fee' => 'required_if:enable_registration_fee,1|integer|min:0'
         ];
     }
@@ -40,6 +41,7 @@ class CourseRequest extends FormRequest
         return [
             'name'             => trans('academic.course_name'),
             'cours_group_id'   => trans('academic.course_group'),
+            'attendance_type'  => trans('student.attendance_type'),
             'registration_fee' => trans('student.registration_fee')
         ];
     }

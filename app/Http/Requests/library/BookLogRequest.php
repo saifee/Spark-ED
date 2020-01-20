@@ -25,7 +25,7 @@ class BookLogRequest extends FormRequest
     {
         return [
             'type'          => 'required|in:student,employee',
-            'date_of_issue' => 'required|date_format:Y-m-d'
+            'date_of_issue' => 'required|date'
         ];
     }
 

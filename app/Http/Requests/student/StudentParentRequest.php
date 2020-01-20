@@ -23,10 +23,13 @@ class StudentParentRequest extends FormRequest
      */
     public function rules()
     {
+        $relations = implode(',', gv(getVar('list'), 'relations', []));
+
         return [
-            'father_name'             => 'required',
-            'mother_name'             => 'required',
-            'father_contact_number_1' => 'required',
+            'first_guardian_name'             => 'required',
+            'first_guardian_relation'         => 'required|different:second_guardian_relation|in:'.$relations,
+            'second_guardian_relation'        => 'required_with:second_guardian_name|different:first_guardian_relation|in:'.$relations,
+            'first_guardian_contact_number_1' => 'required',
         ];
     }
 
@@ -38,9 +41,9 @@ class StudentParentRequest extends FormRequest
     public function attributes()
     {
         return [
-            'father_name'             => trans('student.father_name'),
-            'mother_name'             => trans('student.mother_name'),
-            'father_contact_number_1' => trans('student.father_contact_number'),
+            'first_guardian_name'             => trans('student.first_guardian_name'),
+            'second_guardian_name'             => trans('student.second_guardian_name'),
+            'first_guardian_contact_number_1' => trans('student.first_guardian_contact_number'),
         ];
     }
 
@@ -51,6 +54,10 @@ class StudentParentRequest extends FormRequest
      */
     public function messages()
     {
-        return [];
+        return [
+            'first_guardian_relation.different' => trans('general.different_custom', ['attribute' => trans('general.relation')]),
+            'second_guardian_relation.different' => trans('general.different_custom', ['attribute' => trans('general.relation')]),
+            'second_guardian_relation.required_with' => trans('validation.required', ['attribute' => trans('general.relation')])
+        ];
     }
 }

@@ -25,7 +25,7 @@ class RecordUpdateRequest extends FormRequest
     {
         return [
             'batch_id'      => 'required',
-            'date_of_entry' => 'required|date_format:Y-m-d',
+            'date_of_entry' => 'required|date',
             'number'        => 'required|numeric'
         ];
     }

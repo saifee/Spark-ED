@@ -30,7 +30,7 @@ class PostalRecordRequest extends FormRequest
             'receiver_address' => 'required',
             'reference_number' => 'required',
             'type'             => 'required|in:dispatch,receive',
-            'date'             => 'required|date_format:Y-m-d'
+            'date'             => 'required|date'
         ];
     }
 

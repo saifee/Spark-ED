@@ -25,7 +25,6 @@ class EmployeeRequest extends FormRequest
     {
         return [
             'first_name'      => 'required|min:2',
-            'last_name'       => 'required|min:2',
             'date_of_birth'   => 'required|date',
             'date_of_joining' => 'required|date|after:date_of_birth',
             // 'contact_number'  => 'required',
@@ -46,7 +45,6 @@ class EmployeeRequest extends FormRequest
     {
         return [
             'first_name'      => trans('employee.first_name'),
-            'last_name'       => trans('employee.last_name'),
             'date_of_birth'   => trans('employee.date_of_birth'),
             'date_of_joining' => trans('employee.date_of_joining'),
             'contact_number'  => trans('employee.contact_number'),

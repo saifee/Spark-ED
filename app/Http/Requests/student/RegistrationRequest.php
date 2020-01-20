@@ -23,17 +23,20 @@ class RegistrationRequest extends FormRequest
      */
     public function rules()
     {
+        $relations = implode(',', gv(getVar('list'), 'relations', []));
+
         if (request('student_type') == 'new') {
             return [
-                'first_name'              => 'required|min:2',
-                'date_of_birth'           => 'required|date',
-                'date_of_registration'    => 'required|date|after:date_of_birth',
-                'contact_number'          => 'required',
-                'gender'                  => 'required',
-                'father_name'             => 'required_if:parent_type,new|min:3',
-                'mother_name'             => 'required_if:parent_type,new|min:3',
-                'father_contact_number_1' => 'required_if:parent_type,new',
-                'course_id'               => 'required'
+                'first_name'                      => 'required|min:2',
+                'date_of_birth'                   => 'required|date',
+                'date_of_registration'            => 'required|date|after:date_of_birth',
+                'contact_number'                  => 'required',
+                'gender'                          => 'required',
+                'first_guardian_name'             => 'required_if:parent_type,new|min:3',
+                'first_guardian_relation'         => 'required_if:parent_type,new|different:second_guardian_relation|in:'.$relations,
+                'second_guardian_relation' => 'required_with:second_guardian_name|different:first_guardian_relation|in:'.$relations,
+                'first_guardian_contact_number_1' => 'required_if:parent_type,new',
+                'course_id'                       => 'required'
             ];
         } else {
             return [
@@ -52,16 +55,18 @@ class RegistrationRequest extends FormRequest
     public function attributes()
     {
         return [
-            'student_id'           => trans('student.student'),
-            'first_name'           => trans('student.first_name'),
-            'last_name'            => trans('student.last_name'),
-            'date_of_birth'        => trans('student.date_of_birth'),
-            'date_of_registration' => trans('student.date_of_registration'),
-            'contact_number'       => trans('student.contact_number'),
-            'gender'               => trans('student.gender'),
-            'father_name'          => trans('student.father_name'),
-            'mother_name'          => trans('student.mother_name'),
-            'course_id'            => trans('academic.course')
+            'student_id'               => trans('student.student'),
+            'first_name'               => trans('student.first_name'),
+            'last_name'                => trans('student.last_name'),
+            'date_of_birth'            => trans('student.date_of_birth'),
+            'date_of_registration'     => trans('student.date_of_registration'),
+            'contact_number'           => trans('student.contact_number'),
+            'gender'                   => trans('student.gender'),
+            'first_guardian_name'      => trans('student.first_guardian_name'),
+            'first_guardian_relation'  => trans('general.relation'),
+            'second_guardian_name'     => trans('student.second_guardian_name'),
+            'second_guardian_relation' => trans('general.relation'),
+            'course_id'                => trans('academic.course')
         ];
     }
 
@@ -73,9 +78,11 @@ class RegistrationRequest extends FormRequest
     public function messages()
     {
         return [
-            'father_name.required_if'             => trans('validation.required', ['attribute' => trans('student.father_name')]),
-            'mother_name.required_if'             => trans('validation.required', ['attribute' => trans('student.mother_name')]),
-            'father_contact_number_1.required_if' => trans('validation.required', ['attribute' => trans('student.father_contact_number_1')])
+            'first_guardian_name.required_if'             => trans('validation.required', ['attribute' => trans('student.first_guardian_name')]),
+            'first_guardian_contact_number_1.required_if' => trans('validation.required', ['attribute' => trans('student.first_guardian_contact_number_1')]),
+            'first_guardian_relation.different' => trans('general.different_custom', ['attribute' => trans('general.relation')]),
+            'second_guardian_relation.different' => trans('general.different_custom', ['attribute' => trans('general.relation')]),
+            'second_guardian_relation.required_with' => trans('validation.required', ['attribute' => trans('general.relation')])
         ];
     }
 }

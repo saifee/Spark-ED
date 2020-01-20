@@ -25,7 +25,8 @@ class ScheduleRequest extends FormRequest
     {
         return [
             'exam_id'       => 'required',
-            'batch_id'      => 'required'
+            'batch_id'      => 'required',
+            'overall_pass_percentage' => 'numeric|min:0|max:100'
         ];
     }
 

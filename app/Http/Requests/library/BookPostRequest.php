@@ -24,7 +24,7 @@ class BookPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'date_of_addition' => 'required|date_format:Y-m-d',
+            'date_of_addition' => 'required|date',
             'quantity'         => 'required|integer|min:1'
         ];
     }

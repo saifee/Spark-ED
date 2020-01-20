@@ -29,8 +29,8 @@ class ComplaintRequest extends FormRequest
             'complainant_name'           => 'required',
             'complainant_contact_number' => 'required',
             'description'                => 'required',
-            'date_of_complaint'          => 'required|date_format:Y-m-d',
-            'date_of_resolution'         => 'nullable|date_format:Y-m-d|after_or_equal:date_of_complaint',
+            'date_of_complaint'          => 'required|date',
+            'date_of_resolution'         => 'nullable|date|after_or_equal:date_of_complaint',
         ];
     }
 

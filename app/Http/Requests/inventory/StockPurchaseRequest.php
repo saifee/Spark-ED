@@ -26,7 +26,7 @@ class StockPurchaseRequest extends FormRequest
         return [
             'vendor_id' => 'required',
             'number'    => 'required',
-            'date'      => 'required|date_format:Y-m-d'
+            'date'      => 'required|date'
         ];
     }
 

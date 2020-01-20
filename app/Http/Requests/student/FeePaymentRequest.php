@@ -24,9 +24,11 @@ class FeePaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            'amount'            => 'required|numeric',
-            'installment_id'    => 'required|integer',
-            'date'              => 'required|date'
+            'amount'                  => 'required|numeric',
+            'installment_id'          => 'required|integer',
+            'date'                    => 'required|date',
+            'additional_fee_charge'   => 'numeric|min:0',
+            'additional_fee_discount' => 'numeric|min:0'
         ];
     }
 
@@ -38,9 +40,11 @@ class FeePaymentRequest extends FormRequest
     public function attributes()
     {
         return [
-            'amount'            => trans('finance.amount'),
-            'installment_id'    => trans('finance.fee_installment'),
-            'date'              => trans('finance.date_of_payment')
+            'amount'                  => trans('finance.amount'),
+            'installment_id'          => trans('finance.fee_installment'),
+            'date'                    => trans('finance.date_of_payment'),
+            'additional_fee_charge'   => trans('student.additional_fee_charge'),
+            'additional_fee_discount' => trans('student.additional_fee_discount')
         ];
     }
 

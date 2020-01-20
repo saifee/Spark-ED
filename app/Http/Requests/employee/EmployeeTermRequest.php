@@ -27,12 +27,12 @@ class EmployeeTermRequest extends FormRequest
 
         if ($id) {
             return [
-                'date_of_leaving' => 'required_if:is_leaving,1|date_format:Y-m-d',
+                'date_of_leaving' => 'required_if:is_leaving,1|date',
                 'leaving_remarks' => 'required_if:is_leaving,1|min:20'
             ];
         } else {
             return [
-                'date_of_joining' => 'required|date_format:Y-m-d',
+                'date_of_joining' => 'required|date',
                 'joining_remarks' => 'required|min:20'
             ];
         }

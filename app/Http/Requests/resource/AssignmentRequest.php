@@ -26,8 +26,8 @@ class AssignmentRequest extends FormRequest
         return [
             'title'              => 'required',
             'description'        => 'required',
-            'date_of_assignment' => 'required|date_format:Y-m-d',
-            'due_date'           => 'required|date_format:Y-m-d|after_or_equal:date_of_assignment',
+            'date_of_assignment' => 'required|date',
+            'due_date'           => 'required|date|after_or_equal:date_of_assignment',
             'subject_id'         => 'required'
         ];
     }

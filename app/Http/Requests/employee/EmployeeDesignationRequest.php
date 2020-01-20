@@ -24,7 +24,7 @@ class EmployeeDesignationRequest extends FormRequest
     public function rules()
     {
         return [
-            'date_effective' => 'required|date_format:Y-m-d',
+            'date_effective' => 'required|date',
             'designation_id' => 'required',
             'remarks'        => 'required|min:20'
         ];

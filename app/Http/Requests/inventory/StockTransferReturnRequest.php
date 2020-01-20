@@ -25,7 +25,7 @@ class StockTransferReturnRequest extends FormRequest
     {
         return [
             'type' => 'required|in:consumed,damaged,returned,missed',
-            'date' => 'required|date_format:Y-m-d',
+            'date' => 'required|date',
             'quantity' => 'required|integer|min:1',
             'stock_item_id' => 'required'
         ];

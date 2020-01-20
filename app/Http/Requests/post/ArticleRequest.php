@@ -26,7 +26,7 @@ class ArticleRequest extends FormRequest
         return [
             'article_type_id' => 'required',
             'description'     => 'required',
-            'date_of_article' => 'required|date_format:Y-m-d',
+            'date_of_article' => 'required|date',
             'title'           => 'required'
         ];
     }

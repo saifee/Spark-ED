@@ -25,7 +25,7 @@ class IncomeRequest extends FormRequest
     {
         return [
             'transaction_category_id' => 'required|integer',
-            'date_of_income'          => 'required|date_format:Y-m-d',
+            'date_of_income'          => 'required|date',
             'amount'                  => 'required|min:0|numeric',
             'description'             => 'required',
             'account_id'              => 'required|integer',

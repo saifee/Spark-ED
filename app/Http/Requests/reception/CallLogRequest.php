@@ -29,7 +29,7 @@ class CallLogRequest extends FormRequest
             'type'               => 'required|in:incoming,outgoing',
             'incoming_number'    => 'required',
             'outgoing_number'    => 'required',
-            'date'       => 'required|date_format:Y-m-d'
+            'date'       => 'required|date'
         ];
     }
 

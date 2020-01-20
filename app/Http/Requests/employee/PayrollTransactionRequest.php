@@ -29,7 +29,7 @@ class PayrollTransactionRequest extends FormRequest
             'account_id'          => 'required',
             'payment_method_id'   => 'required',
             'amount'              => 'required|min:0|numeric',
-            'date_of_transaction' => 'date_format:Y-m-d'
+            'date_of_transaction' => 'date'
         ];
     }
 

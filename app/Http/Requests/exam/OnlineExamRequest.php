@@ -28,7 +28,7 @@ class OnlineExamRequest extends FormRequest
             'batch_id' => 'required',
             'subject_id' => 'required',
             'exam_type' => 'required',
-            'date' => 'required|date_format:Y-m-d',
+            'date' => 'required|date',
             'passing_percentage' => 'required|numeric|min:0|max:100',
             'negative_mark_percentage_per_question' => 'required_if:is_negative_mark_applicable,1|numeric|min:0|max:100'
         ];

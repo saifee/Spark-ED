@@ -26,8 +26,8 @@ class EventRequest extends FormRequest
         return [
             'event_type_id'        => 'required',
             'description'          => 'required',
-            'start_date'           => 'required|date_format:Y-m-d',
-            'end_date'             => 'required|date_format:Y-m-d|after_or_equal:start_date',
+            'start_date'           => 'required|date',
+            'end_date'             => 'required|date|after_or_equal:start_date',
             'audience'             => 'required',
             'title'                => 'required',
             'course_id'            => 'required_if:is_for_selected_course,1|array',

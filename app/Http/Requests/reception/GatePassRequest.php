@@ -28,7 +28,7 @@ class GatePassRequest extends FormRequest
             'student_id'  => 'required_if:type,student',
             'reason'      => 'required',
             'type'        => 'required|in:student,employee',
-            'date'        => 'required|date_format:Y-m-d'
+            'date'        => 'required|date'
         ];
     }
 

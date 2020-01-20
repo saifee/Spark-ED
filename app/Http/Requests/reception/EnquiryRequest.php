@@ -23,13 +23,18 @@ class EnquiryRequest extends FormRequest
      */
     public function rules()
     {
+        $relations = implode(',', gv(getVar('list'), 'relations', []));
+
         return [
-            'father_name'       => 'required',
-            'contact_number'    => 'required',
-            'email'             => 'email',
-            'date_of_enquiry'   => 'required|date_format:Y-m-d',
-            'enquiry_type_id'   => 'required',
-            'enquiry_source_id' => 'required'
+            'first_guardian_name'      => 'required',
+            'first_guardian_relation'  => 'required|different:second_guardian_relation,third_guardian_relation|in:'.$relations,
+            'second_guardian_relation' => 'required_with:second_guardian_name|different:first_guardian_relation,third_guardian_relation|in:'.$relations,
+            'third_guardian_relation'  => 'required_with:third_guardian_name|different:first_guardian_relation,second_guardian_relation|in:'.$relations,
+            'contact_number'           => 'required',
+            'email'                    => 'email',
+            'date_of_enquiry'          => 'required|date',
+            'enquiry_type_id'          => 'required',
+            'enquiry_source_id'        => 'required'
         ];
     }
 
@@ -41,12 +46,17 @@ class EnquiryRequest extends FormRequest
     public function attributes()
     {
         return [
-            'father_name'       => trans('student.father_name'),
-            'contact_number'    => trans('student.contact_number'),
-            'email'             => trans('student.email'),
-            'date_of_enquiry'   => trans('reception.date_of_enquiry'),
-            'enquiry_type_id'   => trans('reception.enquiry_type'),
-            'enquiry_source_id' => trans('reception.enquiry_source')
+            'first_guardian_name'  => trans('student.first_guardian_name'),
+            'second_guardian_name' => trans('student.second_guardian_name'),
+            'third_guardian_name'  => trans('student.third_guardian_name'),
+            'first_guardian_relation'  => trans('general.relation'),
+            'second_guardian_relation' => trans('general.relation'),
+            'third_guardian_relation'  => trans('general.relation'),
+            'contact_number'       => trans('student.contact_number'),
+            'email'                => trans('student.email'),
+            'date_of_enquiry'      => trans('reception.date_of_enquiry'),
+            'enquiry_type_id'      => trans('reception.enquiry_type'),
+            'enquiry_source_id'    => trans('reception.enquiry_source')
         ];
     }
 
@@ -58,6 +68,11 @@ class EnquiryRequest extends FormRequest
     public function messages()
     {
         return [
+            'first_guardian_relation.different' => trans('general.different_custom', ['attribute' => trans('general.relation')]),
+            'second_guardian_relation.different' => trans('general.different_custom', ['attribute' => trans('general.relation')]),
+            'third_guardian_relation.different' => trans('general.different_custom', ['attribute' => trans('general.relation')]),
+            'second_guardian_relation.required_with' => trans('validation.required', ['attribute' => trans('general.relation')]),
+            'third_guardian_relation.required_with' => trans('validation.required', ['attribute' => trans('general.relation')])
         ];
     }
 }

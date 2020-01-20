@@ -26,7 +26,7 @@ class SalaryRequest extends FormRequest
         return [
             'employee_id'         => 'required',
             'payroll_template_id' => 'required',
-            'date_effective'      => 'required|date_format:Y-m-d'
+            'date_effective'      => 'required|date'
         ];
     }
 

@@ -25,8 +25,8 @@ class StockTransferRequest extends FormRequest
     {
         return [
             'type' => 'required|in:room,student,employee',
-            'date' => 'required|date_format:Y-m-d',
-            'return_due_date' => 'date_format:Y-m-d',
+            'date' => 'required|date',
+            'return_due_date' => 'date',
         ];
     }
 

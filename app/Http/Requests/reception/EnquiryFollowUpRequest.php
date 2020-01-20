@@ -24,7 +24,7 @@ class EnquiryFollowUpRequest extends FormRequest
     public function rules()
     {
         return [
-            'date_of_follow_up' => 'required|date_format:Y-m-d',
+            'date_of_follow_up' => 'required|date',
             'status'            => 'required',
             'remarks'           => 'required|min:20'
         ];

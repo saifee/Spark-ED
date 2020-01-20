@@ -25,8 +25,8 @@ class LessonPlanRequest extends FormRequest
     {
         return [
             'topic'      => 'required',
-            'start_date' => 'required|date_format:Y-m-d',
-            'end_date'   => 'required|date_format:Y-m-d|after_or_equal:start_date',
+            'start_date' => 'required|date',
+            'end_date'   => 'required|date|after_or_equal:start_date',
             'subject_id' => 'required'
         ];
     }

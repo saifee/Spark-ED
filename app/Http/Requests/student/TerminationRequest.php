@@ -24,8 +24,9 @@ class TerminationRequest extends FormRequest
     public function rules()
     {
         return [
-            'date_of_termination' => 'required|date_format:Y-m-d',
-            'termination_remarks' => 'required|min:20'
+            'date_of_termination' => 'required|date',
+            'termination_remarks' => 'required|min:20',
+            'termination_reason' => 'required'
         ];
     }
 
@@ -38,7 +39,8 @@ class TerminationRequest extends FormRequest
     {
         return [
             'date_of_termination' => trans('student.date_of_termination'),
-            'termination_remarks' => trans('student.termination_remarks')
+            'termination_remarks' => trans('student.termination_remarks'),
+            'termination_reason' => trans('student.termination_reason')
         ];
     }
 

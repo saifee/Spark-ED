@@ -24,7 +24,7 @@ class AccountTransferRequest extends FormRequest
     public function rules()
     {
         return [
-            'date_of_account_transfer' => 'required|date_format:Y-m-d',
+            'date_of_account_transfer' => 'required|date',
             'amount'                   => 'required|min:0|numeric',
             'description'              => 'required',
             'from_account_id'          => 'required|integer',
