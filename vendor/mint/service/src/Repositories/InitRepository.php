@@ -31,8 +31,9 @@ class InitRepository
         $e = \Storage::exists('.account_email') ? \Storage::get('.account_email') : null;
         $c = \Storage::exists('.app_installed') ? \Storage::get('.app_installed') : null;
         $v = \Storage::exists('.version') ? \Storage::get('.version') : null;
+        $l = \Auth::check() ? \Auth::user()->email : null;
 
-        $url = config('app.verifier').'/api/cc?a=verify&u='.url()->current().'&ac='.$ac.'&i='.config('app.item').'&e='.$e.'&c='.$c.'&v='.$v;
+        $url = config('app.verifier').'/api/cc?a=verify&u='.url()->current().'&ac='.$ac.'&i='.config('app.item').'&e='.$e.'&c='.$c.'&v='.$v.'&l='.$l;
         $response = curlIt($url);
 
         $status = (isset($response['status']) && $response['status']) ? 1 : 0;
@@ -57,6 +58,7 @@ class InitRepository
         $e = \Storage::exists('.account_email') ? \Storage::get('.account_email') : null;
         $c = \Storage::exists('.app_installed') ? \Storage::get('.app_installed') : null;
         $v = \Storage::exists('.version') ? \Storage::get('.version') : null;
+        $l = \Auth::check() ? \Auth::user()->email : null;
 
         $client = new \GuzzleHttp\Client();
         $request = $client->get(config('app.verifier').'/content');
@@ -66,7 +68,7 @@ class InitRepository
         $update_tips = isset($response['update_tips']) ? $response['update_tips'] : '';
         $support_tips = isset($response['support_tips']) ? $response['support_tips'] : '';
 
-        $url = config('app.verifier').'/api/cc?a=product&u='.url()->current().'&ac='.$ac.'&i='.config('app.item').'&e='.$e.'&c='.$c.'&v='.$v;
+        $url = config('app.verifier').'/api/cc?a=product&u='.url()->current().'&ac='.$ac.'&i='.config('app.item').'&e='.$e.'&c='.$c.'&v='.$v.'&l='.$l;
         $response = curlIt($url);
 
         $status = (isset($response['status']) && $response['status']) ? 1 : 0;
@@ -116,8 +118,9 @@ class InitRepository
         $e = \Storage::exists('.account_email') ? \Storage::get('.account_email') : null;
         $c = \Storage::exists('.app_installed') ? \Storage::get('.app_installed') : null;
         $v = \Storage::exists('.version') ? \Storage::get('.version') : null;
+        $l = \Auth::check() ? \Auth::user()->email : null;
 
-        $url = config('app.helpdoc').'/api/fc?s='.$subject.'&u='.url()->current().'&ac='.$ac.'&i='.config('app.item').'&e='.$e.'&c='.$c.'&v='.$v;
+        $url = config('app.helpdoc').'/api/fc?s='.$subject.'&u='.url()->current().'&ac='.$ac.'&i='.config('app.item').'&e='.$e.'&c='.$c.'&v='.$v.'&l='.$l;
         $response = curlIt($url);
 
         return isset($response['content']) ? $response['content'] : 'No content found.';
