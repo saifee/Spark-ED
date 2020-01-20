@@ -132,7 +132,7 @@ class VisitorLogController extends Controller
 
         $visitor_log = $this->repo->findByUuidOrFail($uuid);
 
-        $selected_student = ($visitor_log->student_id) ? ['id' => $visitor_log->student_id, 'name' => $visitor_log->Student->name.' ('.$visitor_log->Student->Parent->father_name.' '.$visitor_log->Student->contact_number.')'] : [];
+        $selected_student = ($visitor_log->student_id) ? ['id' => $visitor_log->student_id, 'name' => $visitor_log->Student->name.' ('.$visitor_log->Student->Parent->first_guardian_name.' '.$visitor_log->Student->contact_number.')'] : [];
 
         $selected_employee = ($visitor_log->employee_id) ? ['id' => $visitor_log->employee_id, 'name' => $visitor_log->Employee->name.' ('.$visitor_log->Employee->contact_number.')'] : [];
 

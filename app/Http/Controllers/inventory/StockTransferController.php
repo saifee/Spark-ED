@@ -122,7 +122,7 @@ class StockTransferController extends Controller
 
         $attachments = $this->upload->getAttachment($this->module, $stock_transfer->id);
 
-        $selected_student = ($stock_transfer->student_id) ? ['id' => $stock_transfer->student_id, 'name' => $stock_transfer->Student->name.' ('.$stock_transfer->Student->Parent->father_name.' '.$stock_transfer->Student->contact_number.')'] : [];
+        $selected_student = ($stock_transfer->student_id) ? ['id' => $stock_transfer->student_id, 'name' => $stock_transfer->Student->name.' ('.$stock_transfer->Student->Parent->first_guardian_name.' '.$stock_transfer->Student->contact_number.')'] : [];
 
         $selected_employee = ($stock_transfer->employee_id) ? ['id' => $stock_transfer->employee_id, 'name' => $stock_transfer->Employee->name.' ('.$stock_transfer->Employee->contact_number.')'] : [];
 

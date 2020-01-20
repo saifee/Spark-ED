@@ -64,7 +64,7 @@ class VehicleLogController extends Controller
     {
         $vehicle_logs = $this->repo->print(request('filter'));
 
-        return view('print.transport.vehicle-log', compact('vehicle_logs'))->render();
+        return view('print.transport.vehicle.log', compact('vehicle_logs'))->render();
     }
 
     /**
@@ -77,7 +77,7 @@ class VehicleLogController extends Controller
         $vehicle_logs = $this->repo->print(request('filter'));
 
         $uuid = Str::uuid();
-        $pdf = \PDF::loadView('print.transport.vehicle-log', compact('vehicle_logs'))->save('../storage/app/downloads/'.$uuid.'.pdf');
+        $pdf = \PDF::loadView('print.transport.vehicle.log', compact('vehicle_logs'))->save('../storage/app/downloads/'.$uuid.'.pdf');
 
         return $uuid;
     }

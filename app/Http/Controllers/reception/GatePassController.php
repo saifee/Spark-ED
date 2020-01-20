@@ -132,7 +132,7 @@ class GatePassController extends Controller
 
         $gate_pass = $this->repo->findByUuidOrFail($uuid);
 
-        $selected_student = ($gate_pass->student_id) ? ['id' => $gate_pass->student_id, 'name' => $gate_pass->Student->name.' ('.$gate_pass->Student->Parent->father_name.' '.$gate_pass->Student->contact_number.')'] : [];
+        $selected_student = ($gate_pass->student_id) ? ['id' => $gate_pass->student_id, 'name' => $gate_pass->Student->name.' ('.$gate_pass->Student->Parent->first_guardian_name.' '.$gate_pass->Student->contact_number.')'] : [];
 
         $selected_employee = ($gate_pass->employee_id) ? ['id' => $gate_pass->employee_id, 'name' => $gate_pass->Employee->name.' ('.$gate_pass->Employee->contact_number.')'] : [];
 

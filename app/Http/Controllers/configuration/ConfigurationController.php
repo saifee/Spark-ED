@@ -101,6 +101,7 @@ class ConfigurationController extends Controller
         $type = request('type') ? : 'system';
 
         $system_variables = getVar('system');
+        $list = getVar('list');
 
         if ($type === 'mail') {
             $mail_drivers = gv($system_variables, 'mail_drivers', []);
@@ -108,7 +109,6 @@ class ConfigurationController extends Controller
         }
 
         if ($type === 'library') {
-            $list = getVar('list');
             $late_fee_frequencies = generateNormalTranslatedSelectOption(isset($list['frequency']) ? $list['frequency'] : []);
             return $this->success(compact('late_fee_frequencies'));
         }
@@ -145,8 +145,9 @@ class ConfigurationController extends Controller
         }
 
         $currencies = generateNormalSelectOption($currencies);
+        $days = generateNormalTranslatedSelectOption(isset($list['day']) ? $list['day'] : []);
 
-        return $this->success(compact('color_themes', 'directions', 'date_formats', 'time_formats', 'notification_positions', 'timezones', 'locales', 'sidebar', 'currencies'));
+        return $this->success(compact('color_themes', 'directions', 'date_formats', 'time_formats', 'notification_positions', 'timezones', 'locales', 'sidebar', 'currencies','days'));
     }
 
     /**

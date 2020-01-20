@@ -66,6 +66,7 @@ class ReportController extends Controller
         $data = $this->repo->getReport($this->request->all());
         
         $summary = gv($data, 'summary');
+
         $student_record = gv($data, 'student_record');
         $print_options = array('no_border' => true, 'margin_before_signature' => "40px");
 

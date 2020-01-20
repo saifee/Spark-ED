@@ -89,8 +89,8 @@ class EnquiryController extends Controller
      * Used to store Enquiry
      * @post ("/api/enquiry")
      * @param ({
-     *      @Parameter("father_name", type="string", required="required", description="Father Name of Student"),
-     *      @Parameter("mother_name", type="string", required="optional", description="Mother Name of Student"),
+     *      @Parameter("first_guardian_name", type="string", required="required", description="First Guardian Name of Student"),
+     *      @Parameter("second_guardian_name", type="string", required="optional", description="Second Guardian Name of Student"),
      *      @Parameter("guardian_name", type="string", required="optional", description="Guardian Name of Student"),
      *      @Parameter("email", type="string", required="optional", description="Email of Student"),
      *      @Parameter("contact_number", type="number", required="required", description="Contact Number of Student"),
@@ -152,8 +152,8 @@ class EnquiryController extends Controller
      * @patch ("/api/enquiry/{uuid}")
      * @param ({
      *      @Parameter("uuid", type="string", required="true", description="Unique Id of Enquiry")
-     *      @Parameter("father_name", type="string", required="required", description="Father Name of Student"),
-     *      @Parameter("mother_name", type="string", required="optional", description="Mother Name of Student"),
+     *      @Parameter("first_guardian_name", type="string", required="required", description="First Guardian Name of Student"),
+     *      @Parameter("second_guardian_name", type="string", required="optional", description="Second Guardian Name of Student"),
      *      @Parameter("guardian_name", type="string", required="optional", description="Guardian Name of Student"),
      *      @Parameter("email", type="string", required="optional", description="Email of Student"),
      *      @Parameter("contact_number", type="number", required="required", description="Contact Number of Student"),

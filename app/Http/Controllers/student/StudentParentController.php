@@ -71,9 +71,9 @@ class StudentParentController extends Controller
      * Used to store Parent
      * @post ("/api/student/parent")
      * @param ({
-     *      @Parameter("father_name", type="string", required="true", description="Father's Name of Student"),
-     *      @Parameter("father_contact_number_1", type="string", required="true", description="Father's Contact Number"),
-     *      @Parameter("mother_name", type="string", required="true", description="Mother's Name of Student"),
+     *      @Parameter("first_guardian_name", type="string", required="true", description="First Guardian Name of Student"),
+     *      @Parameter("first_guardian_contact_number_1", type="string", required="true", description="First Guardian Contact Number"),
+     *      @Parameter("second_guardian_name", type="string", required="true", description="Second Guardian Name of Student"),
      * })
      * @return Response
      */
@@ -95,7 +95,7 @@ class StudentParentController extends Controller
     {
         $this->authorize('search', StudentParent::class);
 
-        return $this->ok($this->repo->searchByFatherMotherName($this->request->all()));
+        return $this->ok($this->repo->searchByFirstOrSecondName($this->request->all()));
     }
 
     /**

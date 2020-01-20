@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Student;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Calendar\Holiday;
-use App\Models\Student\StudentAttendance as Attendance;
 use App\Http\Controllers\Controller;
 use App\Models\Student\StudentRecord;
 use App\Models\Student\TransferCertificate;
+use App\Repositories\Upload\UploadRepository;
 use App\Http\Requests\Student\TerminationRequest;
 use App\Repositories\Student\TerminationRepository;
 use App\Repositories\Student\StudentRecordRepository;
+use App\Models\Student\StudentAttendance as Attendance;
 use App\Http\Requests\Student\TransferCertificateRequest;
 
 class TerminationController extends Controller
@@ -22,6 +23,8 @@ class TerminationController extends Controller
     protected $transfer_certificate;
     protected $holiday;
     protected $attendance;
+    protected $upload;
+    protected $module = 'student_record';
 
     /**
      * Instantiate a new controller instance.
@@ -34,7 +37,8 @@ class TerminationController extends Controller
         StudentRecordRepository $student_record,
         TransferCertificate $transfer_certificate,
         Holiday $holiday,
-        Attendance $attendance
+        Attendance $attendance,
+        UploadRepository $upload
     ) {
         $this->request = $request;
         $this->repo = $repo;
@@ -42,6 +46,7 @@ class TerminationController extends Controller
         $this->transfer_certificate = $transfer_certificate;
         $this->holiday = $holiday;
         $this->attendance = $attendance;
+        $this->upload = $upload;
     }
 
     /**
@@ -128,6 +133,22 @@ class TerminationController extends Controller
     }
 
     /**
+     * Get attachment of termination
+     * @get ("/api/student/{uuid}/terminate/{record_id}/attachment")
+     * @return Response
+     */
+    public function terminateAttachment($uuid, $record_id)
+    {
+        $this->authorize('terminate', StudentRecord::class);
+
+        $student_record = $this->student_record->findByUuidOrFail($uuid, $record_id);
+
+        $attachments = $this->upload->getAttachment($this->module, $student_record->id);
+
+        return $this->success(compact('attachments'));
+    }
+
+    /**
      * Used to get transfer certificate of student
      * @get ("/api/student/{uuid}/transfer-certificate/{record_id}")
      * @return Response
@@ -178,5 +199,31 @@ class TerminationController extends Controller
         $this->repo->transferCertificate($student_record, $this->request->all());
 
         return $this->success(['message' => trans('student.transfer_certificate_saved')]);
+    }
+
+    /**
+     * Used to download Student Termination Attachment
+     * @get ("/student/{uuid}/terminate/{id}/attachment/{attachment_uuid}/download")
+     * @param ({
+     *      @Parameter("uuid", type="string", required="true", description="Unique Id of Student"),
+     *      @Parameter("id", type="integer", required="true", description="Id of Document"),
+     *      @Parameter("attachment_uuid", type="string", required="true", description="Unique Id of Attachment"),
+     * })
+     * @return Response download
+     */
+    public function download($uuid, $id, $attachment_uuid)
+    {
+        $this->authorize('terminate', StudentRecord::class);
+
+        $student_record = $this->student_record->findByUuidOrFail($uuid, $id);
+
+        $attachment = $this->upload->getAttachment($this->module, $student_record->id, $attachment_uuid);
+
+        if (! \Storage::exists($attachment->filename)) {
+            return view('errors.file-not-found');
+        }
+
+        $download_path = storage_path('app/'.$attachment->filename);
+        return response()->download($download_path, $attachment->user_filename);
     }
 }

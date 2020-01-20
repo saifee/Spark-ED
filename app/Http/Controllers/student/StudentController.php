@@ -52,16 +52,16 @@ class StudentController extends Controller {
 		$this->authorize('list', StudentRecord::class);
 
         if (request('action') == 'excel') {
-            $students = $this->repo->paginate($this->request->all());
+            $student_records = $this->repo->paginate($this->request->all());
 
-            return Excel::download(new ExportStudents($students), 'Students.xlsx');
+            return Excel::download(new ExportStudents($student_records), 'Students.xlsx');
         }
 
-		$students = $this->repo->paginate($this->request->all());
+		$student_records = $this->repo->paginate($this->request->all());
 
 		$filters = $this->repo->getFilters();
 
-		return $this->success(compact('students', 'filters'));
+		return $this->success(compact('student_records', 'filters'));
 	}
 
 	/**
@@ -72,11 +72,11 @@ class StudentController extends Controller {
 	public function print() {
 		$this->authorize('list', StudentRecord::class);
 
-		$students = $this->repo->print(request('filter'));
+		$student_records = $this->repo->print(request('filter'));
 
 		$filter = request('filter');
 
-		return view('print.student.admission', compact('students', 'filter'))->render();
+		return view('print.student.admission', compact('student_records', 'filter'))->render();
 	}
 
 	/**
@@ -87,12 +87,12 @@ class StudentController extends Controller {
 	public function pdf() {
 		$this->authorize('list', StudentRecord::class);
 
-		$students = $this->repo->print(request('filter'));
+		$student_records = $this->repo->print(request('filter'));
 
 		$filter = request('filter');
 
 		$uuid = Str::uuid();
-		$pdf = \PDF::loadView('print.student.admission', compact('students', 'filter'))->save('../storage/app/downloads/' . $uuid . '.pdf');
+		$pdf = \PDF::loadView('print.student.admission', compact('student_records', 'filter'))->save('../storage/app/downloads/' . $uuid . '.pdf');
 
 		return $uuid;
 	}
@@ -173,19 +173,19 @@ class StudentController extends Controller {
 
 		$student = $this->repo->findByUuidOrFail($uuid);
 
-		if (!in_array($type, ['self', 'father', 'mother'])) {
+		if (!in_array($type, ['self', 'first-guardian', 'second-guardian'])) {
 			return $this->error(['message' => trans('general.invalid_action')]);
 		}
 
 		if ($type == 'self') {
 			$field = 'student_photo';
 			$image = $student->student_photo;
-		} elseif ($type == 'father') {
-			$field = 'father_photo';
-			$image = $student->Parent->father_photo;
-		} elseif ($type == 'mother') {
-			$field = 'mother_photo';
-			$image = $student->Parent->mother_photo;
+		} elseif ($type == 'first-guardian') {
+			$field = 'first_guardian_photo';
+			$image = $student->Parent->first_guardian_photo;
+		} elseif ($type == 'second-guardian') {
+			$field = 'second_guardian_photo';
+			$image = $student->Parent->second_guardian_photo;
 		}
 
 		$image = str_replace('storage/', '', $image);
@@ -204,11 +204,11 @@ class StudentController extends Controller {
 		if ($type == 'self') {
 			$student->student_photo = 'storage/' . $file;
 			$student->save();
-		} elseif ($type == 'father') {
-			$student->Parent->father_photo = 'storage/' . $file;
+		} elseif ($type == 'first-guardian') {
+			$student->Parent->first_guardian_photo = 'storage/' . $file;
 			$student->Parent->save();
-		} elseif ($type == 'mother') {
-			$student->Parent->mother_photo = 'storage/' . $file;
+		} elseif ($type == 'second-guardian') {
+			$student->Parent->second_guardian_photo = 'storage/' . $file;
 			$student->Parent->save();
 		}
 
@@ -228,19 +228,19 @@ class StudentController extends Controller {
 
 		$student = $this->repo->findByUuidOrFail($uuid);
 
-		if (!in_array($type, ['self', 'father', 'mother'])) {
+		if (!in_array($type, ['self', 'first-guardian', 'second-guardian'])) {
 			return $this->error(['message' => trans('general.invalid_action')]);
 		}
 
 		if ($type == 'self') {
 			$field = 'student_photo';
 			$image = $student->student_photo;
-		} elseif ($type == 'father') {
-			$field = 'father_photo';
-			$image = $student->Parent->father_photo;
-		} elseif ($type == 'mother') {
-			$field = 'mother_photo';
-			$image = $student->Parent->mother_photo;
+		} elseif ($type == 'first-guardian') {
+			$field = 'first_guardian_photo';
+			$image = $student->Parent->first_guardian_photo;
+		} elseif ($type == 'second-guardian') {
+			$field = 'second_guardian_photo';
+			$image = $student->Parent->second_guardian_photo;
 		}
 
 		$image = str_replace('storage/', '', $image);
@@ -256,11 +256,11 @@ class StudentController extends Controller {
 		if ($type == 'self') {
 			$student->student_photo = null;
 			$student->save();
-		} elseif ($type == 'father') {
-			$student->Parent->father_photo = null;
+		} elseif ($type == 'first-guardian') {
+			$student->Parent->first_guardian_photo = null;
 			$student->Parent->save();
-		} elseif ($type == 'mother') {
-			$student->Parent->mother_photo = null;
+		} elseif ($type == 'second-guardian') {
+			$student->Parent->second_guardian_photo = null;
 			$student->Parent->save();
 		}
 
