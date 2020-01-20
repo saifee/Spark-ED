@@ -1,0 +1,6 @@
+  modified:   app/Repositories/employee/EmployeeRepository.php
+  modified:   app/Repositories/inventory/StockItemRepository.php
+  modified:   app/Repositories/inventory/StockTransferRepository.php
+  modified:   app/Repositories/student/RegistrationRepository.php
+  modified:   app/Repositories/student/StudentRecordRepository.php
+  modified:   app/Repositories/student/StudentRepository.php
