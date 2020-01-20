@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\OtpRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Academic\AcademicSession;
 use App\Repositories\Auth\AuthRepository;
@@ -62,7 +63,7 @@ class AuthController extends Controller
      * })
      * @return authentication token
      */
-    public function otp(Request $request)
+    public function otp(OtpRequest $request)
     {
         $data = $this->repo->otp($this->request->all());
 
