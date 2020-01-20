@@ -37,7 +37,21 @@ function envu($data = array())
     return true;
 }
 
+function getHostNameForCachePrefix()
+{
+    return isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+}
+
 //////////////////////////////////////////////////////////////////////// Date helper function starts
+
+function validateEmail($email)
+{
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return true;
+    }
+
+    return false;
+}
 
 /*
  *  Used to check whether date is valid or not
@@ -104,6 +118,8 @@ function getDateFormat()
         return 'd-M-Y';
     } elseif (config('config.date_format') === 'MMM-DD-YYYY') {
         return 'M-d-Y';
+    } elseif (config('config.date_format') === 'YYYY-MM-DD') {
+        return 'Y-m-d';
     } else {
         return 'd-m-Y';
     }
@@ -754,7 +770,7 @@ function dateBetweenSession($date)
         return false;
     }
 
-    if ($date >= config('config.default_academic_session.start_date') && $date <= config('config.default_academic_session.end_date')) {
+    if (toDate($date) >= config('config.default_academic_session.start_date') && toDate($date) <= config('config.default_academic_session.end_date')) {
         return true;
     }
 
@@ -767,7 +783,7 @@ function dateLessThanSessionStart($date)
         return false;
     }
 
-    if ($date <= config('config.default_academic_session.start_date')) {
+    if (toDate($date) <= config('config.default_academic_session.start_date')) {
         return true;
     }
 
@@ -780,7 +796,7 @@ function dateLessThanSessionEnd($date)
         return false;
     }
 
-    if ($date <= config('config.default_academic_session.end_date')) {
+    if (toDate($date) <= config('config.default_academic_session.end_date')) {
         return true;
     }
 
@@ -793,7 +809,7 @@ function dateGreaterThanSessionStart($date)
         return false;
     }
 
-    if ($date >= config('config.default_academic_session.start_date')) {
+    if (toDate($date) >= config('config.default_academic_session.start_date')) {
         return true;
     }
 
@@ -806,11 +822,42 @@ function dateGreaterThanSessionEnd($date)
         return false;
     }
 
-    if ($date >= config('config.default_academic_session.end_date')) {
+    if (toDate($date) >= config('config.default_academic_session.end_date')) {
         return true;
     }
 
     return false;
+}
+
+function getDayInInteger($day)
+{
+    if ($day == 'monday') {
+        return 1;
+    } elseif ($day == 'tuesday') {
+        return 2;
+    } elseif ($day == 'wednesday') {
+        return 3;
+    } elseif ($day == 'thursday') {
+        return 4;
+    } elseif ($day == 'friday') {
+        return 5;
+    } elseif ($day == 'saturday') {
+        return 6;
+    } else {
+        return 0;
+    }
+}
+
+function getDaysInOrder()
+{
+    $list = getVar('list');
+    $days = $list['day'];
+
+    for ($i=0; $i < getDayInInteger(config('config.first_day_of_week')) ; $i++) {
+        array_push($days, array_shift($days));
+    }
+
+    return generateTranslatedSelectOption($days);
 }
 
 function getLateFeeFrequencies()
@@ -1460,7 +1507,12 @@ function getStudentAttendanceMoreThanOnceTypes()
         array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.second')]), 'value' => 2),
         array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.third')]), 'value' => 3),
         array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.fourth')]), 'value' => 4),
-        array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.fifth')]), 'value' => 5)
+        array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.fifth')]), 'value' => 5),
+        array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.sixth')]), 'value' => 6),
+        array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.seventh')]), 'value' => 7),
+        array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.eight')]), 'value' => 8),
+        array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.ninth')]), 'value' => 9),
+        array('text' => trans('student.attendance_session_name', ['attribute' => trans('list.tenth')]), 'value' => 10)
     );
 
     return $data;
