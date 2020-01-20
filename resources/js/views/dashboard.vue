@@ -23,9 +23,9 @@
                             </div>
                             <div class="col-12 col-md-6 product-intro">
                                 <h2>Do you want a <span class="special">Tour</span>?</h2>
-                                <h3>Watch InstiKit's Short Introduction Video</h3>
-                                <p>We will go through all the primary modules and features that InstiKit currently has in this short video. If you like InstiKit click on the button below to buy InstiKit.</p>
-                                <a class="btn btn-danger" href="https://instikit.com/buy/regular"><span class="p-r-10 m-r-10 border-right">Liked it?</span><strong><i class="fas fa-shopping-cart m-r-5"></i> Buy it Now</strong></a>
+                                <h3>Watch Spark's Short Introduction Video</h3>
+                                <p>We will go through all the primary modules and features that Spark currently has in this short video. If you like Spark click on the button below to buy Spark.</p>
+                                <a class="btn btn-danger" href="https://Spark.com/buy/regular"><span class="p-r-10 m-r-10 border-right">Liked it?</span><strong><i class="fas fa-shopping-cart m-r-5"></i> Buy it Now</strong></a>
                                 <button class="btn" @click="hideTourVideo"><i class="fas fa-times"></i> Hide</button>
                             </div>
                         </div>
