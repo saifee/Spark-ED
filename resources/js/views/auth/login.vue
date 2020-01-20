@@ -3,7 +3,7 @@
         <div class="login-register guest-page">
             <div class="login-box card guest-box">
                 <div class="card-body p-4">
-                    <!-- <img :src="getLogo" class="org-logo" /> -->
+                    <img :src="getLogo" class="org-logo" />
                     <form class="form-horizontal form-material" id="loginform" @submit.prevent="process" @keydown="loginForm.errors.clear($event.target.name)">
                         <h3 class="box-title m-t-20 m-b-10">{{trans('auth.login')}}</h3>
                         <social-login v-if="getConfig('made') === 'saudi'" />
