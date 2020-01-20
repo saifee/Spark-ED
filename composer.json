@@ -26,10 +26,10 @@
         "spatie/laravel-activitylog": "^3.8.0",
         "spatie/laravel-permission": "^3.0",
         "stripe/stripe-php": "^6.1",
+        "laravel/telescope": "^2.1",
         "tymon/jwt-auth": "1.0.0-rc.5"
     },
     "require-dev": {
-        "laravel/telescope": "^2.1",
         "facade/ignition": "^1.4",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
