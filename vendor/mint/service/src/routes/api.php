@@ -5,6 +5,8 @@ Route::group(['prefix' => 'api'], function () {
     Route::post('/install', 'Mint\Service\Controllers\InstallController@store');
     Route::post('/license', 'Mint\Service\Controllers\LicenseController@verify');
 
+    Route::post('/biometric', 'Mint\Service\Controllers\AttendanceController@read');
+
     Route::get('/about', 'Mint\Service\Controllers\HomeController@about');
     Route::get('/support', 'Mint\Service\Controllers\SupportController@index');
     Route::post('/support', 'Mint\Service\Controllers\SupportController@submit');
