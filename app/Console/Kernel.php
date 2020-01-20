@@ -25,7 +25,6 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('backup-database')->dailyAt('01:00');
         $schedule->command('telescope:prune')->daily();
-        $schedule->command('reset')->everyThirtyMinutes();
         $schedule->command('queue:work --stop-when-empty')->everyMinute();
     }
 
