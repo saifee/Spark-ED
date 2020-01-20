@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 
 	Route::get('/student/{uuid}/document/{id}/attachment/{attachment_uuid}/download', 'Student\StudentDocumentController@download');
 	Route::get('/student/{uuid}/qualification/{id}/attachment/{attachment_uuid}/download', 'Student\StudentQualificationController@download');
+	Route::get('/student/{uuid}/terminate/{id}/attachment/{attachment_uuid}/download', 'Student\TerminationController@download');
 
 	Route::get('/employee/{uuid}/document/{id}/attachment/{attachment_uuid}/download', 'Employee\EmployeeDocumentController@download');
 	Route::get('/employee/{uuid}/qualification/{id}/attachment/{attachment_uuid}/download', 'Employee\EmployeeQualificationController@download');

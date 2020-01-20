@@ -745,6 +745,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('/student/terminated/print', 'Student\TerminationController@print');
 	Route::post('/student/terminated/pdf', 'Student\TerminationController@pdf');
 	Route::post('/student/{uuid}/terminate/{record_id}', 'Student\TerminationController@terminate');
+	Route::get('/student/{uuid}/terminate/{record_id}/attachment', 'Student\TerminationController@terminateAttachment');
 
 	Route::get('/student/{uuid}/transfer-certificate/{record_id}', 'Student\TerminationController@getTransferCertificate');
 	Route::post('/student/{uuid}/transfer-certificate/{record_id}/print', 'Student\TerminationController@printTransferCertificate');
