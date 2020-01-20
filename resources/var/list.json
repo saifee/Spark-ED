@@ -10,14 +10,20 @@
 		"widowed",
 		"divorced"
 	],
+	"relations": [
+		"father",
+		"mother",
+		"spouse",
+		"other"
+	],
 	"day": [
+		"sunday",
 		"monday",
 		"tuesday",
 		"wednesday",
 		"thursday",
 		"friday",
-		"saturday",
-		"sunday"
+		"saturday"
 	],
 	"frequency": [
 		"daily",

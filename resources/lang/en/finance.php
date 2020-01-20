@@ -19,6 +19,7 @@
   'account_transfer_cancelled' => 'Account transfer cancelled.',
   'account_transfer_description' => 'Description',
   'account_transfer_module_description' => 'Records transactions between different accounts i.e. credit an account and debit another account',
+  'other' => 'Other',
   'account_transfer_module_title' => 'List all Account Transfers here',
   'account_transfer_updated' => 'Account transfer updated.',
   'account_type' => 'Type',

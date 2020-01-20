@@ -35,6 +35,11 @@
 		"more_than_once",
 		"subject_wise"
 	],
+	"student_termination_reasons": [
+		"transferred",
+		"passed",
+		"withdrawn"
+	],
 	"online_exam_types": [
 		"mcq",
 		"mixed"

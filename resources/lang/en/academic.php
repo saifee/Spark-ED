@@ -20,6 +20,7 @@
   'allocation' => 'Allocation',
   'batch' => 'Batch',
   'batch_added' => 'Batch added.',
+  'batch_holiday_except_date_tip' => 'Choose all the dates which will not be holidays for this batch.',
   'batch_already_has_subject' => 'Some batches are already has some subjects.',
   'batch_associated_with_admission' => 'Admission record associated with this batch.',
   'batch_associated_with_class_teacher' => 'Batch is associated with multiple class teachers.',

@@ -149,8 +149,8 @@
 					"submenu": []
 				},
 				{
-					"name": "admission",
-					"translation": "student.admission",
+					"name": "student_list",
+					"translation": "student.student_list",
 					"visibility": true,
 					"submenu": []
 				},

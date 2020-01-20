@@ -6,6 +6,7 @@
 	    "sidebar": "mini",
 	    "locale": "en",
 	    "timezone": "Asia/Kolkata",
+	    "first_day_of_week": "monday",
 	    "notification_position": "toast-bottom-right",
 	    "date_format": "DD-MM-YYYY",
 	    "time_format": "H:mm",
@@ -33,6 +34,7 @@
 	    "frontend_website": 1,
 	    "designation_subordinate_level": 1,
 	    "default_attendance_type": "daily",
+	    "student_late_attendance_time": "daily",
 	    "enable_registration": 0,
 	    "enable_registration_fee": 0,
 	    "default_max_strength_per_batch": 30,
@@ -222,6 +224,10 @@
 		{ 
 			"text": "MMM-DD-YYYY",
 			"value": "MMM-DD-YYYY"
+		},
+		{ 
+			"text": "YYYY-MM-DD",
+			"value": "YYYY-MM-DD"
 		}
 	],
 	"time_formats": [
