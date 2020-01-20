@@ -346,9 +346,11 @@ class PayrollTemplateRepository
     {
         $payroll_template = $this->findByUuidOrFail($uuid);
 
-        if ($payroll_template->salaries()->count) {
+        if ($payroll_template->salaries()->count()) {
             throw ValidationException::withMessages(['message' => trans('employee.payroll_template_associated_with_salary')]);
         }
+
+        return $payroll_template;
     }
 
     /**

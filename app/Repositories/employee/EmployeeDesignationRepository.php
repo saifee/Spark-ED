@@ -88,13 +88,13 @@ class EmployeeDesignationRepository
     {
         $this->validateInput($employee, $params);
 
-        $date_effective = gv($params, 'date_effective');
+        $date_effective = toDate(gv($params, 'date_effective'));
 
         $employee_designations = $employee->EmployeeDesignations;
 
         $last_designation = $employee_designations->sortByDesc('date_effective')->first();
 
-        if ($last_designation && $date_effective <= $last_designation->date_effective) {
+        if ($last_designation && $date_effective <= toDate($last_designation->date_effective)) {
             throw ValidationException::withMessages(['date_effective' => trans('employee.cannot_assign_designation_before_previous_designation', ['date' => showDate($last_designation->date_effective)])]);
         }
 
@@ -129,7 +129,7 @@ class EmployeeDesignationRepository
     {
         $designation_id = gv($params, 'designation_id');
         $department_id = gv($params, 'department_id');
-        $date_effective = gv($params, 'date_effective');
+        $date_effective = toDate(gv($params, 'date_effective'));
 
         $designation = $this->designation->findOrFail($designation_id);
 
@@ -158,7 +158,7 @@ class EmployeeDesignationRepository
         $formatted = [
             'designation_id' => gv($params, 'designation_id'),
             'department_id'  => gv($params, 'department_id'),
-            'date_effective' => gv($params, 'date_effective'),
+            'date_effective' => toDate(gv($params, 'date_effective')),
             'remarks'        => gv($params, 'remarks')
         ];
 
@@ -200,17 +200,17 @@ class EmployeeDesignationRepository
      */
     public function update(EmployeeDesignation $employee_designation, $params)
     {
-        $date_effective = gv($params, 'date_effective');
+        $date_effective = toDate(gv($params, 'date_effective'));
 
         $this->validateInput($employee_designation->Employee, $params, $employee_designation->id);
 
         $employee_term = $employee_designation->EmployeeTerm;
 
-        if ($employee_term->date_of_joining == $employee_designation->date_effective && $date_effective != $employee_designation->date_effective) {
+        if ($employee_term->date_of_joining == toDate($employee_designation->date_effective) && $date_effective != toDate($employee_designation->date_effective)) {
             throw ValidationException::withMessages(['date_effective' => trans('employee.first_designation_date_should_be_date_of_joining', ['date' => showDate($employee_term->date_of_joining)])]);
         }
 
-        if ($date_effective < $employee_term->date_of_joining || ($employee_term->date_of_leaving && $date_effective > $employee_term->date_of_leaving)) {
+        if ($date_effective < toDate($employee_term->date_of_joining) || ($employee_term->date_of_leaving && $date_effective > toDate($employee_term->date_of_leaving))) {
             throw ValidationException::withMessages(['date_effective' => trans('employee.date_not_in_term_range', ['start_date' => showDate($employee_term->date_of_joining), 'end_date' => $employee_term->date_of_leaving ? showDate($employee_term->date_of_leaving) : showDate(date('Y-m-d')) ]) ]);
         }
 
@@ -241,7 +241,7 @@ class EmployeeDesignationRepository
 
         $employee_designations = $employee_designation->Employee->EmployeeDesignations;
 
-        if ($employee_designations->where('id', '!=', $id)->where('date_effective', '>', $employee_designation->date_effective)->count()) {
+        if ($employee_designations->where('id', '!=', $id)->where('date_effective', '>', toDate($employee_designation->date_effective))->count()) {
             throw ValidationException::withMessages(['message' => trans('employee.only_last_designation_is_editable')]);
         }
 

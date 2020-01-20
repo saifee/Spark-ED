@@ -265,7 +265,7 @@ class StockPurchaseRepository
 
         beginTransaction();
 
-        $stock_purchase->date        = gv($params, 'date');
+        $stock_purchase->date        = toDate(gv($params, 'date'));
         $stock_purchase->number      = gv($params, 'number');
         $stock_purchase->vendor_id   = gv($params, 'vendor_id');
         $stock_purchase->description = gv($params, 'description');

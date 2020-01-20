@@ -317,6 +317,7 @@ class BatchRepository
         $options['roll_number_prefix'] = gv($params, 'roll_number_prefix', config('config.default_roll_number_prefix'));
         $options['default_attendance_method'] = gv($params, 'default_attendance_method');
         $options['roll_number_digit']  = gv($params, 'roll_number_digit', 0);
+        $options['holidays_except'] = gv($params, 'holidays_except', []);
 
         $formatted = [
             'name'                => $name,

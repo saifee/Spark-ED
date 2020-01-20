@@ -175,7 +175,7 @@ class VehicleLogRepository
     private function formatParams($params, $vehicle_log_id = null)
     {
         $vehicle_id  = gv($params, 'vehicle_id');
-        $date_of_log = gv($params, 'date_of_log');
+        $date_of_log = toDate(gv($params, 'date_of_log'));
         $log         = gv($params, 'log');
 
         if (! $this->vehicle->findActive($vehicle_id)) {
@@ -188,22 +188,22 @@ class VehicleLogRepository
 
         if (
             $vehicle_logs->filter(function ($log, $key) use ($date_of_log) {
-                return $log->date_of_log == $date_of_log;
+                return toDate($log->date_of_log) == $date_of_log;
             })->count()
         ) {
             throw ValidationException::withMessages(['date_of_log' => trans('transport.vehicle_log_exists_for_same_date')]);
         }
 
         $min_log = $vehicle_logs->filter(function ($log, $key) use ($date_of_log) {
-            return $log->date_of_log < $date_of_log;
+            return toDate($log->date_of_log) < $date_of_log;
         })->sortBy('date_of_log')->first();
 
         $max_log = $vehicle_logs->filter(function ($log, $key) use ($date_of_log) {
-            return $log->date_of_log > $date_of_log;
+            return toDate($log->date_of_log) > $date_of_log;
         })->sortByDesc('date_of_log')->first();
 
         $last_log = $vehicle_logs->filter(function ($log, $key) use ($date_of_log) {
-            return $log->date_of_log < $date_of_log;
+            return toDate($log->date_of_log) < $date_of_log;
         })->sortByDesc('date_of_log')->first();
 
         if ($min_log && $log < $min_log->log) {
@@ -220,7 +220,7 @@ class VehicleLogRepository
 
         $formatted = [
             'vehicle_id'  => gv($params, 'vehicle_id'),
-            'date_of_log' => gv($params, 'date_of_log'),
+            'date_of_log' => toDate(gv($params, 'date_of_log')),
             'log'         => gv($params, 'log', 0),
             'description' => gv($params, 'description')
         ];
@@ -252,7 +252,7 @@ class VehicleLogRepository
     {
         $vehicle_log = $this->findOrFail($id);
 
-        if ($this->vehicle_log->filterByVehicleId($vehicle_log->vehicle_id)->where('date_of_log', '>', $vehicle_log->date_of_log)->count()) {
+        if ($this->vehicle_log->filterByVehicleId($vehicle_log->vehicle_id)->where('date_of_log', '>', toDate($vehicle_log->date_of_log))->count()) {
             throw ValidationException::withMessages(['message' => trans('transport.intermediate_vehicle_log_cannot_be_deleted')]);
         }
 

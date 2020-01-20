@@ -96,7 +96,7 @@ class VehicleInchargeRepository
      */
     private function getEmployeeQuery($employee_id = null, $date = null)
     {
-        $date = ($date) ? : date('Y-m-d');
+        $date = ($date) ? toDate($date) : date('Y-m-d');
 
         $query = $employee_id ? $this->employee->whereId($employee_id) : $this->employee;
 
@@ -166,7 +166,7 @@ class VehicleInchargeRepository
                 throw ValidationException::withMessages(['message' => trans('transport.could_not_find_vehicle')]);
             }
 
-            $date_effective = gv($vehicle, 'date_effective');
+            $date_effective = toDate(gv($vehicle, 'date_effective'));
 
             if (! $date_effective) {
                 throw ValidationException::withMessages([$index.'_date_effective' => trans('validation.required', ['attribute' => trans('transport.date_effective')])]);
@@ -187,13 +187,13 @@ class VehicleInchargeRepository
             }
 
             if ($vehicle_incharges->filter(function ($vehicle_incharge, $key) use ($date_effective, $vehicle_id) {
-                return $vehicle_incharge->vehicle_id == $vehicle_id && $vehicle_incharge->date_effective >= toDate($date_effective);
+                return $vehicle_incharge->vehicle_id == $vehicle_id && toDate($vehicle_incharge->date_effective) >= toDate($date_effective);
             })->count()) {
                 throw ValidationException::withMessages([$index.'_date_effective' => trans('transport.vehicle_incharge_exists_after_given_date')]);
             }
 
             $last_vehicle_incharge = $vehicle_incharges->where('vehicle_id', $vehicle_id)->sortByDesc('date_effective')->filter(function ($vehicle_incharge, $key) use ($date_effective) {
-                return $vehicle_incharge->date_effective <= toDate($date_effective);
+                return toDate($vehicle_incharge->date_effective) <= toDate($date_effective);
             })->first();
 
             if ($employee_id == optional($last_vehicle_incharge)->employee_id) {
@@ -212,7 +212,7 @@ class VehicleInchargeRepository
     {
         $vehicle_incharge = $this->findOrFail($id);
 
-        if ($this->vehicle_incharge->filterByBatchId($vehicle_incharge->vehicle_id)->where('date_effective', '>', $vehicle_incharge->date_effective)->count()) {
+        if ($this->vehicle_incharge->filterByVehicleId($vehicle_incharge->vehicle_id)->where('date_effective', '>', toDate($vehicle_incharge->date_effective))->count()) {
             throw ValidationException::withMessages(['message' => trans('transport.latest_vehicle_incharge_can_be_deleted')]);
         }
 

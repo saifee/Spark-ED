@@ -189,7 +189,7 @@ class StudentSiblingRepository
         }, 'studentRecords.batch','studentRecords.batch.course','studentRecords.admission'])
             ->whereNotIn('id', $student_sibling_id)
             ->where(function ($q) use ($query) {
-                $q->where('first_name', 'like', '%'.$query.'%')->orWhere('last_name', 'like', '%'.$query.'%')->orWhere('father_name', 'like', '%'.$query.'%')->orWhere('mother_name', 'like', '%'.$query.'%');
+                $q->where('first_name', 'like', '%'.$query.'%')->orWhere('last_name', 'like', '%'.$query.'%')->orWhere('first_guardian_name', 'like', '%'.$query.'%')->orWhere('second_guardian_name', 'like', '%'.$query.'%');
             })->orderBy('first_name', 'asc')->orderBy('last_name', 'asc')->paginate($page_length);
     }
 }

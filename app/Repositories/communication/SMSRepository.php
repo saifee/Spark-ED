@@ -126,7 +126,7 @@ class SMSRepository
 
         $include_alternate_number = gbv($params, 'include_alternate_number');
 
-        $query = $this->student_record->filterBySession()->whereNull('date_of_exit')->select(['id','student_id'])->with(['student:id,student_parent_id,contact_number,emergency_contact_number','student.parent:id,father_contact_number_1,father_contact_number_2,mother_contact_number_1,mother_contact_number_2']);
+        $query = $this->student_record->filterBySession()->whereNull('date_of_exit')->select(['id','student_id'])->with(['student:id,student_parent_id,contact_number,emergency_contact_number','student.parent:id,first_guardian_contact_number_1,first_guardian_contact_number_2,second_guardian_contact_number_1,second_guardian_contact_number_2']);
 
         if (gv($params, 'audience') == 'selected_course') {
             $query->whereHas('batch', function($q) use($course_id) {
@@ -146,10 +146,10 @@ class SMSRepository
 
             if ($include_alternate_number) {
                 $numbers[] = $student_record->student->emergency_contact_number;
-                $numbers[] = $student_record->student->parent->father_contact_number_1;
-                $numbers[] = $student_record->student->parent->father_contact_number_2;
-                $numbers[] = $student_record->student->parent->mother_contact_number_1;
-                $numbers[] = $student_record->student->parent->mother_contact_number_2;
+                $numbers[] = $student_record->student->parent->first_guardian_contact_number_1;
+                $numbers[] = $student_record->student->parent->first_guardian_contact_number_2;
+                $numbers[] = $student_record->student->parent->second_guardian_contact_number_1;
+                $numbers[] = $student_record->student->parent->second_guardian_contact_number_2;
             }
         }
 

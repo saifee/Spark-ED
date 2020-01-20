@@ -76,7 +76,7 @@ class ReportRepository
 
         $query = $this->student_record->select(['id','student_id','batch_id','admission_id'])->filterBySession()->with([
             'student:id,first_name,middle_name,last_name,contact_number,student_parent_id,uuid',
-            'student.parent:id,father_name',
+            'student.parent:id,first_guardian_name',
             'admission:id,number',
             'batch:id,name,course_id',
             'batch.course:id,name',
@@ -88,7 +88,8 @@ class ReportRepository
             'studentFeeRecords.feeInstallment.transportFee.transportFeeDetails:id,transport_fee_id,transport_circle_id,amount',
             'studentFeeRecords.studentOptionalFeeRecords:id,student_fee_record_id,fee_head_id',
             'studentFeeRecords.feeConcession:id,name',
-            'studentFeeRecords.feeConcession.feeConcessionDetails:id,fee_concession_id,fee_head_id,amount,type'
+            'studentFeeRecords.feeConcession.feeConcessionDetails:id,fee_concession_id,fee_head_id,amount,type',
+            'studentFeeRecords.transactions:id,student_fee_record_id,amount,is_cancelled,options'
         ]);
 
         if (count($ids)) {
@@ -123,6 +124,7 @@ class ReportRepository
         $grand_late = 0;
         $grand_paid = 0;
         $grand_concession = 0;
+        $grand_other = 0;
 
         foreach ($student_records as $student_record) {
             $total = 0;
@@ -130,6 +132,7 @@ class ReportRepository
             $late = 0;
             $balance = 0;
             $concession = 0;
+            $other = 0;
 
             foreach ($student_record->studentFeeRecords as $student_fee_record) {
                 $fee_installment = $student_fee_record->feeInstallment;
@@ -163,12 +166,25 @@ class ReportRepository
                 $total_installment = $installment + $transport + $student_fee_record->late_fee_charged;
                 $total += $total_installment;
 
+                $transaction_paid = 0;
+                foreach ($student_fee_record->transactions as $transaction) {
+                    if (! $transaction->is_cancelled) {
+                        $transaction_additional_fee_charge = $transaction->getOption('additional_fee_charge');
+                        $transaction_additional_fee_discount = $transaction->getOption('additional_fee_discount');
+                        $other += gv($transaction_additional_fee_charge, 'amount', 0);
+                        $other -= gv($transaction_additional_fee_discount, 'amount', 0);
+                        $transaction_paid += $transaction->amount;
+                    }
+                }
+
                 if ($student_fee_record->status == 'cancelled') {
                     $total -= $total_installment;
                 }
 
                 if ($student_fee_record->status == 'paid') {
                     $paid += $total_installment;
+                } else if ($student_fee_record->status == 'partially_paid') {
+                    $paid += $transaction_paid;
                 }
 
                 $balance = $total - $paid;
@@ -177,21 +193,23 @@ class ReportRepository
             }
 
             $list[] = array(
-                'uuid'             => $student_record->student->uuid,
-                'id'               => $student_record->id,
-                'name'             => $student_record->student->name,
-                'batch'            => $student_record->batch->course->name.' '.$student_record->batch->name,
-                'father_name'      => $student_record->student->parent->father_name,
-                'contact_number'   => $student_record->student->contact_number,
-                'admission_number' => $student_record->admission->number,
-                'total'            => $total,
-                'concession'       => $concession,
-                'paid'             => $paid,
-                'balance'          => $balance,
-                'late'             => $late
+                'uuid'                => $student_record->student->uuid,
+                'id'                  => $student_record->id,
+                'name'                => $student_record->student->name,
+                'batch'               => $student_record->batch->course->name.' '.$student_record->batch->name,
+                'first_guardian_name' => $student_record->student->parent->first_guardian_name,
+                'contact_number'      => $student_record->student->contact_number,
+                'admission_number'    => $student_record->admission->number,
+                'total'               => $total,
+                'other'               => $other,
+                'concession'          => $concession,
+                'paid'                => $paid,
+                'balance'             => $balance,
+                'late'                => $late
             );
 
             $grand_total += $total;
+            $grand_other += $other;
             $grand_balance += $balance;
             $grand_paid += $paid;
             $grand_late += $late;
@@ -208,6 +226,7 @@ class ReportRepository
 
         $footer = array(
             'grand_total'      => $grand_total,
+            'grand_other'      => $grand_other,
             'grand_balance'    => $grand_balance,
             'grand_late'       => $grand_late,
             'grand_paid'       => $grand_paid,
@@ -272,7 +291,7 @@ class ReportRepository
             $new_sms = $sms;
             $new_sms = str_replace('#NAME#', gv($record, 'name'), $new_sms);
             $new_sms = str_replace('#BATCH#', gv($record, 'batch'), $new_sms);
-            $new_sms = str_replace('#FATHER_NAME#', gv($record, 'father_name'), $new_sms);
+            $new_sms = str_replace('#FIRST_GUARDIAN_NAME#', gv($record, 'first_guardian_name'), $new_sms);
             $new_sms = str_replace('#LATE_FEE#', gv($record, 'late'), $new_sms);
             $new_sms = str_replace('#TOTAL_FEE#', gv($record, 'total'), $new_sms);
             $new_sms = str_replace('#PAID_FEE#', gv($record, 'paid'), $new_sms);
@@ -306,7 +325,7 @@ class ReportRepository
 
         $query = $this->student_record->select(['id','student_id','batch_id','admission_id'])->filterBySession()->with([
             'student:id,first_name,middle_name,last_name,contact_number,student_parent_id,uuid',
-            'student.parent:id,father_name',
+            'student.parent:id,first_guardian_name',
             'admission:id,number',
             'batch:id,name,course_id',
             'batch.course:id,name',
@@ -382,15 +401,15 @@ class ReportRepository
 
                     if ($concession)
                         $list[] = array(
-                            'uuid'             => $student_record->student->uuid,
-                            'id'               => $student_record->id,
-                            'name'             => $student_record->student->name,
-                            'batch'            => $student_record->batch->course->name.' '.$student_record->batch->name,
-                            'father_name'      => $student_record->student->parent->father_name,
-                            'contact_number'   => $student_record->student->contact_number,
-                            'admission_number' => $student_record->admission->number,
-                            'fee_installment'  => $student_fee_record->feeInstallment->title.' ('.$student_fee_record->feeInstallment->feeAllocationGroup->feeGroup->name.')',
-                            'concession'       => $concession,
+                            'uuid'                => $student_record->student->uuid,
+                            'id'                  => $student_record->id,
+                            'name'                => $student_record->student->name,
+                            'batch'               => $student_record->batch->course->name.' '.$student_record->batch->name,
+                            'first_guardian_name' => $student_record->student->parent->first_guardian_name,
+                            'contact_number'      => $student_record->student->contact_number,
+                            'admission_number'    => $student_record->admission->number,
+                            'fee_installment'     => $student_fee_record->feeInstallment->title.' ('.$student_fee_record->feeInstallment->feeAllocationGroup->feeGroup->name.')',
+                            'concession'          => $concession,
                         );
                 }
             }
@@ -472,7 +491,7 @@ class ReportRepository
         })->select(['id','student_record_id','fee_installment_id','fee_concession_id','transport_circle_id','status','late_fee_charged','due_date','late_fee_applicable','late_fee_frequency','late_fee'])->with([
             'studentRecord:id,student_id,batch_id,admission_id',
             'studentRecord.student:id,uuid,student_parent_id,first_name,middle_name,last_name,contact_number',
-            'studentRecord.student.parent:id,father_name',
+            'studentRecord.student.parent:id,first_guardian_name',
             'studentRecord.admission:id,number',
             'studentRecord.batch:id,name,course_id',
             'studentRecord.batch.course:id,name',
@@ -575,19 +594,19 @@ class ReportRepository
             }
 
             $list[] = array(
-                'id'                => $student_fee_record->id,
-                'uuid'              => $student_fee_record->studentRecord->student->uuid,
-                'student_record_id' => $student_fee_record->studentRecord->id,
-                'name'              => $student_fee_record->studentRecord->student->name,
-                'batch'             => $student_fee_record->studentRecord->batch->course->name.' '.$student_fee_record->studentRecord->batch->name,
-                'father_name'       => $student_fee_record->studentRecord->student->parent->father_name,
-                'contact_number'    => $student_fee_record->studentRecord->student->contact_number,
-                'admission_number'  => $student_fee_record->studentRecord->admission->number,
-                'fee_group'         => $student_fee_record->feeInstallment->feeAllocationGroup->feeGroup->name,
-                'total'             => $total_installment,
-                'due_date'          => $due_date,
-                'overdue'           => dateDiff($due_date, date('Y-m-d')),
-                'late_fee'          => $late_fee
+                'id'                  => $student_fee_record->id,
+                'uuid'                => $student_fee_record->studentRecord->student->uuid,
+                'student_record_id'   => $student_fee_record->studentRecord->id,
+                'name'                => $student_fee_record->studentRecord->student->name,
+                'batch'               => $student_fee_record->studentRecord->batch->course->name.' '.$student_fee_record->studentRecord->batch->name,
+                'first_guardian_name' => $student_fee_record->studentRecord->student->parent->first_guardian_name,
+                'contact_number'      => $student_fee_record->studentRecord->student->contact_number,
+                'admission_number'    => $student_fee_record->studentRecord->admission->number,
+                'fee_group'           => $student_fee_record->feeInstallment->feeAllocationGroup->feeGroup->name,
+                'total'               => $total_installment,
+                'due_date'            => $due_date,
+                'overdue'             => dateDiff($due_date, date('Y-m-d')),
+                'late_fee'            => $late_fee
             );
 
             $grand_total += $total_installment;
@@ -663,7 +682,7 @@ class ReportRepository
             $new_sms = $sms;
             $new_sms = str_replace('#NAME#', gv($record, 'name'), $new_sms);
             $new_sms = str_replace('#BATCH#', gv($record, 'batch'), $new_sms);
-            $new_sms = str_replace('#FATHER_NAME#', gv($record, 'father_name'), $new_sms);
+            $new_sms = str_replace('#FIRST_GUARDIAN_NAME#', gv($record, 'first_guardian_name'), $new_sms);
             $new_sms = str_replace('#FEE_GROUP#', gv($record, 'fee_group'), $new_sms);
             $new_sms = str_replace('#TOTAL_FEE#', gv($record, 'total'), $new_sms);
             $new_sms = str_replace('#DUE_DATE#', gv($record, 'due_date'), $new_sms);
@@ -711,7 +730,7 @@ class ReportRepository
                 'studentFeeRecord.studentRecord.batch:id,name,course_id',
                 'studentFeeRecord.studentRecord.batch.course:id,name',
                 'studentFeeRecord.studentRecord.student:id,uuid,student_parent_id,first_name,middle_name,last_name,contact_number',
-                'studentFeeRecord.studentRecord.student.parent:id,father_name',
+                'studentFeeRecord.studentRecord.student.parent:id,first_guardian_name',
                 'studentFeeRecord.studentRecord.admission:id,number',
             ])->select(['id','prefix','number','student_fee_record_id','payment_method_id','account_id','amount','date','is_online_payment','source','reference_number'])->filterBySession()->whereNotNull('student_fee_record_id')->filterByHead('fee')->dateBetween([
                 'start_date' => $start_date,
@@ -776,7 +795,7 @@ class ReportRepository
                 'receipt_no'            => $transaction->prefix.$transaction->number,
                 'name'                  => $transaction->studentFeeRecord->studentRecord->student->name,
                 'batch'                 => $transaction->studentFeeRecord->studentRecord->batch->course->name.' '.$transaction->studentFeeRecord->studentRecord->batch->name,
-                'father_name'           => $transaction->studentFeeRecord->studentRecord->student->parent->father_name,
+                'first_guardian_name'           => $transaction->studentFeeRecord->studentRecord->student->parent->first_guardian_name,
                 'contact_number'        => $transaction->studentFeeRecord->studentRecord->student->contact_number,
                 'admission_number'      => $transaction->studentFeeRecord->studentRecord->admission->number,
                 'fee_installment'       => $transaction->studentFeeRecord->feeInstallment->title,
@@ -854,7 +873,7 @@ class ReportRepository
             $new_sms = $sms;
             $new_sms = str_replace('#NAME#', gv($record, 'name'), $new_sms);
             $new_sms = str_replace('#BATCH#', gv($record, 'batch'), $new_sms);
-            $new_sms = str_replace('#FATHER_NAME#', gv($record, 'father_name'), $new_sms);
+            $new_sms = str_replace('#FIRST_GUARDIAN_NAME#', gv($record, 'first_guardian_name'), $new_sms);
             $new_sms = str_replace('#RECEIPT_NO#', gv($record, 'receipt_no'), $new_sms);
             $new_sms = str_replace('#AMOUNT#', gv($record, 'amount'), $new_sms);
             $new_sms = str_replace('#DATE#', gv($record, 'date'), $new_sms);

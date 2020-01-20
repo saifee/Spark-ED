@@ -313,7 +313,7 @@ class OnlineExamRepository
             throw ValidationException::withMessages(['exam_type' => trans('general.invalid_input')]);
         }
 
-        $date = gv($params, 'date');
+        $date = toDate(gv($params, 'date'));
         if (! dateBetweenSession($date)) {
             throw ValidationException::withMessages(['date' => trans('academic.invalid_session_date_range')]);
         }
@@ -357,7 +357,7 @@ class OnlineExamRepository
             'name'         => $name,
             'description'  => $description,
             'exam_type'  => gv($params, 'exam_type'),
-            'date'  => $date,
+            'date'  => toDate($date),
             'start_time'  => toTime($start_time),
             'end_time'  => toTime($end_time),
             'passing_percentage' => gv($params, 'passing_percentage', 0),
@@ -745,7 +745,11 @@ class OnlineExamRepository
      */
     public function getOnlineExamRecord(OnlineExam $online_exam)
     {
-        $student_record = $this->student->getAuthStudentRecord();
+        $student_record = $this->student->getAuthStudentRecord($online_exam->batch_id);
+
+        if (! $student_record) {
+            return;
+        }
 
         return $this->online_exam_record->whereOnlineExamId($online_exam->id)->whereStudentRecordId($student_record->id)->first();
     }
@@ -769,7 +773,7 @@ class OnlineExamRepository
      */
     public function storeExam(OnlineExam $online_exam, $params = array())
     {
-        $student_record = $this->student->getAuthStudentRecord();
+        $student_record = $this->student->getAuthStudentRecord($online_exam->batch_id);
 
         if (! $student_record) {
             throw ValidationException::withMessages(['message' => trans('general.invalid_input')]);
@@ -843,7 +847,7 @@ class OnlineExamRepository
      */
     public function getStudents(OnlineExam $online_exam)
     {
-        $date = $online_exam->date;
+        $date = toDate($online_exam->date);
         $student_records = $this->student_record->with('student','student.parent','batch','batch.course')->filterBySession()->filterbyBatchId($online_exam->batch_id)->where('date_of_entry','<=',$date)->where(function($q) use($date) {
             $q->where('date_of_exit',null)->orWhere(function($q1) use($date) {
                 $q1->where('date_of_exit','!=',null)->where('date_of_exit','>=',$date);

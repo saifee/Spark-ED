@@ -134,7 +134,7 @@ class RecordRepository
 
         $student_records = [];
 
-        $date_of_exam = $exam_record->date;
+        $date_of_exam = toDate($exam_record->date);
         $student_records = $this->student_record->filterBySession()->filterbyBatchId($batch_id)->where('date_of_entry','<=', $date_of_exam)->where(function($q) use($date_of_exam) {
             $q->where('date_of_exit',null)->orWhere(function($q1) use($date_of_exam) {
                 $q1->where('date_of_exit','!=',null)->where('date_of_exit','>=',$date_of_exam);
@@ -198,6 +198,8 @@ class RecordRepository
         if (! $date_of_exam) {
             throw ValidationException::withMessages(['message' => trans('exam.subject_has_no_exam')]);
         }
+        
+        $date_of_exam = toDate($date_of_exam);
         
         $student_records = $this->student_record->filterBySession()->filterbyBatchId($batch_id)->where('date_of_entry','<=', $date_of_exam)->where(function($q) use($date_of_exam) {
             $q->where('date_of_exit',null)->orWhere(function($q1) use($date_of_exam) {

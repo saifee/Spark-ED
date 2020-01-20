@@ -97,13 +97,15 @@ class StudentParentRepository
      */
     public function getData($params)
     {
-        $sort_by                 = gv($params, 'sort_by', 'created_at');
-        $order                   = gv($params, 'order', 'desc');
-        $father_name             = gv($params, 'father_name');
-        $mother_name             = gv($params, 'mother_name');
-        $father_contact_number_1 = gv($params, 'father_contact_number_1');
+        $sort_by                         = gv($params, 'sort_by', 'created_at');
+        $order                           = gv($params, 'order', 'desc');
+        $first_guardian_name             = gv($params, 'first_guardian_name');
+        $first_guardian_relation         = gv($params, 'first_guardian_relation');
+        $second_guardian_name            = gv($params, 'second_guardian_name');
+        $second_guardian_relation        = gv($params, 'second_guardian_relation');
+        $first_guardian_contact_number_1 = gv($params, 'first_guardian_contact_number_1');
 
-        $query = $this->student_parent->filterByFatherName($father_name)->filterByMotherName($mother_name)->filterByFatherContactNumber1($father_contact_number_1);
+        $query = $this->student_parent->filterByFirstGuardianName($first_guardian_name)->filterBySecondGuardianName($second_guardian_name)->filterByFirstGuardianContactNumber1($first_guardian_contact_number_1);
 
         return $query->orderBy($sort_by, $order);
     }
@@ -133,12 +135,12 @@ class StudentParentRepository
     }
 
     /**
-     * Search parent by father name or mother name
+     * Search parent by first or second guardian name
      *
      * @param integer $id
      * @return StudentParent
      */
-    public function searchByFatherMotherName($params = array())
+    public function searchByFirstOrSecondName($params = array())
     {
         $page_length = gv($params, 'page_length', config('config.page_length'));
         $query = gv($params, 'query');
@@ -147,7 +149,7 @@ class StudentParentRepository
             throw ValidationException::withMessages(['message' => trans('student.parent_search_query_required')]);
         }
 
-        return $this->student_parent->where('father_name', 'like', '%'.$query.'%')->orWhere('mother_name', 'like', '%'.$query.'%')->paginate($page_length);
+        return $this->student_parent->where('first_guardian_name', 'like', '%'.$query.'%')->orWhere('second_guardian_name', 'like', '%'.$query.'%')->paginate($page_length);
     }
 
     /**
@@ -170,15 +172,24 @@ class StudentParentRepository
      */
     public function validateInput($params = array(), $id = null)
     {
-        $father_name             = gv($params, 'father_name');
-        $mother_name             = gv($params, 'mother_name');
-        $father_contact_number_1 = gv($params, 'father_contact_number_1');
+        $existing_parent = $this->getExistingParent($params, $id);
+
+        if ($existing_parent) {
+            throw ValidationException::withMessages(['message' => trans('student.parent_exists')]);
+        }
+    }
+
+    public function getExistingParent($params = array(), $id = null)
+    {
+        $first_guardian_name             = gv($params, 'first_guardian_name');
+        $first_guardian_relation         = gv($params, 'first_guardian_relation');
+        $second_guardian_name            = gv($params, 'second_guardian_name');
+        $second_guardian_relation        = gv($params, 'second_guardian_relation');
+        $first_guardian_contact_number_1 = gv($params, 'first_guardian_contact_number_1');
 
         $parent_exists = ($id) ? $this->student_parent->where('id', '!=', $id) : $this->student_parent->whereNotNull('id');
 
-        if ($parent_exists->filterByFatherName($father_name, 1)->filterByMotherName($mother_name, 1)->filterByFatherContactNumber1($father_contact_number_1)->count()) {
-            throw ValidationException::withMessages(['message' => trans('student.parent_exists')]);
-        }
+        return $parent_exists->filterByFirstGuardianName($first_guardian_name, 1)->where('first_guardian_relation', $first_guardian_relation)->filterByFirstGuardianContactNumber1($first_guardian_contact_number_1)->first();
     }
 
     /**
@@ -190,11 +201,13 @@ class StudentParentRepository
     private function formatParams($params)
     {
         $formatted = [
-            'father_name'             => gv($params, 'father_name'),
-            'mother_name'             => gv($params, 'mother_name'),
-            'father_contact_number_1' => gv($params, 'father_contact_number_1'),
-            'father_email'            => gv($params, 'father_email'),
-            'options'                 => array()
+            'first_guardian_name'             => gv($params, 'first_guardian_name'),
+            'first_guardian_relation'         => gv($params, 'first_guardian_relation'),
+            'second_guardian_name'            => gv($params, 'second_guardian_name'),
+            'second_guardian_relation'        => gv($params, 'second_guardian_relation'),
+            'first_guardian_contact_number_1' => gv($params, 'first_guardian_contact_number_1'),
+            'first_guardian_email'            => gv($params, 'first_guardian_email'),
+            'options'                         => array()
         ];
 
         return $formatted;

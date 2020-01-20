@@ -334,6 +334,10 @@ class PageRepository
      */
     public function delete(Page $page)
     {
+        if ($page->menu->getOption('is_default')) {
+            throw ValidationException::withMessages(['message' => trans('frontend.could_not_modify_default_menu')]);
+        }
+
         return $page->delete();
     }
 

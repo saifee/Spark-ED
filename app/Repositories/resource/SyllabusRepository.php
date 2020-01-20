@@ -295,8 +295,8 @@ class SyllabusRepository
         $titles = array();
         foreach ($topics as $index => $topic) {
             $title       = gv($topic, 'title');
-            $start_date  = gv($topic, 'start_date');
-            $end_date    = gv($topic, 'end_date');
+            $start_date  = toDate(gv($topic, 'start_date'));
+            $end_date    = toDate(gv($topic, 'end_date'));
             $description = gv($topic, 'description');
 
             if (! $title) {

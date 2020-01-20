@@ -275,7 +275,7 @@ class ReportRepository
                 $record = $records->firstWhere('subject_id', $subject->id);
 
                 $student_marks = $record ? ($record->marks ? : []) : [];
-                $date = $record ? $record->date : null;
+                $date = $record ? toDate($record->date) : null;
 
                 $student_mark = searchByKey($student_marks, 'id', $student_record->id);
                 $last_date = ($date && $student_marks) ? $date : $last_date;
@@ -463,7 +463,7 @@ class ReportRepository
         }
 
         $last_date = (! $last_date) ? config('config.default_academic_session.end_date') : $last_date;
-        $start_date = config('config.default_academic_session.start_date') >= $student_record->date_of_entry ? config('config.default_academic_session.start_date') : $student_record->date_of_entry;
+        $start_date = config('config.default_academic_session.start_date') >= toDate($student_record->date_of_entry) ? config('config.default_academic_session.start_date') : toDate($student_record->date_of_entry);
         $holidays = $this->holiday->filterBySession()->where('date','<=',$last_date)->count();
         $working_days = dateDiff($start_date, $last_date);
 
@@ -488,6 +488,7 @@ class ReportRepository
         $summary['grade'] = isset($grade) ? $grade : null;
         $summary['working_days'] = $working_days;
         $summary['attendance'] = $working_days - $total_absent;
+        $summary['attendance_percentage'] = round((($working_days - $total_absent) / $working_days ) * 100,2);
 
         return compact('student_record', 'summary');
     }
@@ -544,7 +545,8 @@ class ReportRepository
                 'grade'              => $grade,
                 'assessment_details' => $assessment_details,
                 'show_subject_total' => $show_subject_total,
-                'single_assessment_detail_id' => $single_assessment_detail_id
+                'single_assessment_detail_id' => $single_assessment_detail_id,
+                'overall_pass_percentage' => $schedule->getOption('overall_pass_percentage')
             );
         }
 
@@ -652,6 +654,7 @@ class ReportRepository
         $batch->load('subjects');
 
         $last_date_of_exam = $exam_schedule->records->last()->date;
+        $last_date_of_exam = toDate($last_date_of_exam);
         $student_records = $this->student_record->with('student','admission')->filterBySession()->filterbyBatchId($batch_id)->where('date_of_entry','<=', $last_date_of_exam)->where(function($q) use($last_date_of_exam) {
             $q->where('date_of_exit',null)->orWhere(function($q1) use($last_date_of_exam) {
                 $q1->where('date_of_exit','!=',null)->where('date_of_exit','>=',$last_date_of_exam);

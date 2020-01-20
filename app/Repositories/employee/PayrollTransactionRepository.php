@@ -204,7 +204,7 @@ class PayrollTransactionRepository
         $employee_id         = gv($params, 'employee_id');
         $amount              = gv($params, 'amount', 0);
         $head                = gv($params, 'head');
-        $date_of_transaction = gv($params, 'date_of_transaction');
+        $date_of_transaction = toDate(gv($params, 'date_of_transaction'));
 
         if (! is_numeric($amount)) {
             throw ValidationException::withMessages(['amount' => trans('validation.numeric', ['attribute' => trans('finance.amount')])]);
@@ -309,7 +309,7 @@ class PayrollTransactionRepository
         }
 
         $head                = gv($params, 'head');
-        $date_of_transaction = gv($params, 'date_of_transaction');
+        $date_of_transaction = toDate(gv($params, 'date_of_transaction'));
         $amount              = gv($params, 'amount', 0);
         $employee_id         = gv($params, 'employee_id');
 
@@ -326,7 +326,7 @@ class PayrollTransactionRepository
                 throw ValidationException::withMessages(['message' => trans('employee.payroll_transaction_amount_greater_than_unpaid_payroll_balance', ['balance' => currency($payroll->balance, 1)])]);
             }
 
-            if ($date_of_transaction < $payroll->end_date) {
+            if ($date_of_transaction < toDate($payroll->end_date)) {
                 throw ValidationException::withMessages(['message' => trans('employee.payroll_transaction_date_less_than_payroll_end_date')]);
             }
 
@@ -353,7 +353,7 @@ class PayrollTransactionRepository
     private function formatParams($params, $payroll_transaction_id = null)
     {
         $amount              = gv($params, 'amount', 0);
-        $date_of_transaction = gv($params, 'date_of_transaction');
+        $date_of_transaction = toDate(gv($params, 'date_of_transaction'));
         $head                = gv($params, 'head');
         $remarks             = gv($params, 'remarks');
         $employee_id         = gv($params, 'employee_id');
@@ -384,7 +384,7 @@ class PayrollTransactionRepository
             'amount'                   => $amount,
             'account_id'               => $account->id,
             'head'                     => $head,
-            'date'                     => $date_of_transaction,
+            'date'                     => toDate($date_of_transaction),
             'remarks'                  => $remarks,
             'payment_method_id'        => $payment_method_id,
             'instrument_number'        => ($payment_method->getOption('requires_instrument_number')) ? gv($params, 'instrument_number') : null,
@@ -464,7 +464,7 @@ class PayrollTransactionRepository
             throw ValidationException::withMessages(['message' => trans('general.invalid_action')]);
         }
 
-        $previous_payroll_transactions = $this->payroll_transaction->filterByEmployeeId($payroll_transaction->employee_id)->filterByHead($payroll_transaction->head)->isNotCancelled()->where('date','>',$payroll_transaction->date)->count();
+        $previous_payroll_transactions = $this->payroll_transaction->filterByEmployeeId($payroll_transaction->employee_id)->filterByHead($payroll_transaction->head)->isNotCancelled()->where('date','>', toDate($payroll_transaction->date))->count();
 
         if ($previous_payroll_transactions) {
             throw ValidationException::withMessages(['message' => trans('employee.payroll_transaction_cannot_add_alter_at_previous_date')]);

@@ -220,7 +220,7 @@ class CallLogRepository
         $name               = gv($params, 'name');
         $incoming_number    = gv($params, 'incoming_number');
         $outgoing_number    = gv($params, 'outgoing_number');
-        $date       = toDate(gv($params, 'date'));
+        $date               = toDate(gv($params, 'date'));
         $start_time         = gv($params, 'start_time');
         $end_time           = gv($params, 'end_time');
         $description        = gv($params, 'description');
@@ -249,7 +249,7 @@ class CallLogRepository
             'name'               => $name,
             'incoming_number'    => $incoming_number,
             'outgoing_number'    => $outgoing_number,
-            'date'               => $date,
+            'date'               => toDate($date),
             'start_time'         => toTime($start_time),
             'end_time'           => toTime($end_time),
             'description'        => $description,

@@ -217,7 +217,7 @@ class AccountTransferRepository
             'account_id'               => $account_transfer->to_account_id,
             'head'                     => 'account-transfer',
             'account_transfer_id'      => $account_transfer->id,
-            'date'                     => gv($params, 'date_of_account_transfer'),
+            'date'                     => toDate(gv($params, 'date_of_account_transfer')),
             'remarks'                  => null,
             'upload_token'             => Str::uuid(),
             'payment_method_id'        => $payment_method_id,
@@ -243,7 +243,7 @@ class AccountTransferRepository
     private function formatParams($params, $account_transfer_id = null)
     {
         $amount                   = gv($params, 'amount', 0);
-        $date_of_account_transfer = gv($params, 'date_of_account_transfer');
+        $date_of_account_transfer = toDate(gv($params, 'date_of_account_transfer'));
         $description              = gv($params, 'description');
         $from_account_id          = gv($params, 'from_account_id');
         $to_account_id            = gv($params, 'to_account_id');
@@ -258,7 +258,7 @@ class AccountTransferRepository
 
         $formatted = [
             'amount'                   => $amount,
-            'date_of_account_transfer' => $date_of_account_transfer,
+            'date_of_account_transfer' => toDate($date_of_account_transfer),
             'description'              => $description,
             'options'                  => []
         ];
@@ -313,7 +313,7 @@ class AccountTransferRepository
 
         $account_transfer->Transaction->forceFill([
             'amount'                   => gv($params, 'amount'),
-            'date'                     => gv($params, 'date_of_account_transfer'),
+            'date'                     => toDate(gv($params, 'date_of_account_transfer')),
             'payment_method_id'        => $payment_method_id,
             'instrument_number'        => ($payment_method->getOption('requires_instrument_number')) ? gv($params, 'instrument_number') : null,
             'instrument_date'          => ($payment_method->getOption('requires_instrument_date')) ? toDate(gv($params, 'instrument_date')) : null,

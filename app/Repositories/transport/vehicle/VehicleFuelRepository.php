@@ -221,7 +221,7 @@ class VehicleFuelRepository
 
         $formatted = [
             'vehicle_id'           => gv($params, 'vehicle_id'),
-            'date_of_fueling'      => gv($params, 'date_of_fueling'),
+            'date_of_fueling'      => toDate(gv($params, 'date_of_fueling')),
             'vehicle_fuel_type_id' => $vehicle->vehicle_fuel_type_id,
             'quantity'             => formatNumber(gv($params, 'quantity', 0), config('config.vehicle_fuel_quantity_decimal_place')),
             'price_per_unit'       => currency(gv($params, 'price_per_unit', 0)),
@@ -283,7 +283,7 @@ class VehicleFuelRepository
     {
         $vehicle_fuel = $this->findOrFail($id);
 
-        if ($this->vehicle_fuel->filterByVehicleId($vehicle_fuel->vehicle_id)->where('date_of_fueling', '>', $vehicle_fuel->date_of_fueling)->count()) {
+        if ($this->vehicle_fuel->filterByVehicleId($vehicle_fuel->vehicle_id)->where('date_of_fueling', '>', toDate($vehicle_fuel->date_of_fueling))->count()) {
             throw ValidationException::withMessages(['message' => trans('transport.intermediate_fuel_log_cannot_be_deleted')]);
         }
 

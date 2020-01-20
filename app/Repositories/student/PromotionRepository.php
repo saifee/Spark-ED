@@ -76,13 +76,13 @@ class PromotionRepository
      */
     public function getData($params)
     {
-        $sort_by        = gv($params, 'sort_by', 'created_at');
-        $order          = gv($params, 'order', 'desc');
-        $batch_id       = gv($params, 'batch_id');
-        $first_name     = gv($params, 'first_name');
-        $last_name      = gv($params, 'last_name');
-        $father_name    = gv($params, 'father_name');
-        $mother_name    = gv($params, 'mother_name');
+        $sort_by              = gv($params, 'sort_by', 'created_at');
+        $order                = gv($params, 'order', 'desc');
+        $batch_id             = gv($params, 'batch_id');
+        $first_name           = gv($params, 'first_name');
+        $last_name            = gv($params, 'last_name');
+        $first_guardian_name  = gv($params, 'first_guardian_name');
+        $second_guardian_name = gv($params, 'second_guardian_name');
 
         if (! $batch_id) {
             throw ValidationException::withMessages(['message' => trans('academic.could_not_find_batch')]);
@@ -90,12 +90,12 @@ class PromotionRepository
 
         $batch_id = is_array($batch_id) ? $batch_id : ($batch_id ? explode(',', $batch_id) : []);
 
-        $query = $this->student_record->with('student', 'student.parent', 'admission', 'batch', 'batch.course')->filterBySession()->whereIsPromoted(0)->whereNull('date_of_exit')->filterByBatchesId($batch_id)->whereHas('student', function ($q) use ($first_name, $last_name, $father_name, $mother_name) {
+        $query = $this->student_record->with('student', 'student.parent', 'admission', 'batch', 'batch.course')->filterBySession()->whereIsPromoted(0)->whereNull('date_of_exit')->filterByBatchesId($batch_id)->whereHas('student', function ($q) use ($first_name, $last_name, $first_guardian_name, $second_guardian_name) {
             $q->filterByFirstName($first_name)->filterByLastName($last_name);
 
-            if ($father_name || $mother_name) {
-                $q->whereHas('parent', function ($q1) use ($father_name, $mother_name) {
-                    $q1->filterByFatherName($father_name)->filterByMotherName($mother_name);
+            if ($first_guardian_name || $second_guardian_name) {
+                $q->whereHas('parent', function ($q1) use ($first_guardian_name, $second_guardian_name) {
+                    $q1->filterByFirstGuardianName($first_guardian_name)->filterBySecondGuardianName($second_guardian_name);
                 });
             }
         });

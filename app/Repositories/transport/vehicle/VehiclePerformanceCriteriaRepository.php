@@ -170,13 +170,13 @@ class VehiclePerformanceCriteriaRepository
     private function formatParams($params, $vehicle_performance_criteria_id = null)
     {
         $vehicle_id     = gv($params, 'vehicle_id');
-        $date_effective = gv($params, 'date_effective');
+        $date_effective = toDate(gv($params, 'date_effective'));
 
         $vehicle = $this->vehicle->findOrFail($vehicle_id);
 
         $formatted = [
             'vehicle_id'         => gv($params, 'vehicle_id'),
-            'date_effective'     => gv($params, 'date_effective'),
+            'date_effective'     => toDate(gv($params, 'date_effective')),
             'min_service_charge' => gv($params, 'min_service_charge', 0),
             'max_service_charge' => gv($params, 'max_service_charge', 0),
             'min_run'            => gv($params, 'min_run', 0),

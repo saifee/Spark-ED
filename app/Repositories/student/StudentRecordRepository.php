@@ -166,7 +166,7 @@ class StudentRecordRepository {
 		$admission->prefix = $prefix;
 		$admission->number = $number;
 
-		$next_student_records = $this->student_record->filterByStudentId($student_record->student_id)->where('date_of_entry', '>', $student_record->date_of_entry)->count();
+		$next_student_records = $this->student_record->filterByStudentId($student_record->student_id)->where('date_of_entry', '>', toDate($student_record->date_of_entry))->count();
 
 		if ($next_student_records) {
 			throw ValidationException::withMessages(['message' => trans('student.no_modification_allowed_in_intermediate_records')]);
@@ -174,16 +174,16 @@ class StudentRecordRepository {
 
 		$first_student_record = $this->student_record->filterByAdmissionId($admission->id)->orderBy('date_of_entry', 'asc')->first();
 
-		$date_of_entry = gv($params, 'date_of_entry');
+		$date_of_entry = toDate(gv($params, 'date_of_entry'));
 
-		if ($date_of_entry != $student_record->date_of_entry) {
-			$previous_student_record = $this->student_record->filterByStudentId($student_record->student_id)->where('date_of_entry', '<', $student_record->date_of_entry)->orderBy('date_of_entry', 'desc')->first();
+		if ($date_of_entry != toDate($student_record->date_of_entry)) {
+			$previous_student_record = $this->student_record->filterByStudentId($student_record->student_id)->where('date_of_entry', '<', toDate($student_record->date_of_entry))->orderBy('date_of_entry', 'desc')->first();
 
-			if ($previous_student_record && $previous_student_record->date_of_exit && $previous_student_record->date_of_exit >= $date_of_entry) {
+			if ($previous_student_record && toDate($previous_student_record->date_of_exit) && toDate($previous_student_record->date_of_exit) >= $date_of_entry) {
 				throw ValidationException::withMessages(['message' => trans('student.record_is_overlapping')]);
 			}
 
-			if ($previous_student_record && !$previous_student_record->date_of_exit && $previous_student_record->date_of_entry >= $date_of_entry) {
+			if ($previous_student_record && !$previous_student_record->date_of_exit && toDate($previous_student_record->date_of_entry) >= $date_of_entry) {
 				throw ValidationException::withMessages(['message' => trans('student.record_is_overlapping')]);
 			}
 
@@ -191,10 +191,10 @@ class StudentRecordRepository {
 				throw ValidationException::withMessages(['message' => trans('student.date_of_entry_should_less_than_session_end_date')]);
 			}
 
-			$student_record->date_of_entry = $date_of_entry;
+			$student_record->date_of_entry = toDate($date_of_entry);
 
 			if ($first_student_record->id == $student_record->id) {
-				$admission->date_of_admission = $date_of_entry;
+				$admission->date_of_admission = toDate($date_of_entry);
 			}
 
 		}
@@ -284,20 +284,20 @@ class StudentRecordRepository {
 
 				$next_student_fee_record = $this->student_fee_record->with('feeInstallment')->filterByStudentRecordId($student_record->id)->where('fee_installment_id', '>', $fee_installment_id)->orderBy('fee_installment_id', 'asc')->first();
 
-				if ($next_student_fee_record && $next_student_fee_record->feeInstallment->fee_allocation_group_id == $student_fee_record->feeInstallment->fee_allocation_group_id && (($next_student_fee_record->due_date && $next_student_fee_record->due_date <= $due_date) || (!$next_student_fee_record->due_date && $next_student_fee_record->feeInstallment->due_date <= $due_date))) {
+				if ($next_student_fee_record && $next_student_fee_record->feeInstallment->fee_allocation_group_id == $student_fee_record->feeInstallment->fee_allocation_group_id && (($next_student_fee_record->due_date && toDate($next_student_fee_record->due_date) <= $due_date) || (!$next_student_fee_record->due_date && toDate($next_student_fee_record->feeInstallment->due_date) <= $due_date))) {
 					throw ValidationException::withMessages(['due_date_' . $fee_installment_id => trans('finance.due_date_greater_than_next_installment_due_date')]);
 				}
 
 				$previous_student_fee_record = $this->student_fee_record->with('feeInstallment')->filterByStudentRecordId($student_record->id)->where('fee_installment_id', '<', $fee_installment_id)->orderBy('fee_installment_id', 'desc')->first();
 
-				if ($previous_student_fee_record && $previous_student_fee_record->feeInstallment->fee_allocation_group_id == $student_fee_record->feeInstallment->fee_allocation_group_id && (($previous_student_fee_record->due_date && $previous_student_fee_record->due_date >= $due_date) || (!$previous_student_fee_record->due_date && $previous_student_fee_record->feeInstallment->due_date >= $due_date))) {
+				if ($previous_student_fee_record && $previous_student_fee_record->feeInstallment->fee_allocation_group_id == $student_fee_record->feeInstallment->fee_allocation_group_id && (($previous_student_fee_record->due_date && toDate($previous_student_fee_record->due_date) >= $due_date) || (!$previous_student_fee_record->due_date && toDate($previous_student_fee_record->feeInstallment->due_date) >= $due_date))) {
 					throw ValidationException::withMessages(['due_date_' . $fee_installment_id => trans('finance.due_date_less_than_previous_installment_due_date')]);
 				}
 
 				if ($student_fee_record->status == 'unpaid') {
 					$student_fee_record->transport_circle_id = $transport_circle_id;
 					$student_fee_record->fee_concession_id = $fee_concession_id;
-					$student_fee_record->due_date = ($student_fee_record->feeInstallment->due_date != $due_date) ? $due_date : null;
+					$student_fee_record->due_date = ($student_fee_record->feeInstallment->due_date != $due_date) ? toDate($due_date) : null;
 					$student_fee_record->late_fee_applicable = ($student_fee_record->feeInstallment->late_fee_applicable != $late_fee_applicable) ? $late_fee_applicable : null;
 					$student_fee_record->late_fee_frequency = ($student_fee_record->feeInstallment->late_fee_frequency != $late_fee_frequency) ? $late_fee_frequency : null;
 					$student_fee_record->late_fee = ($student_fee_record->feeInstallment->late_fee != $late_fee) ? $late_fee : 0;
@@ -406,6 +406,12 @@ class StudentRecordRepository {
 
 		if ($fee_concession_id && !$this->fee_concession->find($fee_concession_id)) {
 			throw ValidationException::withMessages(['fee_concession_id' => trans('finance.could_not_find_fee_concession')]);
+		}
+
+		$existing_student_fee_record_count = $this->student_fee_record->whereStudentRecordId($student_record->id)->count();
+
+		if ($existing_student_fee_record_count) {
+			throw ValidationException::withMessages(['message' => trans('student.duplicate_fee_installment_found')]);
 		}
 
 		$installments = array();
@@ -582,11 +588,11 @@ class StudentRecordRepository {
 	 * @return integer
 	 */
 	private function getLateFee(StudentRecord $student_record, FeeInstallment $fee_installment, $date = null) {
-		$date = ($date) ? $date : date('Y-m-d');
+		$date = ($date) ? toDate($date) : date('Y-m-d');
 
 		$student_fee_record = $student_record->studentFeeRecords->firstWhere('fee_installment_id', $fee_installment->id);
 
-		$due_date = $student_fee_record->due_date ?: $fee_installment->due_date;
+		$due_date = $student_fee_record->due_date ? toDate($student_fee_record->due_date) : toDate($fee_installment->due_date);
 
 		$late_fee_applicable = (($student_fee_record->late_fee_applicable == null && $fee_installment->late_fee_applicable) || $student_fee_record->late_fee_applicable) ? 1 : 0;
 
@@ -634,7 +640,7 @@ class StudentRecordRepository {
 	}
 
 	private function validatePreviousPaymentDate(StudentRecord $student_record, $fee_installment, $params = array()) {
-		$date = gv($params, 'date');
+		$date = toDate(gv($params, 'date'));
 
 		$previous_fee_paid_ids = $this->student_fee_record->filterByStudentRecordId($student_record->id)->whereIn('status', ['paid', 'partially_paid'])
 			->whereHas('feeInstallment', function ($q) use ($fee_installment) {
@@ -650,8 +656,18 @@ class StudentRecordRepository {
 
 	private function validateInput($fee_installments, $params = array()) {
 		$installments = gv($params, 'installments', []);
-		$date = gv($params, 'date');
+		$date = toDate(gv($params, 'date'));
 		$amount = gv($params, 'amount', 0);
+		$additional_fee_charge = gv($params, 'additional_fee_charge', 0);
+		$additional_fee_discount = gv($params, 'additional_fee_discount', 0);
+
+		if ($additional_fee_charge && ! gv($params, 'additional_fee_charge_label')) {
+			throw ValidationException::withMessages(['additional_fee_charge_label' => trans('validation.required', ['attribute' => trans('student.additional_fee_charge')])]);
+		}
+
+		if ($additional_fee_discount && ! gv($params, 'additional_fee_discount_label')) {
+			throw ValidationException::withMessages(['additional_fee_discount_label' => trans('validation.required', ['attribute' => trans('student.additional_fee_discount')])]);
+		}
 
 		if (!count($installments)) {
 			throw ValidationException::withMessages(['message' => trans('finance.installment_missing')]);
@@ -680,7 +696,7 @@ class StudentRecordRepository {
 				throw ValidationException::withMessages(['message' => trans('finance.could_not_find_fee_installment')]);
 			}
 
-			if ($previous_installment && $previous_installment->due_date > $student_fee_installment->due_date) {
+			if ($previous_installment && toDate($previous_installment->due_date) > toDate($student_fee_installment->due_date)) {
 				throw ValidationException::withMessages(['message' => trans('general.invalid_input')]);
 			}
 
@@ -692,10 +708,16 @@ class StudentRecordRepository {
 		if (!$can_make_partial_payment && $total != $amount) {
 			throw ValidationException::withMessages(['message' => trans('finance.total_mismatch')]);
 		}
+
+		$final_amount = $amount + $additional_fee_charge - $additional_fee_discount;
+
+		if ($amount < 0) {
+			throw ValidationException::withMessages(['message' => trans('validation.min.numeric', ['attribute' => trans('finance.amount'), 'min' => 0])]);
+		}
 	}
 
 	private function initializeTransaction($params = array()) {
-		$date = gv($params, 'date');
+		$date = toDate(gv($params, 'date'));
 		$amount = gv($params, 'amount', 0);
 		$is_online_payment = gbv($params, 'is_online_payment');
 		$account_id = gv($params, 'account_id');
@@ -727,7 +749,7 @@ class StudentRecordRepository {
 			'user_id' => gv($params, 'user_id') ?: (\Auth::check() ? \Auth::user()->id : null),
 			'prefix' => $account_prefix,
 			'account_id' => $account_id,
-			'date' => $date,
+			'date' => toDate($date),
 			'remarks' => $remarks,
 			'payment_method_id' => $payment_method_id,
 			'is_multi_installment' => count($installments) > 1 ? 1 : 0,
@@ -754,10 +776,18 @@ class StudentRecordRepository {
 	public function makePayment(StudentRecord $student_record, $params = array()) {
 		$student_record = $this->loadFeeData($student_record);
 		$fee_installment_id = gv($params, 'installment_id');
-		$date = gv($params, 'date');
+		$date = toDate(gv($params, 'date'));
 		$amount = gv($params, 'amount', 0);
 		$handling_fee = gv($params, 'handling_fee', 0);
 		$installments = gv($params, 'installments', []);
+
+		$is_student_or_parent =  \Auth::user()->hasAnyRole([config('system.default_role.student'), config('system.default_role.parent')]) ? true : false;
+
+		if (! $is_student_or_parent) {
+			$amount -= gv($params, 'additional_fee_charge', 0);
+			$amount += gv($params, 'additional_fee_discount', 0);
+			$params['amount'] = $amount;
+		}
 
 		$data = $this->initializeTransaction($params);
 		$transaction = $data['transaction'];
@@ -791,6 +821,9 @@ class StudentRecordRepository {
 
 			$paid = 0;
 			foreach ($student_fee_record->transactions->where('is_cancelled', 0)->all() as $paid_fee) {
+				$transaction_additional_fee_charge = $paid_fee->getOption('additional_fee_charge');
+				$transaction_additional_fee_discount = $paid_fee->getOption('additional_fee_discount');
+				$fee += gv($transaction_additional_fee_charge, 'amount', 0) - gv($transaction_additional_fee_discount, 'amount', 0);
 				$paid += $paid_fee->amount;
 			}
 
@@ -879,6 +912,18 @@ class StudentRecordRepository {
 
 				if (!$transaction_group_id && $handling_fee) {
 					$txn->handling_fee = $handling_fee;
+				}
+
+				if (!$transaction_group_id && !$is_student_or_parent) {
+					$txn_options['additional_fee_charge'] = array(
+						'label' => gv($params, 'additional_fee_charge_label'),
+						'amount' => gv($params, 'additional_fee_charge', 0)
+					);
+					$txn_options['additional_fee_discount'] = array(
+						'label' => gv($params, 'additional_fee_discount_label'),
+						'amount' => gv($params, 'additional_fee_discount', 0)
+					);
+					$txn->amount = $txn->amount + gv($params, 'additional_fee_charge', 0) - gv($params, 'additional_fee_discount', 0);
 				}
 
 				if (!$transaction_group_id && $transaction['is_multi_installment']) {
@@ -1060,7 +1105,7 @@ class StudentRecordRepository {
 		$student_fee_record = $this->getStudentFeeRecord($student_record, $fee_record_id);
 
 		$paid = $this->student_fee_record->where('id', '!=', $student_fee_record->id)->where('student_record_id', $student_record->id)->whereHas('feeInstallment', function ($q) use ($student_fee_record) {
-			$q->where('fee_allocation_group_id', $student_fee_record->feeInstallment->fee_allocation_group_id)->where('due_date', '>=', $student_fee_record->feeInstallment->due_date);
+			$q->where('fee_allocation_group_id', $student_fee_record->feeInstallment->fee_allocation_group_id)->where('due_date', '>=', toDate($student_fee_record->feeInstallment->due_date));
 		})->whereIn('status', ['paid', 'partially_paid'])->count();
 
 		if ($paid) {
@@ -1259,7 +1304,7 @@ class StudentRecordRepository {
 		$query = $this->student_record->select('id', 'student_id', 'batch_id')
 			->with([
 				'student:id,uuid,student_parent_id,first_name,middle_name,last_name,contact_number',
-				'student.parent:id,father_name',
+				'student.parent:id,first_guardian_name',
 				'batch:id,course_id,name',
 				'batch.course:id,name',
 				'admission:id,number,prefix',

@@ -96,7 +96,7 @@ class AttendanceRepository
     public function fetchProduction($params)
     {
         $employee_id = gv($params, 'employee_id');
-        $date = gv($params, 'date');
+        $date = toDate(gv($params, 'date'));
 
         $employee = $this->employee->findOrFail($employee_id);
 
@@ -296,7 +296,7 @@ class AttendanceRepository
     {
         $params['summary'] = true;
         $params['status'] = 'active';
-        $date_of_attendance = gv($params, 'date');
+        $date_of_attendance = toDate(gv($params, 'date'));
 
         $employees = $this->employee->getData($params)->get();
 
@@ -323,7 +323,7 @@ class AttendanceRepository
     {
         $params['status']   = 'active';
         $employees          = gv($params, 'employees', []);
-        $date_of_attendance = gv($params, 'date_of_attendance');
+        $date_of_attendance = toDate(gv($params, 'date_of_attendance'));
 
         if (! $employees) {
             throw ValidationException::withMessages(['message' => trans('employee.no_employee_found_for_attendance')]);
@@ -362,7 +362,7 @@ class AttendanceRepository
     private function validateInput($params)
     {
         $category           = gv($params, 'category');
-        $date_of_attendance = gv($params, 'date_of_attendance');
+        $date_of_attendance = toDate(gv($params, 'date_of_attendance'));
 
         if (! in_array($category, ['regular','production'])) {
             throw ValidationException::withMessages(['message' => trans('employee.invalid_attendance_category')]);
@@ -417,7 +417,7 @@ class AttendanceRepository
     {
         $category           = gv($params, 'category');
         $employees          = gv($params, 'employees', []);
-        $date_of_attendance = gv($params, 'date_of_attendance');
+        $date_of_attendance = toDate(gv($params, 'date_of_attendance'));
 
         $this->validateInput($params);
 
@@ -456,7 +456,7 @@ class AttendanceRepository
                     $employee_attendance->save();
                 } else {
                     $employee_attendance = $this->attendance->forceCreate([
-                        'date_of_attendance'          => $date_of_attendance,
+                        'date_of_attendance'          => toDate($date_of_attendance),
                         'employee_id'                 => $id,
                         'employee_attendance_type_id' => $attendance,
                         'remarks'                     => $remarks
@@ -474,7 +474,7 @@ class AttendanceRepository
     public function storeProduction($params)
     {
         $employee_id = gv($params, 'employee_id');
-        $date_of_attendance = gv($params, 'date_of_attendance');
+        $date_of_attendance = toDate(gv($params, 'date_of_attendance'));
         $attendances = gv($params, 'attendances', []);
 
         $params['category'] = 'production';

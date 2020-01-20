@@ -226,7 +226,7 @@ class IncomeRepository
             'account_id'               => $account->id,
             'head'                     => 'income',
             'income_id'                => $income->id,
-            'date'                     => gv($params, 'date_of_income'),
+            'date'                     => toDate(gv($params, 'date_of_income')),
             'remarks'                  => null,
             'upload_token'             => Str::uuid(),
             'payment_method_id'        => $payment_method_id,
@@ -252,7 +252,7 @@ class IncomeRepository
     private function formatParams($params, $income_id = null)
     {
         $amount                  = gv($params, 'amount', 0);
-        $date_of_income          = gv($params, 'date_of_income');
+        $date_of_income          = toDate(gv($params, 'date_of_income'));
         $description             = gv($params, 'description');
         $transaction_category_id = gv($params, 'transaction_category_id');
         $account_id              = gv($params, 'account_id');
@@ -267,7 +267,7 @@ class IncomeRepository
         $formatted = [
             'transaction_category_id' => $transaction_category_id,
             'amount'                  => $amount,
-            'date_of_income'          => $date_of_income,
+            'date_of_income'          => toDate($date_of_income),
             'description'             => $description,
             'options'                 => []
         ];
@@ -320,7 +320,7 @@ class IncomeRepository
 
         $income->Transaction->forceFill([
             'amount'                   => gv($params, 'amount'),
-            'date'                     => gv($params, 'date_of_income'),
+            'date'                     => toDate(gv($params, 'date_of_income')),
             'payment_method_id'        => $payment_method_id,
             'instrument_number'        => ($payment_method->getOption('requires_instrument_number')) ? gv($params, 'instrument_number') : null,
             'instrument_date'          => ($payment_method->getOption('requires_instrument_date')) ? toDate(gv($params, 'instrument_date')) : null,

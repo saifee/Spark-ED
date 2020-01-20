@@ -92,7 +92,7 @@ class EmployeeTermRepository
     {
         $designation_id  = gv($params, 'designation_id');
         $department_id   = gv($params, 'department_id');
-        $date_of_joining = gv($params, 'date_of_joining');
+        $date_of_joining = toDate(gv($params, 'date_of_joining'));
         $joining_remarks = gv($params, 'joining_remarks');
 
         $employee_terms = $employee->EmployeeTerms;
@@ -125,7 +125,7 @@ class EmployeeTermRepository
 
         $employee_term = $this->employee_term->forceCreate([
             'employee_id' => $employee->id,
-            'date_of_joining' => $date_of_joining,
+            'date_of_joining' => toDate($date_of_joining),
             'joining_remarks' => $joining_remarks,
             'upload_token' => gv($params, 'upload_token')
         ]);
@@ -135,7 +135,7 @@ class EmployeeTermRepository
             'employee_term_id' => $employee_term->id,
             'designation_id' => $designation_id,
             'department_id' => $department_id,
-            'date_effective' => $date_of_joining,
+            'date_effective' => toDate($date_of_joining),
             'upload_token' => Str::uuid()
         ]);
 
@@ -174,27 +174,27 @@ class EmployeeTermRepository
         $is_leaving = gbv($params, 'is_leaving');
 
         if ($is_leaving) {
-            $date_of_leaving = gv($params, 'date_of_leaving');
+            $date_of_leaving = toDate(gv($params, 'date_of_leaving'));
             $leaving_remarks = gv($params, 'leaving_remarks');
 
-            if ($date_of_leaving <= $employee_term->date_of_joining) {
+            if ($date_of_leaving <= toDate($employee_term->date_of_joining)) {
                 throw ValidationException::withMessages(['date_of_leaving' => trans('employee.date_of_leaving_lesser_than_date_of_joining')]);
             }
 
             $last_designation = $employee_term->EmployeeDesignations->sortByDesc('date_effective')->first();
 
-            if ($last_designation && $date_of_leaving <= $last_designation->date_effective) {
+            if ($last_designation && $date_of_leaving <= toDate($last_designation->date_effective)) {
                 throw ValidationException::withMessages(['date_of_leaving' => trans('employee.date_of_leaving_lesser_than_last_designation_date', ['date' => showDate($last_designation->date_effective)]) ]);
             }
 
-            $employee_term->date_of_leaving = $date_of_leaving;
+            $employee_term->date_of_leaving = toDate($date_of_leaving);
             $employee_term->leaving_remarks = $leaving_remarks;
             $employee_term->save();
 
             $last_employee_designation = $employee_term->EmployeeDesignations->last();
 
             if ($last_employee_designation) {
-                $last_employee_designation->date_end = $date_of_leaving;
+                $last_employee_designation->date_end = toDate($date_of_leaving);
                 $last_employee_designation->save();
             }
         } else {
@@ -228,7 +228,7 @@ class EmployeeTermRepository
 
         $employee_terms = $employee_term->Employee->EmployeeTerms;
 
-        if ($employee_terms->where('id', '!=', $id)->where('date_of_joining', '>', $employee_term->date_of_joining)->count()) {
+        if ($employee_terms->where('id', '!=', $id)->where('date_of_joining', '>', toDate($employee_term->date_of_joining))->count()) {
             throw ValidationException::withMessages(['message' => trans('employee.only_last_term_is_editable')]);
         }
 

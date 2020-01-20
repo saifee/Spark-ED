@@ -258,8 +258,8 @@ class AssignmentRepository
     private function formatParams($params, $assignment_id = null)
     {
         $title              = gv($params, 'title');
-        $date_of_assignment = gv($params, 'date_of_assignment');
-        $due_date           = gv($params, 'due_date');
+        $date_of_assignment = toDate(gv($params, 'date_of_assignment'));
+        $due_date           = toDate(gv($params, 'due_date'));
         $description        = clean(gv($params, 'description'));
         $subject_id         = gv($params, 'subject_id');
 
@@ -270,8 +270,8 @@ class AssignmentRepository
         $formatted = [
             'subject_id'         => $subject_id,
             'title'              => $title,
-            'date_of_assignment' => $date_of_assignment,
-            'due_date'           => $due_date,
+            'date_of_assignment' => toDate($date_of_assignment),
+            'due_date'           => toDate($due_date),
             'description'        => clean($description),
             'options'            => []
         ];

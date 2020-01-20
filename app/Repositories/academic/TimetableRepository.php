@@ -191,8 +191,7 @@ class TimetableRepository
 
         $batches = $this->course_group->getBatchOption();
 
-        $list = getVar('list');
-        $days = generateTranslatedSelectOption(isset($list['day']) ? $list['day'] : []);
+        $days = getDaysInOrder();
 
         return compact('class_timings', 'batches', 'days');
     }
@@ -229,7 +228,7 @@ class TimetableRepository
         $timetable = $this->timetable->forceCreate([
             'uuid'           => Str::uuid(),
             'batch_id'       => gv($params, 'batch_id'),
-            'date_effective' => gv($params, 'date_effective'),
+            'date_effective' => toDate(gv($params, 'date_effective')),
             'description'    => gv($params, 'description'),
             'options'        => []
         ]);
@@ -256,7 +255,7 @@ class TimetableRepository
     private function validateTimetable($params, $timetable_id = null)
     {
         $batch_id = gv($params, 'batch_id');
-        $date_effective = gv($params, 'date_effective');
+        $date_effective = toDate(gv($params, 'date_effective'));
 
         $batch = $this->batch->filterBySession()->whereId($batch_id)->first();
 
@@ -376,7 +375,7 @@ class TimetableRepository
         }
 
         $timetable->batch_id       = gv($params, 'batch_id');
-        $timetable->date_effective = gv($params, 'date_effective');
+        $timetable->date_effective = toDate(gv($params, 'date_effective'));
         $timetable->description    = gv($params, 'description');
         $timetable->save();
 
@@ -452,7 +451,7 @@ class TimetableRepository
         $date = gv($params, 'date_effective');
 
         $batch_id = is_array($batch_id) ? $batch_id : ($batch_id ? explode(',', $batch_id) : []);
-        $date = $date ? $date : date('Y-m-d');
+        $date = $date ? toDate($date) : date('Y-m-d');
 
         $query = $this->batch->with('timetables', 'timetables.batch', 'timetables.batch.course', 'timetables.timetableAllocations', 'timetables.timetableAllocations.timetableAllocationDetails', 'timetables.timetableAllocations.classTiming', 'timetables.timetableAllocations.classTiming.classTimingSessions', 'timetables.timetableAllocations.timetableAllocationDetails.subject', 'timetables.timetableAllocations.timetableAllocationDetails.subject.subjectTeachers', 'timetables.timetableAllocations.timetableAllocationDetails.subject.subjectTeachers.employee', 'timetables.timetableAllocations.timetableAllocationDetails.classTimingSession')->filterBySession();
 

@@ -112,7 +112,7 @@ class LeaveRequestRepository
      */
     public function getLeaveAllocation(LeaveRequest $leave_request)
     {
-        $leave_allocation = $this->leave_allocation->with(['leaveAllocationDetails:id,employee_leave_allocation_id,employee_leave_type_id,allotted,used','leaveAllocationDetails.leaveType:id,name,alias'])->filterBySession()->filterByEmployeeId($leave_request->employee_id)->where('start_date','<=',$leave_request->start_date)->where('end_date','>=',$leave_request->end_date)->first();
+        $leave_allocation = $this->leave_allocation->with(['leaveAllocationDetails:id,employee_leave_allocation_id,employee_leave_type_id,allotted,used','leaveAllocationDetails.leaveType:id,name,alias'])->filterBySession()->filterByEmployeeId($leave_request->employee_id)->where('start_date','<=', toDate($leave_request->start_date))->where('end_date','>=', toDate($leave_request->end_date))->first();
 
         if (! $leave_allocation) {
             throw ValidationException::withMessages(['message' => trans('employee.could_not_find_leave_allocation_for_given_period', ['start' => showDate($leave_request->start_date), 'end' => showDate($leave_request->end_date), 'name' => $leave_request->Employee->name])]);
@@ -224,8 +224,8 @@ class LeaveRequestRepository
 
     private function getHolidayAsLeave($params, $holidays)
     {
-        $start_date = gv($params, 'start_date');
-        $end_date = gv($params, 'end_date');
+        $start_date = toDate(gv($params, 'start_date'));
+        $end_date = toDate(gv($params, 'end_date'));
 
         if (! dateBetweenSession($start_date)) {
             throw ValidationException::withMessages(['message' => trans('employee.date_not_in_academic_session', ['date' => trans('employee.leave_request_start_date')])]);
@@ -282,8 +282,8 @@ class LeaveRequestRepository
     {
         $leave_request_id = gv($params, 'leave_request_id');
         $employee_id      = gv($params, 'employee_id');
-        $start_date       = gv($params, 'start_date');
-        $end_date         = gv($params, 'end_date');
+        $start_date       = toDate(gv($params, 'start_date'));
+        $end_date       = toDate(gv($params, 'end_date'));
 
         $overlapping_query = (! $leave_request_id) ? $this->leave_request : $this->leave_request->where('id', '!=', $leave_request_id);
 
@@ -322,8 +322,8 @@ class LeaveRequestRepository
     {
         $employee_id     = gv($params, 'employee_id');
         $employee_name   = gv($params, 'employee_name');
-        $start_date      = gv($params, 'start_date');
-        $end_date        = gv($params, 'end_date');
+        $start_date      = toDate(gv($params, 'start_date'));
+        $end_date      = toDate(gv($params, 'end_date'));
         $leave_type_id   = gv($params, 'leave_type_id');
         $leave_type_name = gv($params, 'leave_type_name');
         $leave_requested = gv($params, 'leave_requested');
@@ -351,8 +351,8 @@ class LeaveRequestRepository
 
     private function isPayrollGenerated($params)
     {
-        $start_date  = gv($params, 'start_date');
-        $end_date    = gv($params, 'end_date');
+        $start_date  = toDate(gv($params, 'start_date'));
+        $end_date  = toDate(gv($params, 'end_date'));
         $employee_id = gv($params, 'employee_id');
 
         $payroll = $this->payroll->filterByEmployeeId($employee_id)->where(function($q) use($start_date, $end_date) {
@@ -381,8 +381,8 @@ class LeaveRequestRepository
      */
     private function formatParams($params, $leave_request_id = null)
     {
-        $start_date    = gv($params, 'start_date');
-        $end_date      = gv($params, 'end_date');
+        $start_date    = toDate(gv($params, 'start_date'));
+        $end_date    = toDate(gv($params, 'end_date'));
         $leave_type_id = gv($params, 'employee_leave_type_id');
         $employee_id   = gv($params, 'employee_id');
         $reason        = gv($params, 'reason');
@@ -407,15 +407,15 @@ class LeaveRequestRepository
         $this->validateLeaveRequestOverlapping([
             'leave_request_id' => $leave_request_id,
             'employee_id'      => $employee->id,
-            'start_date'       => $start_date,
-            'end_date'         => $end_date
+            'start_date'       => toDate($start_date),
+            'end_date'         => toDate($end_date)
         ]);
 
         $leave_balance = $this->validateLeaveBalance([
             'employee_id'     => $employee->id,
             'employee_name'   => $employee->name,
-            'start_date'      => $start_date,
-            'end_date'        => $end_date,
+            'start_date'      => toDate($start_date),
+            'end_date'        => toDate($end_date),
             'leave_type_id'   => $leave_type->id,
             'leave_type_name' => $leave_type->name,
             'leave_requested' => $leave_requested
@@ -433,8 +433,8 @@ class LeaveRequestRepository
         $formatted = [
             'employee_id'            => $employee->id,
             'employee_leave_type_id' => $leave_type->id,
-            'start_date'             => $start_date,
-            'end_date'               => $end_date,
+            'start_date'             => toDate($start_date),
+            'end_date'               => toDate($end_date),
             'reason'                 => $reason,
             'status'                 => 'pending',
             'requester_user_id'      => \Auth::user()->id,
@@ -515,8 +515,8 @@ class LeaveRequestRepository
         $this->employee->isAccessible($leave_request->employee);
 
         $this->isPayrollGenerated([
-            'start_date' => $leave_request->start_date,
-            'end_date' => $leave_request->end_date,
+            'start_date' => toDate($leave_request->start_date),
+            'end_date' => toDate($leave_request->end_date),
             'employee_id' => $leave_request->employee_id
         ]);
 

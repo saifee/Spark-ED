@@ -266,12 +266,13 @@ class RegistrationRepository
 
         $list = getVar('list');
         $genders = generateTranslatedSelectOption(isset($list['gender']) ? $list['gender'] : []);
+        $guardian_relations = generateTranslatedSelectOption(isset($list['relations']) ? $list['relations'] : []);
 
         $previous_institutes = $this->institute->selectAll();
 
         $custom_fields = $this->getRegistrationCustomField();
 
-        return compact('courses', 'genders', 'course_details', 'previous_institutes','custom_fields');
+        return compact('courses', 'genders', 'course_details', 'previous_institutes','custom_fields','guardian_relations');
     }
 
     /**
@@ -306,6 +307,16 @@ class RegistrationRepository
     }
 
     /**
+     * Get disabled registration number
+     * @param  Registration $registration
+     * @return boolean
+     */
+    public function getDisabledAdmissionNumber(Registration $registration)
+    {
+        return $this->student_record->whereStudentId($registration->student_id)->filterBySession()->whereNull('date_of_exit')->count() ? true : false;
+    }
+
+    /**
      * Create a new registration.
      *
      * @param array $params
@@ -319,6 +330,8 @@ class RegistrationRepository
         $student_type = gv($params, 'student_type');
 
         $custom_values = $this->custom_field->validateCustomValues('student_registration', gv($params, 'custom_values', []));
+
+        \DB::beginTransaction();
 
         if ($student_type == 'new') {
             $student = $this->student->create($params);
@@ -334,7 +347,7 @@ class RegistrationRepository
             $student_id = gv($params, 'student_id');
             $student = $this->student->findOrFail($student_id);
 
-            $this->student->validateStudentForRegistration($student);
+            $this->student->validateStudentForRegistration($student, $params);
         }
 
         $registration = $this->registration->forceCreate($this->formatParams($params, $student));
@@ -343,6 +356,8 @@ class RegistrationRepository
         $options['custom_values'] = mergeByKey($registration->getOption('custom_values'), $custom_values);
         $registration->options = $options;
         $registration->save();
+
+        \DB::commit();
     }
 
     /**
@@ -352,7 +367,7 @@ class RegistrationRepository
      */
     public function validateInput($params = array())
     {
-        $date_of_registration  = gv($params, 'date_of_registration');
+        $date_of_registration  = toDate(gv($params, 'date_of_registration'));
         $gender                = gv($params, 'gender');
         $course_id             = gv($params, 'course_id');
         $previous_institute_id = gv($params, 'previous_institute_id');
@@ -440,10 +455,26 @@ class RegistrationRepository
 
         beginTransaction();
 
-        $student = $this->student->create($params);
-        $student_parent = $this->student_parent->create($params);
-        $params['student_parent_id'] = $student_parent->id;
-        $this->student->updateParentId($student, $params);
+        $student_parent = $this->student_parent->getExistingParent($params);
+
+        $student = $this->student->getExistingStudent($params);
+
+        if ($student_parent && $student && $student->student_parent_id != $student_parent->id) {
+            throw ValidationException::withMessages(['message' => trans('student.parent_detail_mismatch')]);
+        }
+
+        if (! $student_parent) {
+            $student_parent = $this->student_parent->create($params);
+        }
+
+        if (! $student) {
+            $student = $this->student->create($params);
+            $params['student_parent_id'] = $student_parent->id;
+            $this->student->updateParentId($student, $params);
+        }
+
+        $params['date_of_registration'] = today();
+        $this->student->validateStudentForRegistration($student, $params);
 
         $params['is_online'] = 1;
 
@@ -471,7 +502,7 @@ class RegistrationRepository
     private function formatParams($params, $student)
     {
         $formatted = [
-            'date_of_registration'  => gv($params, 'date_of_registration', date('Y-m-d')),
+            'date_of_registration'  => toDate(gv($params, 'date_of_registration', date('Y-m-d'))),
             'registration_remarks'  => gv($params, 'registration_remarks'),
             'course_id'             => gv($params, 'course_id'),
             'registration_fee'      => gv($params, 'registration_fee', 0),
@@ -499,7 +530,7 @@ class RegistrationRepository
             throw ValidationException::withMessages(['message' => trans('general.invalid_action')]);
         }
 
-        $date              = gv($params, 'date');
+        $date              = toDate(gv($params, 'date'));
         $account_id        = gv($params, 'account_id');
         $payment_method_id = gv($params, 'payment_method_id');
         $remarks           = gv($params, 'remarks');
@@ -508,7 +539,7 @@ class RegistrationRepository
 
         $payment_method = $this->payment_method->findOrFail($payment_method_id);
 
-        if ($date < $registration->date_of_registration) {
+        if ($date < toDate($registration->date_of_registration)) {
             throw ValidationException::withMessages(['date' => trans('student.date_cannot_less_than_date_of_registration')]);
         }
 
@@ -528,7 +559,7 @@ class RegistrationRepository
             'account_id'               => $account_id,
             'head'                     => 'registration_fee',
             'registration_id'          => $registration->id,
-            'date'                     => $date,
+            'date'                     => toDate($date),
             'remarks'                  => $remarks,
             'upload_token'             => Str::uuid(),
             'payment_method_id'        => $payment_method_id,
@@ -586,6 +617,44 @@ class RegistrationRepository
             throw ValidationException::withMessages(['message' => trans('general.invalid_action')]);
         }
 
+        if (! request('admission_remarks')) {
+            throw ValidationException::withMessages(['admission_remarks' => trans('validation.required', ['attribute' => trans('student.admission_remarks')])]);
+        }
+
+        if (! request('admission_number')) {
+            throw ValidationException::withMessages(['admission_number' => trans('validation.required', ['attribute' => trans('student.admission_number')])]);
+        }
+
+        if (! is_numeric(request('admission_number'))) {
+            throw ValidationException::withMessages(['admission_number' => trans('validation.numeric', ['attribute' => trans('student.admission_number')])]);
+        }
+
+        if (request('admission_number') < 0) {
+            throw ValidationException::withMessages(['admission_number' => trans('validation.min.numeric', ['attribute' => trans('student.admission_number'), 'min' => 0])]);
+        }
+
+        $admission_number = ltrim(gv($params, 'admission_number'), '0');
+
+        if (! isInteger($admission_number)) {
+            throw ValidationException::withMessages(['admission_number' => trans('validation.integer', ['attribute' => trans('student.admission_number')])]);
+        }
+
+        $admission_number_prefix = gv($params, 'admission_number_prefix');
+
+        if ($this->admission->filterByNumber($admission_number)->filterByPrefix($admission_number_prefix)->count()) {
+            throw ValidationException::withMessages(['admission_number' => trans('student.admission_number_exists')]);
+        }
+
+        $date_of_admission = toDate(gv($params, 'date_of_admission'));
+
+        if ($date_of_admission < toDate($registration->date_of_registration)) {
+            throw ValidationException::withMessages(['date_of_admission' => trans('student.date_cannot_less_than_date_of_registration')]);
+        }
+
+        if (! dateLessThanSessionEnd($date_of_admission)) {
+            throw ValidationException::withMessages(['date_of_admission' => trans('academic.date_less_than_session_end')]);
+        }
+
         if ($status == 'rejected') {
             return $this->rejectRegistration($params, $registration);
         }
@@ -630,28 +699,6 @@ class RegistrationRepository
             throw ValidationException::withMessages(['batch_id' => trans('finance.no_fee_allocated')]);
         }
 
-        $admission_number = ltrim(gv($params, 'admission_number'), '0');
-
-        if (! isInteger($admission_number)) {
-            throw ValidationException::withMessages(['admission_number' => trans('validation.integer', ['attribute' => trans('student.admission_number')])]);
-        }
-
-        $admission_number_prefix = gv($params, 'admission_number_prefix');
-
-        if ($this->admission->filterByNumber($admission_number)->filterByPrefix($admission_number_prefix)->count()) {
-            throw ValidationException::withMessages(['admission_number' => trans('student.admission_number_exists')]);
-        }
-
-        $date_of_admission = gv($params, 'date_of_admission');
-
-        if ($date_of_admission < $registration->date_of_registration) {
-            throw ValidationException::withMessages(['date_of_admission' => trans('student.date_cannot_less_than_date_of_registration')]);
-        }
-
-        if (! dateLessThanSessionEnd($date_of_admission)) {
-            throw ValidationException::withMessages(['date_of_admission' => trans('academic.date_less_than_session_end')]);
-        }
-
         $transport_circle_id = gv($params, 'transport_circle_id');
 
         if ($transport_circle_id && ! $this->transport_circle->find($transport_circle_id)) {
@@ -663,6 +710,14 @@ class RegistrationRepository
         if ($fee_concession_id && ! $this->fee_concession->find($fee_concession_id)) {
             throw ValidationException::withMessages(['fee_concession_id' => trans('finance.could_not_find_fee_concession')]);
         }
+
+        $this->student->validateStudentForRegistration($registration->student, [
+            'course_id' => $registration->course_id,
+            'date_of_registration' => $registration->date_of_registration
+        ]);
+
+
+        \DB::beginTransaction();
 
         $fee_concession = gv($params, 'fee_concession');
 
@@ -676,19 +731,19 @@ class RegistrationRepository
 
         $admission = $this->admission->forceCreate([
             'batch_id'          => gv($params, 'batch_id'),
-            'date_of_admission' => $date_of_admission,
-            'prefix'            => $admission_number_prefix,
-            'number'            => $admission_number,
+            'date_of_admission' => toDate(gv($params, 'date_of_admission')),
+            'prefix'            => gv($params, 'admission_number_prefix'),
+            'number'            => gv($params, 'admission_number'),
             'registration_id'   => $registration->id,
             'admission_remarks' => gv($params, 'admission_remarks')
         ]);
 
         $student_record = $this->student_record->forceCreate([
-            'admission_id'        => $admission->id,
+            'admission_id'        => isset($admission) ? $admission->id : null,
             'academic_session_id' => config('config.default_academic_session.id'),
             'batch_id'            => gv($params, 'batch_id'),
             'fee_allocation_id'   => $fee_allocation->id,
-            'date_of_entry'       => $date_of_admission,
+            'date_of_entry'       => toDate(gv($params, 'date_of_admission')),
             'student_id'          => $registration->Student->id,
             'entry_remarks'       => gv($params, 'admission_remarks')
         ]);
@@ -711,6 +766,8 @@ class RegistrationRepository
         $registration->status = 'allotted';
         $registration->save();
 
+        \DB::commit();
+
         return $registration;
     }
 
@@ -724,7 +781,7 @@ class RegistrationRepository
      */
     public function update(Registration $registration, $params)
     {
-        $date_of_registration  = gv($params, 'date_of_registration');
+        $date_of_registration  = toDate(gv($params, 'date_of_registration'));
         $course_id             = gv($params, 'course_id');
         $previous_institute_id = gv($params, 'previous_institute_id');
 
@@ -742,9 +799,14 @@ class RegistrationRepository
             $previous_institute = $this->institute->findOrFail($previous_institute_id);
         }
 
+        $this->student->validateStudentForRegistration($registration->student, [
+            'course_id' => $course_id,
+            'date_of_registration' => $date_of_registration
+        ]);
+
         if ($registration->registration_fee_status == 'paid') {
             $transaction = $registration->Transactions->first();
-            $date_of_payment = ($transaction) ? $transaction->date : null;
+            $date_of_payment = ($transaction) ? toDate($transaction->date) : null;
 
             if ($date_of_registration > $date_of_payment) {
                 throw ValidationException::withMessages(['message' => trans('student.date_of_registration_cannot_greater_than_date_of_payment')]);
@@ -753,7 +815,7 @@ class RegistrationRepository
 
         $custom_values = $this->custom_field->validateCustomValues('student_registration', gv($params, 'custom_values', []));
 
-        $registration->date_of_registration  = $date_of_registration;
+        $registration->date_of_registration  = toDate($date_of_registration);
         $registration->course_id             = $course_id;
         $registration->previous_institute_id = $previous_institute_id;
         $registration->registration_remarks  = gv($params, 'registration_remarks');

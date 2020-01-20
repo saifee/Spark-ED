@@ -98,6 +98,7 @@ class ConfigurationRepository
         $config['show_footer_credit'] = gbv($config_variables, 'show_footer_credit');
         $config['pb']                 = gbv($config_variables, 'pb');
         $config['default_currency'] = getDefaultCurrency();
+        $config['current_date']       = today();
 
         $config['made'] = env('MADE');
 
@@ -386,7 +387,13 @@ class ConfigurationRepository
             }
 
             $default_academic_session = ($user_preference) ? $this->academic_session->find($user_preference->academic_session_id) : $this->academic_session->whereIsDefault(1)->first();
-            config(['config.default_academic_session' => $default_academic_session]);
+            if ($default_academic_session) {
+                $default_academic_session->start_date = toDate($default_academic_session->start_date);
+                $default_academic_session->end_date = toDate($default_academic_session->end_date);
+                config(['config.default_academic_session' => $default_academic_session]);
+            } else {
+                config(['config.default_academic_session' => null]);
+            }
         }
 
         $this->setVisibility();

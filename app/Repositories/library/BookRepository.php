@@ -412,7 +412,7 @@ class BookRepository
      */
     public function post(Book $book, $params)
     {
-        $date_of_addition = gv($params, 'date_of_addition');
+        $date_of_addition = toDate(gv($params, 'date_of_addition'));
         $quantity = gv($params, 'quantity', 0);
         $details = gv($params, 'details');
 
@@ -467,7 +467,7 @@ class BookRepository
 
         $book_post = $this->book_post->forceCreate([
             'book_id' => $book->id,
-            'date_of_addition' => $date_of_addition,
+            'date_of_addition' => toDate($date_of_addition),
             'quantity' => $quantity,
             'remarks' => gv($params, 'remarks'),
             'options' => array()
@@ -585,13 +585,14 @@ class BookRepository
      */
     public function getBookPostDetail($number, $date)
     {
+        $date = toDate($date);
         $book_post_detail = $this->book_post_detail->with('bookPost', 'bookLogDetails', 'bookLogDetails.bookLog')->filterByAvailability()->filterByNumber($number)->first();
 
         if (! $book_post_detail) {
             throw ValidationException::withMessages(['message' => trans('library.could_not_find_book')]);
         }
 
-        $date_of_addition = $book_post_detail->bookPost->date_of_addition;
+        $date_of_addition = toDate($book_post_detail->bookPost->date_of_addition);
         if ($date_of_addition > $date) {
             throw ValidationException::withMessages(['message' => trans('library.book_added_after_given_date', ['number' => $number, 'date_of_addition' => showDate($date_of_addition), 'date_of_issue' => showDate($date)])]);
         }
@@ -599,7 +600,7 @@ class BookRepository
         $last_issued = $book_post_detail->bookLogDetails->sortByDesc('id')->first();
 
         if ($last_issued) {
-            if ($last_issued->date_of_return && $last_issued->date_of_return > $date) {
+            if ($last_issued->date_of_return && toDate($last_issued->date_of_return) > $date) {
                 throw ValidationException::withMessages(['message' => trans('library.book_last_returned_after_given_date', ['number' => $number, 'date_of_issue' => showDate($last_issued->date_of_return)])]);
             }
 
@@ -607,7 +608,7 @@ class BookRepository
                 throw ValidationException::withMessages(['message' => trans('library.book_not_returned', ['number' => $number])]);
             }
 
-            // $last_issued_date = $last_issued->bookLog->date_of_issue;
+            // $last_issued_date = toDate($last_issued->bookLog->date_of_issue);
             // if ($last_issued_date > $date) {
             //     throw ValidationException::withMessages(['message' => trans('library.book_last_issued_after_given_date', ['number' => $number, 'date_of_issue' => showDate($last_issued_date)])]);
             // }
@@ -625,7 +626,7 @@ class BookRepository
     public function searchByNumber($params = array())
     {
         $number = gv($params, 'number');
-        $date = gv($params, 'date');
+        $date = toDate(gv($params, 'date'));
 
         if (! $number) {
             throw ValidationException::withMessages(['message' => trans('library.could_not_find_book')]);

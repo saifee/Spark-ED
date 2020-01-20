@@ -176,7 +176,7 @@ class ClassTeacherRepository
                 throw ValidationException::withMessages(['message' => trans('academic.could_not_find_batch')]);
             }
 
-            $date_effective = gv($batch, 'date_effective');
+            $date_effective = toDate(gv($batch, 'date_effective'));
 
             if (! $date_effective) {
                 throw ValidationException::withMessages([$index.'_date_effective' => trans('validation.required', ['attribute' => trans('academic.date_effective')])]);

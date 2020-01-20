@@ -486,7 +486,7 @@ class FeeAllocationRepository
             foreach ($installments as $index => $installment) {
                 $title    = gv($installment, 'title');
                 $uuid     = gv($installment, 'uuid');
-                $due_date = gv($installment, 'due_date') ? date('Y-m-d', strtotime(gv($installment, 'due_date'))) : null;
+                $due_date = gv($installment, 'due_date') ? toDate(gv($installment, 'due_date')) : null;
                 $transport_fee_id = gv($installment, 'transport_fee_id');
 
                 // Validate all transport ids

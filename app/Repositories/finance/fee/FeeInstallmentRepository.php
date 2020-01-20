@@ -73,7 +73,7 @@ class FeeInstallmentRepository
     {
         $late_fee_applicable = gbv($params, 'late_fee_applicable');
 
-        $fee_installment->due_date = gv($params, 'due_date');
+        $fee_installment->due_date = toDate(gv($params, 'due_date'));
         $fee_installment->late_fee_applicable = $late_fee_applicable;
         $fee_installment->late_fee_frequency = $late_fee_applicable ? gv($params, 'late_fee_frequency', 0) : 0;
         $fee_installment->late_fee = $late_fee_applicable ? gv($params, 'late_fee', 0) : 0;
@@ -115,13 +115,13 @@ class FeeInstallmentRepository
         $paid_installment = $fee_installment->paid_installment;
         $fee_group = $fee_installment->FeeAllocationGroup->FeeGroup;
 
-        $previous_due_date_query = $this->fee_installment->whereFeeAllocationGroupId($fee_installment->fee_allocation_group_id)->where('due_date', '<', $fee_installment->due_date)->orderBy('due_date', 'desc')->first();
+        $previous_due_date_query = $this->fee_installment->whereFeeAllocationGroupId($fee_installment->fee_allocation_group_id)->where('due_date', '<', toDate($fee_installment->due_date))->orderBy('due_date', 'desc')->first();
 
-        $previous_due_date = ($previous_due_date_query) ? $previous_due_date_query->due_date : config('config.default_academic_session.start_date');
+        $previous_due_date = ($previous_due_date_query) ? toDate($previous_due_date_query->due_date) : config('config.default_academic_session.start_date');
 
-        $next_due_date_query = $this->fee_installment->whereFeeAllocationGroupId($fee_installment->fee_allocation_group_id)->where('due_date', '>', $fee_installment->due_date)->orderBy('due_date', 'asc')->first();
+        $next_due_date_query = $this->fee_installment->whereFeeAllocationGroupId($fee_installment->fee_allocation_group_id)->where('due_date', '>', toDate($fee_installment->due_date))->orderBy('due_date', 'asc')->first();
 
-        $next_due_date = ($next_due_date_query) ? $next_due_date_query->due_date : config('config.default_academic_session.end_date');
+        $next_due_date = ($next_due_date_query) ? toDate($next_due_date_query->due_date) : config('config.default_academic_session.end_date');
 
         $due_date = gv($params, 'due_date');
 

@@ -267,9 +267,9 @@ class SalaryRepository
         $id = array();
         $variables = [];
         foreach ($payroll_template_details as $index => $payroll_template_detail) {
-            $amount = gnv($payroll_template_detail, 'amount');
+            $amount = gv($payroll_template_detail, 'amount', 0);
 
-            if (! isInteger($amount)) {
+            if (! is_numeric($amount)) {
                 throw ValidationException::withMessages(['amount_'.$index => trans('validation.required', ['attribute' => trans('employee.salary_structure_amount')])]);
             }
 
@@ -299,7 +299,7 @@ class SalaryRepository
         
         $previous_salary_query = (!$salary_id) ? $this->salary : $this->salary->where('id','!=',$salary_id);
 
-        $previous_salary = $previous_salary_query->filterByEmployeeId($employee->id)->filterbyPayrollTemplateId($payroll_template->id)->where('date_effective','>=',gv($params, 'date_effective'))->count();
+        $previous_salary = $previous_salary_query->filterByEmployeeId($employee->id)->filterbyPayrollTemplateId($payroll_template->id)->where('date_effective','>=', toDate(gv($params, 'date_effective')))->count();
 
         if ($previous_salary) {
             throw ValidationException::withMessages(['message' => trans('employee.salary_already_defined_on_previous_date')]);
@@ -308,7 +308,7 @@ class SalaryRepository
         $formatted = [
             'employee_id'         => gv($params, 'employee_id'),
             'payroll_template_id' => gv($params, 'payroll_template_id'),
-            'date_effective'      => gv($params, 'date_effective'),
+            'date_effective'      => toDate(gv($params, 'date_effective')),
             'description'         => gv($params, 'description'),
             'options'             => []
         ];

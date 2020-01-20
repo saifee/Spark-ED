@@ -30,7 +30,7 @@ class TwoFactorSecurityRepository
             if ($user->hasRole(config('system.default_role.student'))) {
                 $number = optional($user->student)->contact_number;
             } else if ($user->hasRole(config('system.default_role.parent'))) {
-                $number = optional($user->parent)->father_contact_number_1;
+                $number = optional($user->parent)->first_guardian_contact_number_1;
             } else {
                 $number = optional($user->employee)->contact_number;
             }

@@ -212,7 +212,7 @@ class VehicleDocumentRepository
         $vehicle_id               = gv($params, 'vehicle_id');
         $vehicle_document_type_id = gv($params, 'vehicle_document_type_id');
         $title                    = gv($params, 'title');
-        $date_of_expiry           = gv($params, 'date_of_expiry');
+        $date_of_expiry           = toDate(gv($params, 'date_of_expiry'));
         $description              = gv($params, 'description');
 
         if (! $this->vehicle->findActive($vehicle_id)) {
@@ -237,7 +237,7 @@ class VehicleDocumentRepository
             'vehicle_id'               => $vehicle_id,
             'vehicle_document_type_id' => $vehicle_document_type_id,
             'title'                    => $title,
-            'date_of_expiry'           => $date_of_expiry,
+            'date_of_expiry'           => toDate($date_of_expiry),
             'description'              => $description
         ];
 

@@ -192,8 +192,8 @@ class PayrollRepository
     public function fetch($params = array())
     {
         $employee_id = gv($params, 'employee_id');
-        $start_date  = gv($params, 'start_date');
-        $end_date    = gv($params, 'end_date');
+        $start_date  = toDate(gv($params, 'start_date'));
+        $end_date    = toDate(gv($params, 'end_date'));
         $payroll_id  = gv($params, 'payroll_id');
         $self        = gbv($params, 'self');
 
@@ -319,7 +319,7 @@ class PayrollRepository
 
         $attendance = $attendance_types->whereIn('type',['present','holiday'])->sum('count');
 
-        $half_day = optional($attendance_types->firstWhere('type','half_day'))->count;
+        $half_day = $attendance_types->firstWhere('type','half_day')->count;
 
         $leave = $attendance_types->firstWhere('type','leave')['count'];
 
@@ -401,7 +401,7 @@ class PayrollRepository
             $amount = gv($pay_head, 'amount', 0);
             $pay_head_id = gv($pay_head, 'pay_head_id');
 
-            if (! isInteger($amount)) {
+            if (! is_numeric($amount)) {
                 throw ValidationException::withMessages(['message' => trans('validation.integer', ['attribute' => gv($pay_head, 'name')])]);
             }
 
@@ -515,8 +515,8 @@ class PayrollRepository
         $formatted = [
             'employee_id'               => gv($params, 'employee_id'),
             'employee_salary_id'        => gv($params, 'employee_salary_id'),
-            'start_date'                => gv($params, 'start_date'),
-            'end_date'                  => gv($params, 'end_date'),
+            'start_date'                => toDate(gv($params, 'start_date')),
+            'end_date'                  => toDate(gv($params, 'end_date')),
             'per_day_calculation_basis' => gv($params, 'per_day_calculation_basis'),
             'user_defined_days'         => gv($params, 'user_defined_days',0),
             'payment_status'            => 'unpaid',

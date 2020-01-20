@@ -208,14 +208,15 @@ class EnquiryRepository
         $courses         = $this->course_group->getCourseOption();
         $list            = getVar('list');
         $genders         = generateTranslatedSelectOption(isset($list['gender']) ? $list['gender'] : []);
+        $guardian_relations         = generateTranslatedSelectOption(isset($list['relations']) ? $list['relations'] : []);
         $enquiry_statuses = [
-            array('id' => 'open', 'name' => trans('reception.enquiry_status_open')),
-            array('id' => 'partially_closed', 'name' => trans('reception.enquiry_status_partially_closed')),
-            array('id' => 'closed', 'name' => trans('reception.enquiry_status_closed')),
-            array('id' => 'missed', 'name' => trans('reception.enquiry_status_missed')),
+        array('id' => 'open', 'name' => trans('reception.enquiry_status_open')),
+        array('id' => 'partially_closed', 'name' => trans('reception.enquiry_status_partially_closed')),
+        array('id' => 'closed', 'name' => trans('reception.enquiry_status_closed')),
+        array('id' => 'missed', 'name' => trans('reception.enquiry_status_missed')),
         ];
 
-        return compact('enquiry_types', 'enquiry_sources', 'courses', 'institutes', 'genders','enquiry_statuses');
+        return compact('enquiry_types', 'enquiry_sources', 'courses', 'institutes', 'genders','enquiry_statuses','guardian_relations');
     }
 
     /**
@@ -233,9 +234,12 @@ class EnquiryRepository
             'enquiry_type_id'          => gv($params, 'enquiry_type_id'),
             'status'                   => 'open',
             'enquiry_source_id'        => gv($params, 'enquiry_source_id'),
-            'father_name'              => gv($params, 'father_name'),
-            'mother_name'              => gv($params, 'mother_name'),
-            'guardian_name'            => gv($params, 'guardian_name'),
+            'first_guardian_name'      => gv($params, 'first_guardian_name'),
+            'first_guardian_relation'  => gv($params, 'first_guardian_relation'),
+            'second_guardian_name'     => gv($params, 'second_guardian_name'),
+            'second_guardian_relation' => gv($params, 'second_guardian_relation'),
+            'third_guardian_name'      => gv($params, 'third_guardian_name'),
+            'third_guardian_relation'  => gv($params, 'third_guardian_relation'),
             'email'                    => gv($params, 'email'),
             'contact_number'           => gv($params, 'contact_number'),
             'alternate_contact_number' => gv($params, 'alternate_contact_number'),
@@ -334,12 +338,15 @@ class EnquiryRepository
     {
         $this->validateInput($params, $enquiry->id);
 
-        $enquiry->date_of_enquiry          = gv($params, 'date_of_enquiry');
+        $enquiry->date_of_enquiry          = toDate(gv($params, 'date_of_enquiry'));
         $enquiry->enquiry_type_id          = gv($params, 'enquiry_type_id');
         $enquiry->enquiry_source_id        = gv($params, 'enquiry_source_id');
-        $enquiry->father_name              = gv($params, 'father_name');
-        $enquiry->mother_name              = gv($params, 'mother_name');
-        $enquiry->guardian_name            = gv($params, 'guardian_name');
+        $enquiry->first_guardian_name      = gv($params, 'first_guardian_name');
+        $enquiry->first_guardian_relation  = gv($params, 'first_guardian_relation');
+        $enquiry->second_guardian_name     = gv($params, 'second_guardian_name');
+        $enquiry->second_guardian_relation = gv($params, 'second_guardian_relation');
+        $enquiry->third_guardian_name      = gv($params, 'third_guardian_name');
+        $enquiry->third_guardian_relation  = gv($params, 'third_guardian_relation');
         $enquiry->contact_number           = gv($params, 'contact_number');
         $enquiry->alternate_contact_number = gv($params, 'alternate_contact_number');
         $enquiry->email                    = gv($params, 'email');
@@ -409,8 +416,8 @@ class EnquiryRepository
      */
     public function followUp(Enquiry $enquiry, $params)
     {
-        $date_of_follow_up = gv($params, 'date_of_follow_up');
-        $date_of_next_follow_up = gv($params, 'date_of_next_follow_up');
+        $date_of_follow_up = toDate(gv($params, 'date_of_follow_up'));
+        $date_of_next_follow_up = toDate(gv($params, 'date_of_next_follow_up'));
         $status = gv($params, 'status');
         $remarks = gv($params, 'remarks');
 
@@ -422,17 +429,17 @@ class EnquiryRepository
             throw ValidationException::withMessages(['date_of_next_follow_up' => trans('reception.date_of_next_follow_up_less_than_date_of_follow_up')]);
         }
 
-        if ($date_of_follow_up < $enquiry->date_of_enquiry) {
+        if ($date_of_follow_up < toDate($enquiry->date_of_enquiry)) {
             throw ValidationException::withMessages(['date_of_follow_up' => trans('reception.date_of_follow_up_less_than_date_of_enquiry')]);
         }
 
-        if ($date_of_next_follow_up && $date_of_next_follow_up < $enquiry->date_of_enquiry) {
+        if ($date_of_next_follow_up && $date_of_next_follow_up < toDate($enquiry->date_of_enquiry)) {
             throw ValidationException::withMessages(['date_of_next_follow_up' => trans('reception.date_of_next_follow_up_less_than_date_of_enquiry')]);
         }
 
         $last_follow_up = $enquiry->EnquiryFollowUps->sortByDesc('date_of_follow_up')->first();
 
-        if ($last_follow_up && $last_follow_up->date_of_follow_up >= $date_of_follow_up) {
+        if ($last_follow_up && toDate($last_follow_up->date_of_follow_up) >= $date_of_follow_up) {
             throw ValidationException::withMessages(['date_of_follow_up' => trans('reception.date_of_follow_up_less_than_last_date_of_follow_up')]);
         }
 

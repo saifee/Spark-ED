@@ -131,7 +131,7 @@ class EmailRepository
 
         $include_alternate_email = gbv($params, 'include_alternate_email');
 
-        $query = $this->student_record->filterBySession()->whereNull('date_of_exit')->select(['id','student_id'])->with(['student:id,student_parent_id,email','student.parent:id,father_email,mother_email']);
+        $query = $this->student_record->filterBySession()->whereNull('date_of_exit')->select(['id','student_id'])->with(['student:id,student_parent_id,email','student.parent:id,first_guardian_email,second_guardian_email']);
 
         if (gv($params, 'audience') == 'selected_course') {
             $query->whereHas('batch', function($q) use($course_id) {
@@ -150,8 +150,8 @@ class EmailRepository
             $emails[] = $student_record->student->email;
 
             if ($include_alternate_email) {
-                $emails[] = $student_record->student->parent->father_email;
-                $emails[] = $student_record->student->parent->mother_email;
+                $emails[] = $student_record->student->parent->first_guardian_email;
+                $emails[] = $student_record->student->parent->second_guardian_email;
             }
         }
 

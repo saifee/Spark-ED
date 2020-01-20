@@ -242,8 +242,8 @@ class LeaveAllocationRepository
     private function formatParams($params, $leave_allocation_id = null)
     {
         $employee_id = gv($params, 'employee_id');
-        $start_date  = gv($params, 'start_date');
-        $end_date    = gv($params, 'end_date');
+        $start_date  = toDate(gv($params, 'start_date'));
+        $end_date  = toDate(gv($params, 'end_date'));
         $description = gv($params, 'description');
 
         $employee = $this->employee->findOrFail($employee_id);
@@ -284,8 +284,8 @@ class LeaveAllocationRepository
 
         $formatted = [
             'employee_id' => gv($params, 'employee_id'),
-            'start_date'  => gv($params, 'start_date'),
-            'end_date'    => gv($params, 'end_date'),
+            'start_date'  => toDate(gv($params, 'start_date')),
+            'end_date'  => toDate(gv($params, 'end_date')),
             'description' => gv($params, 'description'),
             'options'     => []
         ];
@@ -310,12 +310,12 @@ class LeaveAllocationRepository
     {
         $this->validateLeaveTypes($params);
 
-        $leave_requests = $this->leave_request->filterByEmployeeId($leave_allocation->employee_id)->where('start_date','>=',$leave_allocation->start_date)->where('end_date','<=',$leave_allocation->end_date)->get();
+        $leave_requests = $this->leave_request->filterByEmployeeId($leave_allocation->employee_id)->where('start_date','>=', toDate($leave_allocation->start_date))->where('end_date','<=', toDate($leave_allocation->end_date))->get();
 
         $first_leave_request = $leave_requests->sortBy('start_date')->first();
         $last_leave_request = $leave_requests->sortByDesc('end_date')->first();
 
-        if ($leave_requests && (gv($params, 'start_date') > $first_leave_request->start_date || gv($params, 'end_date') < $last_leave_request->end_date)) {
+        if ($leave_requests->count() && (gv($params, 'start_date') > toDate($first_leave_request->start_date) || gv($params, 'end_date') < toDate($last_leave_request->end_date))) {
             throw ValidationException::withMessages(['message' => trans('employee.leave_allocation_limit_date_between', ['start_date' => showDate($first_leave_request->start_date), 'end_date' => showDate($last_leave_request->end_date)])]);
         }
 
@@ -354,7 +354,7 @@ class LeaveAllocationRepository
     {
         $leave_allocation = $this->findByUuidOrFail($uuid);
 
-        $leave_requests = $this->leave_request->filterByEmployeeId($leave_allocation->employee_id)->where('start_date','>=',$leave_allocation->start_date)->where('end_date','<=',$leave_allocation->end_date)->get();
+        $leave_requests = $this->leave_request->filterByEmployeeId($leave_allocation->employee_id)->where('start_date','>=', toDate($leave_allocation->start_date))->where('end_date','<=', toDate($leave_allocation->end_date))->get();
 
         if ($leave_requests->count()) {
             throw ValidationException::withMessages(['message' => trans('employee.leave_allocation_associated_with_leave_request')]);

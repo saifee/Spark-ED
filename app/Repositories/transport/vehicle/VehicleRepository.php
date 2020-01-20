@@ -311,12 +311,12 @@ class VehicleRepository
             'engine_number'      => gv($params, 'engine_number'),
             'cubic_capacity'     => gv($params, 'cubic_capacity'),
             'class'              => gv($params, 'class'),
-            'registration_date'  => gv($params, 'registration_date'),
+            'registration_date'  => toDate(gv($params, 'registration_date')),
             'registration_place' => gv($params, 'registration_place')
         );
 
         $options['disposal'] = array(
-            'sale_date'            => gv($params, 'sale_date'),
+            'sale_date'            => toDate(gv($params, 'sale_date')),
             'selling_price'        => gv($params, 'selling_price'),
             'buyer_name'           => gv($params, 'buyer_name'),
             'buyer_contact_number' => gv($params, 'buyer_contact_number'),

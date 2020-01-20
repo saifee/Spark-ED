@@ -325,8 +325,8 @@ class StockTransferRepository
         $stock_transfer->room_id         = $type == 'room' ? gv($params, 'room_id') : null;
         $stock_transfer->student_id      = $type == 'student' ? gv($params, 'student_id') : null;
         $stock_transfer->employee_id     = $type == 'employee' ? gv($params, 'employee_id') : null;
-        $stock_transfer->date            = gv($params, 'date');
-        $stock_transfer->return_due_date = gv($params, 'return_due_date');
+        $stock_transfer->date            = toDate(gv($params, 'date'));
+        $stock_transfer->return_due_date = toDate(gv($params, 'return_due_date'));
         $stock_transfer->description     = gv($params, 'description');
         $stock_transfer->payment_method  = gv($params, 'payment_method');
         $stock_transfer->cash_paid       = gv($params, 'cash_paid');
@@ -387,7 +387,7 @@ class StockTransferRepository
         $description = gv($params, 'description');
         $type = gv($params, 'type');
 
-        if ($date < $stock_transfer->date) {
+        if ($date < toDate($stock_transfer->date)) {
             throw ValidationException::withMessages(['date' => trans('inventory.return_date_should_greater_than_equal_to_stock_transfer_date')]);
         }
 

@@ -253,8 +253,8 @@ class LessonPlanRepository
     private function formatParams($params, $lesson_plan_id = null)
     {
         $topic      = gv($params, 'topic');
-        $start_date = gv($params, 'start_date');
-        $end_date   = gv($params, 'end_date');
+        $start_date = toDate(gv($params, 'start_date'));
+        $end_date   = toDate(gv($params, 'end_date'));
         $subject_id = gv($params, 'subject_id');
 
         if (! dateBetweenSession($start_date)) {
@@ -294,8 +294,8 @@ class LessonPlanRepository
         $formatted = [
             'subject_id' => $subject_id,
             'topic'      => $topic,
-            'start_date' => $start_date,
-            'end_date'   => $end_date,
+            'start_date' => toDate($start_date),
+            'end_date'   => toDate($end_date),
             'options'    => []
         ];
 

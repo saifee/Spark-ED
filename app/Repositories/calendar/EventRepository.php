@@ -306,8 +306,8 @@ class EventRepository
         $title                = gv($params, 'title');
         $venue                = gv($params, 'venue');
         $description          = gv($params, 'description');
-        $start_date           = gv($params, 'start_date');
-        $end_date             = gv($params, 'end_date');
+        $start_date           = toDate(gv($params, 'start_date'));
+        $end_date             = toDate(gv($params, 'end_date'));
         $start_time           = gv($params, 'start_time');
         $end_time             = gv($params, 'end_time');
         $no_time              = gbv($params, 'no_time');
@@ -370,8 +370,8 @@ class EventRepository
             'event_type_id' => $event_type_id,
             'title'         => $title,
             'venue'         => $venue,
-            'start_date'    => $start_date,
-            'end_date'      => $end_date,
+            'start_date'    => toDate($start_date),
+            'end_date'      => toDate($end_date),
             'start_time'    => (! $no_time) ? toTime($start_time) : null,
             'end_time'      => (! $no_time) ? toTime($end_time) : null,
             'description'   => clean($description),

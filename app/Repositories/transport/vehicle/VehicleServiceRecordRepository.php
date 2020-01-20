@@ -218,10 +218,10 @@ class VehicleServiceRecordRepository
         $formatted = [
             'vehicle_id'                => gv($params, 'vehicle_id'),
             'vehicle_service_center_id' => gv($params, 'vehicle_service_center_id'),
-            'date_of_service'           => gv($params, 'date_of_service'),
+            'date_of_service'           => toDate(gv($params, 'date_of_service')),
             'amount'                    => currency(gv($params, 'amount', 0)),
             'log'                       => currency(gv($params, 'log', 0)),
-            'next_due_date'             => gv($params, 'next_due_date'),
+            'next_due_date'             => toDate(gv($params, 'next_due_date')),
             'next_due_log'              => null,
             'employee_id'               => null,
             'description'               => gv($params, 'description')
@@ -281,7 +281,7 @@ class VehicleServiceRecordRepository
     {
         $vehicle_service_record = $this->findOrFail($id);
 
-        if ($this->vehicle_service_record->filterByVehicleId($vehicle_service_record->vehicle_id)->where('date_of_service', '>', $vehicle_service_record->date_of_service)->count()) {
+        if ($this->vehicle_service_record->filterByVehicleId($vehicle_service_record->vehicle_id)->where('date_of_service', '>', toDate($vehicle_service_record->date_of_service))->count()) {
             throw ValidationException::withMessages(['message' => trans('transport.intermediate_service_record_cannot_be_deleted')]);
         }
 

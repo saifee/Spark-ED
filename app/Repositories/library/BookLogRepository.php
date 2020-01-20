@@ -215,7 +215,7 @@ class BookLogRepository
         $student_id = gv($params, 'student_id');
         $employee_id = gv($params, 'employee_id');
         $issue_remarks = gv($params, 'issue_remarks');
-        $date_of_issue = gv($params, 'date_of_issue');
+        $date_of_issue = toDate(gv($params, 'date_of_issue'));
 
         if (! dateBetweenSession($date_of_issue)) {
             throw ValidationException::withMessages(['date_of_issue' => trans('academic.invalid_session_date_range')]);
@@ -268,7 +268,7 @@ class BookLogRepository
 
         $book_log = $this->book_log->forceCreate([
             'uuid' => Str::uuid(),
-            'date_of_issue' => $date_of_issue,
+            'date_of_issue' => toDate($date_of_issue),
             'student_record_id' => ($type == 'student') ? $student_record_id : null,
             'employee_id' => ($type == 'employee') ? $employee_id : null,
             'issue_remarks' => $issue_remarks,
@@ -434,7 +434,7 @@ class BookLogRepository
      */
     private function bookReturnAction(BookLog $book_log, $params)
     {
-        $date_of_return    = gv($params, 'date_of_return');
+        $date_of_return    = toDate(gv($params, 'date_of_return'));
         $ids               = gv($params, 'ids', []);
         $late_fee          = gv($params, 'late_fee');
         $return_remarks    = gv($params, 'return_remarks');
@@ -445,15 +445,15 @@ class BookLogRepository
             throw ValidationException::withMessages(['date_of_return' => trans('academic.invalid_session_date_range')]);
         }
 
-        if ($date_of_return < $book_log->date_of_issue) {
+        if ($date_of_return < todate($book_log->date_of_issue)) {
             throw ValidationException::withMessages(['date_of_return' => trans('library.date_of_return_less_than_date_of_issue')]);
         }
 
         $late = 0;
-        if ($book_log->late_fee_applicable && $book_log->due_date < $date_of_return) {
+        if ($book_log->late_fee_applicable && toDate($book_log->due_date) < $date_of_return) {
             $frequency = getLateFeeFrequenciesInDays($book_log->late_fee_frequency);
 
-            $late_days = dateDiff($book_log->due_date, $date_of_return);
+            $late_days = dateDiff(toDate($book_log->due_date), $date_of_return);
 
             $per_period = floor($late_days / $frequency);
             $late = $book_log->late_fee_charge * $per_period;
@@ -478,7 +478,7 @@ class BookLogRepository
                 $this->createTransaction($payment_method, $account, $params);
             }
 
-            $book_log_detail->date_of_return = $date_of_return;
+            $book_log_detail->date_of_return = toDate($date_of_return);
             $book_log_detail->return_remarks = $return_remarks;
             $book_log_detail->late_fee = $late;
             $book_log_detail->save();

@@ -35,8 +35,8 @@ class CelebrationRepository
      */
     public function getBirthday($params = array())
     {
-        $start_date = gv($params, 'start_date') ? : date('Y-m-d');
-        $end_date = gv($params, 'end_date') ? : date('Y-m-d');
+        $start_date = gv($params, 'start_date') ? toDate(gv($params, 'start_date')) : date('Y-m-d');
+        $end_date = gv($params, 'end_date') ? toDate(gv($params, 'end_date')) : date('Y-m-d');
 
         if (dateDiff($end_date, $start_date) > 365) {
             throw ValidationException::withMessages(['message' => trans('calendar.max_selection_period_is_one_year')]);
@@ -106,8 +106,8 @@ class CelebrationRepository
      */
     public function getAnniversary($params = array())
     {
-        $start_date = gv($params, 'start_date') ? : date('Y-m-d');
-        $end_date = gv($params, 'end_date') ? : date('Y-m-d');
+        $start_date = gv($params, 'start_date') ? toDate(gv($params, 'start_date')) : date('Y-m-d');
+        $end_date = gv($params, 'end_date') ? toDate(gv($params, 'end_date')) : date('Y-m-d');
 
         if (dateDiff($end_date, $start_date) > 365) {
             throw ValidationException::withMessages(['message' => trans('calendar.max_selection_period_is_one_year')]);
@@ -160,8 +160,8 @@ class CelebrationRepository
      */
     public function getWorkAnniversary($params = array())
     {
-        $start_date = gv($params, 'start_date') ? : date('Y-m-d');
-        $end_date = gv($params, 'end_date') ? : date('Y-m-d');
+        $start_date = gv($params, 'start_date') ? toDate(gv($params, 'start_date')) : date('Y-m-d');
+        $end_date = gv($params, 'end_date') ? toDate(gv($params, 'end_date')) : date('Y-m-d');
 
         if (dateDiff($end_date, $start_date) > 365) {
             throw ValidationException::withMessages(['message' => trans('calendar.max_selection_period_is_one_year')]);

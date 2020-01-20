@@ -110,7 +110,7 @@ class TodoRepository
         $formatted = [
             'title'       => gv($params, 'title'),
             'description' => gv($params, 'description'),
-            'date'        => gv($params, 'date')
+            'date'        => toDate(gv($params, 'date'))
         ];
 
         if ($action === 'create') {

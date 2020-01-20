@@ -471,8 +471,8 @@ class AcademicSessionRepository
             }
         }
 
-        $start_date = gv($params, 'start_date');
-        $end_date   = gv($params, 'end_date');
+        $start_date = toDate(gv($params, 'start_date'));
+        $end_date   = toDate(gv($params, 'end_date'));
 
         $overlapping_query = (! $academic_session_id) ? $this->academic_session : $this->academic_session->where('id', '!=', $academic_session_id);
 

@@ -217,12 +217,10 @@ class FeeHeadRepository
 
         $fee_head_exists = $fee_head_exist_query->filterByName($name, 1)->filterBySession()->count();
 
-        if ($fee_head_id !== null) {
         if ($this->fee_allocation->filterBySession()->count()) {
             throw ValidationException::withMessages(['message' => trans('finance.no_update_after_fee_allocation')]);
         }
         
-        }
         if ($fee_head_exists) {
             throw ValidationException::withMessages(['name' => trans('finance.fee_head_exists')]);
         }

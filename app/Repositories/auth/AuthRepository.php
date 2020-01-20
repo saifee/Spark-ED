@@ -231,10 +231,10 @@ class AuthRepository
         }
 
         $user = \App\User::whereHas('parent', function($q) use($mobile) {
-            $q->where('father_contact_number_1', $mobile)
-                ->orWhere('father_contact_number_2', $mobile)
-                ->orWhere('mother_contact_number_1', $mobile)
-                ->orWhere('mother_contact_number_2', $mobile);
+            $q->where('first_guardian_contact_number_1', $mobile)
+                ->orWhere('first_guardian_contact_number_2', $mobile)
+                ->orWhere('second_guardian_contact_number_1', $mobile)
+                ->orWhere('second_guardian_contact_number_2', $mobile);
         })->first();
 
         if ($user) {

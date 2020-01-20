@@ -247,7 +247,7 @@ class ArticleRepository
     private function formatParams($params, $article_id = null)
     {
         $title           = gv($params, 'title');
-        $date_of_article = gv($params, 'date_of_article');
+        $date_of_article = toDate(gv($params, 'date_of_article'));
         $description     = gv($params, 'description');
         $is_public       = gbv($params, 'is_public');
         $article_type_id = gv($params, 'article_type_id');
@@ -267,7 +267,7 @@ class ArticleRepository
         $formatted = [
             'article_type_id' => $article_type_id,
             'title'           => $title,
-            'date_of_article' => $date_of_article,
+            'date_of_article' => toDate($date_of_article),
             'description'     => clean($description),
             'is_public'       => $is_public,
             'options'         => []

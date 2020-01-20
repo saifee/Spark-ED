@@ -201,7 +201,7 @@ class EmployeeRepository {
 		$employee_category_id = gv($params, 'employee_category_id');
 		$employee_group_id = gv($params, 'employee_group_id');
 		$self = gv($params, 'self', 0);
-		$date = gv($params, 'date', date('Y-m-d'));
+		$date = toDate(gv($params, 'date', date('Y-m-d')));
 
 		$this->employee->whereNull('prefix')->update(['prefix' => config('config.employee_code_prefix')]);
 
@@ -422,7 +422,7 @@ class EmployeeRepository {
 	 */
 	public function fetchDepartmentWiseEmployee($params = array()) {
 		$department_id = gv($params, 'department_id');
-		$date = gv($params, 'date', date('Y-m-d'));
+		$date = toDate(gv($params, 'date', date('Y-m-d')));
 
 		$department = $this->department->findOrFail($department_id);
 
@@ -505,7 +505,7 @@ class EmployeeRepository {
 	 * @param array $params
 	 */
 	public function validateInput($params = array()) {
-		$date_of_joining = gv($params, 'date_of_joining');
+		$date_of_joining = toDate(gv($params, 'date_of_joining'));
 		$gender = gv($params, 'gender');
 		$department_id = gv($params, 'department_id');
 		$designation_id = gv($params, 'designation_id');
@@ -562,7 +562,7 @@ class EmployeeRepository {
 			'next_of_kin_phone' => gv($params, 'next_of_kin_phone'),
 			'mother_name' => gv($params, 'mother_name'),
 			'contact_number' => gv($params, 'contact_number'),
-			'date_of_birth' => gv($params, 'date_of_birth'),
+			'date_of_birth' => toDate(gv($params, 'date_of_birth')),
 			'gender' => gv($params, 'gender'),
 			'code' => gv($params, 'code'),
 			'prefix' => gv($params, 'prefix'),
@@ -585,7 +585,7 @@ class EmployeeRepository {
 			'employee_id' => $employee->id,
 			'department_id' => gv($params, 'department_id'),
 			'designation_id' => gv($params, 'designation_id'),
-			'date_effective' => gv($params, 'date_of_joining'),
+			'date_effective' => toDate(gv($params, 'date_of_joining')),
 			'upload_token' => Str::uuid(),
 			'employee_term_id' => $employee_term_id,
 			'options' => [],
@@ -601,7 +601,7 @@ class EmployeeRepository {
 	public function createEmployeeTerm(Employee $employee, $params = array()) {
 		return $this->employee_term->forceCreate([
 			'employee_id' => $employee->id,
-			'date_of_joining' => gv($params, 'date_of_joining'),
+			'date_of_joining' => toDate(gv($params, 'date_of_joining')),
 			'upload_token' => Str::uuid(),
 			'options' => [],
 		]);
@@ -767,8 +767,8 @@ class EmployeeRepository {
 		return [
 			'first_name' => gv($params, 'first_name'),
 			'last_name' => gv($params, 'last_name'),
-			'date_of_birth' => gv($params, 'date_of_birth'),
-			'date_of_anniversary' => gv($params, 'date_of_anniversary'),
+			'date_of_birth' => toDate(gv($params, 'date_of_birth')),
+			'date_of_anniversary' => toDate(gv($params, 'date_of_anniversary')),
 			'marital_status' => gv($params, 'marital_status'),
 			'middle_name' => gv($params, 'middle_name'),
 			'father_name' => gv($params, 'father_name'),
@@ -932,7 +932,7 @@ class EmployeeRepository {
 			->whereIn('id', $this->getAccessibleEmployeeId())
 			->where(function ($q1) use ($q) {
 				$q1->where(\DB::raw('concat_ws(first_name," ",middle_name," ",last_name)'), 'LIKE', '%' . $q . '%')
-					->orWhere(\DB::raw('concat_ws(prefix," ",LPAD(code, ' . config('config.employee_code_digit') . ', 0))'), 'LIKE', '%' . $q . '%');;
+					->orWhere(\DB::raw('concat_ws(prefix," ",LPAD(code, ' . config('config.employee_code_digit') . ', 0))'), 'LIKE', '%' . $q . '%');
 			})->take(10)->get();
 	}
 

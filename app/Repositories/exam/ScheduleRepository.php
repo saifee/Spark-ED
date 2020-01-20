@@ -343,11 +343,11 @@ class ScheduleRepository
             'exam_id'            => $exam_id,
             'batch_id'           => $batch_id,
             'exam_grade_id'      => $exam_grade_id,
-            'exam_assessment_id' => $exam_assessment_id,
-            'options'            => []
+            'exam_assessment_id' => $exam_assessment_id
         ];
 
         if (! $exam_schedule_id) {
+            $formatted['options'] = array('overall_pass_percentage' => gv($params, 'overall_pass_percentage'));
             $formatted['observation_marks'] = [];
         }
 
@@ -372,7 +372,7 @@ class ScheduleRepository
         foreach ($records as $record) {
             $subject_id         = gv($record, 'subject_id');
             $has_no_exam        = gbv($record, 'has_no_exam');
-            $date               = gv($record, 'date');
+            $date               = toDate(gv($record, 'date'));
             $assessment_details = gv($record, 'assessment_details', []);
 
             $record = $this->record->firstOrCreate([
@@ -417,6 +417,11 @@ class ScheduleRepository
         $exam_schedule->forceFill($this->formatParams($params, $exam_schedule->id))->save();
 
         $this->updateRecord($exam_schedule, $params);
+
+        $exam_schedule_options = $exam_schedule->options;
+        $exam_schedule_options['overall_pass_percentage'] = gv($params, 'overall_pass_percentage');
+        $exam_schedule->options = $exam_schedule_options;
+        $exam_schedule->save();
 
         return $exam_schedule;
     }

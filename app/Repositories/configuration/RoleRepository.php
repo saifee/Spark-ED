@@ -93,7 +93,7 @@ class RoleRepository
 
     public function listNameById($ids = array())
     {
-        $ids = is_array($ids) ? $ids : ($ids) ? [$ids] : [];
+        $ids = is_array($ids) ? $ids : (($ids) ? [$ids] : []);
 
         return $this->role->whereIn('id', $ids)->get()->pluck('name')->all();
     }

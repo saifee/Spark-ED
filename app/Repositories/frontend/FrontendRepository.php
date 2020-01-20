@@ -272,16 +272,17 @@ class FrontendRepository {
 
 		$list = getVar('list');
 		$genders = generateTranslatedSelectOption(isset($list['gender']) ? $list['gender'] : []);
+		$guardian_relations = generateTranslatedSelectOption(isset($list['relations']) ? $list['relations'] : []);
 
 		if (!$academic_session) {
 			$courses = array();
-			return compact('courses', 'genders');
+			return compact('courses', 'genders','guardian_relations');
 		}
 
 		$courses = $this->course_group->getCourseOptionWithDetail($academic_session->id);
 
         $custom_fields = $this->custom_field->listAllByForm('student_online_registration');
 
-		return compact('courses', 'genders','custom_fields');
+		return compact('courses', 'genders', 'custom_fields', 'guardian_relations');
 	}
 }
