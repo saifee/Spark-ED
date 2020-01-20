@@ -16,7 +16,7 @@ class LeaveAllocation extends Model
                             'description',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array','start_date' => 'date', 'end_date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'employee_leave_allocations';
     protected static $logName = 'employee_leave_allocation';

@@ -22,7 +22,7 @@ class StudentRecord extends Model
                             'exit_remarks',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_entry' => 'date', 'date_of_exit' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'student_records';
     protected static $logName = 'student_record';
@@ -111,25 +111,25 @@ class StudentRecord extends Model
         });
     }
     
-    public function scopeFilterByFatherName($q, $father_name, $s = 0)
+    public function scopeFilterByFirstGuardianName($q, $first_guardian_name, $s = 0)
     {
-        if (! $father_name) {
+        if (! $first_guardian_name) {
             return $q;
         }
 
-        return $q->whereHas('student', function ($q) use ($father_name, $s) {
-            ($s) ? $q->where('father_name', '=', $father_name) : $q->where('father_name', 'like', '%'.$father_name.'%');
+        return $q->whereHas('student', function ($q) use ($first_guardian_name, $s) {
+            ($s) ? $q->where('first_guardian_name', '=', $first_guardian_name) : $q->where('first_guardian_name', 'like', '%'.$first_guardian_name.'%');
         });
     }
     
-    public function scopeFilterByMotherName($q, $mother_name, $s = 0)
+    public function scopeFilterBySecondGuardianName($q, $second_guardian_name, $s = 0)
     {
-        if (! $mother_name) {
+        if (! $second_guardian_name) {
             return $q;
         }
 
-        return $q->whereHas('student', function ($q) use ($mother_name, $s) {
-            ($s) ? $q->where('mother_name', '=', $mother_name) : $q->where('mother_name', 'like', '%'.$mother_name.'%');
+        return $q->whereHas('student', function ($q) use ($second_guardian_name, $s) {
+            ($s) ? $q->where('second_guardian_name', '=', $second_guardian_name) : $q->where('second_guardian_name', 'like', '%'.$second_guardian_name.'%');
         });
     }
     

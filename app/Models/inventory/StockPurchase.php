@@ -18,7 +18,7 @@ class StockPurchase extends Model
                             'upload_token',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'stock_purchases';
     protected static $logName = 'stock_purchase';

@@ -17,7 +17,7 @@ class StudentAttendance extends Model
                             'attendance',
                             'options'
                         ];
-    protected $casts = ['options' => 'array', 'attendance' => 'array'];
+    protected $casts = ['options' => 'array', 'attendance' => 'array', 'date_of_attendance' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'student_attendances';
     protected static $logName = 'student_attendance';

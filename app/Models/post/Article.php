@@ -17,7 +17,7 @@ class Article extends Model
                             'options',
                             'user_id'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_article' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'articles';
     protected static $logName = 'article';

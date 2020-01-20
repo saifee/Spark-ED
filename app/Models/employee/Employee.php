@@ -35,6 +35,7 @@ class Employee extends Model
                             'next_of_kin_id',
                             'next_of_kin_phone',
                             'mother_name',
+                            'spouse_name',
                             'emergency_contact_name',
                             'emergency_contact_number',
                             'present_address_line_1',
@@ -51,7 +52,7 @@ class Employee extends Model
                             'permanent_country',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_birth' => 'date', 'date_of_anniversary' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'employees';
     protected static $logName = 'student';
@@ -251,6 +252,15 @@ class Employee extends Model
         }
 
         return ($strict) ? $q->where('father_name', '=', $father_name) : $q->where('father_name', 'like', '%'.$father_name.'%');
+    }
+    
+    public function scopeFilterBySpouseName($q, $spouse_name, $strict = 0)
+    {
+        if (! $spouse_name) {
+            return $q;
+        }
+
+        return ($strict) ? $q->where('spouse_name', '=', $spouse_name) : $q->where('spouse_name', 'like', '%'.$spouse_name.'%');
     }
     
     public function scopeFilterByDOB($q, $date_of_birth)

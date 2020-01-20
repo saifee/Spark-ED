@@ -16,7 +16,7 @@ class VehicleLog extends Model
                             'description',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_log' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'vehicle_logs';
     protected static $logName = 'vehicle_log';

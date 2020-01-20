@@ -23,7 +23,7 @@ class CallLog extends Model
                             'user_id',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array','date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'call_logs';
     protected static $logName = 'call_log';
@@ -49,8 +49,8 @@ class CallLog extends Model
 
     public function getCallDurationAttribute()
     {
-        $start_time = Carbon::parse($this->date.' '.$this->start_time);
-        $end_time = Carbon::parse($this->date.' '.$this->end_time);
+        $start_time = Carbon::parse(toDate($this->date).' '.$this->start_time);
+        $end_time = Carbon::parse(toDate($this->date).' '.$this->end_time);
 
         return $end_time->diff($start_time)->format('%H:%I:%S');
     }

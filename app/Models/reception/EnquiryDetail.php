@@ -20,7 +20,7 @@ class EnquiryDetail extends Model
                             'remarks',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_birth' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'enquiry_details';
     protected static $logName = 'enquiry_detail';

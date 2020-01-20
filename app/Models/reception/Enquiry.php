@@ -10,9 +10,12 @@ class Enquiry extends Model
     use LogsActivity;
 
     protected $fillable = [
-                            'father_name',
-                            'mother_name',
-                            'guardian_name',
+                            'first_guardian_name',
+                            'first_guardian_relation',
+                            'second_guardian_name',
+                            'second_guardian_relation',
+                            'third_guardian_name',
+                            'third_guardian_relation',
                             'email',
                             'contact_number',
                             'alternate_contact_number',
@@ -84,22 +87,22 @@ class Enquiry extends Model
         return $q->where('uuid', '=', $uuid);
     }
 
-    public function scopeFilterByFatherName($q, $father_name, $s = 0)
+    public function scopeFilterByFirstGuardianName($q, $first_guardian_name, $s = 0)
     {
-        if (! $father_name) {
+        if (! $first_guardian_name) {
             return $q;
         }
 
-        return ($s) ? $q->where('father_name', '=', $father_name) : $q->where('father_name', 'like', '%'.$father_name.'%');
+        return ($s) ? $q->where('first_guardian_name', '=', $first_guardian_name) : $q->where('first_guardian_name', 'like', '%'.$first_guardian_name.'%');
     }
 
-    public function scopeFilterByMotherName($q, $mother_name, $s = 0)
+    public function scopeFilterBySecondGuardianName($q, $second_guardian_name, $s = 0)
     {
-        if (! $mother_name) {
+        if (! $second_guardian_name) {
             return $q;
         }
 
-        return ($s) ? $q->where('mother_name', '=', $mother_name) : $q->where('mother_name', 'like', '%'.$mother_name.'%');
+        return ($s) ? $q->where('second_guardian_name', '=', $second_guardian_name) : $q->where('second_guardian_name', 'like', '%'.$second_guardian_name.'%');
     }
 
     public function scopeFilterBySession($q)

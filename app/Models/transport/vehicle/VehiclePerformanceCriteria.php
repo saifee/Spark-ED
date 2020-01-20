@@ -21,7 +21,7 @@ class VehiclePerformanceCriteria extends Model
                             'description',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_effective' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'vehicle_performance_criterias';
     protected static $logName = 'vehicle_performance_criteria';

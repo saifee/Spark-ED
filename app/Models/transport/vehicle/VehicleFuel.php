@@ -17,7 +17,7 @@ class VehicleFuel extends Model
                             'description',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_fueling' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'vehicle_fuels';
     protected static $logName = 'vehicle_fuel';

@@ -18,7 +18,7 @@ class Record extends Model
                             'marks',
                             'options'
                         ];
-    protected $casts = ['options' => 'array','marks' => 'array'];
+    protected $casts = ['options' => 'array','marks' => 'array', 'date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'exam_records';
     protected static $logName = 'exam_record';

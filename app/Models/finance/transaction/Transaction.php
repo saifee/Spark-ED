@@ -41,7 +41,7 @@ class Transaction extends Model
                             'handling_fee',
                             'cancelled_at'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'transactions';
     protected static $logName = 'transaction';

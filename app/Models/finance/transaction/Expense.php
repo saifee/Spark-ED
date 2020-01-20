@@ -21,7 +21,7 @@ class Expense extends Model
                             'is_cancelled',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_expense' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'expenses';
     protected static $logName = 'expense';

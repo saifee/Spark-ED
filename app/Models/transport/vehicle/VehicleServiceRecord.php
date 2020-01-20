@@ -21,7 +21,7 @@ class VehicleServiceRecord extends Model
                             'description',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_service' => 'date', 'next_due_date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'vehicle_service_records';
     protected static $logName = 'vehicle_service_record';

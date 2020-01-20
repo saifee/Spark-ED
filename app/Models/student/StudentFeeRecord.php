@@ -24,7 +24,7 @@ class StudentFeeRecord extends Model
                             'remarks',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'due_date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'student_fee_records';
     protected static $logName = 'student_fee_record';

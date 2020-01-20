@@ -2,6 +2,7 @@
 
 namespace App\Models\Academic;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -25,6 +26,7 @@ class Batch extends Model
     protected static $logFillable = true;
     protected static $logOnlyDirty = true;
     protected static $ignoreChangedAttributes = ['updated_at'];
+    protected $appends = ['holidays_except'];
     
     public function course()
     {
@@ -84,6 +86,18 @@ class Batch extends Model
     public function getOption(string $option)
     {
         return array_get($this->options, $option);
+    }
+
+    public function getHolidaysExceptAttribute()
+    {
+        $dates = $this->getOption('holidays_except') ? : [];
+
+        $holidays_except = array();
+        foreach ($dates as $date) {
+            $holidays_except[] = Carbon::parse($date);
+        }
+
+        return $holidays_except;
     }
 
     public function getBatchWithCourseAttribute()

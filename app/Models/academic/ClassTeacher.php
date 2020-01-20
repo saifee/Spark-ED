@@ -16,7 +16,7 @@ class ClassTeacher extends Model
                             'description',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_effective' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'class_teachers';
     protected static $logName = 'class_teacher';

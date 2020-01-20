@@ -19,7 +19,7 @@ class LeaveRequest extends Model
                             'requester_user_id',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'start_date' => 'date', 'end_date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'employee_leave_requests';
     protected static $logName = 'employee_leave_request';

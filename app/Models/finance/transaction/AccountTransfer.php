@@ -19,7 +19,7 @@ class AccountTransfer extends Model
                             'is_cancelled',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_account_transfer' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'account_transfers';
     protected static $logName = 'account_transfer';

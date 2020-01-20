@@ -23,6 +23,11 @@ class Page extends Model
     protected static $logOnlyDirty = true;
     protected static $ignoreChangedAttributes = ['updated_at'];
     protected $appends = ['excerpt'];
+
+    public function menu()
+    {
+        return $this->hasOne('App\Models\Frontend\Menu', 'frontend_page_id');
+    }
     
     public function getOption(string $option)
     {

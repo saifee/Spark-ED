@@ -15,7 +15,7 @@ class Timetable extends Model
                             'description',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_effective' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'timetables';
     protected static $logName = 'timetable';

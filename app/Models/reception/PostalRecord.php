@@ -23,7 +23,7 @@ class PostalRecord extends Model
                             'user_id',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'postal_records';
     protected static $logName = 'postal_record';

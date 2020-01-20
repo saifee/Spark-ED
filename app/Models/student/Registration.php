@@ -19,7 +19,7 @@ class Registration extends Model
                             'review_remarks',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_registration' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'registrations';
     protected static $logName = 'registration';

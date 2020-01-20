@@ -21,7 +21,7 @@ class Syllabus extends Model
                             'upload_token',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'start_date' => 'date', 'end_date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'syllabuses';
     protected static $logName = 'syllabus';

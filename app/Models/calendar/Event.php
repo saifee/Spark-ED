@@ -23,7 +23,7 @@ class Event extends Model
                             'upload_token',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'start_date' => 'date', 'end_date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'events';
     protected static $logName = 'event';

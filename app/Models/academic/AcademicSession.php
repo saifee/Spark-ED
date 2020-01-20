@@ -17,7 +17,7 @@ class AcademicSession extends Model
                             'is_default',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array','start_date' => 'date', 'end_date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'academic_sessions';
     protected static $logName = 'academic_session';

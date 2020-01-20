@@ -20,7 +20,7 @@ class FeeInstallment extends Model
                             'uuid',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'due_date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'fee_installments';
     protected static $logName = 'fee_installment';

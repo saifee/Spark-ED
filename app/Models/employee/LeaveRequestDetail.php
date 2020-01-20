@@ -18,7 +18,7 @@ class LeaveRequestDetail extends Model
                             'approver_user_id',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_action' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'employee_leave_request_details';
     protected static $logName = 'employee_leave_request_detail';

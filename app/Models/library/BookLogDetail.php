@@ -21,7 +21,7 @@ class BookLogDetail extends Model
                             'late_fee',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_return' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'book_log_details';
     protected static $logName = 'book_log_detail';

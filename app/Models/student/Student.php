@@ -45,7 +45,7 @@ class Student extends Model
                             'permanent_country',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_birth' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'students';
     protected static $logName = 'student';

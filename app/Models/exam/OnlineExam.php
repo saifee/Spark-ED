@@ -20,7 +20,8 @@ class OnlineExam extends Model
     protected $casts = [
                             'passing_mark' => 'array',
                             'negative_mark' => 'array',
-                            'options' => 'array'
+                            'options' => 'array',
+                            'date' => 'date'
                         ];
     protected $primaryKey = 'id';
     protected $table = 'online_exams';

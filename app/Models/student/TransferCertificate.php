@@ -10,7 +10,7 @@ class TransferCertificate extends Model
     use LogsActivity;
 
     protected $fillable = ['student_record_id'];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_application' => 'date', 'date_of_issue' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'transfer_certificates';
     protected static $logName = 'transfer_certificate';

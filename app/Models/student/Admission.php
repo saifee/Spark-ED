@@ -19,13 +19,14 @@ class Admission extends Model
                             'admission_remarks',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_admission' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'admissions';
     protected static $logName = 'admission';
     protected static $logFillable = true;
     protected static $logOnlyDirty = true;
     protected static $ignoreChangedAttributes = ['updated_at'];
+    protected $appends = ['admission_number'];
     
     public function academicSession()
     {

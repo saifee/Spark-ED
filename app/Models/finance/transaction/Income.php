@@ -20,7 +20,7 @@ class Income extends Model
                             'is_cancelled',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_income' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'incomes';
     protected static $logName = 'income';

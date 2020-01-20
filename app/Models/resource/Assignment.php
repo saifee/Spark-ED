@@ -19,7 +19,7 @@ class Assignment extends Model
                             'upload_token',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_assigment' => 'date', 'due_date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'assignments';
     protected static $logName = 'assignment';

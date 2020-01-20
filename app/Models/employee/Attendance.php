@@ -16,7 +16,7 @@ class Attendance extends Model
                             'remarks',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_attendance' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'employee_attendances';
     protected static $logName = 'employee_attendance';

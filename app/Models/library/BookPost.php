@@ -16,7 +16,7 @@ class BookPost extends Model
                             'remarks',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_addition' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'book_posts';
     protected static $logName = 'book_post';

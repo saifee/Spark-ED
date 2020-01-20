@@ -18,7 +18,7 @@ class Todo extends Model
                             'completed_at',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'todos';
     protected static $logName = 'todo';

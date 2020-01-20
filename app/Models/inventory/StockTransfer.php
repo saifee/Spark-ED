@@ -26,7 +26,7 @@ class StockTransfer extends Model
                             'discount',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date' => 'date', 'return_due_date' => 'date', 'return_date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'stock_transfers';
     protected static $logName = 'stock_transfer';

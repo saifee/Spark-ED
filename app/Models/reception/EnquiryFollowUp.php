@@ -18,7 +18,7 @@ class EnquiryFollowUp extends Model
                             'remarks',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_follow_up' => 'date', 'date_of_next_follow_up' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'enquiry_follow_ups';
     protected static $logName = 'enquiry_follow_up';

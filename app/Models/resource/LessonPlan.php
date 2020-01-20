@@ -20,7 +20,7 @@ class LessonPlan extends Model
                             'upload_token',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'start_date' => 'date', 'end_date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'lesson_plans';
     protected static $logName = 'lesson_plan';

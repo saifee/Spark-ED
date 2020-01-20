@@ -17,7 +17,7 @@ class Certificate extends Model
                             'body',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_certificate' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'certificates';
     protected static $logName = 'certificate';

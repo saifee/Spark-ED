@@ -17,7 +17,7 @@ class SyllabusTopic extends Model
                             'description',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'start_date' => 'date', 'end_date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'syllabus_topics';
     protected static $logName = 'syllabus_topic';

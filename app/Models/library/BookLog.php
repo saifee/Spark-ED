@@ -20,7 +20,7 @@ class BookLog extends Model
                             'late_fee_charge',
                             'options'
                         ];
-    protected $casts = ['options' => 'array'];
+    protected $casts = ['options' => 'array', 'date_of_issue' => 'date', 'due_date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'book_logs';
     protected static $logName = 'book_log';
