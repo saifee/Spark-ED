@@ -44,6 +44,7 @@ import datepicker from 'vuejs-datepicker'
 import draggable from 'vuedraggable'
 import UUID from 'vue-uuid';
 import VueFormWizard from 'vue-form-wizard'
+import vueHeadful from 'vue-headful'
 import VueCountdown from '@chenfengyuan/vue-countdown';
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 
@@ -105,6 +106,7 @@ Vue.component('custom-field',customField);
 Vue.component('right-panel',rightPanel);
 Vue.component('help-button',helpButton);
 Vue.component('tour-notification',tourNotification);
+Vue.component('vue-headful', vueHeadful)
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + Vue.cookie.get('auth_token');
