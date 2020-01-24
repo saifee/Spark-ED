@@ -1,4 +1,5 @@
 <template>
+<div>
     <form @submit.prevent="proceed" @keydown="bookForm.errors.clear($event.target.name)">
         <div class="row">
             <div class="col-12 col-sm-3">
@@ -11,6 +12,7 @@
             <div class="col-12 col-sm-3">
                 <div class="form-group">
                     <label for="">{{trans('library.book_author')}}</label>
+                    <button type="button" class="btn btn-xs btn-info pull-right" v-if="hasPermission('access-configuration')" @click="showBookAuthorModal = true">{{trans('general.add_new')}}</button>
                     <v-select label="name" v-model="selected_book_author" name="book_author_id" id="book_author_id" :options="book_authors" :placeholder="trans('library.select_book_author')" @select="onBookAuthorSelect" @close="bookForm.errors.clear('book_author_id')" @remove="bookForm.book_author_id = ''">
                         <div class="multiselect__option" slot="afterList" v-if="!book_authors.length">
                             {{trans('general.no_option_found')}}
@@ -22,6 +24,7 @@
             <div class="col-12 col-sm-3">
                 <div class="form-group">
                     <label for="">{{trans('library.book_language')}}</label>
+                    <button type="button" class="btn btn-xs btn-info pull-right" v-if="hasPermission('access-configuration')" @click="showBookLanguageModal = true">{{trans('general.add_new')}}</button>
                     <v-select label="name" v-model="selected_book_language" name="book_language_id" id="book_language_id" :options="book_languages" :placeholder="trans('library.select_book_language')" @select="onBookLanguageSelect" @close="bookForm.errors.clear('book_language_id')" @remove="bookForm.book_language_id = ''">
                         <div class="multiselect__option" slot="afterList" v-if="!book_languages.length">
                             {{trans('general.no_option_found')}}
@@ -33,6 +36,7 @@
             <div class="col-12 col-sm-3">
                 <div class="form-group">
                     <label for="">{{trans('library.book_topic')}}</label>
+                    <button type="button" class="btn btn-xs btn-info pull-right" v-if="hasPermission('access-configuration')" @click="showBookTopicModal = true">{{trans('general.add_new')}}</button>
                     <v-select label="name" v-model="selected_book_topic" name="book_topic_id" id="book_topic_id" :options="book_topics" :placeholder="trans('library.select_book_topic')" @select="onBookTopicSelect" @close="bookForm.errors.clear('book_topic_id')" @remove="bookForm.book_topic_id = ''">
                         <div class="multiselect__option" slot="afterList" v-if="!book_topics.length">
                             {{trans('general.no_option_found')}}
@@ -44,6 +48,7 @@
             <div class="col-12 col-sm-3">
                 <div class="form-group">
                     <label for="">{{trans('library.book_publisher')}}</label>
+                    <button type="button" class="btn btn-xs btn-info pull-right" v-if="hasPermission('access-configuration')" @click="showBookPublisherModal = true">{{trans('general.add_new')}}</button>
                     <v-select label="name" v-model="selected_book_publisher" name="book_publisher_id" id="book_publisher_id" :options="book_publishers" :placeholder="trans('library.select_book_publisher')" @select="onBookPublisherSelect" @close="bookForm.errors.clear('book_publisher_id')" @remove="bookForm.book_publisher_id = ''">
                         <div class="multiselect__option" slot="afterList" v-if="!book_publishers.length">
                             {{trans('general.no_option_found')}}
@@ -118,12 +123,102 @@
             </button>
         </div>
     </form>
+
+    <transition name="modal" v-if="showBookAuthorModal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container modal-lg">
+                    <div class="modal-header">
+                        <slot name="header">
+                            {{trans('library.add_new_book_author')}}
+                            <span class="float-right pointer" @click="showBookAuthorModal = false">x</span>
+                        </slot>
+                    </div>
+                    <div class="modal-body">
+                        <slot name="body">
+                            <book-author-form @completed="getPreRequisite" @cancel="showBookAuthorModal = false"></book-author-form>
+                            <div class="clearfix"></div>
+                        </slot>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+
+    <transition name="modal" v-if="showBookLanguageModal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container modal-lg">
+                    <div class="modal-header">
+                        <slot name="header">
+                            {{trans('library.add_new_book_language')}}
+                            <span class="float-right pointer" @click="showBookLanguageModal = false">x</span>
+                        </slot>
+                    </div>
+                    <div class="modal-body">
+                        <slot name="body">
+                            <book-language-form @completed="getPreRequisite" @cancel="showBookLanguageModal = false"></book-language-form>
+                            <div class="clearfix"></div>
+                        </slot>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+
+    <transition name="modal" v-if="showBookTopicModal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container modal-lg">
+                    <div class="modal-header">
+                        <slot name="header">
+                            {{trans('library.add_new_book_topic')}}
+                            <span class="float-right pointer" @click="showBookTopicModal = false">x</span>
+                        </slot>
+                    </div>
+                    <div class="modal-body">
+                        <slot name="body">
+                            <book-topic-form @completed="getPreRequisite" @cancel="showBookTopicModal = false"></book-topic-form>
+                            <div class="clearfix"></div>
+                        </slot>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+
+    <transition name="modal" v-if="showBookPublisherModal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container modal-lg">
+                    <div class="modal-header">
+                        <slot name="header">
+                            {{trans('library.add_new_book_publisher')}}
+                            <span class="float-right pointer" @click="showBookPublisherModal = false">x</span>
+                        </slot>
+                    </div>
+                    <div class="modal-body">
+                        <slot name="body">
+                            <book-publisher-form @completed="getPreRequisite" @cancel="showBookPublisherModal = false"></book-publisher-form>
+                            <div class="clearfix"></div>
+                        </slot>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+</div>
 </template>
 
 
 <script>
+    import bookAuthorForm from '../../configuration/library/book-author/form'
+    import bookLanguageForm from '../../configuration/library/book-language/form'
+    import bookTopicForm from '../../configuration/library/book-topic/form'
+    import bookPublisherForm from '../../configuration/library/book-publisher/form'
+
     export default {
-        components: {},
+        components: {bookAuthorForm,bookLanguageForm,bookTopicForm,bookPublisherForm,},
         data() {
             return {
                 bookForm: new Form({
@@ -148,6 +243,10 @@
                 selected_book_topic: null,
                 book_publishers: [],
                 selected_book_publisher: null,
+                showBookAuthorModal: false,
+                showBookLanguageModal: false,
+                showBookTopicModal: false,
+                showBookPublisherModal: false,
                 default_currency: helper.getConfig('default_currency')
             };
         },
@@ -164,6 +263,9 @@
             this.getPreRequisite();
         },
         methods: {
+            hasPermission(permission){
+                return helper.hasPermission(permission);
+            },
             proceed(){
                 if(this.uuid)
                     this.update();
