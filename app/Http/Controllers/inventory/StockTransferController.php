@@ -74,6 +74,29 @@ class StockTransferController extends Controller
     }
 
     /**
+     * Used to print Stock Transfer details
+     * @post ("/api/stock/transfer/{id}/print")
+     * @return Response
+     */
+    public function printDetail($id)
+    {
+        $stock_transfer = $this->repo->findOrFail($id);
+        $stock_transfer['sub_total'] = array_reduce(array_map(function($detail) {
+            return $detail['price'] * $detail['quantity'];
+        }, $stock_transfer->details->toArray()), function($carry, $item) {
+            $carry += $item;
+            return $carry;
+        });
+        $stock_transfer['total'] = 0;
+        $stock_transfer['total'] += $stock_transfer['sub_total'];
+        $stock_transfer['total'] -= $stock_transfer->discount;
+        $stock_transfer['paid'] = ($stock_transfer->payment_method === 'wallet') ? $stock_transfer['total'] : $stock_transfer['cash_paid'];
+        $stock_transfer['balance'] = $stock_transfer['total'] - $stock_transfer['paid'];
+
+        return view('print.inventory.stock-transfer-detail', compact('stock_transfer'))->render();
+    }
+
+    /**
      * Used to generate pdf all Stock Transfers
      * @post ("/api/stock/transfer/pdf")
      * @return Response

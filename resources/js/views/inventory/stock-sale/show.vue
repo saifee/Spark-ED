@@ -10,6 +10,14 @@
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
                         <router-link to="/inventory/stock/sale" class="btn btn-info btn-sm"><i class="fas fa-list"></i> <span class="d-none d-sm-inline">{{trans('inventory_sale.stock_sale')}}</span></router-link>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info btn-sm dropdown-toggle no-caret " role="menu" id="moreOption" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-tooltip="trans('general.more_option')">
+                                <i class="fas fa-ellipsis-h"></i> <span class="d-none d-sm-inline"></span>
+                            </button>
+                            <div :class="['dropdown-menu',getConfig('direction') == 'ltr' ? 'dropdown-menu-right' : '']" aria-labelledby="moreOption">
+                                <button class="dropdown-item custom-dropdown" @click="print"><i class="fas fa-print"></i> {{trans('general.print')}}</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -183,6 +191,22 @@
             getCount(item, status) {
                 let count = 0;
                 return count;
+            },
+            getConfig(config) {
+                return helper.getConfig(config)
+            },
+            print(){
+                let loader = this.$loading.show();
+                axios.post('/api/stock/transfer/'+this.id+'/print',{fee: this.fee})
+                    .then(response => {
+                        let print = window.open("/print");
+                        loader.hide();
+                        print.document.write(response);
+                    })
+                    .catch(error => {
+                        loader.hide();
+                        helper.showErrorMsg(error);
+                    });
             }
         },
         filters: {

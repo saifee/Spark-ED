@@ -1429,6 +1429,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::get('/stock/transfer/pre-requisite', 'Inventory\StockTransferController@preRequisite');
 	Route::get('/stock/transfer', 'Inventory\StockTransferController@index');
 	Route::get('/stock/transfer/{id}', 'Inventory\StockTransferController@show');
+	Route::post('/stock/transfer/{id}/print', 'Inventory\StockTransferController@printDetail');
 	Route::post('/stock/transfer/{id}/return', 'Inventory\StockTransferController@returnItem');
 	Route::delete('/stock/transfer/{id}/return/{return_id}', 'Inventory\StockTransferController@destroyReturn');
 	Route::post('/stock/transfer', 'Inventory\StockTransferController@store');
