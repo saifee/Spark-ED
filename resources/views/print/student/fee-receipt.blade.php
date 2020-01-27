@@ -41,16 +41,15 @@
     <tbody>
         @php
             $i = 1;
+            $transaction_additional_fee_charge = $transaction->getOption('additional_fee_charge');
+            $transaction_additional_fee_charge_amount = gv($transaction_additional_fee_charge, 'amount', 0);
+            $transaction_additional_fee_charge_label = gv($transaction_additional_fee_charge, 'label');
+            $transaction_additional_fee_discount = $transaction->getOption('additional_fee_discount');
+            $transaction_additional_fee_discount_amount = gv($transaction_additional_fee_discount, 'amount', 0);
+            $transaction_additional_fee_discount_label = gv($transaction_additional_fee_discount, 'label');
         @endphp
         @foreach($transaction->studentFeeRecordDetails as $student_fee_record_detail)
             @php
-                $transaction_additional_fee_charge = $transaction->getOption('additional_fee_charge');
-                $transaction_additional_fee_charge_amount = gv($transaction_additional_fee_charge, 'amount', 0);
-                $transaction_additional_fee_charge_label = gv($transaction_additional_fee_charge, 'label');
-                $transaction_additional_fee_discount = $transaction->getOption('additional_fee_discount');
-                $transaction_additional_fee_discount_amount = gv($transaction_additional_fee_discount, 'amount', 0);
-                $transaction_additional_fee_discount_label = gv($transaction_additional_fee_discount, 'label');
-
                 $fee_installment_detail = $transaction->studentFeeRecord->feeInstallment->feeInstallmentDetails->firstWhere('fee_head_id', $student_fee_record_detail->fee_head_id);
                 $amount = $fee_installment_detail ? $fee_installment_detail->amount : 0;
                 $fee_concession = $transaction->studentFeeRecord->feeConcession;
