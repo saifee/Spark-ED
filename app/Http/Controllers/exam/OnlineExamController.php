@@ -158,7 +158,7 @@ class OnlineExamController extends Controller
         $this->authorize('exam', $online_exam);
 
         $questions = $this->repo->getOnlineExamQuestions($online_exam);
-        $end_time = Carbon::parse($online_exam->date.' '.$online_exam->end_time);
+        $end_time = Carbon::parse(toDate($online_exam->date).' '.$online_exam->end_time);
         $countdown = abs($end_time->diffInSeconds(Carbon::now(), false) * 1000);
 
         $online_exam_record = $this->repo->getOnlineExamRecord($online_exam);

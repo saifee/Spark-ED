@@ -20,7 +20,7 @@ class GatePass extends Model
                             'user_id',
                             'options'
                         ];
-    protected $casts = ['options' => 'array', 'date' => 'array'];
+    protected $casts = ['options' => 'array', 'date' => 'date'];
     protected $primaryKey = 'id';
     protected $table = 'gate_passes';
     protected static $logName = 'gate_pass';

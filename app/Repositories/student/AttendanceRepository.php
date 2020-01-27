@@ -77,6 +77,7 @@ class AttendanceRepository
     {
         $batch_id = gv($params, 'batch_id');
         $date = toDate(gv($params, 'date_of_attendance'));
+        $submitted_date = toDate(gv($params, 'date_of_attendance'));
 
         $query = $this->student_record->with('student', 'student.parent', 'admission','batch')->filterBySession()->filterByBatchId($batch_id);
 
@@ -99,18 +100,21 @@ class AttendanceRepository
         }
 
         $batch = $this->batch->findOrFail($batch_id);
+        $holiday_except = $batch->getOption('holiday_except') ? : [];
         $course = $batch->Course;
         $subjects = $batch->subjects->pluck('id')->all();
 
+        $holidays = $this->holiday->filterBySession()->get();
+
         $date = ($date) ? toDate($date) : date('Y-m-d');
+        $month = date('m', strtotime($date));
+        $year = date('Y', strtotime($date));
         $days = Carbon::parse($date)->daysInMonth;
 
         $this->validateAttendance($subjects, $params);
 
-        $start_date = date('Y-m', strtotime($date)).'-01';
-        $end_date = date('Y-m', strtotime($date)).'-'.$days;
-
-        $class_teachers = $this->getClassTeachers($batch_id);
+        $start_date = date($year.'-'.$month, strtotime($date)).'-01';
+        $end_date = date($year.'-'.$month, strtotime($date)).'-'.$days;
 
         $params['start_date'] = $start_date;
         $params['end_date'] = $end_date;
@@ -118,7 +122,104 @@ class AttendanceRepository
 
         $attendance = $this->student_attendance->whereBatchId($batch_id)->whereDateOfAttendance($date)->whereSubjectId(gv($params, 'subject_id'))->whereSession(gv($params, 'session'))->first();
 
-        return compact('student_records', 'batch', 'attendances','course','class_teachers','attendance');
+        $header = array();
+
+        $student_data = array();
+        $daily_present = array();
+        for ($i = 1; $i <= $days; $i++) {
+            array_push($header, $i);
+            $daily_present[$i] = 0;
+        }
+        array_push($header, '');
+
+        $attendance_data = array();
+        $student_present = array();
+        foreach ($student_records as $student_record) {
+            $attendance_data[$student_record->id] = array();
+            $student_present[$student_record->id] = 0;
+        }
+
+        $current_date_attendance = array();
+
+        for ($i = 1; $i <= $days; $i++) {
+            $date = date($year.'-'.$month.'-').str_pad($i, 2, '0', STR_PAD_LEFT);
+            $date_attendance = $attendances->firstWhere('date_of_attendance', getDateTime($date));
+
+            $holiday = $holidays->firstWhere('date', getDateTime($date));
+
+            foreach ($student_records as $student_record) {
+                $attendance_detail = array();
+
+                if ($date < toDate($student_record->date_of_entry) || (toDate($student_record->date_of_exit) && $date > toDate($student_record->date_of_exit))) {
+                    $attendance_detail = array('label' => 'unavailable', 'icon' => '');
+                } else {
+                    if (! $date_attendance) {
+                        if (! in_array($date, $holiday_except) && $holiday) {
+                            $attendance_detail = array('label' => 'holiday', 'icon' => 'fa-hospital', 'description' => $holiday->description);
+                        } else {
+                            $attendance_detail = array('label' => 'unmarked', 'icon' => '');
+                        }
+                    } else {
+                        $late_attendance = $date_attendance->getAttendance('late') ? : [];
+                        $absent_attendance = $date_attendance->getAttendance('data') ? : [];
+                        $half_day_attendance = $date_attendance->getAttendance('half_day') ? : [];
+
+                        if (searchByKey($late_attendance, 'id', $student_record->id)) {
+                            $attendance_detail = array('label' => 'late', 'icon' => 'fa-history');
+                            $daily_present[$i]++;
+                            $student_present[$student_record->id]++;
+                        } else if (searchByKey($absent_attendance, 'id', $student_record->id)) {
+                            $attendance_detail = array('label' => 'absent', 'icon' => 'fa-times');
+                        } else if (searchByKey($half_day_attendance, 'id', $student_record->id)) {
+                            $attendance_detail = array('label' => 'half_day', 'icon' => 'fa-coffee');
+                            $daily_present[$i]++;
+                            $student_present[$student_record->id]++;
+                        } else if (! in_array($date, $holiday_except) && $holiday) {
+                            $attendance_detail = array('label' => 'holiday', 'icon' => 'fa-hospital', 'description' => $holiday->description);
+                        } else {
+                            $attendance_detail = array('label' => 'present', 'icon' => 'fa-check');
+                            $daily_present[$i]++;
+                            $student_present[$student_record->id]++;
+                        }
+                    }
+                }
+
+                $attendance_data[$student_record->id][$i] = $attendance_detail;
+
+                if ($date == $submitted_date) {
+                    $current_date_attendance[] = array('id' => $student_record->id, 'attendance' => gv($attendance_detail, 'label'));
+                }
+            }
+        }
+
+        $student_data = array();
+        foreach ($student_records as $index => $student_record) {
+            $roll_number = $student_record->roll_number ? (' ('.getRollNumber($student_record).')') : '';
+
+            $student_data[] = array(
+                'id' => $student_record->id,
+                'sno' => $index + 1,
+                'name' => $student_record->student->name.$roll_number,
+                'attendances' => $attendance_data[$student_record->id],
+                'monthly_count' => $student_present[$student_record->id]
+            );
+        }
+
+        $student_data[] = array(
+            'sno' => '',
+            'name' => trans('general.total').' '.$student_records->count(),
+            'attendances' => $daily_present,
+            'monthly_count' => ''
+        );
+
+        $is_editable = $this->canMarkAttendance([
+            'batch_id' => $batch_id,
+            'date_of_attendance' => $submitted_date
+        ]);
+
+        $is_deletable = $attendance && $is_editable ? true : false;
+
+        return compact('student_records', 'batch', 'attendances','course','attendance','student_data','header', 'is_editable', 'is_deletable', 'current_date_attendance');
     }
 
     /**
@@ -222,6 +323,77 @@ class AttendanceRepository
     }
 
     /**
+     * Check if user can mark attendance
+     * @param  array  $params
+     * @return void
+     */
+    private function canMarkAttendance($params = array())
+    {
+        $batch_id = gv($params, 'batch_id');
+        $date_of_attendance = gv($params, 'date_of_attendance');
+        $validate = gbv($params, 'validate', 0);
+
+        $class_teachers = $this->getClassTeachers($batch_id);
+
+        $auth_user = \Auth::user();
+
+        if (! $auth_user->can('mark-student-attendance') && $auth_user->can('mark-class-teacher-wise-student-attendance') && ! amIClassTeacherOnDate($class_teachers, $date_of_attendance)) {
+            if ($validate) {
+                throw ValidationException::withMessages(['message' => trans('general.permission_denied')]);
+            } else {
+                return false;
+            }
+        }
+
+        if (! dateBetweenSession($date_of_attendance)) {
+            
+            if ($validate) {
+                throw ValidationException::withMessages(['message' => trans('academic.invalid_session_date_range')]);
+            } else {
+                return false;
+            }
+        }
+
+        if (! config('config.allow_to_modify_student_attendance') && $date_of_attendance < date('Y-m-d')) {
+            
+            if ($validate) {
+                throw ValidationException::withMessages(['message' => trans('student.cannot_modify_attendance_of_previous_dates')]);
+            } else {
+                return false;
+            }
+        }
+
+        if (config('config.allow_to_modify_student_attendance') && $date_of_attendance < date('Y-m-d') && dateDiff(date('Y-m-d'), $date_of_attendance) > config('config.days_allowed_to_modify_student_attendance')) {
+            
+            if ($validate) {
+                throw ValidationException::withMessages(['message' => trans('student.can_mark_attendance_of_days', ['day' => config('config.days_allowed_to_modify_student_attendance')] )]);
+            } else {
+                return false;
+            }
+        }
+
+        if (! config('config.allow_to_mark_student_advance_attendance') && $date_of_attendance > date('Y-m-d')) {
+            
+            if ($validate) {
+                throw ValidationException::withMessages(['message' => trans('student.cannot_mark_attendance_of_advance_dates')]);
+            } else {
+                return false;
+            }
+        }
+
+        if (config('config.allow_to_mark_student_advance_attendance') && $date_of_attendance > date('Y-m-d') && dateDiff(date('Y-m-d'), $date_of_attendance) > config('config.days_allowed_to_mark_student_advance_attendance')) {
+            
+            if ($validate) {
+                throw ValidationException::withMessages(['message' => trans('student.can_mark_advance_attendance_of_days', ['day' => config('config.days_allowed_to_mark_student_advance_attendance')] )]);
+            } else {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Store student attendance.
      *
      * @return Array
@@ -242,17 +414,11 @@ class AttendanceRepository
 
         $this->validateAttendance($subjects, $params);
 
-        $class_teachers = $this->getClassTeachers($batch_id);
-
-        $auth_user = \Auth::user();
-
-        if (! $auth_user->can('mark-student-attendance') && $auth_user->can('mark-class-teacher-wise-student-attendance') && ! amIClassTeacherOnDate($class_teachers, $date_of_attendance)) {
-            throw ValidationException::withMessages(['message' => trans('general.permission_denied')]);
-        }
-
-        if (! dateBetweenSession($date_of_attendance)) {
-            throw ValidationException::withMessages(['message' => trans('academic.invalid_session_date_range')]);
-        }
+        $this->canMarkAttendance([
+            'batch_id' => $batch_id,
+            'date_of_attendance' => $date_of_attendance,
+            'validate' => 1
+        ]);
 
         $student_records = $this->student_record->filterBySession()->filterbyBatchId($batch_id)->where('date_of_entry','<=',$date_of_attendance)->where(function($q) use($date_of_attendance) {
             $q->where('date_of_exit',null)->orWhere(function($q1) use($date_of_attendance) {
@@ -262,22 +428,6 @@ class AttendanceRepository
 
         $subject_id = gv($params, 'subject_id');
         $session = gv($params, 'session');
-
-        if (! config('config.allow_to_modify_student_attendance') && $date_of_attendance < date('Y-m-d')) {
-            throw ValidationException::withMessages(['message' => trans('student.cannot_modify_attendance_of_previous_dates')]);
-        }
-
-        if (config('config.allow_to_modify_student_attendance') && $date_of_attendance < date('Y-m-d') && dateDiff(date('Y-m-d'), $date_of_attendance) > config('config.days_allowed_to_modify_student_attendance')) {
-            throw ValidationException::withMessages(['message' => trans('student.can_mark_attendance_of_days', ['day' => config('config.days_allowed_to_modify_student_attendance')] )]);
-        }
-
-        if (! config('config.allow_to_mark_student_advance_attendance') && $date_of_attendance > date('Y-m-d')) {
-            throw ValidationException::withMessages(['message' => trans('student.cannot_mark_attendance_of_advance_dates')]);
-        }
-
-        if (config('config.allow_to_mark_student_advance_attendance') && $date_of_attendance > date('Y-m-d') && dateDiff(date('Y-m-d'), $date_of_attendance) > config('config.days_allowed_to_mark_student_advance_attendance')) {
-            throw ValidationException::withMessages(['message' => trans('student.can_mark_advance_attendance_of_days', ['day' => config('config.days_allowed_to_mark_student_advance_attendance')] )]);
-        }
 
         $students = gv($params, 'students', []);
 

@@ -292,7 +292,7 @@ class PayrollRepository
             }
 
             $leave_request = $leave_requests->filter(function($item) use ($date) {
-                return (data_get($item, 'start_date') <= $date) && (data_get($item, 'end_date') >= $date);
+                return (data_get($item, 'start_date') <= getDateTime($date)) && (data_get($item, 'end_date') >= getDateTime($date));
             })->first();
 
             if ($leave_request) {
@@ -300,7 +300,7 @@ class PayrollRepository
             }
 
             if (! $emplyoee_attendance) {
-                $holiday = $holidays->firstWhere('date', $date);
+                $holiday = $holidays->firstWhere('date', getDateTime($date));
                 if ($holiday) {
                     $emplyoee_attendance = $holiday_alias ? : 'H';
                 }
@@ -319,7 +319,9 @@ class PayrollRepository
 
         $attendance = $attendance_types->whereIn('type',['present','holiday'])->sum('count');
 
-        $half_day = $attendance_types->firstWhere('type','half_day')->count;
+        $half_day_data = $attendance_types->firstWhere('type','half_day');
+
+        $half_day = $half_day_data ? $half_day_data->count : 0;
 
         $leave = $attendance_types->firstWhere('type','leave')['count'];
 

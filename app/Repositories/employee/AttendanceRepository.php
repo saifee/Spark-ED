@@ -197,7 +197,7 @@ class AttendanceRepository
                 $attendance_color = 'default';
                 $employee_attendance_description = '';
 
-                $marked_attendance = $all_employee_attendances->firstWhere('date_of_attendance', $date);
+                $marked_attendance = $all_employee_attendances->firstWhere('date_of_attendance', getDateTime($date));
 
                 if ($marked_attendance) {
                     $marked = $marked_attendance->attendanceType;
@@ -209,7 +209,7 @@ class AttendanceRepository
                 }
 
                 $leave_request = $leave_requests->where('employee_id', $employee->id)->filter(function($item) use ($date) {
-                    return (data_get($item, 'start_date') <= $date) && (data_get($item, 'end_date') >= $date);
+                    return (data_get($item, 'start_date') <= getDateTime($date)) && (data_get($item, 'end_date') >= getDateTime($date));
                 })->first();
 
                 if ($leave_request) {
@@ -219,7 +219,7 @@ class AttendanceRepository
                 }
 
                 if (! $employee_attendance) {
-                    $holiday = $holidays->firstWhere('date', $date);
+                    $holiday = $holidays->firstWhere('date', getDateTime($date));
                     if ($holiday) {
                         $employee_attendance = $holiday_alias ? : 'H';
                         $attendance_color = $this->getColor('holiday');

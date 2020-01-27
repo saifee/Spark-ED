@@ -350,7 +350,7 @@ class ReportRepository
      */
     public function getDayBookData($params)
     {
-        $date = gv($params, 'date');
+        $date = toDate(gv($params, 'date'));
 
         if (! dateBetweenSession($date)) {
             throw ValidationException::withMessages(['message' => trans('academic.invalid_session_date_range')]);
