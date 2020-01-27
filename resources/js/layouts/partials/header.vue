@@ -19,6 +19,7 @@
                     <li class="nav-item d-none d-sm-inline" v-if="getConfig('maintenance_mode')"><span class="mt-4 badge badge-danger m-b-10">{{trans('configuration.under_maintenance')}}</span></li>
                     <li class="nav-item d-none d-sm-inline" v-if="!getConfig('mode')"><span class="mt-4 badge badge-danger m-b-10">{{trans('configuration.test_mode')}}</span></li>
 
+                    <li class="nav-item">{{getConfig('institute_name')}}</li>
                 </ul>
                 <ul class="navbar-nav flex-filler"></ul>
                 <ul class="navbar-nav my-lg-0">
