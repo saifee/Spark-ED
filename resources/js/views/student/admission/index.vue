@@ -55,6 +55,7 @@
                 <div class="card card-form" v-if="showFilterPanel">
                     <div class="card-body">
                         <h4 class="card-title">{{trans('general.filter')}}
+                            <small><a href="#" @click.prevent="showFilterFullPanel = !showFilterFullPanel">{{trans('general.toggle')}}</a></small>
                         </h4>
                         <div class="row">
                             <div class="col-12 col-sm-2">
@@ -91,6 +92,7 @@
                                     </v-select>
                                 </div>
                             </div>
+                        <template v-if="showFilterFullPanel">
                             <div class="col-12 col-sm-6">
                                 <date-range-picker :start-date.sync="filter.date_of_birth_start_date" :end-date.sync="filter.date_of_birth_end_date" :label="trans('student.date_of_birth_between')"></date-range-picker>
                             </div>
@@ -157,8 +159,9 @@
                                     </v-select>
                                 </div>
                             </div>
+                        </template>
                         </div>
-                        <div class="card-footer text-right">
+                        <div class="card-footer text-right d-none">
                             <button type="button" @click="showFilterPanel = false" class="btn btn-danger">{{trans('general.cancel')}}</button>
                             <button type="button" class="btn btn-info waves-effect waves-light" @click="getStudents">{{trans('general.filter')}}</button>
                         </div>
@@ -495,7 +498,8 @@
                 selected_religions: null,
                 categories: [],
                 selected_categories: null,
-                showFilterPanel: false,
+                showFilterPanel: true,
+                showFilterFullPanel: false,
                 showColumnPanel: false,
                 selected_student_groups: null,
                 help_topic: ''

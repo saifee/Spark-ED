@@ -52,6 +52,7 @@
   'file_not_supported' => 'File not supported.',
   'file_too_large' => 'File Too Large.',
   'filter' => 'Filter',
+  'toggle' => 'Toggle',
   'from' => 'from',
   'general' => 'General',
   'generate_pdf' => 'Generate PDF',
