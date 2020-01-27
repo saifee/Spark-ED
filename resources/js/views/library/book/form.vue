@@ -369,7 +369,7 @@
                     });
             },
             onCourseSelect(selectedOption){
-                this.registrationForm.course_id = selectedOption.id;
+                this.bookForm.course_id = selectedOption.id;
             },
             onBookAuthorSelect(selectedOption){
                 this.bookForm.book_author_id = selectedOption.id;
