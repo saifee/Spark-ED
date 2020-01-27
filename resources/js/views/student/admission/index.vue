@@ -210,56 +210,56 @@
                                 <tr v-for="student in students.data">
                                     <td class="select-all" v-if="hasPermission('edit-student')">
                                         <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" :value="student.id" v-model="studentGroupForm.ids">
+                                            <input type="checkbox" class="custom-control-input" :value="student.student.id" v-model="studentGroupForm.ids">
                                             <span class="custom-control-label"></span>
                                         </label>
                                     </td>
                                     <td v-if="isColumnVisible('admission_number')" v-text="getAdmissionNumber(student)"></td>
                                     <td v-if="isColumnVisible('roll_number')" v-text="getRollNumber(student)"></td>
-                                    <td v-text="student.first_name"></td>
-                                    <td v-if="isColumnVisible('middle_name')" v-text="student.middle_name"></td>
-                                    <td>{{student.last_name || ''}}</td>
-                                    <td v-if="isColumnVisible('gender')">{{trans('list.'+student.gender)}}</td>
-                                    <td v-if="isColumnVisible('father_name')" v-text="student.parent ? student.parent.father_name : ''"></td>
-                                    <td v-if="isColumnVisible('mother_name')" v-text="student.parent ? student.parent.mother_name : ''"></td>
-                                    <td v-if="isColumnVisible('date_of_birth')">{{student.date_of_birth | moment}}</td>
+                                    <td v-text="student.student.first_name"></td>
+                                    <td v-if="isColumnVisible('middle_name')" v-text="student.student.middle_name"></td>
+                                    <td>{{student.student.last_name || ''}}</td>
+                                    <td v-if="isColumnVisible('gender')">{{trans('list.'+student.student.gender)}}</td>
+                                    <td v-if="isColumnVisible('father_name')" v-text="student.student.parent ? student.student.parent.father_name : ''"></td>
+                                    <td v-if="isColumnVisible('mother_name')" v-text="student.student.parent ? student.student.parent.mother_name : ''"></td>
+                                    <td v-if="isColumnVisible('date_of_birth')">{{student.student.date_of_birth | moment}}</td>
                                     <td v-if="isColumnVisible('date_of_admission')">{{getAdmissionDate(student) | moment}}</td>
                                     <td v-if="isColumnVisible('date_of_promotion')">{{getPromotionDate(student)}}</td>
-                                    <td v-if="isColumnVisible('contact_number')" v-text="student.contact_number"></td>
+                                    <td v-if="isColumnVisible('contact_number')" v-text="student.student.contact_number"></td>
                                     <td v-text="getCourse(student)"></td>
                                     <td v-text="getBatch(student)"></td>
-                                    <td v-if="isColumnVisible('nationality')" v-text="student.nationality"></td>
-                                    <td v-if="isColumnVisible('blood_group')" v-text="student.blood_group ? student.blood_group.name : ''"></td>
-                                    <td v-if="isColumnVisible('religion')" v-text="student.religion ? student.religion.name : ''"></td>
-                                    <td v-if="isColumnVisible('caste')" v-text="student.caste ? student.caste.name : ''"></td>
-                                    <td v-if="isColumnVisible('category')" v-text="student.category ? student.category.name : ''"></td>
-                                    <td v-if="isColumnVisible('unique_identification_number')" v-text="student.unique_identification_number"></td>
-                                    <td v-if="isColumnVisible('father_contact_number_1')" v-text="student.parent.father_contact_number_1"></td>
-                                    <td v-if="isColumnVisible('mother_contact_number_1')" v-text="student.parent.mother_contact_number_1"></td>
-                                    <td v-if="isColumnVisible('emergency_contact_name')" v-text="student.emergency_contact_name"></td>
-                                    <td v-if="isColumnVisible('emergency_contact_number')" v-text="student.emergency_contact_number"></td>
+                                    <td v-if="isColumnVisible('nationality')" v-text="student.student.nationality"></td>
+                                    <td v-if="isColumnVisible('blood_group')" v-text="student.student.blood_group ? student.student.blood_group.name : ''"></td>
+                                    <td v-if="isColumnVisible('religion')" v-text="student.student.religion ? student.student.religion.name : ''"></td>
+                                    <td v-if="isColumnVisible('caste')" v-text="student.student.caste ? student.student.caste.name : ''"></td>
+                                    <td v-if="isColumnVisible('category')" v-text="student.student.category ? student.student.category.name : ''"></td>
+                                    <td v-if="isColumnVisible('unique_identification_number')" v-text="student.student.unique_identification_number"></td>
+                                    <td v-if="isColumnVisible('father_contact_number_1')" v-text="student.student.parent.father_contact_number_1"></td>
+                                    <td v-if="isColumnVisible('mother_contact_number_1')" v-text="student.student.parent.mother_contact_number_1"></td>
+                                    <td v-if="isColumnVisible('emergency_contact_name')" v-text="student.student.emergency_contact_name"></td>
+                                    <td v-if="isColumnVisible('emergency_contact_number')" v-text="student.student.emergency_contact_number"></td>
                                     <td v-if="isColumnVisible('present_address')">
-                                        {{student.present_address_line_1}}
-                                        <span v-if="student.present_address_line_2">, {{student.present_address_line_2}}</span>
-                                        <span v-if="student.present_city"><br /> {{student.present_city}}</span>
-                                        <span v-if="student.present_state">, {{student.present_state}}</span>
-                                        <span v-if="student.present_zipcode">, {{student.present_zipcode}}</span>
-                                        <span v-if="student.present_country"><br /> {{student.present_country}}</span>
+                                        {{student.student.present_address_line_1}}
+                                        <span v-if="student.student.present_address_line_2">, {{student.student.present_address_line_2}}</span>
+                                        <span v-if="student.student.present_city"><br /> {{student.student.present_city}}</span>
+                                        <span v-if="student.student.present_state">, {{student.student.present_state}}</span>
+                                        <span v-if="student.student.present_zipcode">, {{student.student.present_zipcode}}</span>
+                                        <span v-if="student.student.present_country"><br /> {{student.student.present_country}}</span>
                                     </td>
                                     <td v-if="isColumnVisible('permanent_address')">
-                                        <template v-if="student.same_as_present_address">{{trans('student.same_as_present_address')}}</template>
+                                        <template v-if="student.student.same_as_present_address">{{trans('student.student.same_as_present_address')}}</template>
                                         <template v-else>
-                                            {{student.permanent_address_line_1}}
-                                            <span v-if="student.permanent_address_line_2">, {{student.permanent_address_line_2}}</span>
-                                            <span v-if="student.permanent_city"><br /> {{student.permanent_city}}</span>
-                                            <span v-if="student.permanent_state">, {{student.permanent_state}}</span>
-                                            <span v-if="student.permanent_zipcode">, {{student.permanent_zipcode}}</span>
-                                            <span v-if="student.permanent_country"><br /> {{student.permanent_country}}</span>
+                                            {{student.student.permanent_address_line_1}}
+                                            <span v-if="student.student.permanent_address_line_2">, {{student.student.permanent_address_line_2}}</span>
+                                            <span v-if="student.student.permanent_city"><br /> {{student.student.permanent_city}}</span>
+                                            <span v-if="student.student.permanent_state">, {{student.student.permanent_state}}</span>
+                                            <span v-if="student.student.permanent_zipcode">, {{student.student.permanent_zipcode}}</span>
+                                            <span v-if="student.student.permanent_country"><br /> {{student.student.permanent_country}}</span>
                                         </template>
                                     </td>
                                     <td class="table-option">
                                         <div class="btn-group" v-if="hasNotAnyRole(['student','parent'])">
-                                            <button class="btn btn-info btn-sm" v-tooltip="trans('student.view_student_detail')" @click="$router.push('/student/'+student.uuid)">
+                                            <button class="btn btn-info btn-sm" v-tooltip="trans('student.student.view_student_detail')" @click="$router.push('/student/'+student.student.uuid)">
                                                 <i class="fas fa-arrow-circle-right"></i> {{trans('general.view')}}
                                             </button>
                                             <template v-if="hasPermission('list-student-fee')">
@@ -267,17 +267,17 @@
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <button class="dropdown-item custom-dropdown-menu" v-tooltip="trans('student.view_student_fee')" @click="$router.push('/student/'+student.uuid+'/fee/'+getStudentRecordId(student))">
+                                                    <button class="dropdown-item custom-dropdown-menu" v-tooltip="trans('student.student.view_student_fee')" @click="$router.push('/student/'+student.student.uuid+'/fee/'+getStudentRecordId(student))">
                                                         <i class="fas fa-file"></i> {{trans('finance.view_fee_allocation')}}
                                                     </button>
-                                                    <button class="dropdown-item custom-dropdown-menu" v-tooltip="trans('student_wallet.view_student_wallet')" @click="$router.push('/student/'+student.uuid+'/wallet/'+getStudentRecordId(student))">
+                                                    <button class="dropdown-item custom-dropdown-menu" v-tooltip="trans('student_wallet.view_student_wallet')" @click="$router.push('/student/'+student.student.uuid+'/wallet/'+getStudentRecordId(student))">
                                                         <i class="fas fa-wallet"></i> {{trans('student_wallet.view_student_wallet')}}
                                                     </button>
                                                 </div>
                                             </template>
                                         </div>
                                         <div v-else>
-                                            <button class="btn btn-info btn-sm" v-tooltip="trans('student.view_student_fee')" @click="$router.push('/student/'+student.uuid+'/fee/'+getStudentRecordId(student))">
+                                            <button class="btn btn-info btn-sm" v-tooltip="trans('student.student.view_student_fee')" @click="$router.push('/student/'+student.student.uuid+'/fee/'+getStudentRecordId(student))">
                                                 <i class="fas fa-arrow-circle-right"></i> {{trans('finance.view_fee_allocation')}}
                                             </button>
                                         </div>
@@ -534,7 +534,7 @@
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/student?page=' + page + url)
                     .then(response => {
-                        this.students = response.students;
+                        this.students = response.student_records;
                         this.batches = response.filters.batches;
                         this.blood_groups = response.filters.blood_groups;
                         this.religions = response.filters.religions;
@@ -658,36 +658,32 @@
                 return (this.filter.columns.indexOf(column) > -1) ? true : false;
             },
             getAdmissionDate(student){
-                let student_record = student.student_records[0];
-                return student_record.admission.date_of_admission;
+                return student.admission.date_of_admission;
             },
             getPromotionDate(student){
-                let student_record = student.student_records[0];
-                
-                if (student_record.admission.date_of_admission == student_record.date_of_entry)
+                let student_record = student.student;
+
+                if (student.admission.date_of_admission == student_record.date_of_entry)
                     return '-';
                 else
                     return helper.formatDate(student_record.date_of_entry);
             },
             getAdmissionNumber(student){
-                let student_record = student.student_records[0];
-                return helper.getAdmissionNumber(student_record.admission);
+                return helper.getAdmissionNumber(student.admission);
             },
             getRollNumber(student){
-                let student_record = student.student_records[0];
+                let student_record = student.student;
 
                 return helper.getRollNumber(student_record);
             },
             getCourse(student){
-                let student_record = student.student_records[0];
-                return student_record.batch.course.name;
+                return student.batch.course.name;
             },
             getBatch(student){
-                let student_record = student.student_records[0];
-                return student_record.batch.name;
+                return student.batch.name;
             },
             getStudentRecordId(student){
-                let student_record = student.student_records[0];
+                let student_record = student.student;
                 return student_record.id;
             },
             onStudentGroupSelect(selectedOption){
