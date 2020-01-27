@@ -44,7 +44,6 @@ class CreateEmployeesTable extends Migration
             $table->string('unique_identification_number',20)->nullable();
             $table->string('father_name')->nullable();
             $table->string('mother_name')->nullable();
-            $table->string('spouse_name')->nullable();
             $table->string('emergency_contact_name')->nullable();
             $table->string('emergency_contact_number')->nullable();
             $table->string('present_address_line_1')->nullable();
