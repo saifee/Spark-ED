@@ -249,7 +249,7 @@
   'second_guardian_occupation' => 'Second Guardian Occupation',
   'second_guardian_photo' => 'Second Guardian Photo',
   'second_guardian_qualification' => 'Second Guardian Qualification',
-  'second_guardian_tongue' => 'Second Guardian Tongue',
+  'mother_tongue' => 'Mother Tongue',
   'second_guardian_unique_identification_number' => 'Second Guardian Unique Identification Number',
   'name' => 'Name',
   'nationality' => 'Nationality',
@@ -458,4 +458,8 @@
   'termination_reason_transferred' => 'Transferred to another School',
   'termination_reason_passed' => 'Passed',
   'termination_reason_withdrawn' => 'Withdrawn',
+  'attendance_present' => 'Present',
+  'attendance_absent' => 'Absent',
+  'attendance_late' => 'Late',
+  'attendance_half_day' => 'Half Day',
 );
