@@ -340,6 +340,8 @@ class BookRepository
         }
 
         $formatted['options'] = [];
+        $formatted['options']['book_category'] = gv($params, 'book_category');
+        $formatted['options']['course_id'] = gv($params, 'course_id');
 
         return $formatted;
     }

@@ -238,6 +238,8 @@
         data() {
             return {
                 bookForm: new Form({
+                    book_category: '',
+                    course_id: '',
                     title: '',
                     isbn_number: '',
                     book_author_id: '',
@@ -331,6 +333,8 @@
                 let loader = this.$loading.show();
                 axios.get('/api/book/'+this.uuid)
                     .then(response => {
+                        this.bookForm.book_category = response.book.options.book_category;
+                        this.bookForm.course_id = response.book.options.course_id;
                         this.bookForm.title = response.book.title;
                         this.bookForm.isbn_number = response.book.isbn_number;
                         this.bookForm.edition = response.book.edition;
