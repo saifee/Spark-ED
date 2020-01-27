@@ -7,6 +7,7 @@ use App\Models\Library\BookLogDetail;
 use App\Models\Library\BookPost;
 use App\Models\Library\BookPostDetail;
 use Illuminate\Validation\ValidationException;
+use App\Repositories\Configuration\Academic\CourseGroupRepository;
 use App\Repositories\Configuration\Library\BookAuthorRepository;
 use App\Repositories\Configuration\Library\BookTopicRepository;
 use App\Repositories\Configuration\Library\BookLanguageRepository;
@@ -24,6 +25,7 @@ class BookRepository
     protected $book_post_detail;
     protected $book_condition;
     protected $book_log_detail;
+    protected $course_group;
 
     /**
      * Instantiate a new instance.
@@ -39,6 +41,7 @@ class BookRepository
         BookPost $book_post,
         BookPostDetail $book_post_detail,
         BookConditionRepository $book_condition,
+        CourseGroupRepository $course_group,
         BookLogDetail $book_log_detail
     ) {
         $this->book = $book;
@@ -50,6 +53,7 @@ class BookRepository
         $this->book_post_detail = $book_post_detail;
         $this->book_condition = $book_condition;
         $this->book_log_detail = $book_log_detail;
+        $this->course_group = $course_group;
     }
 
     /**
@@ -246,8 +250,9 @@ class BookRepository
         $book_languages = $this->book_language->selectAll();
         $book_topics = $this->book_topic->selectAll();
         $book_publishers = $this->book_publisher->selectAll();
+        $courses = $this->course_group->getCourseOption();
 
-        return compact('book_authors', 'book_languages', 'book_topics', 'book_publishers');
+        return compact('book_authors', 'book_languages', 'book_topics', 'book_publishers', 'courses');
     }
 
     /**

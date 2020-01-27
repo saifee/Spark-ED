@@ -4,6 +4,13 @@
         <div class="row">
             <div class="col-12 col-sm-3">
                 <div class="form-group">
+                    <label for="">{{trans('library.book_category')}}</label>
+                    <v-select v-model="bookForm.book_category" name="book_category" id="book_category" :options="book_categories" :placeholder="trans('library.book_category')">
+                    </v-select>
+                </div>
+            </div>
+            <div class="col-12 col-sm-3">
+                <div class="form-group">
                     <label for="">{{trans('library.book_title')}}</label>
                     <input class="form-control" type="text" v-model="bookForm.title" name="title" :placeholder="trans('library.book_title')">
                     <show-error :form-name="bookForm" prop-name="title"></show-error>
@@ -58,7 +65,7 @@
                 </div>
             </div>
             <div class="col-12 col-md-3">
-                <div class="form-group">
+                <div class="form-group" v-if="bookForm.book_category === undefined || bookForm.book_category === null || bookForm.book_category === '' || bookForm.book_category === 'Reading Books'">
                     <label for="">{{trans('library.book_type')}}</label>
                     <div class="radio radio-success">
                         <input type="radio" value="reference" id="type_reference" v-model="bookForm.type" :checked="bookForm.type == 'reference'" name="type" @click="bookForm.errors.clear('type')">
@@ -69,6 +76,15 @@
                         <label for="type_text">{{trans('library.book_type_text')}}</label>
                     </div>
                     <show-error :form-name="bookForm" prop-name="type"></show-error>
+                </div>
+                <div class="form-group" v-if="bookForm.book_category === 'Academic Books'">
+                    <label for="">{{trans('academic.course')}}</label>
+                    <v-select label="name" v-model="selected_course" group-values="courses" group-label="course_group" :group-select="false" name="course_id" id="course_id" :options="courses" :placeholder="trans('academic.select_course')" @select="onCourseSelect" @close="bookForm.errors.clear('course_id')" @remove="bookForm.course_id = ''">
+                        <div class="multiselect__option" slot="afterList" v-if="!courses.length">
+                            {{trans('general.no_option_found')}}
+                        </div>
+                    </v-select>
+                    <show-error :form-name="bookForm" prop-name="course_id"></show-error>
                 </div>
             </div>
             <div class="col-12 col-sm-3">
@@ -235,6 +251,12 @@
                     summary: '',
                     description: ''
                 }),
+                book_categories: [
+                    'Reading Books',
+                    'Academic Books',
+                ],
+                courses: [],
+                selected_course: null,
                 book_authors: [],
                 selected_book_author: null,
                 book_languages: [],
@@ -280,6 +302,7 @@
                         this.book_languages = response.book_languages;
                         this.book_topics = response.book_topics;
                         this.book_publishers = response.book_publishers;
+                        this.courses = response.courses;
                         loader.hide();
                     })
                     .catch(error => {
@@ -344,6 +367,9 @@
                         loader.hide();
                         helper.showErrorMsg(error);
                     });
+            },
+            onCourseSelect(selectedOption){
+                this.registrationForm.course_id = selectedOption.id;
             },
             onBookAuthorSelect(selectedOption){
                 this.bookForm.book_author_id = selectedOption.id;

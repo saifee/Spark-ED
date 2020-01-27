@@ -196,5 +196,6 @@
   'barcode_range_end' => 'End',
   'barcode_height' => 'Height',
   'barcode_width' => 'Width',
+  'book_category' => 'Book Category',
   'barcode_per_page_limit' => 'Per Page Limit'
 );
