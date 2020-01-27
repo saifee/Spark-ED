@@ -86,6 +86,18 @@ function dateDiff($date1, $date2)
  *  @return date with start midnight time
  */
 
+function getDateTime($date)
+{
+    return date('Y-m-d', strtotime($date)).' 00:00:00';
+}
+
+/*
+ *  Used to get date with start midnight time
+ *  @param
+ *  $date as timestamp or date variable
+ *  @return date with start midnight time
+ */
+
 function getStartOfDate($date)
 {
     return date('Y-m-d', strtotime($date)).' 00:00';
@@ -983,7 +995,7 @@ function getEmployeeDesignation($employee, $date = null)
         $employee->load('employeeDesignations');
     }
 
-    return $employee->employeeDesignations->sortByDesc('date_effective')->firstWhere('date_effective', '<=', $date);
+    return $employee->employeeDesignations->sortByDesc('date_effective')->firstWhere('date_effective', '<=', getDateTime($date));
 }
 
 function getEmployeeDesignationId($employee, $date = null)
