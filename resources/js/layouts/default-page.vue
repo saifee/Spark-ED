@@ -1,21 +1,27 @@
 <template>
-    <div id="main-wrapper">
+    <v-app>
         <tour-notification class="d-none d-sm-inline" />
         <app-header></app-header>
         <app-sidebar></app-sidebar>
 
-        <div class="page-wrapper page-wrapper-header" v-bind:style="[getConfig('replace_sidebar_menu_with_top_menu') == 1 ? {marginLeft: 0} : {}]">
+        <v-content>
+            <v-container fluid>
+                <v-row no-gutters>
+                    <v-col cols="12">
             <!-- <div v-html="message" v-if="!getConfig('mode')"></div> -->
             <router-view></router-view>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-content>
         	<app-footer></app-footer>
-        </div>
-    </div>
+    </v-app>
 </template>
 
 
 <script>
-    import AppHeader from './partials/header.vue'
-    import AppSidebar from './partials/sidebar.vue'
+    import AppHeader from './partials/header-2.vue'
+    import AppSidebar from './partials/sidebar-2.vue'
     import AppFooter from './partials/footer.vue'
 
     export default {
