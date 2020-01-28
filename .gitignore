@@ -2,11 +2,8 @@
 /vendor
 /.idea
 /.vagrant
-./composer.lock
 /public/hot
 /public/storage
-composer.lock
-package-lock.json
 Homestead.json
 Homestead.yaml
 npm-debug.log
