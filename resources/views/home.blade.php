@@ -10,6 +10,7 @@
         <title>{{config('app.name') ? : 'Spark'}}</title>
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <link rel="shortcut icon" href="{{ config('config.icon') ? url('/'.config('config.icon')) : url('/images/favicon.png') }}">
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
         @if((!cache('direction') && config('config.direction') == 'rtl') || cache('direction') == 'rtl')
             <link href="{{ mix('/css/style-rtl.css') }}" id="direction" rel="stylesheet">
         @else
