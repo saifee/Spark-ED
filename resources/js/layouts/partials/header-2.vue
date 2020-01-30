@@ -15,6 +15,7 @@
       <v-toolbar-title>{{getConfig('institute_name')}}</v-toolbar-title>
       <v-spacer />
       <v-menu
+      offset-y
         v-if="getAcademicSessions.length && hasPermission('change-academic-session')"
         left
         bottom
@@ -48,6 +49,7 @@
         <i class="fas fa-cogs"></i>
       </v-btn>
       <v-menu
+      offset-y
         left
         bottom
       >
