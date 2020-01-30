@@ -1390,7 +1390,6 @@
 <script>
 export default {
   data: () => ({
-    test: true,
   }),
   methods: {
     hasPermission(permission) {
