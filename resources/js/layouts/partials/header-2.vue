@@ -8,7 +8,7 @@
       :clipped-right="getConfig('sidebar_clipped') == 1"
     >
       <router-link  to="/">
-        <v-avatar tile>
+        <v-avatar tile class="mr-3">
             <v-img :src="getIcon" />
         </v-avatar>
       </router-link>
