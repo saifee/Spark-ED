@@ -14,6 +14,7 @@
       </router-link>
       <v-toolbar-title>{{getConfig('institute_name')}}</v-toolbar-title>
       <v-spacer />
+      <v-toolbar-items>
       <v-menu
       offset-y
         v-if="getAcademicSessions.length && hasPermission('change-academic-session')"
@@ -75,6 +76,7 @@
           </v-list-item>
         </v-list>
       </v-menu>
+  </v-toolbar-items>
     </v-app-bar>
 </template>
 
