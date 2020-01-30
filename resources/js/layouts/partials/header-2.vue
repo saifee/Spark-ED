@@ -4,8 +4,8 @@
       app
       dark
       fixed
-      clipped-left
-      clipped-right
+      :clipped-left="getConfig('sidebar_clipped') == 1"
+      :clipped-right="getConfig('sidebar_clipped') == 1"
     >
       <router-link  to="/">
         <v-avatar tile>

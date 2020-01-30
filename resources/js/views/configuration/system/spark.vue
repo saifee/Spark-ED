@@ -8,6 +8,12 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 col-sm-6">
+            <div class="form-group">
+                <v-switch v-model="configForm.sidebar_clipped" :label="trans('configuration_spark.sidebar_clipped')">
+                </v-switch>
+            </div>
+        </div>
     </div>
 </template>
 

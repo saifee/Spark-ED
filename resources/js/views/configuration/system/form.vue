@@ -293,6 +293,7 @@
                     maintenance_mode: 0,
                     maintenance_mode_message: '',
                     replace_sidebar_menu_with_top_menu: 0,
+                    sidebar_clipped: 0,
                     online_registration_header: '',
                     online_registration_success_message: '',
                     config_type: ''
@@ -372,6 +373,7 @@
                 this.configForm.backup = (this.configForm.backup) ? 1 : 0;
                 this.configForm.maintenance_mode = (this.configForm.maintenance_mode) ? 1 : 0;
                 this.configForm.replace_sidebar_menu_with_top_menu = (this.configForm.replace_sidebar_menu_with_top_menu) ? 1 : 0;
+                this.configForm.sidebar_clipped = (this.configForm.sidebar_clipped) ? 1 : 0;
                 return this.configForm.post('/api/configuration')
                     .then(response => {
                         this.$store.dispatch('setConfig',{loaded: false});

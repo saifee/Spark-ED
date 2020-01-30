@@ -2,7 +2,7 @@
     <v-navigation-drawer
       fixed
       app
-      clipped
+      :clipped="getConfig('sidebar_clipped') == 1"
       :right="getConfig('user_direction') === 'rtl'"
       :mini-variant="getConfig('user_sidebar') === 'mini'"
       :expand-on-hover="getConfig('user_sidebar') === 'mini'"
