@@ -13,10 +13,12 @@
       </template>
       <span>{{ trans('general.dashboard') }}</span>
     </v-tooltip>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="configMenu && hasPermission('access-configuration')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="configMenu && hasPermission('access-configuration')"
           icon
           to="/configuration/basic"
           exact
@@ -27,10 +29,12 @@
       </template>
       <span>{{ trans('configuration.basic_configuration') }}</span>
     </v-tooltip>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="configMenu && hasPermission('access-configuration')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="configMenu && hasPermission('access-configuration')"
           icon
           to="/configuration/social"
           exact
@@ -41,10 +45,12 @@
       </template>
       <span>{{ trans('configuration.social_network') }}</span>
     </v-tooltip>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="configMenu && hasPermission('access-configuration')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="configMenu && hasPermission('access-configuration')"
           icon
           to="/configuration/system"
           exact
@@ -55,10 +61,12 @@
       </template>
       <span>{{ trans('configuration.system_configuration') }}</span>
     </v-tooltip>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="configMenu && hasPermission('access-configuration')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="configMenu && hasPermission('access-configuration')"
           icon
           to="/configuration/mail"
           exact
@@ -69,10 +77,12 @@
       </template>
       <span>{{ trans('configuration.mail_configuration') }}</span>
     </v-tooltip>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="configMenu && hasPermission('access-configuration') && getConfig('multilingual')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="configMenu && hasPermission('access-configuration') && getConfig('multilingual')"
           icon
           to="/configuration/locale"
           exact
@@ -83,10 +93,12 @@
       </template>
       <span>{{ trans('configuration.locale') }}</span>
     </v-tooltip>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="configMenu && hasPermission('access-configuration') && hasRole('admin')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="configMenu && hasPermission('access-configuration') && hasRole('admin')"
           icon
           to="/configuration/role"
           exact
@@ -97,10 +109,12 @@
       </template>
       <span>{{ trans('configuration.role') }}</span>
     </v-tooltip>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="configMenu && hasPermission('access-configuration') && hasRole('admin')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="configMenu && hasPermission('access-configuration') && hasRole('admin')"
           icon
           to="/configuration/permission"
           exact
@@ -111,10 +125,12 @@
       </template>
       <span>{{ trans('configuration.permission') }}</span>
     </v-tooltip>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="configMenu && hasPermission('access-configuration')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="configMenu && hasPermission('access-configuration')"
           icon
           to="/configuration/sms"
           exact
@@ -125,10 +141,12 @@
       </template>
       <span>{{ trans('configuration.sms') }}</span>
     </v-tooltip>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="configMenu && hasPermission('access-configuration')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="configMenu && hasPermission('access-configuration')"
           icon
           to="/configuration/payment/gateway"
           exact
@@ -139,10 +157,12 @@
       </template>
       <span>{{ trans('finance.payment_gateway') }}</span>
     </v-tooltip>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="configMenu && hasPermission('access-configuration')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="configMenu && hasPermission('access-configuration')"
           icon
           to="/configuration/authentication"
           exact
@@ -153,10 +173,12 @@
       </template>
       <span>{{ trans('auth.authentication') }}</span>
     </v-tooltip>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="configMenu && hasPermission('access-configuration')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="configMenu && hasPermission('access-configuration')"
           icon
           to="/configuration/menu"
           exact
@@ -167,10 +189,12 @@
       </template>
       <span>{{ trans('configuration.menu') }}</span>
     </v-tooltip>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="configMenu && hasPermission('access-configuration')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="configMenu && hasPermission('access-configuration')"
           icon
           to="/configuration/module"
           exact
@@ -607,10 +631,12 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="moduleConfigMenu && hasPermission('access-configuration')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="moduleConfigMenu && hasPermission('access-configuration')"
           icon
           to="/configuration/custom-field"
           aria-expanded="false"
@@ -660,10 +686,12 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="moduleMenu && showMenu('institute_document') && hasPermission('list-institute-document')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="moduleMenu && showMenu('institute_document') && hasPermission('list-institute-document')"
           icon
           to="/institute/document"
           exact
@@ -1650,10 +1678,12 @@
         </template>
       </v-list>
     </v-menu>
-    <v-tooltip bottom>
+    <v-tooltip
+      v-if="moduleMenu && hasPermission('access-configuration')"
+      bottom
+    >
       <template v-slot:activator="{ on }">
         <v-btn
-          v-if="moduleMenu && hasPermission('access-configuration')"
           icon
           to="/configuration"
           exact
