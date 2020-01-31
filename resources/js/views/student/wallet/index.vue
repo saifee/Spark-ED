@@ -5,8 +5,7 @@
 	            <div class="col-12 col-sm-6">
 	                <div class="form-group">
 	                    <label class="custom-control custom-checkbox">
-	                        <input type="checkbox" class="custom-control-input" v-model="walletForm.enable_student_wallet">
-	                        <span class="custom-control-label">{{trans('student_wallet.enable_student_wallet')}}</span>
+		                    	<v-switch v-model="walletForm.enable_student_wallet" :label="trans('student_wallet.enable_student_wallet')" color="success" />
 	                    </label>
 	                </div>
 	                <template v-if="walletForm.enable_student_wallet">
