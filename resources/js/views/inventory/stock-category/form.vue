@@ -18,8 +18,7 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
-                        <label for="">{{trans('inventory_sale.stock_category_saleable')}}</label>
-                        <div><switches v-model="stockCategoryForm.saleable" theme="bootstrap" color="success"></switches></div>
+                        <v-switch v-model="stockCategoryForm.saleable" :label="trans('inventory_sale.stock_category_saleable')" color="success" />
                         <show-error :form-name="stockCategoryForm" prop-name="saleable"></show-error>
                     </div>
                 </div>
