@@ -24,8 +24,8 @@
 				<td style="width: 35%;">{{$student_record->student->parent->mother_name}}</td>
 				<td style="width: 10%; font-weight: bold;">{{trans('academic.batch')}}</td>
 				<td style="width: 15%;">{{$student_record->batch->course->name.' '.$student_record->batch->name}}</td>
-				<td style="width: 10%; font-weight: bold;"></td>
-				<td style="width: 15%;"></td>
+				<td style="width: 10%; font-weight: bold;">{{trans('student.gender')}}</td>
+				<td style="width: 15%;">{{ucwords($student_record->student->gender)}}</td>
 			</tr>
         </tbody>
     </table>
@@ -111,9 +111,10 @@
 							@php
 								$percentage = formatNumber(($summary['exam_total'][$header['schedule_id']] / $summary['exam_assessment_total'][$header['schedule_id']] ) * 100);
 								$overall_pass_percentage = gv($header, 'overall_pass_percentage');
+								$show_result = gbv($header, 'show_result');
 							@endphp
 							{{$percentage}}% 
-							@if ($overall_pass_percentage)
+							@if ($overall_pass_percentage && $show_result)
 								<span style="text-transform: uppercase;"> {{$percentage >= $overall_pass_percentage ? trans('exam.exam_result_passed') : trans('exam.exam_result_failed') }}</span>
 							@endif
 						@endif
@@ -193,8 +194,8 @@
 						@foreach ($summary['grade']->details as $detail)
 							<tr>
 								<td style="text-align: center;">{{$detail->name}}</td>
-								<td style="text-align: center;">{{$detail->description}}</td>
 								<td style="text-align: center;">{{trans('exam.grade_detail', ['min_percentage' => formatNumber($detail->min_percentage), 'max_percentage' => formatNumber($detail->max_percentage)])}}</td>
+								<td style="text-align: center;">{{$detail->description}}</td>
 							</tr>
 						@endforeach
 				    </table>

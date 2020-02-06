@@ -1,4 +1,4 @@
-<?php return array (
+<?php return array(
   'absent_code' => 'Ab',
   'add_new_assessment' => 'Add New Exam Assessment',
   'add_new_assessment_detail' => 'Add New Assessment Type',
@@ -148,8 +148,8 @@
   'total' => 'Total',
   'total_attendances' => 'Total Attendance',
   'attendance_percentage' => 'Attendance Percentage',
-  'exam_result_passed' => 'Passed', 
-  'exam_result_failed' => 'Failed', 
+  'exam_result_passed' => 'Passed',
+  'exam_result_failed' => 'Failed',
   'total_code' => 'T',
   'total_working_days' => 'Total Working Days',
   'online_exam' => 'Online Exam',
@@ -221,5 +221,6 @@
   'online_exam_saved' => 'Answer stored.',
   'online_exam_mixed_question_type_found' => 'Cannot set type as Multiple Choice Question, Mixed Type Questions found.',
   'online_exam_record' => 'Report Card',
-  'online_exam_rank' => 'Rank'
+  'online_exam_rank' => 'Rank',
+  'show_result' => 'Show Result'
 );

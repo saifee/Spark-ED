@@ -175,7 +175,7 @@ class FrontendRepository {
 	 * @return Event
 	 */
 	public function listEvent() {
-		return $this->event->with('eventType')->filterByAudience('everyone')->upcomingAndLive()->orderBy('start_date','desc')->take(5)->get();
+		return $this->event->with('eventType')->filterByAudience('everyone')->upcomingAndLive()->orderBy('start_date','asc')->take(5)->get();
 	}
 
 	/**

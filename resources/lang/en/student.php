@@ -1,4 +1,4 @@
-<?php return array (
+<?php return array(
   'absentee' => 'Absentee',
   'absentee_module_description' => 'Get list of all the students who are absent on selected dates, take print out, send SMS',
   'absentee_module_title' => 'Listing all Absent Students!',
@@ -177,8 +177,8 @@
   'existing_parent' => 'Existing Parent',
   'existing_student' => 'Existing Student',
   'guardian' => 'Guardian',
-  'father_name' => 'Father Name',
-  'mother_name' => 'Mother Name',
+  'father_name' => 'Father\'s Name',
+  'mother_name' => 'Mother\'s Name',
   'first_guardian_name' => 'First Guardian',
   'first_guardian_relation' => 'First Guardian Relation',
   'first_guardian_annual_income' => 'First Guardian Annual Income',
@@ -387,8 +387,8 @@
   'student_type' => 'Student',
   'student_username' => 'Student Username',
   'subject_wise' => 'Subject Wise',
-  'tc_props' => 
-  array (
+  'tc_props' =>
+  array(
     'admission_date_and_class' => 'Date of First Admission in the School with Class',
     'last_exam_with_result' => 'School / Board Annual Examination last taken with result',
     'last_exam_if_failed' => 'Whether failed, if so once / twice in the same class',

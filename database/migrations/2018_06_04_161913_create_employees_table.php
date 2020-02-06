@@ -16,6 +16,7 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->nullable();
+            $table->string('prefix',20)->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->integer('code')->default(0);
@@ -44,6 +45,7 @@ class CreateEmployeesTable extends Migration
             $table->string('unique_identification_number',20)->nullable();
             $table->string('father_name')->nullable();
             $table->string('mother_name')->nullable();
+            $table->string('spouse_name')->nullable();
             $table->string('emergency_contact_name')->nullable();
             $table->string('emergency_contact_number')->nullable();
             $table->string('present_address_line_1')->nullable();

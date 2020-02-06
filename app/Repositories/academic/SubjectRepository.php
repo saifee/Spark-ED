@@ -224,20 +224,20 @@ class SubjectRepository
 
         $subject_name_query = ($subject) ? $this->subject->where('id', '!=', $subject->id) : $this->subject;
 
-        if ($subject_name_query->filterByBatchId($batch->id)->filterByExactName(gv($params, 'name'))->count()) {
+        if ($subject_name_query->filterByBatchId($batch->id)->filterByName(gv($params, 'name'), 1)->count()) {
             throw ValidationException::withMessages(['name' => trans('academic.duplicate_subject_name')]);
         }
 
         $subject_code_query = ($subject) ? $this->subject->where('id', '!=', $subject->id) : $this->subject;
 
-        if ($subject_code_query->filterByBatchId($batch->id)->filterByCode(gv($params, 'code'))->count()) {
+        if ($subject_code_query->filterByBatchId($batch->id)->filterByCode(gv($params, 'code'), 1)->count()) {
             throw ValidationException::withMessages(['code' => trans('academic.duplicate_subject_code')]);
         }
 
         $subject_shortcode_query = ($subject) ? $this->subject->where('id', '!=', $subject->id) : $this->subject;
 
         $shortcode = gv($params, 'shortcode');
-        if ($shortcode && $subject_shortcode_query->filterByBatchId($batch->id)->filterByShortcode($shortcode)->count()) {
+        if ($shortcode && $subject_shortcode_query->filterByBatchId($batch->id)->filterByShortcode($shortcode, 1)->count()) {
             throw ValidationException::withMessages(['shortcode' => trans('academic.duplicate_subject_shortcode')]);
         }
     }

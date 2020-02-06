@@ -103,7 +103,7 @@ class ScheduleController extends Controller
 
         $student_records = $this->student_record->with('student','student.parent','admission','batch','batch.course','studentFeeRecords','studentFeeRecords.feeInstallment')->whereBatchId($exam_schedule->batch_id)->where(function($q) {
                 $q->whereNull('date_of_exit')->orWhere('date_of_exit','>',today());
-            })->select('student_records.*', \DB::raw('(SELECT concat_ws(first_name," ",middle_name," ",last_name) FROM students WHERE student_records.student_id = students.id ) as name'))->orderBy('name','asc')->simplePaginate(10);
+            })->select('student_records.*', \DB::raw('(SELECT concat_ws(" ", first_name,middle_name,last_name) FROM students WHERE student_records.student_id = students.id ) as name'))->orderBy('name','asc')->simplePaginate(10);
 
         $print_options = array();
 

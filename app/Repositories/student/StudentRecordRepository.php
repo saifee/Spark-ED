@@ -1246,7 +1246,7 @@ class StudentRecordRepository {
 
 		$batch = $this->batch->findOrFail($batch_id);
 
-		$student_records = $this->student_record->with('student', 'student.parent', 'admission')->filterBySession()->filterByBatchId($batch_id)->whereNull('date_of_exit')->select('student_records.*', \DB::raw('(SELECT concat_ws(first_name," ",middle_name," ",last_name) FROM students WHERE student_records.student_id = students.id ) as name'))->orderBy('name','asc')->get();
+		$student_records = $this->student_record->with('student', 'student.parent', 'admission')->filterBySession()->filterByBatchId($batch_id)->whereNull('date_of_exit')->select('student_records.*', \DB::raw('(SELECT concat_ws(" ", first_name,middle_name,last_name) FROM students WHERE student_records.student_id = students.id ) as name'))->orderBy('name','asc')->get();
 
 		return compact('student_records', 'batch');
 	}

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{env('APP_NAME')}}</title>
+	<title>{{config('app.name') ? : env('APP_NAME')}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
     	*{font-family:'Helvetica';}
-	    body{width:auto; max-width:800px;margin:0 auto;font-size:12px;}
+	    body{width:auto; @if(! gv(isset($print_options) ? $print_options : [], 'full_width')) max-width:800px; @endif margin:0 auto;font-size:12px;}
 	    h2{font-size: 16px;font-weight: bold;}
 	    .heading{font-size: 16px;font-weight: bold;}
 	    .font-weight-bold{font-weight: bold;}
@@ -44,6 +44,15 @@
 		    vertical-align: inherit;
 		    border-color: inherit;
 		}
+		.comma:not(:first-child) {
+		margin-left: -.3em;  
+		}
+		.comma:empty {
+		display: none;
+		}
+		.comma:not(:first-child):before {
+		content: ", ";
+		}
 		.table-padded-lg td {
 		    padding: 0.8em;
 		}
@@ -53,7 +62,7 @@
     </style>
 </head>
 <body>
-	    <div style="@if(! gv(isset($print_options) ? : [], 'no_border')) border:1px dashed #696969; @endif margin-top: 10px;">
+	    <div style="@if(! gv(isset($print_options) ? $print_options : [], 'no_border')) border:1px dashed #696969; @endif margin-top: 10px;">
 	        <div style="padding:10px;background: #ffffff;">
 	            <table border="0" style="width:100%;margin-top: 20px;height: 100px;">
 		            <tr>
@@ -67,12 +76,12 @@
 		                        </tr>
 		                        <tr>
 		                            <td>
-		                            	{{config('config.address_line_1')}}
-		                            	@if(config('config.address_line_2')), {{config('config.address_line_2')}} @endif
-		                            	@if(config('config.city')), {{config('config.city')}} @endif
-		                            	@if(config('config.state')), {{config('config.state')}} @endif
-		                            	@if(config('config.zipcode')), {{config('config.zipcode')}} @endif
-		                            	@if(config('config.country')), {{config('config.country')}} @endif
+		                            	<span class="comma">{{config('config.address_line_1')}}</span>
+		                            	@if(config('config.address_line_2'))<span class="comma">{{config('config.address_line_2')}}</span> @endif
+		                            	@if(config('config.city'))<span class="comma">{{config('config.city')}}</span> @endif
+		                            	@if(config('config.state'))<span class="comma">{{config('config.state')}}</span> @endif
+		                            	@if(config('config.zipcode'))<span class="comma">{{config('config.zipcode')}}</span> @endif
+		                            	@if(config('config.country'))<span class="comma">{{config('config.country')}}</span> @endif
 		                            </td>
 		                        </tr>
 		                        @if(config('config.phone'))

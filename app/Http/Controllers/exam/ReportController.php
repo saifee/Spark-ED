@@ -104,7 +104,7 @@ class ReportController extends Controller
         $this->authorize('report', Record::class);
 
         $data = $this->repo->topperReport($this->request->all());
-        $print_options = array('no_border' => true);
+        $print_options = array('no_border' => true, 'full_width' => true);
 
         return view('print.exam.topper_report', compact('data', 'print_options'));
     }

@@ -80,13 +80,13 @@ class ReportRepository
             );
         }
 
-        $term_exam = $exams->where('exam_term_id','!=',null)->count();
+        $term_exam = $exams->where('exam_term_id', '!=', null)->count();
 
         if ($term_exam == count($exams)) {
             $types = [
                 array('text' => trans('exam.term_wise_report'), 'value' => 'term')
             ];
-        } else if (! $term_exam) {
+        } elseif (! $term_exam) {
             $types = [
                 array('text' => trans('exam.no_term_wise_report'), 'value' => 'no_term')
             ];
@@ -99,7 +99,7 @@ class ReportRepository
 
         $exams = $data;
 
-        return compact('batches','types','exams');
+        return compact('batches', 'types', 'exams');
     }
 
     /**
@@ -114,22 +114,22 @@ class ReportRepository
 
         $batch = $this->batch->findOrFail($batch_id);
 
-        $query = $this->student_record->with('student','batch')->filterBySession()->filterbyBatchId($batch_id);
+        $query = $this->student_record->with('student', 'batch')->filterBySession()->filterbyBatchId($batch_id);
 
         if (\Auth::user()->hasRole(config('system.default_role.parent'))) {
             $student_ids = \Auth::user()->Parent->Students->pluck('id')->all();
-            $query->whereHas('student', function($q) use($student_ids) {
+            $query->whereHas('student', function ($q) use ($student_ids) {
                 $q->whereIn('id', $student_ids);
             });
-        } else if (\Auth::user()->hasRole(config('system.default_role.student'))) {
+        } elseif (\Auth::user()->hasRole(config('system.default_role.student'))) {
             $student_id = \Auth::user()->Student->id;
-            $query->whereHas('student', function($q) use($student_id) {
+            $query->whereHas('student', function ($q) use ($student_id) {
                 $q->where('id', $student_id);
             });
         }
 
-        if (\Auth::user()->can('access-exam-report')) { }
-        else if (\Auth::user()->can('access-class-teacher-wise-exam-report')) {
+        if (\Auth::user()->can('access-exam-report')) {
+        } elseif (\Auth::user()->can('access-class-teacher-wise-exam-report')) {
             $class_teachers = $this->getClassTeachers($batch_id);
 
             if (! amIClassTeacherOnDate($class_teachers)) {
@@ -151,7 +151,7 @@ class ReportRepository
      */
     private function getClassTeachers($batch_id)
     {
-        $class_teachers = $this->class_teacher->filterByBatchId($batch_id)->orderBy('date_effective','desc')->get(['employee_id','date_effective']);
+        $class_teachers = $this->class_teacher->filterByBatchId($batch_id)->orderBy('date_effective', 'desc')->get(['employee_id','date_effective']);
 
         $employee_id = optional(\Auth::user()->Employee)->id;
         foreach ($class_teachers as $class_teacher) {
@@ -167,22 +167,22 @@ class ReportRepository
         $batch = $this->batch->findOrFail($batch_id);
         $student_record_id = gv($params, 'student_record_id');
 
-        $query = $this->student_record->with('student','admission','batch','batch.course','batch.subjects','student.parent');
+        $query = $this->student_record->with('student', 'admission', 'batch', 'batch.course', 'batch.subjects', 'student.parent');
 
         if (\Auth::user()->hasRole(config('system.default_role.parent'))) {
             $student_ids = \Auth::user()->Parent->Students->pluck('id')->all();
-            $query->whereHas('student', function($q) use($student_ids) {
+            $query->whereHas('student', function ($q) use ($student_ids) {
                 $q->whereIn('id', $student_ids);
             });
-        } else if (\Auth::user()->hasRole(config('system.default_role.student'))) {
+        } elseif (\Auth::user()->hasRole(config('system.default_role.student'))) {
             $student_id = \Auth::user()->Student->id;
-            $query->whereHas('student', function($q) use($student_id) {
+            $query->whereHas('student', function ($q) use ($student_id) {
                 $q->where('id', $student_id);
             });
         }
 
-        if (\Auth::user()->can('access-exam-report')) { }
-        else if (\Auth::user()->can('access-class-teacher-wise-exam-report')) {
+        if (\Auth::user()->can('access-exam-report')) {
+        } elseif (\Auth::user()->can('access-class-teacher-wise-exam-report')) {
             $class_teachers = $this->getClassTeachers($batch_id);
 
             if (! amIClassTeacherOnDate($class_teachers)) {
@@ -205,18 +205,18 @@ class ReportRepository
         if ($type == 'term') {
             $exam_terms = $this->exam_term->with([
                 'exams',
-                'exams.schedules' => function($q1) use($batch_id) {
+                'exams.schedules' => function ($q1) use ($batch_id) {
                     $q1->where('batch_id', $batch_id);
-                }, 
+                },
                 'exams.schedules.assessment',
                 'exams.schedules.assessment.details',
                 'exams.schedules.records',
                 'exams.schedules.records.subject'
-            ])->filterBySession()->whereHas('exams', function($q2) use($batch_id) {
-                $q2->whereHas('schedules', function($q3) use($batch_id) {
+            ])->filterBySession()->whereHas('exams', function ($q2) use ($batch_id) {
+                $q2->whereHas('schedules', function ($q3) use ($batch_id) {
                     $q3->where('batch_id', $batch_id);
                 });
-            })->orderBy('position','asc')->get();
+            })->orderBy('position', 'asc')->get();
 
             $previous_colspan = 0;
             foreach ($exam_terms as $exam_term) {
@@ -233,21 +233,20 @@ class ReportRepository
                 ));
                 $previous_colspan = $colspan;
             }
-
         } else {
             $exams = $this->exam->whereNull('exam_term_id')->filterBySession()->with([
-                'schedules' => function($q1) use($batch_id) {
+                'schedules' => function ($q1) use ($batch_id) {
                     $q1->where('batch_id', $batch_id);
-                }, 
+                },
                 'schedules.grade',
                 'schedules.grade.details',
                 'schedules.assessment',
                 'schedules.assessment.details',
                 'schedules.records',
                 'schedules.records.subject'
-            ])->whereHas('schedules', function($q2) use($batch_id) {
+            ])->whereHas('schedules', function ($q2) use ($batch_id) {
                 $q2->where('batch_id', $batch_id);
-            })->orderBy('position','asc')->get();
+            })->orderBy('position', 'asc')->get();
 
             $header = $this->getHeader($exams, $header);
         }
@@ -292,7 +291,7 @@ class ReportRepository
                         if ($assessment_detail_id > 0) {
                             $assess_detail = searchByKey($record->getOption('assessment_details'), 'id', $assessment_detail_id);
                             $assessment_detail_is_applicable = gbv($assess_detail, 'is_applicable');
-                            $assessment_detail_max_mark = ($assessment_detail_is_applicable) ? gv($assess_detail, 'max_mark',0) : 0;
+                            $assessment_detail_max_mark = ($assessment_detail_is_applicable) ? gv($assess_detail, 'max_mark', 0) : 0;
                         } else {
                             $assessment_detail_max_mark = 0;
                             foreach ($record->getOption('assessment_details') as $assess_detail) {
@@ -306,7 +305,7 @@ class ReportRepository
                     if ($date && $assessment_detail_is_applicable) {
                         if ($is_absent) {
                             $mark = trans('exam.absent_code');
-                        } else if ($obtained_mark) {
+                        } elseif ($obtained_mark) {
                             $is_absent = gbv($obtained_mark, 'is_absent');
                             $mark = $is_absent ? config('exam.absent_code') : (float) gv($obtained_mark, 'ob', 0);
                         } else {
@@ -321,7 +320,7 @@ class ReportRepository
                             $subject_total = is_numeric($subject_total) ? $subject_total : 0;
                             $subject_total += $mark;
                         }
-                    } else if (! $assessment_detail_id) {
+                    } elseif (! $assessment_detail_id) {
                         $mark = $subject_total;
                     }
 
@@ -359,11 +358,11 @@ class ReportRepository
                         $mark = $this->getGrade($mark, $assessment_detail_max_mark, $grade);
                     }
 
-                    $marks[] = $mark; 
+                    $marks[] = $mark;
                 }
 
                 if ($grade && $assessment_detail_id < 0) {
-                    $max_mark = $show_subject_total ? $subject_assessment_total[$schedule_id][0] : $single_assessment_detail_id ? $subject_assessment_total[$schedule_id][$single_assessment_detail_id] : 0;
+                    $max_mark = $show_subject_total ? $subject_assessment_total[$schedule_id][0] : ($single_assessment_detail_id ? $subject_assessment_total[$schedule_id][$single_assessment_detail_id] : 0);
 
                     $subject_assessment_total[$schedule_id][-1] = $this->getGrade($max_mark, $exam_assessment_total[$schedule_id], $grade, 1);
                 }
@@ -391,12 +390,11 @@ class ReportRepository
 
         $observation_term_header = array();
         $observation_header = array();
-        $batch->load('observation','observation.details','grade','grade.details');
+        $batch->load('observation', 'observation.details', 'grade', 'grade.details');
 
         if ($type == 'term') {
             $observation_exam_terms = $this->getExams($batch, 'term');
             foreach ($observation_exam_terms as $exam_term) {
-
                 $include_term = 0;
                 foreach ($exam_term->exams as $exam) {
                     $schedule = $exam->schedules->first();
@@ -410,23 +408,25 @@ class ReportRepository
                     }
                 }
 
-                if ($include_term)
+                if ($include_term) {
                     array_push($observation_term_header, array(
                         'id' => $exam_term->id,
                         'name' => $exam_term->name,
                         'colspan' => $exam_term->exams->count()
                     ));
+                }
             }
         } else {
             $observation_exams = $this->getExams($batch);
             foreach ($observation_exams as $exam) {
                 $schedule = $exam->schedules->first();
-                if ($schedule->observation_marks)
+                if ($schedule->observation_marks) {
                     array_push($observation_header, array(
                         'exam_id' => $exam->id,
                         'name' => $exam->name,
                         'schedule' => $schedule
                     ));
+                }
             }
         }
 
@@ -464,11 +464,11 @@ class ReportRepository
 
         $last_date = (! $last_date) ? config('config.default_academic_session.end_date') : $last_date;
         $start_date = config('config.default_academic_session.start_date') >= toDate($student_record->date_of_entry) ? config('config.default_academic_session.start_date') : toDate($student_record->date_of_entry);
-        $holidays = $this->holiday->filterBySession()->where('date','<=',$last_date)->count();
+        $holidays = $this->holiday->filterBySession()->where('date', '<=', $last_date)->count();
         $working_days = dateDiff($start_date, $last_date);
 
-        $attendances = $this->attendance->dateOfAttendanceBetween(['start_date' => $start_date, 'end_date' => $last_date])->whereBatchId($batch_id)->where(function($q) {
-            $q->where(function($q1) {
+        $attendances = $this->attendance->dateOfAttendanceBetween(['start_date' => $start_date, 'end_date' => $last_date])->whereBatchId($batch_id)->where(function ($q) {
+            $q->where(function ($q1) {
                 $q1->whereNull('subject_id')->whereNull('session')->whereIsDefault(0);
             })->orWhere('is_default', 1);
         })->get();
@@ -488,7 +488,7 @@ class ReportRepository
         $summary['grade'] = isset($grade) ? $grade : null;
         $summary['working_days'] = $working_days;
         $summary['attendance'] = $working_days - $total_absent;
-        $summary['attendance_percentage'] = round((($working_days - $total_absent) / $working_days ) * 100,2);
+        $summary['attendance_percentage'] = $working_days ? round((($working_days - $total_absent) / $working_days) * 100, 2) : 0;
 
         return compact('student_record', 'summary');
     }
@@ -504,8 +504,9 @@ class ReportRepository
         foreach ($exams as $exam) {
             $schedule = $exam->schedules->first();
 
-            if (! $schedule)
+            if (! $schedule) {
                 continue;
+            }
 
             $assessment_details = $schedule->assessment->details->sortBy('position')->all();
             $grade = $schedule->grade;
@@ -546,7 +547,8 @@ class ReportRepository
                 'assessment_details' => $assessment_details,
                 'show_subject_total' => $show_subject_total,
                 'single_assessment_detail_id' => $single_assessment_detail_id,
-                'overall_pass_percentage' => $schedule->getOption('overall_pass_percentage')
+                'overall_pass_percentage' => $schedule->getOption('overall_pass_percentage'),
+                'show_result' => $schedule->getOption('show_result')
             );
         }
 
@@ -567,7 +569,7 @@ class ReportRepository
 
         $percentage = round(formatNumber(($mark / $max_mark) * 100));
 
-        $grade_detail = $grade->details->sortByDesc('min_percentage')->filter(function ($elem, $key) use($percentage) {
+        $grade_detail = $grade->details->sortByDesc('min_percentage')->filter(function ($elem, $key) use ($percentage) {
             return $elem->min_percentage <= $percentage && $elem->max_percentage >= $percentage;
         })->first();
 
@@ -593,22 +595,22 @@ class ReportRepository
         if ($type == 'term') {
             return $this->exam_term->with([
                 'exams',
-                'exams.schedules' => function($q1) use($batch) {
+                'exams.schedules' => function ($q1) use ($batch) {
                     $q1->where('batch_id', $batch->id);
                 }
-            ])->filterBySession()->whereHas('exams', function($q2) use($batch) {
-                $q2->whereHas('schedules', function($q3) use($batch) {
+            ])->filterBySession()->whereHas('exams', function ($q2) use ($batch) {
+                $q2->whereHas('schedules', function ($q3) use ($batch) {
                     $q3->where('batch_id', $batch->id);
                 });
-            })->orderBy('position','asc')->get();
+            })->orderBy('position', 'asc')->get();
         } else {
             return $this->exam->whereNull('exam_term_id')->filterBySession()->with([
-                'schedules' => function($q1) use($batch) {
+                'schedules' => function ($q1) use ($batch) {
                     $q1->where('batch_id', $batch->id);
                 }
-            ])->whereHas('schedules', function($q2) use($batch) {
+            ])->whereHas('schedules', function ($q2) use ($batch) {
                 $q2->where('batch_id', $batch->id);
-            })->orderBy('position','asc')->get();
+            })->orderBy('position', 'asc')->get();
         }
     }
 
@@ -640,8 +642,8 @@ class ReportRepository
             'assessment.details',
             'grade',
             'grade.details',
-            'records' => function($q) {
-                $q->whereNotNull('date')->orderBy('date','asc');
+            'records' => function ($q) {
+                $q->whereNotNull('date')->orderBy('date', 'asc');
             }
         ])->filterByExamId($exam_id)->filterByBatchId($batch_id)->first();
 
@@ -655,9 +657,9 @@ class ReportRepository
 
         $last_date_of_exam = $exam_schedule->records->last()->date;
         $last_date_of_exam = toDate($last_date_of_exam);
-        $student_records = $this->student_record->with('student','admission')->filterBySession()->filterbyBatchId($batch_id)->where('date_of_entry','<=', $last_date_of_exam)->where(function($q) use($last_date_of_exam) {
-            $q->where('date_of_exit',null)->orWhere(function($q1) use($last_date_of_exam) {
-                $q1->where('date_of_exit','!=',null)->where('date_of_exit','>=',$last_date_of_exam);
+        $student_records = $this->student_record->with('student', 'admission')->filterBySession()->filterbyBatchId($batch_id)->where('date_of_entry', '<=', $last_date_of_exam)->where(function ($q) use ($last_date_of_exam) {
+            $q->where('date_of_exit', null)->orWhere(function ($q1) use ($last_date_of_exam) {
+                $q1->where('date_of_exit', '!=', null)->where('date_of_exit', '>=', $last_date_of_exam);
             });
         })->get();
 
@@ -667,13 +669,13 @@ class ReportRepository
         $header = array();
         $assessment_header = array();
         foreach ($subjects as $subject) {
-            $record = $exam_schedule->records->where('date','!=',null)->where('subject_id',$subject->id)->first();
+            $record = $exam_schedule->records->where('date', '!=', null)->where('subject_id', $subject->id)->first();
             if ($record) {
                 $header[] = array('name' => $subject->code, 'shortcode' => $subject->shortcode, 'colspan' => $exam_assessment_details->count());
             }
         }
 
-        foreach($exam_assessment_details as $exam_assessment_detail) {
+        foreach ($exam_assessment_details as $exam_assessment_detail) {
             $assessment_header[] = $exam_assessment_detail->code;
         }
 
@@ -684,7 +686,7 @@ class ReportRepository
             $student_total = 0;
             $max_mark = 0;
             foreach ($subjects as $subject) {
-                $record = $exam_schedule->records->where('date','!=',null)->where('subject_id',$subject->id)->first();
+                $record = $exam_schedule->records->where('date', '!=', null)->where('subject_id', $subject->id)->first();
                 if (! $record) {
                     continue;
                 }
@@ -702,8 +704,8 @@ class ReportRepository
                         if ($exam_assessment_detail->id > 0) {
                             $assess_detail = searchByKey($record->getOption('assessment_details'), 'id', $exam_assessment_detail->id);
                             $assessment_detail_is_applicable = gbv($assess_detail, 'is_applicable');
-                            $assessment_detail_max_mark = ($assessment_detail_is_applicable) ? gv($assess_detail, 'max_mark',0) : 0;
-                        // } else {
+                            $assessment_detail_max_mark = ($assessment_detail_is_applicable) ? gv($assess_detail, 'max_mark', 0) : 0;
+                            // } else {
                         //     $assessment_detail_max_mark = 0;
                         //     foreach ($record->getOption('assessment_details') as $assess_detail) {
                         //         $assessment_detail_max_mark += gbv($assess_detail, 'is_applicable') ? gv($assess_detail, 'max_mark', 0) : 0;
@@ -715,10 +717,10 @@ class ReportRepository
 
                     $obtained_mark = searchByKey($assessment_marks, 'id', $exam_assessment_detail->id);
 
-                    if ($assessment_detail_is_applicable){
+                    if ($assessment_detail_is_applicable) {
                         if ($is_absent) {
                             $mark = trans('exam.absent_code');
-                        } else if($obtained_mark) {
+                        } elseif ($obtained_mark) {
                             $is_absent = gbv($obtained_mark, 'is_absent');
                             $mark = $is_absent ? config('exam.absent_code') : (float) gv($obtained_mark, 'ob', 0);
                         } else {
@@ -731,7 +733,6 @@ class ReportRepository
                     $student_total += (is_numeric($mark)) ? $mark : 0;
 
                     array_push($row, $mark);
-
                 }
             }
                 

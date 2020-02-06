@@ -153,6 +153,16 @@ class ReportRepository
                 if ($transaction->getOption('late_fee')) {
                     $fee_summary[] = array('head' => trans('finance.late_fee'), 'amount' => $transaction->getOption('late_fee'));
                 }
+
+                $additional_fee_charge = $transaction->getOption('additional_fee_charge');
+                if (gv($additional_fee_charge, 'amount', 0) > 0) {
+                    $fee_summary[] = array('head' => gv($additional_fee_charge, 'label'), 'amount' => gv($additional_fee_charge, 'amount', 0));
+                }
+
+                $additional_fee_discount = $transaction->getOption('additional_fee_discount');
+                if (gv($additional_fee_discount, 'amount', 0) > 0) {
+                    $fee_summary[] = array('head' => gv($additional_fee_discount, 'label'), 'amount' => gv($additional_fee_discount, 'amount', 0));
+                }
             }
 
             $concession_amount += $installment_concession;

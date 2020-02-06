@@ -316,7 +316,8 @@
         "position": "prefix",
         "decimal_place": 2,
         "number_value": "Rupee",
-        "decimal_value": "Paise"
+        "decimal_value": "Paise",
+        "format": "indian"
     },
     {
         "description": "Indonesia Rupiah",

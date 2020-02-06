@@ -94,15 +94,6 @@ class Subject extends Model
         return ($s) ? $q->where('name', '=', $name) : $q->where('name', 'like', '%'.$name.'%');
     }
 
-    public function scopeFilterByExactName($q, $name, $s = 0)
-    {
-        if (! $name) {
-            return $q;
-        }
-
-        return $q->where('name', '=', $name);
-    }
-
     public function scopeFilterByCode($q, $code, $s = 0)
     {
         if (! $code) {

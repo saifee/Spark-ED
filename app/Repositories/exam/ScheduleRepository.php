@@ -211,7 +211,7 @@ class ScheduleRepository
         $exam_assessment_with_details = $this->exam_assessment->getAll();
         $exams = $this->exam->selectAll();
 
-        return compact('batches','batch_with_subjects','exam_grades','exam_assessments','exams','exam_assessment_with_details');
+        return compact('batches', 'batch_with_subjects', 'exam_grades', 'exam_assessments', 'exams', 'exam_assessment_with_details');
     }
 
     /**
@@ -254,7 +254,7 @@ class ScheduleRepository
         $exam_assessment_id  = gv($params, 'exam_assessment_id');
         $records             = gv($params, 'records', []);
 
-        $query = $exam_schedule_id ? $this->exam_schedule->where('id','!=', $exam_schedule_id) : $this->exam_schedule;
+        $query = $exam_schedule_id ? $this->exam_schedule->where('id', '!=', $exam_schedule_id) : $this->exam_schedule;
 
         $exam_schedule_exists = $query->filterByExamId($exam_id)->filterByBatchId($batch_id)->count();
 
@@ -293,8 +293,9 @@ class ScheduleRepository
                 throw ValidationException::withMessages(['message' => trans('academic.could_not_find_subject')]);
             }
 
-            if ($has_no_exam)
+            if ($has_no_exam) {
                 continue;
+            }
 
             if (! $date) {
                 throw ValidationException::withMessages([$index.'_schedule_date' => trans('validation.required', ['attribute' => trans('exam.schedule_date')])]);
@@ -347,9 +348,13 @@ class ScheduleRepository
         ];
 
         if (! $exam_schedule_id) {
-            $formatted['options'] = array('overall_pass_percentage' => gv($params, 'overall_pass_percentage'));
             $formatted['observation_marks'] = [];
         }
+
+        $formatted['options'] = array(
+            'overall_pass_percentage' => gv($params, 'overall_pass_percentage'),
+            'show_result' => gbv($params, 'show_result')
+        );
 
         return $formatted;
     }
@@ -420,6 +425,7 @@ class ScheduleRepository
 
         $exam_schedule_options = $exam_schedule->options;
         $exam_schedule_options['overall_pass_percentage'] = gv($params, 'overall_pass_percentage');
+        $exam_schedule_options['show_result'] = gbv($params, 'show_result');
         $exam_schedule->options = $exam_schedule_options;
         $exam_schedule->save();
 
@@ -436,8 +442,12 @@ class ScheduleRepository
     {
         $exam_schedule = $this->findOrFail($id);
 
-        if ($exam_schedule->records()->count()) {
-            throw ValidationException::withMessages(['message' => trans('exam.schedule_associated_with_exam')]);
+        $exam_records = $exam_schedule->records;
+
+        foreach ($exam_records as $exam_record) {
+            if ($exam_record->marks) {
+                throw ValidationException::withMessages(['message' => trans('exam.schedule_associated_with_exam')]);
+            }
         }
 
         return $exam_schedule;
