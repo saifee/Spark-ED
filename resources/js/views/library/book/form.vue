@@ -333,8 +333,8 @@
                 let loader = this.$loading.show();
                 axios.get('/api/book/'+this.uuid)
                     .then(response => {
-                        this.bookForm.book_category = response.book.options.book_category;
-                        this.bookForm.course_id = response.book.options.course_id;
+                        this.bookForm.book_category = response.book.options ? response.book.options.book_category : null;
+                        this.bookForm.course_id = response.book.options ? response.book.options.course_id : null;
                         this.bookForm.title = response.book.title;
                         this.bookForm.isbn_number = response.book.isbn_number;
                         this.bookForm.edition = response.book.edition;
