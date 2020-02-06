@@ -161,10 +161,12 @@
                             </div>
                         </template>
                         </div>
-                        <div class="card-footer text-right d-none">
+                        <template v-if="showFilterFullPanel">
+                        <div class="card-footer text-right">
                             <button type="button" @click="showFilterPanel = false" class="btn btn-danger">{{trans('general.cancel')}}</button>
                             <button type="button" class="btn btn-info waves-effect waves-light" @click="getStudents">{{trans('general.filter')}}</button>
                         </div>
+                        </template>
                     </div>
                 </div>
             </transition>
