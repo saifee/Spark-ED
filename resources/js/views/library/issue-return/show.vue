@@ -154,7 +154,7 @@
                                             <td>{{book_log_detail.book_post_detail.book_post.book.title}}</td>
                                             <td>{{book_log_detail.book_post_detail.book_post.book.book_author.name}}</td>
                                             <td>{{formatCurrency(book_log_detail.book_post_detail.book_post.book.price)}}</td>
-                                            <td>{{book_log_detail.book_post_detail.book_condition.name}}</td>
+                                            <td v-if="book_log_detail.book_post_detail.book_condition">{{book_log_detail.book_post_detail.book_condition.name}}</td>
                                             <td>
                                                 <span v-if="book_log_detail.date_of_return">{{book_log_detail.date_of_return | moment}}</span>
                                                 <span v-else-if="book_log_detail.is_non_returnable" class="label label-danger">{{trans('library.non_returnable')}}</span>
