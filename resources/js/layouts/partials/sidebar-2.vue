@@ -1,6 +1,7 @@
 <template>
     <v-navigation-drawer
       v-if="getConfig('replace_sidebar_menu_with_top_menu') != 1"
+      v-model="drawer"
       fixed
       app
       :clipped="getConfig('sidebar_clipped') == 1"
@@ -24,7 +25,15 @@
 
     export default {
         components: {mainMenu},
+        data: () => ({
+            drawer: null,
+        }),
         mounted() {
+        },
+        watch: {
+          '$store.state.navigationDrawer': function () {
+            this.drawer = !this.drawer
+          },
         },
         methods : {
             logout(){
