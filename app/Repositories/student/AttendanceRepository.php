@@ -76,6 +76,7 @@ class AttendanceRepository
     public function fetch($params)
     {
         $batch_id = gv($params, 'batch_id');
+        $sort_by = gv($params, 'sort_by', 'name');
         $date = toDate(gv($params, 'date_of_attendance'));
         $submitted_date = toDate(gv($params, 'date_of_attendance'));
 
@@ -93,7 +94,7 @@ class AttendanceRepository
             });
         }
 
-        $student_records = $query->get();
+        $student_records = $query->select('student_records.*', \DB::raw('(SELECT concat_ws(first_name," ",middle_name," ",last_name) FROM students WHERE student_records.student_id = students.id ) as name'))->orderBy('name','asc')->get();
 
         if (! $batch_id) {
             throw ValidationException::withMessages(['message' => trans('academic.could_not_find_batch')]);
@@ -200,17 +201,20 @@ class AttendanceRepository
                 'id' => $student_record->id,
                 'sno' => $index + 1,
                 'name' => $student_record->student->name.$roll_number,
+                'roll_number' => $student_record->roll_number,
                 'attendances' => $attendance_data[$student_record->id],
                 'monthly_count' => $student_present[$student_record->id]
             );
         }
 
-        $student_data[] = array(
-            'sno' => '',
-            'name' => trans('general.total').' '.$student_records->count(),
-            'attendances' => $daily_present,
-            'monthly_count' => ''
-        );
+        if (count($student_data)) {
+            $student_data[] = array(
+                'sno' => '',
+                'name' => trans('general.total').' '.$student_records->count(),
+                'attendances' => $daily_present,
+                'monthly_count' => ''
+            );
+        }
 
         $is_editable = $this->canMarkAttendance([
             'batch_id' => $batch_id,
@@ -333,9 +337,17 @@ class AttendanceRepository
         $date_of_attendance = gv($params, 'date_of_attendance');
         $validate = gbv($params, 'validate', 0);
 
-        $class_teachers = $this->getClassTeachers($batch_id);
-
         $auth_user = \Auth::user();
+
+        if ($auth_user->hasAnyRole([config('system.default_role.student'), config('system.default_role.parent')])) {
+            if ($validate) {
+                throw ValidationException::withMessages(['message' => trans('general.permission_denied')]);
+            } else {
+                return false;
+            }
+        }
+
+        $class_teachers = $this->getClassTeachers($batch_id);
 
         if (! $auth_user->can('mark-student-attendance') && $auth_user->can('mark-class-teacher-wise-student-attendance') && ! amIClassTeacherOnDate($class_teachers, $date_of_attendance)) {
             if ($validate) {

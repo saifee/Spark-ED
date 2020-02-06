@@ -1246,7 +1246,7 @@ class StudentRecordRepository {
 
 		$batch = $this->batch->findOrFail($batch_id);
 
-		$student_records = $this->student_record->with('student', 'student.parent', 'admission')->filterBySession()->filterByBatchId($batch_id)->whereNull('date_of_exit')->get();
+		$student_records = $this->student_record->with('student', 'student.parent', 'admission')->filterBySession()->filterByBatchId($batch_id)->whereNull('date_of_exit')->select('student_records.*', \DB::raw('(SELECT concat_ws(first_name," ",middle_name," ",last_name) FROM students WHERE student_records.student_id = students.id ) as name'))->orderBy('name','asc')->get();
 
 		return compact('student_records', 'batch');
 	}
@@ -1301,6 +1301,11 @@ class StudentRecordRepository {
 			return [];
 		}
 
+        $array_of_name = explode(' ', $q);
+        $first_name = gv($array_of_name, 0);
+        $middle_name = (str_word_count($q) > 2) ? gv($array_of_name, 1) : '';
+        $last_name = gv($array_of_name, (str_word_count($q) > 2) ? 2 : 1);
+
 		$query = $this->student_record->select('id', 'student_id', 'batch_id')
 			->with([
 				'student:id,uuid,student_parent_id,first_name,middle_name,last_name,contact_number',
@@ -1308,9 +1313,9 @@ class StudentRecordRepository {
 				'batch:id,course_id,name',
 				'batch.course:id,name',
 				'admission:id,number,prefix',
-			])->where(function ($q1) use ($q) {
-			$q1->whereHas('student', function ($q2) use ($q) {
-				$q2->where(\DB::raw('concat_ws(first_name," ",middle_name," ",last_name)'), 'LIKE', '%' . $q . '%');
+			])->where(function ($q1) use ($q, $first_name, $middle_name, $last_name) {
+			$q1->whereHas('student', function ($q2) use ($q, $first_name, $middle_name, $last_name) {
+				$q2->filterByFirstName($first_name)->filterByMiddleName($middle_name)->filterByLastName($last_name);
 			})->orWhereHas('admission', function ($q3) use ($q) {
 				$q3->where(\DB::raw('concat_ws(prefix," ",LPAD(number, ' . config('config.admission_number_digit') . ', 0))'), 'LIKE', '%' . $q . '%');
 			});

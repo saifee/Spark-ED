@@ -141,7 +141,9 @@ class Event extends Model
     public function scopeUpcomingAndLive($q)
     {
         return $q->where(function($q1) {
-            $q1->where('start_date','>=',date('Y-m-d'))->orWhere('end_date','<=',date('Y-m-d'));
+            $q1->where('start_date','>=', date('Y-m-d'))->orWhere(function($q2) {
+                $q2->where('start_date', '<', date('Y-m-d'))->where('end_date','>=', date('Y-m-d'));
+            });
         });
     }
 }

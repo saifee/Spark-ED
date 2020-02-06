@@ -45,6 +45,7 @@ class CelebrationRepository
         $type = gv($params, 'type', 'student');
 
         if ($type == 'student') {
+
             $student_ids = $this->student->whereBetween(\DB::raw('DATE_FORMAT(date_of_birth, "%c-%d")'), [\DB::raw('DATE_FORMAT(?, "%c-%d")'), \DB::raw('DATE_FORMAT(?, "%c-%d")')])
                 ->orWhere(function($q) {
                     $q->whereRaw('MONTH(?) > MONTH(?)')
@@ -53,6 +54,14 @@ class CelebrationRepository
                         ->orWhereRaw('MONTH(date_of_birth) <= MONTH(?)');
                     });
                 })->setBindings([$start_date, $end_date, $start_date, $end_date, $start_date, $end_date])->get()->pluck('id')->all();
+
+            if (\Auth::user()->hasRole(config('system.default_role.student'))) {
+                $student_id = \Auth::user()->student->id;
+                $student_ids = in_array($student_id, $student_ids) ? [$student_id] : [];
+            } else if (\Auth::user()->hasRole(config('system.default_role.parent'))) {
+                $parent_student_ids = \Auth::user()->parent->students->pluck('id')->all();
+                $student_ids = array_intersect($parent_student_ids, $student_ids);
+            }
 
             $query = $this->student->with(['studentRecords','studentRecords.batch','studentRecords.batch.course','parent'])->whereHas('studentRecords', function ($q){
                 $q->whereNull('date_of_exit')->filterBySession();
@@ -66,6 +75,10 @@ class CelebrationRepository
                         ->orWhereRaw('MONTH(date_of_birth) <= MONTH(?)');
                     });
                 })->setBindings([$start_date, $end_date, $start_date, $end_date, $start_date, $end_date])->get()->pluck('id')->all();
+
+            if (\Auth::user()->hasAnyRole([config('system.default_role.student'), config('system.default_role.parent')])) {
+                $employee_ids = [];
+            }
 
             $query = $this->employee->with(['employeeDesignations','employeeDesignations.designation','employeeDesignations.designation.employeeCategory'])->whereHas('employeeTerms', function ($q) use($start_date, $end_date) {
                 $q->whereNull('date_of_leaving');

@@ -26,7 +26,7 @@ class CourseRequest extends FormRequest
         return [
             'name'             => 'required|min:2',
             'course_group_id'  => 'required',
-            'attendance_type'  => 'required|in:daily,subject_wise',
+            // 'attendance_type'  => 'required|in:daily,subject_wise',
             'registration_fee' => 'required_if:enable_registration_fee,1|integer|min:0'
         ];
     }
