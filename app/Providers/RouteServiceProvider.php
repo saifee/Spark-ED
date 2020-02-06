@@ -35,6 +35,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
+        Route::middleware('web')->namespace($this->namespace)->group(base_path('routes/import.php'));
+
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
