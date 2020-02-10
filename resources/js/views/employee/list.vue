@@ -247,7 +247,7 @@
                 employee_groups: [],
                 selected_group: null,
                 filter: {
-                    sort_by : 'first_name',
+                    sort_by : 'code',
                     order: 'asc',
                     page_length: helper.getConfig('page_length'),
                     first_name: '',
@@ -260,6 +260,10 @@
                     status: 'active'
                 },
                 orderByOptions: [
+                    {
+                        value: 'code',
+                        translation: i18n.employee.code
+                    },
                     {
                         value: 'first_name',
                         translation: i18n.employee.first_name
