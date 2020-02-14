@@ -83,8 +83,8 @@ class ConfigurationRepository
         $public_config = config('system.public_config');
 
         $config                  = $this->getSelectedByName($public_config);
-        $config['l']             = (\Storage::exists('.access_code') ? 1 : 0);
-        $config['v']             = \Storage::get('.version');
+        $config['l']             = 1; // (\Storage::exists('.access_code') ? 1 : 0);
+        $config['v']             = '1.0.0'; // \Storage::get('.version');
         $config['pagination']    = config('system.pagination');
         $config['mode']          = (config('app.mode') == 'test') ? 0 : 1;
         $config['default_roles'] = config('system.default_role');
