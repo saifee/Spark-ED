@@ -21,12 +21,12 @@ Route::post('/secret/data/importer/books', function (\Illuminate\Http\Request $r
         // create book
         $newBook = \App\Models\Library\Book::firstOrCreate(['title' => $line[1]], [
             'isbn_number' => $line[2],
-            'book_author_id' => \App\Models\Configuration\Library\BookAuthor::firstOrCreate(['name'=>'Unknown'])->id,
-            'book_language_id' => \App\Models\Configuration\Library\BookLanguage::firstOrCreate(['name'=>'Unknown'])->id,
-            'book_topic_id' => \App\Models\Configuration\Library\BookTopic::firstOrCreate(['name'=>'Unknown'])->id,
-            'book_publisher_id' => \App\Models\Configuration\Library\BookPublisher::firstOrCreate(['name'=>'Unknown'])->id,
-            'page' => 0,
-            'price' => 0,
+            'book_author_id' => \App\Models\Configuration\Library\BookAuthor::firstOrCreate(['name'=>isset($line[3]) && filled($line[3]) ? $line[3] : 'Unknown'])->id,
+            'book_language_id' => \App\Models\Configuration\Library\BookLanguage::firstOrCreate(['name'=>isset($line[4]) && filled($line[4]) ? $line[4] : 'Unknown'])->id,
+            'book_topic_id' => \App\Models\Configuration\Library\BookTopic::firstOrCreate(['name'=>isset($line[8]) && filled($line[8]) ? $line[8] : 'Unknown'])->id,
+            'book_publisher_id' => \App\Models\Configuration\Library\BookPublisher::firstOrCreate(['name'=>isset($line[7]) && filled($line[7]) ? $line[7] : 'Unknown'])->id,
+            'page' => isset($line[5]) && filled($line[5]) ? $line[5] : 0,
+            'price' => isset($line[6]) && filled($line[6]) ? $line[6] : 0,
             'uuid' => \Illuminate\Support\Str::uuid(),
             'options' => array(),
         ]);
@@ -39,7 +39,7 @@ Route::post('/secret/data/importer/books', function (\Illuminate\Http\Request $r
         ]);
         \App\Models\Library\BookPostDetail::create([
             'book_post_id' => $book_post->id,
-            'number' => '',
+            'number' => 1,
             'location' => '',
             'options' => array()
         ]);
