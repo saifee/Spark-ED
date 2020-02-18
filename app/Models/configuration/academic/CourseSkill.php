@@ -14,10 +14,10 @@ class CourseSkill extends Model
                             'position',
                             'name',
                             'options',
-                            'academic_session_id'
-                            'positive'
-                            'points'
-                            'course_skill_icon_id'
+                            'academic_session_id',
+                            'positive',
+                            'points',
+                            'course_skill_icon_id',
                         ];
     protected $casts = ['options' => 'array'];
     protected static $logName = 'course_skill';
