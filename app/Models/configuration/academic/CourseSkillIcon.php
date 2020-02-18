@@ -17,6 +17,11 @@ class CourseSkillIcon extends Model
         return array_get($this->options, $option);
     }
 
+    public function scopeInfo($q)
+    {
+        return $q;
+    }
+
     public function scopeFilterByName($q, $name, $s = 0)
     {
         if (! $name) {
