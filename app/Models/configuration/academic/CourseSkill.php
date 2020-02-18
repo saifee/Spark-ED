@@ -45,15 +45,6 @@ class CourseSkill extends Model
         return $q;
     }
 
-    public function scopeFilterByName($q, $name, $s = 0)
-    {
-        if (! $name) {
-            return $q;
-        }
-
-        return ($s) ? $q->where('name', '=', $name) : $q->where('name', 'like', '%'.$name.'%');
-    }
-
     public function scopeFilterById($q, $id)
     {
         if (! $id) {
