@@ -8,7 +8,7 @@ class CourseSkillIcon extends Model
 {
     protected $fillable = [
                             'name',
-                            'options'
+                            'options',
                         ];
     protected $casts = ['options' => 'array'];
 
