@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Configuration\Academic;
+namespace App\Models\Configuration\Behaviour;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CourseSkillIcon extends Model
+class SkillIcon extends Model
 {
     protected $fillable = [
                             'name',
