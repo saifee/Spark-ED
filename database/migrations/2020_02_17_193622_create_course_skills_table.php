@@ -18,8 +18,6 @@ class CreateCourseSkillsTable extends Migration
             $table->integer('position')->default(0);
             $table->bigInteger('academic_session_id')->unsigned()->nullable();
             $table->foreign('academic_session_id')->references('id')->on('academic_sessions')->onDelete('cascade');
-            $table->bigInteger('course_id')->unsigned()->nullable();
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->bigInteger('batch_id')->unsigned()->nullable();
             $table->foreign('batch_id')->references('id')->on('batches')->onDelete('cascade');
             $table->string('name')->nullable();
@@ -42,7 +40,6 @@ class CreateCourseSkillsTable extends Migration
         Schema::table('course_skills', function(Blueprint $table)
         {
             $table->dropForeign('course_skills_academic_session_id_foreign');
-            $table->dropForeign('course_skills_course_id_foreign');
             $table->dropForeign('course_skills_batch_id_foreign');
             $table->dropForeign('course_skills_course_skill_icon_id_foreign');
         });
