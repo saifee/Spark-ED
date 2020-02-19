@@ -95,6 +95,16 @@ export default [
         meta: { menu: 'module-configuration'}
     },
     {
+        path: '/configuration/behaviour/skill',
+        component: () => import(/* webpackChunkName: "js/configuration/behaviour/courseSkill/index" */ '@views/configuration/behaviour/skill/index'),
+        meta: { menu: 'module-configuration'}
+    },
+    {
+        path: '/configuration/behaviour/skill/:id/edit',
+        component: () => import(/* webpackChunkName: "js/configuration/behaviour/courseSkill/edit" */ '@views/configuration/behaviour/skill/edit'),
+        meta: { menu: 'module-configuration'}
+    },
+    {
         path: '/configuration/academic/institute',
         component: () => import(/* webpackChunkName: "js/configuration/academic/institute/index" */ '@views/configuration/academic/institute/index'),
         meta: { menu: 'module-configuration'}
