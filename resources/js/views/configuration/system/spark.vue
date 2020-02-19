@@ -10,6 +10,11 @@
                 <v-switch v-model="configForm.sidebar_clipped" :label="trans('configuration_spark.sidebar_clipped')" color="success" />
             </div>
         </div>
+        <div class="col-12 col-sm-6">
+            <div class="form-group">
+                <v-switch v-model="configForm.locales_deletable" :label="trans('configuration_spark.locales_deletable')" color="success" />
+            </div>
+        </div>
     </div>
 </template>
 
