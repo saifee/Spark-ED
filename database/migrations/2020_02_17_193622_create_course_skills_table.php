@@ -20,6 +20,8 @@ class CreateCourseSkillsTable extends Migration
             $table->foreign('academic_session_id')->references('id')->on('academic_sessions')->onDelete('cascade');
             $table->bigInteger('course_id')->unsigned()->nullable();
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->bigInteger('batch_id')->unsigned()->nullable();
+            $table->foreign('batch_id')->references('id')->on('batches')->onDelete('cascade');
             $table->string('name')->nullable();
             $table->integer('positive')->default(1);
             $table->integer('points')->default(1);
@@ -41,6 +43,7 @@ class CreateCourseSkillsTable extends Migration
         {
             $table->dropForeign('course_skills_academic_session_id_foreign');
             $table->dropForeign('course_skills_course_id_foreign');
+            $table->dropForeign('course_skills_batch_id_foreign');
             $table->dropForeign('course_skills_course_skill_icon_id_foreign');
         });
 
