@@ -90,7 +90,7 @@
                                         <div class="btn-group">
                                             <button class="btn btn-info btn-sm" v-tooltip="trans('configuration.edit_locale')" @click.prevent="editLocale(locale)"><i class="fas fa-edit"></i></button>
                                             <router-link :to="`/configuration/locale/${locale.locale}/auth`" class="btn btn-success btn-sm" v-tooltip="trans('locale.translation')"><i class="fas fa-arrow-circle-right"></i></router-link>
-                                            <template v-if="getConfig('locales_deletable')">
+                                            <template v-if="getConfig('locales_deletable') == 1">
                                             <button class="btn btn-danger btn-sm" :key="locale.id" v-if="locale.locale !== 'en'" v-confirm="{ok: confirmDelete(locale)}" v-tooltip="trans('configuration.delete_locale')"><i class="fas fa-trash"></i></button>
                                             </template>
                                         </div>
