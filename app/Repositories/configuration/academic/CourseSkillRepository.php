@@ -228,10 +228,6 @@ class CourseSkillRepository
     {
         $course_skill = $this->findOrFail($id);
 
-        if ($course_skill->courses()->count()) {
-            throw ValidationException::withMessages(['message' => trans('academic.course_skill_associated_with_course')]);
-        }
-
         return $course_skill;
     }
 
