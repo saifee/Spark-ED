@@ -1,0 +1,34 @@
+{
+  "skills": [
+    {
+      "name": "Helping others",
+      "points": 1,
+      "positive": 1
+    },
+    {
+      "name": "On task",
+      "points": 1,
+      "positive": 1
+    },
+    {
+      "name": "Participating",
+      "points": 1,
+      "positive": 1
+    },
+    {
+      "name": "Persistence",
+      "points": 1,
+      "positive": 1
+    },
+    {
+      "name": "Teamwork",
+      "points": 1,
+      "positive": 1
+    },
+    {
+      "name": "Working hard",
+      "points": 1,
+      "positive": 1
+    }
+  ]
+}
