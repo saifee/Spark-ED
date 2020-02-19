@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCourseSkillIconsTable extends Migration
+class CreateSkillIconsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCourseSkillIconsTable extends Migration
      */
     public function up()
     {
-        Schema::create('course_skill_icons', function (Blueprint $table) {
+        Schema::create('skill_icons', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->text('options')->nullable();
@@ -28,6 +28,6 @@ class CreateCourseSkillIconsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('course_skill_icons');
+        Schema::dropIfExists('skill_icons');
     }
 }
