@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Configuration\Academic;
+namespace App\Models\Configuration\Behaviour;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class CourseSkill extends Model
+class Skill extends Model
 {
     use LogsActivity;
 
@@ -17,10 +17,10 @@ class CourseSkill extends Model
                             'academic_session_id',
                             'positive',
                             'points',
-                            'course_skill_icon_id',
+                            'skill_icon_id',
                         ];
     protected $casts = ['options' => 'array'];
-    protected static $logName = 'course_skill';
+    protected static $logName = 'skill';
     protected static $logFillable = true;
     protected static $logOnlyDirty = true;
     protected static $ignoreChangedAttributes = ['updated_at'];
@@ -30,9 +30,9 @@ class CourseSkill extends Model
         return $this->belongsTo('App\Models\Academic\AcademicSession');
     }
 
-    public function course_skill_icon()
+    public function skill_icon()
     {
-        return $this->belongsTo('App\Models\Configuration\Academic\CourseSkillIcon');
+        return $this->belongsTo('App\Models\Configuration\Behaviour\SkillIcon');
     }
 
     public function batch()
@@ -47,7 +47,7 @@ class CourseSkill extends Model
 
     public function scopeInfo($q)
     {
-        return $q->with(['batch.course', 'course_skill_icon']);
+        return $q->with(['batch.course', 'skill_icon']);
     }
 
     public function scopeFilterById($q, $id)
