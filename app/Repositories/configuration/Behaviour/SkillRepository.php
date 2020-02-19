@@ -193,7 +193,7 @@ class SkillRepository
             'positive'             => gv($params, 'positive'),
             'points'               => gv($params, 'points'),
             'skill_icon_id' => gv($params, 'skill_icon_id'),
-            'id'            => gv($params, 'id'),
+            'batch_id'      => gv($params, 'batch_id'),
         ];
 
         if (! $skill_id) {
