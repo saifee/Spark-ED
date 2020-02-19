@@ -256,6 +256,18 @@
           <v-list-item-title>{{ trans('student.document_type_only') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+    </v-list-group>
+    <v-list-group
+      v-show="moduleConfigMenu && hasPermission('access-configuration')"
+      v-if="getConfig('made') === 'saudi'"
+      no-action
+    >
+      <template v-slot:activator>
+        <v-list-item-action><i class="fas fa-gem fa-fw" /></v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('behaviour.behaviour_configuration') }}</v-list-item-title>
+        </v-list-item-content>
+      </template>
       <v-list-item to="/configuration/behaviour/skill">
         <v-list-item-content>
           <v-list-item-title>{{ trans('behaviour.skill') }}</v-list-item-title>
