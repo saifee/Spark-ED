@@ -36,6 +36,11 @@ class CourseSkill extends Model
         return $this->belongsTo('App\Models\Academic\Course');
     }
 
+    public function course_skill_icon()
+    {
+        return $this->belongsTo('App\Models\Academic\CourseSkillIcon');
+    }
+
     public function batch()
     {
         return $this->belongsTo('App\Models\Academic\Batch');
@@ -48,7 +53,7 @@ class CourseSkill extends Model
 
     public function scopeInfo($q)
     {
-        return $q->with(['batch.course']);
+        return $q->with(['batch.course', 'course_skill_icon']);
     }
 
     public function scopeFilterById($q, $id)
