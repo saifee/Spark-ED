@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCourseSkillsTable extends Migration
+class CreateSkillsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCourseSkillsTable extends Migration
      */
     public function up()
     {
-        Schema::create('course_skills', function (Blueprint $table) {
+        Schema::create('skills', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('position')->default(0);
             $table->bigInteger('academic_session_id')->unsigned()->nullable();
@@ -44,6 +44,6 @@ class CreateCourseSkillsTable extends Migration
             $table->dropForeign('course_skills_course_skill_icon_id_foreign');
         });
 
-        Schema::dropIfExists('course_skills');
+        Schema::dropIfExists('skills');
     }
 }
