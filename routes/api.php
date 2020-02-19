@@ -256,6 +256,15 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::patch('/student/group/{id}', 'Configuration\Student\StudentGroupController@update');
 	Route::delete('/student/group/{id}', 'Configuration\Student\StudentGroupController@destroy');
 
+	Route::get('/behaviour/skill', 'Configuration\Behaviour\SkillController@index');
+	Route::get('/behaviour/skill/{id}', 'Configuration\Behaviour\SkillController@show');
+	Route::post('/behaviour/skill', 'Configuration\Behaviour\SkillController@store');
+	Route::post('/behaviour/skill/reorder', 'Configuration\Behaviour\SkillController@reorder');
+	Route::post('/behaviour/skill/print', 'Configuration\Behaviour\SkillController@print');
+	Route::post('/behaviour/skill/pdf', 'Configuration\Behaviour\SkillController@pdf');
+	Route::patch('/behaviour/skill/{id}', 'Configuration\Behaviour\SkillController@update');
+	Route::delete('/behaviour/skill/{id}', 'Configuration\Behaviour\SkillController@destroy');
+
 	Route::get('/employee/group', 'Configuration\Employee\EmployeeGroupController@index');
 	Route::get('/employee/group/{id}', 'Configuration\Employee\EmployeeGroupController@show');
 	Route::post('/employee/group', 'Configuration\Employee\EmployeeGroupController@store');
