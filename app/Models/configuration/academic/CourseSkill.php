@@ -38,7 +38,7 @@ class CourseSkill extends Model
 
     public function course_skill_icon()
     {
-        return $this->belongsTo('App\Models\Academic\CourseSkillIcon');
+        return $this->belongsTo('App\Models\Configuration\Academic\CourseSkillIcon');
     }
 
     public function batch()
