@@ -256,6 +256,11 @@
           <v-list-item-title>{{ trans('student.document_type_only') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item to="/configuration/behaviour/skill">
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('behaviour.skill') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list-group>
     <v-list-group
       v-show="moduleConfigMenu && hasPermission('access-configuration')"
