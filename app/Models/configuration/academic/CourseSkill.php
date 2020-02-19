@@ -11,6 +11,7 @@ class CourseSkill extends Model
 
     protected $fillable = [
                             'course_id',
+                            'batch_id',
                             'position',
                             'name',
                             'options',
@@ -35,6 +36,11 @@ class CourseSkill extends Model
         return $this->belongsTo('App\Models\Academic\Course');
     }
 
+    public function batch()
+    {
+        return $this->belongsTo('App\Models\Academic\Batch');
+    }
+
     public function getOption(string $option)
     {
         return array_get($this->options, $option);
@@ -42,7 +48,7 @@ class CourseSkill extends Model
 
     public function scopeInfo($q)
     {
-        return $q;
+        return $q->with(['batch.course']);
     }
 
     public function scopeFilterById($q, $id)
