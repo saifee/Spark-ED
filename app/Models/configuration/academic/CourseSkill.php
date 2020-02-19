@@ -10,7 +10,6 @@ class CourseSkill extends Model
     use LogsActivity;
 
     protected $fillable = [
-                            'course_id',
                             'batch_id',
                             'position',
                             'name',
@@ -29,11 +28,6 @@ class CourseSkill extends Model
     public function acadmicSession()
     {
         return $this->belongsTo('App\Models\Academic\AcademicSession');
-    }
-
-    public function course()
-    {
-        return $this->belongsTo('App\Models\Academic\Course');
     }
 
     public function course_skill_icon()
