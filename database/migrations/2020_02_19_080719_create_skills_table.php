@@ -23,8 +23,8 @@ class CreateSkillsTable extends Migration
             $table->string('name')->nullable();
             $table->integer('positive')->default(1);
             $table->integer('points')->default(1);
-            $table->bigInteger('course_skill_icon_id')->unsigned()->nullable();
-            $table->foreign('course_skill_icon_id')->references('id')->on('course_skill_icons')->onDelete('set null');
+            $table->bigInteger('skill_icon_id')->unsigned()->nullable();
+            $table->foreign('skill_icon_id')->references('id')->on('skill_icons')->onDelete('set null');
             $table->text('options')->nullable();
             $table->timestamps();
         });
@@ -37,11 +37,11 @@ class CreateSkillsTable extends Migration
      */
     public function down()
     {
-        Schema::table('course_skills', function(Blueprint $table)
+        Schema::table('skills', function(Blueprint $table)
         {
-            $table->dropForeign('course_skills_academic_session_id_foreign');
-            $table->dropForeign('course_skills_batch_id_foreign');
-            $table->dropForeign('course_skills_course_skill_icon_id_foreign');
+            $table->dropForeign('skills_academic_session_id_foreign');
+            $table->dropForeign('skills_batch_id_foreign');
+            $table->dropForeign('skills_skill_icon_id_foreign');
         });
 
         Schema::dropIfExists('skills');
