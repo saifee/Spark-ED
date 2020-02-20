@@ -1,5 +1,6 @@
 <?php return array (
   'add_new_skill' => 'Add New Skill',
+  'behaviour' => 'Behaviour',
   'behaviour_configuration' => 'Behaviour Configuration',
   'could_not_find_skill' => 'Could Not Find Skill',
   'delete_skill' => 'Delete Skill',

@@ -195,6 +195,12 @@
 					"translation": "student.parent",
 					"visibility": true,
 					"submenu": []
+				},
+				{
+					"name": "student_behaviour",
+					"translation": "behaviour.behaviour",
+					"visibility": true,
+					"submenu": []
 				}
 			]
 		}

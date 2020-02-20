@@ -100,6 +100,10 @@ export default [
         component: () => import(/* webpackChunkName: "js/student/admission/index" */ '@views/student/admission/index')
     },
     {
+        path: '/student/behaviour',
+        component: () => import(/* webpackChunkName: "js/student/behaviour/index" */ '@views/student/behaviour/index')
+    },
+    {
         path: '/student/roll/number',
         component: () => import(/* webpackChunkName: "js/student/rollNumber/index" */ '@views/student/roll-number/index')
     },
