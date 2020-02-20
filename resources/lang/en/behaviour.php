@@ -5,6 +5,7 @@
   'could_not_find_skill' => 'Could Not Find Skill',
   'delete_skill' => 'Delete Skill',
   'edit_skill' => 'Edit Skill',
+  'reset_bubbles' => 'Reset Bubbles',
   'skill' => 'Skill',
   'skill_added' => 'Skill Added',
   'skill_deleted' => 'Skill Deleted',
@@ -14,4 +15,5 @@
   'skill_points' => 'Points',
   'skill_positive' => 'Positive',
   'skill_updated' => 'Skill Updated',
+  'view_reports' => 'View Reports',
 );
