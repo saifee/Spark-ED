@@ -184,7 +184,7 @@ class SkillRepository
     {
         $skill_exist_query = ($skill_id) ? $this->skill->filterBySession()->where('id', '!=', $skill_id) : $this->skill->filterBySession();
 
-        if ($skill_exist_query->filterByName(gv($params, 'name'), 1)->count()) {
+        if ($skill_exist_query->filterByName(gv($params, 'name'), 1)->filterByBatchId(gv($params, 'batch_id'))->count()) {
             throw ValidationException::withMessages(['name' => trans('behaviour.skill_exists')]);
         }
 
