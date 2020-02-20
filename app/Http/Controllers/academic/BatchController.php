@@ -8,10 +8,12 @@ use App\Models\Academic\Batch;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Academic\BatchRequest;
 use App\Repositories\Academic\BatchRepository;
+use App\Repositories\Configuration\Behaviour\SkillRepository;
 
 class BatchController extends Controller
 {
     protected $request;
+    protected $skill;
     protected $repo;
 
     /**
@@ -21,9 +23,11 @@ class BatchController extends Controller
      */
     public function __construct(
         Request $request,
+        SkillRepository $skill,
         BatchRepository $repo
     ) {
         $this->request = $request;
+        $this->skill = $skill;
         $this->repo = $repo;
 
         $this->middleware('academic.session.set');
@@ -99,6 +103,18 @@ class BatchController extends Controller
         $this->authorize('create', Batch::class);
 
         $batch = $this->repo->create($this->request->all());
+
+        $behaviour_configurations = getSeedVar('behaviour');
+        foreach ($behaviour_configurations['skills'] as $skill) {
+            $this->skill->create([
+                'batch_id' => $batch->id,
+                'name' => $skill['name'],
+                'points' => $skill['points'],
+                'positive' => $skill['positive'],
+                'skill_icon_id' => null,
+                'options' => [],
+            ]);
+        }
 
         return $this->success(['message' => trans('academic.batch_added')]);
     }
