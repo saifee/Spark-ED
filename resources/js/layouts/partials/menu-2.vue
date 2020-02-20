@@ -743,7 +743,7 @@
         </v-list-item-content>
       </v-list-item>
       <v-list-item
-        v-if="(hasPermission('list-student') || hasPermission('list-class-teacher-wise-student')) && showMenu('behaviour')"
+        v-if="(hasPermission('list-student') || hasPermission('list-class-teacher-wise-student')) && showMenu('student_behaviour')"
         to="/student/behaviour"
       >
         <v-list-item-content>
