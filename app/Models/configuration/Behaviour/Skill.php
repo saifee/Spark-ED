@@ -59,6 +59,15 @@ class Skill extends Model
         return $q->where('id', '=', $id);
     }
 
+    public function scopeFilterByBatchId($q, $batch_id)
+    {
+        if (! $batch_id) {
+            return $q;
+        }
+
+        return $q->where('batch_id', '=', $batch_id);
+    }
+
     public function scopeFilterByAcademicSessionId($q, $academic_session_id)
     {
         if (! $academic_session_id) {
