@@ -103,7 +103,7 @@ class SkillRepository
         $skill = $this->skill->info()->filterBySession()->find($id);
 
         if (! $skill) {
-            throw ValidationException::withMessages([$field => trans('academic.could_not_find_skill')]);
+            throw ValidationException::withMessages([$field => trans('behaviour.could_not_find_skill')]);
         }
 
         return $skill;
@@ -185,7 +185,7 @@ class SkillRepository
         $skill_exist_query = ($skill_id) ? $this->skill->filterBySession()->where('id', '!=', $skill_id) : $this->skill->filterBySession();
 
         if ($skill_exist_query->filterByName(gv($params, 'name'), 1)->count()) {
-            throw ValidationException::withMessages(['name' => trans('academic.skill_exists')]);
+            throw ValidationException::withMessages(['name' => trans('behaviour.skill_exists')]);
         }
 
         $formatted = [
