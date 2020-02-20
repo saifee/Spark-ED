@@ -27,7 +27,7 @@ class TimetablePolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-timetable') || $user->can('edit-timetable');
+        return $user->hasRole('super-admin') || $user->can('create-timetable') || $user->can('edit-timetable');
     }
 
     /**
@@ -39,7 +39,7 @@ class TimetablePolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-timetable');
+        return $user->hasRole('super-admin') || $user->can('list-timetable');
     }
 
     /**
@@ -50,7 +50,7 @@ class TimetablePolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-timetable');
+        return $user->hasRole('super-admin') || $user->can('create-timetable');
     }
 
     /**
@@ -62,7 +62,7 @@ class TimetablePolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-timetable');
+        return $user->hasRole('super-admin') || $user->can('list-timetable');
     }
 
     /**
@@ -74,7 +74,7 @@ class TimetablePolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-timetable');
+        return $user->hasRole('super-admin') || $user->can('edit-timetable');
     }
 
     /**
@@ -86,6 +86,6 @@ class TimetablePolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-timetable');
+        return $user->hasRole('super-admin') || $user->can('delete-timetable');
     }
 }

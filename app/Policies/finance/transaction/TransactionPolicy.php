@@ -33,7 +33,7 @@ class TransactionPolicy
      */
     public function getPayrollTransactionPreRequisite(User $user)
     {
-        return $user->can('create-payroll-transaction') || $user->can('edit-payroll-transaction');
+        return $user->hasRole('super-admin') || $user->can('create-payroll-transaction') || $user->can('edit-payroll-transaction');
     }
 
     /**
@@ -45,7 +45,7 @@ class TransactionPolicy
      */
     public function listPayrollTransaction(User $user)
     {
-        return $user->can('list-payroll-transaction');
+        return $user->hasRole('super-admin') || $user->can('list-payroll-transaction');
     }
 
     /**
@@ -56,7 +56,7 @@ class TransactionPolicy
      */
     public function createPayrollTransaction(User $user)
     {
-        return $user->can('create-payroll-transaction');
+        return $user->hasRole('super-admin') || $user->can('create-payroll-transaction');
     }
 
     /**

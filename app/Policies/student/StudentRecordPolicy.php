@@ -24,7 +24,7 @@ class StudentRecordPolicy {
 	 * @return mixed
 	 */
 	public function list(User $user) {
-		return $user->can('list-student') || $user->can('list-class-teacher-wise-student');
+		return $user->hasRole('super-admin') || $user->can('list-student') || $user->can('list-class-teacher-wise-student');
 	}
 
 	/**
@@ -35,7 +35,7 @@ class StudentRecordPolicy {
 	 * @return mixed
 	 */
 	public function listFee(User $user) {
-		return $user->can('list-student-fee');
+		return $user->hasRole('super-admin') || $user->can('list-student-fee');
 	}
 
 	/**
@@ -46,7 +46,7 @@ class StudentRecordPolicy {
 	 * @return mixed
 	 */
 	public function setFee(User $user) {
-		return $user->can('set-fee');
+		return $user->hasRole('super-admin') || $user->can('set-fee');
 	}
 
 	/**
@@ -68,7 +68,7 @@ class StudentRecordPolicy {
 	 * @return mixed
 	 */
 	public function makePaymentAsParent(User $user) {
-		return $user->can('make-fee-payment') && $user->hasAnyRole([
+		return $user->hasRole('super-admin') || $user->can('make-fee-payment') && $user->hasAnyRole([
 			config('system.default_role.parent'),
 			config('system.default_role.student'),
 		]);
@@ -82,7 +82,7 @@ class StudentRecordPolicy {
 	 * @return mixed
 	 */
 	public function cancelPayment(User $user) {
-		return $user->can('cancel-fee-payment');
+		return $user->hasRole('super-admin') || $user->can('cancel-fee-payment');
 	}
 
 	/**
@@ -93,7 +93,7 @@ class StudentRecordPolicy {
 	 * @return mixed
 	 */
 	public function update(User $user) {
-		return $user->can('edit-student');
+		return $user->hasRole('super-admin') || $user->can('edit-student');
 	}
 
 	/**
@@ -104,7 +104,7 @@ class StudentRecordPolicy {
 	 * @return mixed
 	 */
 	public function promote(User $user) {
-		return $user->can('promote-student');
+		return $user->hasRole('super-admin') || $user->can('promote-student');
 	}
 
 	/**
@@ -115,7 +115,7 @@ class StudentRecordPolicy {
 	 * @return mixed
 	 */
 	public function terminate(User $user) {
-		return $user->can('terminate-student');
+		return $user->hasRole('super-admin') || $user->can('terminate-student');
 	}
 
 	/**
@@ -126,7 +126,7 @@ class StudentRecordPolicy {
 	 * @return mixed
 	 */
 	public function rollNumber(User $user) {
-		return $user->can('edit-roll-number');
+		return $user->hasRole('super-admin') || $user->can('edit-roll-number');
 	}
 
 	/**
@@ -137,6 +137,6 @@ class StudentRecordPolicy {
 	 * @return mixed
 	 */
 	public function idCard(User $user) {
-		return $user->can('generate-student-id-card');
+		return $user->hasRole('super-admin') || $user->can('generate-student-id-card');
 	}
 }

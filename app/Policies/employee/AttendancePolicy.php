@@ -28,7 +28,7 @@ class AttendancePolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('mark-employee-attendance') || $user->can('list-employee-attendance');
+        return $user->hasRole('super-admin') || $user->can('mark-employee-attendance') || $user->can('list-employee-attendance');
     }
 
     /**
@@ -40,7 +40,7 @@ class AttendancePolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-employee-attendance');
+        return $user->hasRole('super-admin') || $user->can('list-employee-attendance');
     }
 
     /**
@@ -52,6 +52,6 @@ class AttendancePolicy
      */
     public function create(User $user)
     {
-        return $user->can('mark-employee-attendance');
+        return $user->hasRole('super-admin') || $user->can('mark-employee-attendance');
     }
 }

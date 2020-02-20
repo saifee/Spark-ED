@@ -28,7 +28,7 @@ class TransportCirclePolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-transport-circle');
+        return $user->hasRole('super-admin') || $user->can('list-transport-circle');
     }
 
     /**
@@ -39,7 +39,7 @@ class TransportCirclePolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-transport-circle');
+        return $user->hasRole('super-admin') || $user->can('create-transport-circle');
     }
 
     /**
@@ -51,7 +51,7 @@ class TransportCirclePolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-transport-circle');
+        return $user->hasRole('super-admin') || $user->can('list-transport-circle');
     }
 
     /**
@@ -63,7 +63,7 @@ class TransportCirclePolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-transport-circle');
+        return $user->hasRole('super-admin') || $user->can('edit-transport-circle');
     }
 
     /**
@@ -75,6 +75,6 @@ class TransportCirclePolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-transport-circle');
+        return $user->hasRole('super-admin') || $user->can('delete-transport-circle');
     }
 }

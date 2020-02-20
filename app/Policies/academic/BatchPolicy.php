@@ -28,7 +28,7 @@ class BatchPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-batch') || $user->can('edit-batch');
+        return $user->hasRole('super-admin') || $user->can('create-batch') || $user->can('edit-batch');
     }
 
     /**
@@ -40,7 +40,7 @@ class BatchPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-batch');
+        return $user->hasRole('super-admin') || $user->can('list-batch');
     }
 
     /**
@@ -51,7 +51,7 @@ class BatchPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-batch');
+        return $user->hasRole('super-admin') || $user->can('create-batch');
     }
 
     /**
@@ -63,7 +63,7 @@ class BatchPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-batch');
+        return $user->hasRole('super-admin') || $user->can('list-batch');
     }
 
     /**
@@ -75,7 +75,7 @@ class BatchPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-batch');
+        return $user->hasRole('super-admin') || $user->can('edit-batch');
     }
 
     /**
@@ -87,6 +87,6 @@ class BatchPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-batch');
+        return $user->hasRole('super-admin') || $user->can('delete-batch');
     }
 }

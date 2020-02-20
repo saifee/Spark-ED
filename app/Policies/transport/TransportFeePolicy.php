@@ -28,7 +28,7 @@ class TransportFeePolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-transport-fee') || $user->can('edit-transport-fee');
+        return $user->hasRole('super-admin') || $user->can('create-transport-fee') || $user->can('edit-transport-fee');
     }
 
     /**
@@ -40,7 +40,7 @@ class TransportFeePolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-transport-fee');
+        return $user->hasRole('super-admin') || $user->can('list-transport-fee');
     }
 
     /**
@@ -51,7 +51,7 @@ class TransportFeePolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-transport-fee');
+        return $user->hasRole('super-admin') || $user->can('create-transport-fee');
     }
 
     /**
@@ -63,7 +63,7 @@ class TransportFeePolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-transport-fee');
+        return $user->hasRole('super-admin') || $user->can('list-transport-fee');
     }
 
     /**
@@ -75,7 +75,7 @@ class TransportFeePolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-transport-fee');
+        return $user->hasRole('super-admin') || $user->can('edit-transport-fee');
     }
 
     /**
@@ -87,6 +87,6 @@ class TransportFeePolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-transport-fee');
+        return $user->hasRole('super-admin') || $user->can('delete-transport-fee');
     }
 }

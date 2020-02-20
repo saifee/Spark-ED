@@ -28,7 +28,7 @@ class AcademicSessionPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-academic-session') || $user->can('edit-academic-session');
+        return $user->hasRole('super-admin') || $user->can('create-academic-session') || $user->can('edit-academic-session');
     }
 
     /**
@@ -40,7 +40,7 @@ class AcademicSessionPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-academic-session');
+        return $user->hasRole('super-admin') || $user->can('list-academic-session');
     }
 
     /**
@@ -52,7 +52,7 @@ class AcademicSessionPolicy
      */
     public function importPreviousSessionData(User $user)
     {
-        return $user->can('import-previous-session-data');
+        return $user->hasRole('super-admin') || $user->can('import-previous-session-data');
     }
 
     /**
@@ -63,7 +63,7 @@ class AcademicSessionPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-academic-session');
+        return $user->hasRole('super-admin') || $user->can('create-academic-session');
     }
 
     /**
@@ -75,7 +75,7 @@ class AcademicSessionPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-academic-session');
+        return $user->hasRole('super-admin') || $user->can('list-academic-session');
     }
 
     /**
@@ -87,7 +87,7 @@ class AcademicSessionPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-academic-session');
+        return $user->hasRole('super-admin') || $user->can('edit-academic-session');
     }
 
     /**
@@ -99,6 +99,6 @@ class AcademicSessionPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-academic-session');
+        return $user->hasRole('super-admin') || $user->can('delete-academic-session');
     }
 }

@@ -28,7 +28,7 @@ class FeeHeadPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-fee-head') || $user->can('edit-fee-head');
+        return $user->hasRole('super-admin') || $user->can('create-fee-head') || $user->can('edit-fee-head');
     }
 
     /**
@@ -40,7 +40,7 @@ class FeeHeadPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-fee-head');
+        return $user->hasRole('super-admin') || $user->can('list-fee-head');
     }
 
     /**
@@ -51,7 +51,7 @@ class FeeHeadPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-fee-head');
+        return $user->hasRole('super-admin') || $user->can('create-fee-head');
     }
 
     /**
@@ -63,7 +63,7 @@ class FeeHeadPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-fee-head');
+        return $user->hasRole('super-admin') || $user->can('list-fee-head');
     }
 
     /**
@@ -75,7 +75,7 @@ class FeeHeadPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-fee-head');
+        return $user->hasRole('super-admin') || $user->can('edit-fee-head');
     }
 
     /**
@@ -87,6 +87,6 @@ class FeeHeadPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-fee-head');
+        return $user->hasRole('super-admin') || $user->can('delete-fee-head');
     }
 }

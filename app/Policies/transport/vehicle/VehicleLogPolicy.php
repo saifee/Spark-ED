@@ -28,7 +28,7 @@ class VehicleLogPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-vehicle-log') || $user->can('edit-vehicle-log');
+        return $user->hasRole('super-admin') || $user->can('create-vehicle-log') || $user->can('edit-vehicle-log');
     }
 
     /**
@@ -40,7 +40,7 @@ class VehicleLogPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-vehicle-log');
+        return $user->hasRole('super-admin') || $user->can('list-vehicle-log');
     }
 
     /**
@@ -51,7 +51,7 @@ class VehicleLogPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-vehicle-log');
+        return $user->hasRole('super-admin') || $user->can('create-vehicle-log');
     }
 
     /**
@@ -63,7 +63,7 @@ class VehicleLogPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-vehicle-log');
+        return $user->hasRole('super-admin') || $user->can('list-vehicle-log');
     }
 
     /**
@@ -75,7 +75,7 @@ class VehicleLogPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-vehicle-log');
+        return $user->hasRole('super-admin') || $user->can('edit-vehicle-log');
     }
 
     /**
@@ -87,6 +87,6 @@ class VehicleLogPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-vehicle-log');
+        return $user->hasRole('super-admin') || $user->can('delete-vehicle-log');
     }
 }

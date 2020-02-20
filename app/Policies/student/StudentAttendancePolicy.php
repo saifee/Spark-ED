@@ -28,7 +28,7 @@ class StudentAttendancePolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasAnyPermission(['list-student-attendance','mark-student-attendance']);
+        return $user->hasRole('super-admin') || $user->hasAnyPermission(['list-student-attendance','mark-student-attendance']);
     }
 
     /**
@@ -40,7 +40,7 @@ class StudentAttendancePolicy
      */
     public function store(User $user)
     {
-        return $user->can('mark-student-attendance') || $user->can('mark-class-teacher-wise-student-attendance');
+        return $user->hasRole('super-admin') || $user->can('mark-student-attendance') || $user->can('mark-class-teacher-wise-student-attendance');
     }
 
     /**
@@ -52,6 +52,6 @@ class StudentAttendancePolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-student-attendance');
+        return $user->hasRole('super-admin') || $user->can('list-student-attendance');
     }
 }

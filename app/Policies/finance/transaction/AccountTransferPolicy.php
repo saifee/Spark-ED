@@ -33,7 +33,7 @@ class AccountTransferPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-account-transfer') || $user->can('edit-account-transfer');
+        return $user->hasRole('super-admin') || $user->can('create-account-transfer') || $user->can('edit-account-transfer');
     }
 
     /**
@@ -45,7 +45,7 @@ class AccountTransferPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-account-transfer');
+        return $user->hasRole('super-admin') || $user->can('list-account-transfer');
     }
 
     /**
@@ -56,7 +56,7 @@ class AccountTransferPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-account-transfer');
+        return $user->hasRole('super-admin') || $user->can('create-account-transfer');
     }
 
     /**
@@ -68,7 +68,7 @@ class AccountTransferPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-account-transfer');
+        return $user->hasRole('super-admin') || $user->can('list-account-transfer');
     }
 
     /**

@@ -28,7 +28,7 @@ class BookPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-book') || $user->can('edit-book');
+        return $user->hasRole('super-admin') || $user->can('create-book') || $user->can('edit-book');
     }
 
     /**
@@ -40,7 +40,7 @@ class BookPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-book');
+        return $user->hasRole('super-admin') || $user->can('list-book');
     }
 
     /**
@@ -51,7 +51,7 @@ class BookPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-book');
+        return $user->hasRole('super-admin') || $user->can('create-book');
     }
 
     /**
@@ -63,7 +63,7 @@ class BookPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-book');
+        return $user->hasRole('super-admin') || $user->can('list-book');
     }
 
     /**
@@ -75,7 +75,7 @@ class BookPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-book');
+        return $user->hasRole('super-admin') || $user->can('edit-book');
     }
 
     /**
@@ -87,6 +87,6 @@ class BookPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-book');
+        return $user->hasRole('super-admin') || $user->can('delete-book');
     }
 }

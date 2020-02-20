@@ -28,7 +28,7 @@ class NotesPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-notes') || $user->can('edit-notes');
+        return $user->hasRole('super-admin') || $user->can('create-notes') || $user->can('edit-notes');
     }
 
     /**
@@ -40,7 +40,7 @@ class NotesPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-notes');
+        return $user->hasRole('super-admin') || $user->can('list-notes');
     }
 
     /**
@@ -51,7 +51,7 @@ class NotesPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-notes');
+        return $user->hasRole('super-admin') || $user->can('create-notes');
     }
 
     /**
@@ -63,7 +63,7 @@ class NotesPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-notes');
+        return $user->hasRole('super-admin') || $user->can('list-notes');
     }
 
     /**
@@ -75,7 +75,7 @@ class NotesPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-notes');
+        return $user->hasRole('super-admin') || $user->can('edit-notes');
     }
 
     /**
@@ -87,6 +87,6 @@ class NotesPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-notes');
+        return $user->hasRole('super-admin') || $user->can('delete-notes');
     }
 }

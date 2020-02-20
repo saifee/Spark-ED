@@ -28,7 +28,7 @@ class SubjectPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-subject') || $user->can('edit-subject');
+        return $user->hasRole('super-admin') || $user->can('create-subject') || $user->can('edit-subject');
     }
 
     /**
@@ -40,7 +40,7 @@ class SubjectPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-subject');
+        return $user->hasRole('super-admin') || $user->can('list-subject');
     }
 
     /**
@@ -51,7 +51,7 @@ class SubjectPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-subject');
+        return $user->hasRole('super-admin') || $user->can('create-subject');
     }
 
     /**
@@ -63,7 +63,7 @@ class SubjectPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-subject');
+        return $user->hasRole('super-admin') || $user->can('list-subject');
     }
 
     /**
@@ -75,7 +75,7 @@ class SubjectPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-subject');
+        return $user->hasRole('super-admin') || $user->can('edit-subject');
     }
 
     /**
@@ -87,6 +87,6 @@ class SubjectPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-subject');
+        return $user->hasRole('super-admin') || $user->can('delete-subject');
     }
 }

@@ -28,7 +28,7 @@ class LessonPlanPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-lesson-plan') || $user->can('edit-lesson-plan');
+        return $user->hasRole('super-admin') || $user->can('create-lesson-plan') || $user->can('edit-lesson-plan');
     }
 
     /**
@@ -40,7 +40,7 @@ class LessonPlanPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-lesson-plan');
+        return $user->hasRole('super-admin') || $user->can('list-lesson-plan');
     }
 
     /**
@@ -51,7 +51,7 @@ class LessonPlanPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-lesson-plan');
+        return $user->hasRole('super-admin') || $user->can('create-lesson-plan');
     }
 
     /**
@@ -63,7 +63,7 @@ class LessonPlanPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-lesson-plan');
+        return $user->hasRole('super-admin') || $user->can('list-lesson-plan');
     }
 
     /**
@@ -75,7 +75,7 @@ class LessonPlanPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-lesson-plan');
+        return $user->hasRole('super-admin') || $user->can('edit-lesson-plan');
     }
 
     /**
@@ -87,6 +87,6 @@ class LessonPlanPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-lesson-plan');
+        return $user->hasRole('super-admin') || $user->can('delete-lesson-plan');
     }
 }

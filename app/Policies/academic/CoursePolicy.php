@@ -28,7 +28,7 @@ class CoursePolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-course') || $user->can('edit-course');
+        return $user->hasRole('super-admin') || $user->can('create-course') || $user->can('edit-course');
     }
 
     /**
@@ -40,7 +40,7 @@ class CoursePolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-course');
+        return $user->hasRole('super-admin') || $user->can('list-course');
     }
 
     /**
@@ -51,7 +51,7 @@ class CoursePolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-course');
+        return $user->hasRole('super-admin') || $user->can('create-course');
     }
 
     /**
@@ -63,7 +63,7 @@ class CoursePolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-course');
+        return $user->hasRole('super-admin') || $user->can('list-course');
     }
 
     /**
@@ -75,7 +75,7 @@ class CoursePolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-course');
+        return $user->hasRole('super-admin') || $user->can('edit-course');
     }
 
     /**
@@ -87,6 +87,6 @@ class CoursePolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-course');
+        return $user->hasRole('super-admin') || $user->can('delete-course');
     }
 }

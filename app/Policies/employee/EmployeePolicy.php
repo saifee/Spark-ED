@@ -25,7 +25,7 @@ class EmployeePolicy {
 	 * @return mixed
 	 */
 	public function preRequisite(User $user) {
-		return $user->can('create-employee') || $user->can('edit-employee');
+		return $user->hasRole('super-admin') || $user->can('create-employee') || $user->can('edit-employee');
 	}
 
 	/**
@@ -36,7 +36,7 @@ class EmployeePolicy {
 	 * @return mixed
 	 */
 	public function list(User $user) {
-		return $user->can('list-employee');
+		return $user->hasRole('super-admin') || $user->can('list-employee');
 	}
 
 	/**
@@ -47,7 +47,7 @@ class EmployeePolicy {
 	 * @return mixed
 	 */
 	public function create(User $user) {
-		return $user->can('create-employee');
+		return $user->hasRole('super-admin') || $user->can('create-employee');
 	}
 
 	/**
@@ -58,7 +58,7 @@ class EmployeePolicy {
 	 * @return mixed
 	 */
 	public function show(User $user) {
-		return $user->can('list-employee');
+		return $user->hasRole('super-admin') || $user->can('list-employee');
 	}
 
 	/**
@@ -69,7 +69,7 @@ class EmployeePolicy {
 	 * @return mixed
 	 */
 	public function update(User $user) {
-		return $user->can('edit-employee');
+		return $user->hasRole('super-admin') || $user->can('edit-employee');
 	}
 
 	/**
@@ -80,7 +80,7 @@ class EmployeePolicy {
 	 * @return mixed
 	 */
 	public function search(User $user) {
-		return $user->hasAnyPermission(['issue-book']);
+		return $user->hasRole('super-admin') || $user->hasAnyPermission(['issue-book']);
 	}
 
 	/**
@@ -91,6 +91,6 @@ class EmployeePolicy {
 	 * @return mixed
 	 */
 	public function idCard(User $user) {
-		return $user->can('generate-employee-id-card');
+		return $user->hasRole('super-admin') || $user->can('generate-employee-id-card');
 	}
 }

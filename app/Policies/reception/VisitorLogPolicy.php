@@ -28,7 +28,7 @@ class VisitorLogPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-visitor-log') || $user->can('edit-visitor-log');
+        return $user->hasRole('super-admin') || $user->can('create-visitor-log') || $user->can('edit-visitor-log');
     }
 
     /**
@@ -40,7 +40,7 @@ class VisitorLogPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-visitor-log');
+        return $user->hasRole('super-admin') || $user->can('list-visitor-log');
     }
 
     /**
@@ -51,7 +51,7 @@ class VisitorLogPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-visitor-log');
+        return $user->hasRole('super-admin') || $user->can('create-visitor-log');
     }
 
     /**
@@ -63,7 +63,7 @@ class VisitorLogPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-visitor-log');
+        return $user->hasRole('super-admin') || $user->can('list-visitor-log');
     }
 
     /**
@@ -75,7 +75,7 @@ class VisitorLogPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-visitor-log');
+        return $user->hasRole('super-admin') || $user->can('edit-visitor-log');
     }
 
     /**
@@ -87,6 +87,6 @@ class VisitorLogPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-visitor-log');
+        return $user->hasRole('super-admin') || $user->can('delete-visitor-log');
     }
 }

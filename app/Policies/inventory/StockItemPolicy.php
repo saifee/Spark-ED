@@ -28,7 +28,7 @@ class StockItemPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-stock-item') || $user->can('edit-stock-item');
+        return $user->hasRole('super-admin') || $user->can('create-stock-item') || $user->can('edit-stock-item');
     }
 
     /**
@@ -40,7 +40,7 @@ class StockItemPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-stock-item');
+        return $user->hasRole('super-admin') || $user->can('list-stock-item');
     }
 
     /**
@@ -51,7 +51,7 @@ class StockItemPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-stock-item');
+        return $user->hasRole('super-admin') || $user->can('create-stock-item');
     }
 
     /**
@@ -63,7 +63,7 @@ class StockItemPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-stock-item');
+        return $user->hasRole('super-admin') || $user->can('list-stock-item');
     }
 
     /**
@@ -75,7 +75,7 @@ class StockItemPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-stock-item');
+        return $user->hasRole('super-admin') || $user->can('edit-stock-item');
     }
 
     /**
@@ -87,6 +87,6 @@ class StockItemPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-stock-item');
+        return $user->hasRole('super-admin') || $user->can('delete-stock-item');
     }
 }

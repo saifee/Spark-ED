@@ -33,7 +33,7 @@ class IncomePolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-income') || $user->can('edit-income');
+        return $user->hasRole('super-admin') || $user->can('create-income') || $user->can('edit-income');
     }
 
     /**
@@ -45,7 +45,7 @@ class IncomePolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-income');
+        return $user->hasRole('super-admin') || $user->can('list-income');
     }
 
     /**
@@ -56,7 +56,7 @@ class IncomePolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-income');
+        return $user->hasRole('super-admin') || $user->can('create-income');
     }
 
     /**
@@ -68,7 +68,7 @@ class IncomePolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-income');
+        return $user->hasRole('super-admin') || $user->can('list-income');
     }
 
     /**

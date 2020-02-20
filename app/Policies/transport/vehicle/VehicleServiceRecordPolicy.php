@@ -28,7 +28,7 @@ class VehicleServiceRecordPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-vehicle-service-record') || $user->can('edit-vehicle-service-record');
+        return $user->hasRole('super-admin') || $user->can('create-vehicle-service-record') || $user->can('edit-vehicle-service-record');
     }
 
     /**
@@ -40,7 +40,7 @@ class VehicleServiceRecordPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-vehicle-service-record');
+        return $user->hasRole('super-admin') || $user->can('list-vehicle-service-record');
     }
 
     /**
@@ -51,7 +51,7 @@ class VehicleServiceRecordPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-vehicle-service-record');
+        return $user->hasRole('super-admin') || $user->can('create-vehicle-service-record');
     }
 
     /**
@@ -63,7 +63,7 @@ class VehicleServiceRecordPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-vehicle-service-record');
+        return $user->hasRole('super-admin') || $user->can('list-vehicle-service-record');
     }
 
     /**
@@ -75,7 +75,7 @@ class VehicleServiceRecordPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-vehicle-service-record');
+        return $user->hasRole('super-admin') || $user->can('edit-vehicle-service-record');
     }
 
     /**
@@ -87,6 +87,6 @@ class VehicleServiceRecordPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-vehicle-service-record');
+        return $user->hasRole('super-admin') || $user->can('delete-vehicle-service-record');
     }
 }

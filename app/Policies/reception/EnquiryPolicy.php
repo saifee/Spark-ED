@@ -28,7 +28,7 @@ class EnquiryPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-enquiry') || $user->can('edit-enquiry');
+        return $user->hasRole('super-admin') || $user->can('create-enquiry') || $user->can('edit-enquiry');
     }
 
     /**
@@ -40,7 +40,7 @@ class EnquiryPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-enquiry');
+        return $user->hasRole('super-admin') || $user->can('list-enquiry');
     }
 
     /**
@@ -51,7 +51,7 @@ class EnquiryPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-enquiry');
+        return $user->hasRole('super-admin') || $user->can('create-enquiry');
     }
 
     /**
@@ -63,7 +63,7 @@ class EnquiryPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-enquiry');
+        return $user->hasRole('super-admin') || $user->can('list-enquiry');
     }
 
     /**
@@ -75,7 +75,7 @@ class EnquiryPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-enquiry');
+        return $user->hasRole('super-admin') || $user->can('edit-enquiry');
     }
 
     /**
@@ -87,6 +87,6 @@ class EnquiryPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-enquiry');
+        return $user->hasRole('super-admin') || $user->can('delete-enquiry');
     }
 }

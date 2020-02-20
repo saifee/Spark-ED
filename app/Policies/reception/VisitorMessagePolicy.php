@@ -28,7 +28,7 @@ class VisitorMessagePolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-visitor-message');
+        return $user->hasRole('super-admin') || $user->can('list-visitor-message');
     }
 
     /**
@@ -40,7 +40,7 @@ class VisitorMessagePolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-visitor-message');
+        return $user->hasRole('super-admin') || $user->can('list-visitor-message');
     }
 
     /**
@@ -52,6 +52,6 @@ class VisitorMessagePolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-visitor-message');
+        return $user->hasRole('super-admin') || $user->can('delete-visitor-message');
     }
 }

@@ -28,7 +28,7 @@ class ClassTimingPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-class-timing');
+        return $user->hasRole('super-admin') || $user->can('list-class-timing');
     }
 
     /**
@@ -39,7 +39,7 @@ class ClassTimingPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-class-timing');
+        return $user->hasRole('super-admin') || $user->can('create-class-timing');
     }
 
     /**
@@ -51,7 +51,7 @@ class ClassTimingPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-class-timing');
+        return $user->hasRole('super-admin') || $user->can('list-class-timing');
     }
 
     /**
@@ -63,7 +63,7 @@ class ClassTimingPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-class-timing');
+        return $user->hasRole('super-admin') || $user->can('edit-class-timing');
     }
 
     /**
@@ -75,6 +75,6 @@ class ClassTimingPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-class-timing');
+        return $user->hasRole('super-admin') || $user->can('delete-class-timing');
     }
 }

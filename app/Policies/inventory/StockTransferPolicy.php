@@ -28,7 +28,7 @@ class StockTransferPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-stock-transfer') || $user->can('edit-stock-transfer');
+        return $user->hasRole('super-admin') || $user->can('create-stock-transfer') || $user->can('edit-stock-transfer');
     }
 
     /**
@@ -40,7 +40,7 @@ class StockTransferPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-stock-transfer');
+        return $user->hasRole('super-admin') || $user->can('list-stock-transfer');
     }
 
     /**
@@ -51,7 +51,7 @@ class StockTransferPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-stock-transfer');
+        return $user->hasRole('super-admin') || $user->can('create-stock-transfer');
     }
 
     /**
@@ -63,7 +63,7 @@ class StockTransferPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-stock-transfer');
+        return $user->hasRole('super-admin') || $user->can('list-stock-transfer');
     }
 
     /**
@@ -75,7 +75,7 @@ class StockTransferPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-stock-transfer');
+        return $user->hasRole('super-admin') || $user->can('edit-stock-transfer');
     }
 
     /**
@@ -87,6 +87,6 @@ class StockTransferPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-stock-transfer');
+        return $user->hasRole('super-admin') || $user->can('delete-stock-transfer');
     }
 }

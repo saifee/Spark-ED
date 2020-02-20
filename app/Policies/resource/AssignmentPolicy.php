@@ -28,7 +28,7 @@ class AssignmentPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-assignment') || $user->can('edit-assignment');
+        return $user->hasRole('super-admin') || $user->can('create-assignment') || $user->can('edit-assignment');
     }
 
     /**
@@ -40,7 +40,7 @@ class AssignmentPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-assignment');
+        return $user->hasRole('super-admin') || $user->can('list-assignment');
     }
 
     /**
@@ -51,7 +51,7 @@ class AssignmentPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-assignment');
+        return $user->hasRole('super-admin') || $user->can('create-assignment');
     }
 
     /**
@@ -63,7 +63,7 @@ class AssignmentPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-assignment');
+        return $user->hasRole('super-admin') || $user->can('list-assignment');
     }
 
     /**
@@ -75,7 +75,7 @@ class AssignmentPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-assignment');
+        return $user->hasRole('super-admin') || $user->can('edit-assignment');
     }
 
     /**
@@ -87,6 +87,6 @@ class AssignmentPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-assignment');
+        return $user->hasRole('super-admin') || $user->can('delete-assignment');
     }
 }

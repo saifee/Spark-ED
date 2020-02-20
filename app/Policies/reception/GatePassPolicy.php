@@ -28,7 +28,7 @@ class GatePassPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-gate-pass') || $user->can('edit-gate-pass');
+        return $user->hasRole('super-admin') || $user->can('create-gate-pass') || $user->can('edit-gate-pass');
     }
 
     /**
@@ -40,7 +40,7 @@ class GatePassPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-gate-pass');
+        return $user->hasRole('super-admin') || $user->can('list-gate-pass');
     }
 
     /**
@@ -51,7 +51,7 @@ class GatePassPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-gate-pass');
+        return $user->hasRole('super-admin') || $user->can('create-gate-pass');
     }
 
     /**
@@ -63,7 +63,7 @@ class GatePassPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-gate-pass');
+        return $user->hasRole('super-admin') || $user->can('list-gate-pass');
     }
 
     /**
@@ -75,7 +75,7 @@ class GatePassPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-gate-pass');
+        return $user->hasRole('super-admin') || $user->can('edit-gate-pass');
     }
 
     /**
@@ -87,6 +87,6 @@ class GatePassPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-gate-pass');
+        return $user->hasRole('super-admin') || $user->can('delete-gate-pass');
     }
 }

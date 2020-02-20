@@ -28,7 +28,7 @@ class ComplaintPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->can('create-complaint') || $user->can('edit-complaint');
+        return $user->hasRole('super-admin') || $user->can('create-complaint') || $user->can('edit-complaint');
     }
 
     /**
@@ -40,7 +40,7 @@ class ComplaintPolicy
      */
     public function list(User $user)
     {
-        return $user->can('list-complaint');
+        return $user->hasRole('super-admin') || $user->can('list-complaint');
     }
 
     /**
@@ -51,7 +51,7 @@ class ComplaintPolicy
      */
     public function create(User $user)
     {
-        return $user->can('create-complaint');
+        return $user->hasRole('super-admin') || $user->can('create-complaint');
     }
 
     /**
@@ -63,7 +63,7 @@ class ComplaintPolicy
      */
     public function show(User $user)
     {
-        return $user->can('list-complaint');
+        return $user->hasRole('super-admin') || $user->can('list-complaint');
     }
 
     /**
@@ -75,7 +75,7 @@ class ComplaintPolicy
      */
     public function update(User $user)
     {
-        return $user->can('edit-complaint');
+        return $user->hasRole('super-admin') || $user->can('edit-complaint');
     }
 
     /**
@@ -87,6 +87,6 @@ class ComplaintPolicy
      */
     public function delete(User $user)
     {
-        return $user->can('delete-complaint');
+        return $user->hasRole('super-admin') || $user->can('delete-complaint');
     }
 }
