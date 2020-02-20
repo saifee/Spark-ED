@@ -20,6 +20,7 @@ use App\Repositories\Configuration\Academic\IdCardTemplateRepository;
 use App\Repositories\Configuration\Finance\Transaction\PaymentMethodRepository;
 use App\Repositories\Employee\EmployeeRepository;
 use App\Repositories\Finance\AccountRepository;
+use App\Repositories\Finance\Fee\FeeHeadRepository;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -33,6 +34,7 @@ class StudentRecordRepository {
 	protected $account;
 	protected $payment_method;
 	protected $fee_installment;
+  protected $fee_head;
 	protected $transaction;
 	protected $student_fee_record_detail;
 	protected $course_group;
@@ -58,6 +60,7 @@ class StudentRecordRepository {
 		AccountRepository $account,
 		PaymentMethodRepository $payment_method,
 		FeeInstallment $fee_installment,
+    FeeHeadRepository $fee_head,
 		Transaction $transaction,
 		StudentFeeRecordDetail $student_fee_record_detail,
 		CourseGroupRepository $course_group,
@@ -77,6 +80,7 @@ class StudentRecordRepository {
 		$this->account = $account;
 		$this->payment_method = $payment_method;
 		$this->fee_installment = $fee_installment;
+		$this->fee_head = $fee_head;
 		$this->transaction = $transaction;
 		$this->student_fee_record_detail = $student_fee_record_detail;
 		$this->course_group = $course_group;
@@ -449,8 +453,9 @@ class StudentRecordRepository {
 		$transport_circles = $this->transport_circle->filterBySession($student_record->academic_session_id)->get(['name', 'id']);
 		$fee_concessions = $this->fee_concession->filterBySession($student_record->academic_session_id)->get(['name', 'id']);
 		$late_fee_frequencies = getLateFeeFrequencies();
+    $fee_heads = $this->fee_head->getAll();
 
-		return compact('student_record', 'transport_circles', 'fee_concessions', 'late_fee_frequencies');
+		return compact('student_record', 'transport_circles', 'fee_concessions', 'late_fee_frequencies', 'fee_heads');
 	}
 
 	/**
