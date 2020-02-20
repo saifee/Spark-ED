@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Academic\AcademicSession;
 use App\Models\Configuration\Behaviour\Skill;
+use App\Models\Configuration\Behaviour\SkillIcon;
 use App\Repositories\Academic\BatchRepository;
 use Illuminate\Console\Command;
 
@@ -55,6 +56,12 @@ class BehaviourInit extends Command
 
         $configurations = getSeedVar('behaviour');
 
+        $skill_icons = $configurations['skill_icons'];
+        foreach ($skill_icons as $skill_icon) {
+            SkillIcon::firstOrCreate(['name' => $skill_icon]);
+        }
+
+
         $skills = $configurations['skills'];
 
         $batches = $this->batch->getQuery()->whereHas('course', function ($q1) use ($default_academic_session) {
@@ -70,7 +77,7 @@ class BehaviourInit extends Command
                 ], [
                     'points' => $skill['points'],
                     'positive' => $skill['positive'],
-                    'skill_icon_id' => null,
+                    'skill_icon_id' => optional(SkillIcon::where('name',$skill['icon'])->first())->id,
                     'options' => [],
                 ]);
             }
