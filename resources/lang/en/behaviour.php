@@ -2,6 +2,8 @@
   'add_new_skill' => 'Add New Skill',
   'behaviour' => 'Behaviour',
   'behaviour_configuration' => 'Behaviour Configuration',
+  'behaviour_module_description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id eius, cupiditate ad nostrum cumque quam exercitationem officiis magnam facere velit, animi culpa iusto sequi. Excepturi voluptatem odio et, voluptates magni.',
+  'behaviour_module_title' => 'Behaviour',
   'could_not_find_skill' => 'Could Not Find Skill',
   'delete_skill' => 'Delete Skill',
   'edit_skill' => 'Edit Skill',
