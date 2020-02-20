@@ -79,6 +79,8 @@
                                     </div>
                                     <div class="col-12 col-sm-2">
                                         <div class="form-group">
+                                            <v-switch v-model="installment.fee_concession" color="success" @change="onFeeConcessionChange(installment.fee_concession, installment)"></v-switch>
+                                            <template v-if="false">
                                             <select v-model="installment.fee_concession_id" class="custom-select col-12" @change="" :name="getFeeConcessionFieldName(installment)" :disabled="installment.status != 'unpaid'">
                                                 <option :value="null">{{trans('finance.no_fee_concession')}}</option>
                                                 <option v-for="fee_concession in fee_concessions" v-bind:value="fee_concession.id">
@@ -86,6 +88,7 @@
                                                 </option>
                                             </select>
                                             <show-error :form-name="studentFeeRecordForm" :prop-name="getFeeConcessionFieldName(installment)"></show-error>
+                                            </template>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-2">
@@ -94,6 +97,38 @@
                                                 <input type="checkbox" class="custom-control-input" value="1" v-model="fee_head.value" :disabled="installment.status != 'unpaid'">
                                                 <span class="custom-control-label" v-text="fee_head.name"></span>
                                             </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 offset-2" v-if="installment.fee_concession">
+                                        <div class="border px-3 pt-3 mb-3">
+                                            <div class="row" v-for="fee_head in installment.fee_heads">
+                                                <div class="col-12 col-sm-4">
+                                                    <div class="form-group">
+                                                        <label for="" class="m-t-10">{{fee_head.fee_head_name}}</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-4">
+                                                    <div class="form-group">
+                                                        <template v-if="fee_head.type">
+                                                            <currency-input :position="default_currency.position" :symbol="default_currency.symbol" :name="`discount_${fee_head.fee_head_id}`" :placeholder="trans('finance.fee_concession_discount')" v-model="fee_head.amount"></currency-input>
+                                                        </template>
+                                                        <template v-else>
+                                                            <div class="input-group mb-3">
+                                                                <input class="form-control" type="text" v-model="fee_head.amount" :name="`discount_${fee_head.fee_head_id}`" :placeholder="trans('finance.fee_concession_discount')">
+                                                                <div class="input-group-append">
+                                                                    <span class="input-group-text" id="basic-addon1">%</span>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                        <show-error :form-name="studentFeeRecordForm" :prop-name="`discount_${fee_head.fee_head_id}`"></show-error>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-2">
+                                                    <div class="form-group">
+                                                        <switches class="m-l-20 m-t-10" v-model="fee_head.type" theme="bootstrap" color="success" v-tooltip="fee_head.type ? trans('finance.turn_off_for_discount_in_percent') : trans('finance.turn_on_for_discount_in_amount')"></switches>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -147,6 +182,7 @@
         components : {studentSummary},
         data() {
             return {
+                default_currency: helper.getConfig('default_currency'),
                 uuid:this.$route.params.uuid,
                 record_id:this.$route.params.record_id,
                 student_record: {
@@ -156,6 +192,7 @@
                 },
                 transport_circles: [],
                 fee_concessions: [],
+                fee_heads: [],
                 late_fee_frequencies: [],
                 studentFeeRecordForm: new Form({
                     fee_groups: []
@@ -171,6 +208,19 @@
             this.getRecord();
         },
         methods: {
+            onFeeConcessionChange(val, installment){
+                installment.fee_heads = []
+                if (val) {
+                      this.fee_heads.forEach(fee_head => {
+                          installment.fee_heads.push({
+                              fee_head_id: fee_head.id,
+                              fee_head_name: fee_head.name+' ('+fee_head.fee_group.name+')',
+                              amount: 0,
+                              type: 0
+                          })
+                      })
+                }
+            },
             hasPermission(permission){
                 return helper.hasPermission(permission);
             },
@@ -188,6 +238,7 @@
                         this.transport_circles = response.transport_circles;
                         this.fee_concessions = response.fee_concessions;
                         this.late_fee_frequencies = response.late_fee_frequencies;
+                        this.fee_heads = response.fee_heads;
 
                         this.student_record.fee_allocation.fee_allocation_groups.forEach(fee_allocation_group => {
                             let installments = [];
@@ -223,6 +274,7 @@
                                     fee_concession_id: installment.fee_concession_id,
                                     status: installment.status,
                                     remarks: installment.remarks,
+                                    fee_heads: [],
                                     heads: heads
                                 })
                             });
