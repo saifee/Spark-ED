@@ -80,7 +80,7 @@
                                     <div class="col-12 col-sm-2">
                                         <div class="form-group">
                                             <template v-if="getConfig('made') !== 'saudi'">
-                                            <v-switch v-model="installment.fee_concession" color="success" @change="onFeeConcessionChange(installment.fee_concession, installment)" v-if="installment.fee_concession_id === null"></v-switch>
+                                            <v-switch v-model="installment.fee_concession_switch" color="success" @change="onFeeConcessionChange(installment.fee_concession_switch, installment)" v-if="installment.fee_concession_id === null"></v-switch>
                                             <span v-else>{{ trans('finance.fee_concession_exists') }}</span>
                                             </template>
                                             <template v-else>
