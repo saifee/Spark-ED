@@ -259,8 +259,8 @@ class StudentRecordRepository {
 				$transport_circle_id = gv($installment, 'transport_circle_id');
 				$fee_concession_id = gv($installment, 'fee_concession_id');
 
-				$fee_concession = gbv($installment, 'fee_concession');
-				if ($fee_concession) {
+				$fee_concession_switch = gbv($installment, 'fee_concession_switch');
+				if ($fee_concession_switch) {
 						$name = date('Y-m-d H:i:s');
 						$description = 'Auto-generated';
 						$fee_heads = gv($installment, 'fee_heads');
