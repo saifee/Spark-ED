@@ -719,8 +719,7 @@ class RegistrationRepository
 
         \DB::beginTransaction();
 
-        $fee_concession = gv($params, 'fee_concession');
-
+        $fee_concession = gbv($params, 'fee_concession');
         if ($fee_concession) {
             $name = date('Y-m-d H:i:s');
             $description = 'Auto-generated';
