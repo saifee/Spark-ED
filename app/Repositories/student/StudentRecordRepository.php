@@ -258,6 +258,19 @@ class StudentRecordRepository {
 				$fee_installment_id = gv($installment, 'fee_installment_id');
 				$transport_circle_id = gv($installment, 'transport_circle_id');
 				$fee_concession_id = gv($installment, 'fee_concession_id');
+
+				$fee_concession = gbv($installment, 'fee_concession');
+				if ($fee_concession) {
+						$name = date('Y-m-d H:i:s');
+						$description = 'Auto-generated';
+						$fee_heads = gv($installment, 'fee_heads');
+						$new_fee_concession = $this->fee_concession->create(compact('name', 'description', 'fee_heads'));
+						$fee_concession_id = $new_fee_concession->id;
+
+						// refresh fee_concession_ids
+						$fee_concession_ids = $this->fee_concession->filterBySession($student_record->academic_session_id)->get()->pluck('id')->all();
+				}
+
 				$late_fee_applicable = gbv($installment, 'late_fee_applicable');
 				$late_fee_frequency = gv($installment, 'late_fee_frequency');
 				$due_date = toDate(gv($installment, 'due_date'));
