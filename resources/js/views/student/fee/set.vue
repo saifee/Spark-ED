@@ -79,7 +79,8 @@
                                     </div>
                                     <div class="col-12 col-sm-2">
                                         <div class="form-group">
-                                            <v-switch v-model="installment.fee_concession" color="success" @change="onFeeConcessionChange(installment.fee_concession, installment)"></v-switch>
+                                            <v-switch v-model="installment.fee_concession" color="success" @change="onFeeConcessionChange(installment.fee_concession, installment)" v-if="installment.fee_concession_id === null"></v-switch>
+                                            <span v-else>{{ trans('finance.fee_concession_exists') }}</span>
                                             <template v-if="false">
                                             <select v-model="installment.fee_concession_id" class="custom-select col-12" @change="" :name="getFeeConcessionFieldName(installment)" :disabled="installment.status != 'unpaid'">
                                                 <option :value="null">{{trans('finance.no_fee_concession')}}</option>
