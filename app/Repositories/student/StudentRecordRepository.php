@@ -264,7 +264,8 @@ class StudentRecordRepository {
 						$name = date('Y-m-d H:i:s');
 						$description = 'Auto-generated';
 						$fee_heads = gv($installment, 'fee_heads');
-						$new_fee_concession = $this->fee_concession->create(compact('name', 'description', 'fee_heads'));
+						$academic_session_id = $student_record->academic_session_id;
+						$new_fee_concession = $this->fee_concession->create(compact('name', 'description', 'fee_heads', 'academic_session_id'));
 						$fee_concession_id = $new_fee_concession->id;
 
 						// refresh fee_concession_ids
