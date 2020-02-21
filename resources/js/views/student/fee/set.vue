@@ -102,7 +102,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-8 offset-2" v-if="installment.fee_concession">
+                                    <div class="col-8 offset-2" v-if="installment.fee_concession_switch">
                                         <div class="border px-3 pt-3 mb-3">
                                             <div class="row" v-for="fee_head in installment.fee_heads">
                                                 <div class="col-12 col-sm-4">
