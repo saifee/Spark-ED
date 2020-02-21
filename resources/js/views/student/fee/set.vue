@@ -79,9 +79,11 @@
                                     </div>
                                     <div class="col-12 col-sm-2">
                                         <div class="form-group">
+                                            <template v-if="getConfig('made') !== 'saudi'">
                                             <v-switch v-model="installment.fee_concession" color="success" @change="onFeeConcessionChange(installment.fee_concession, installment)" v-if="installment.fee_concession_id === null"></v-switch>
                                             <span v-else>{{ trans('finance.fee_concession_exists') }}</span>
-                                            <template v-if="false">
+                                            </template>
+                                            <template v-else>
                                             <select v-model="installment.fee_concession_id" class="custom-select col-12" @change="" :name="getFeeConcessionFieldName(installment)" :disabled="installment.status != 'unpaid'">
                                                 <option :value="null">{{trans('finance.no_fee_concession')}}</option>
                                                 <option v-for="fee_concession in fee_concessions" v-bind:value="fee_concession.id">
