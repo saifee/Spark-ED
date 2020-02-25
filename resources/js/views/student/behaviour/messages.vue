@@ -52,6 +52,7 @@
                               type="text"
                             outlined
                             append-outer-icon="send"
+                            @keyup.enter="sendMessage"
                             @click:append-outer="sendMessage"
                           ></v-text-field>
                       </v-col>
