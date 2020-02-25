@@ -19,7 +19,7 @@ Route::post('/secret/data/importer/books', function (\Illuminate\Http\Request $r
         if($flag) { $flag = false; continue; }
         if (blank($line[1])) { continue; }
         // create book
-        $newBook = \App\Models\Library\Book::firstOrCreate(['title' => $line[1]], [
+        $newBook = \App\Models\Library\Book::updateOrCreate(['title' => trim($line[1])], [
             'isbn_number' => $line[2],
             'book_author_id' => \App\Models\Configuration\Library\BookAuthor::firstOrCreate(['name'=>isset($line[3]) && filled($line[3]) ? $line[3] : 'Unknown'])->id,
             'book_language_id' => \App\Models\Configuration\Library\BookLanguage::firstOrCreate(['name'=>isset($line[4]) && filled($line[4]) ? $line[4] : 'Unknown'])->id,
