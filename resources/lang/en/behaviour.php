@@ -7,6 +7,8 @@
   'could_not_find_skill' => 'Could Not Find Skill',
   'delete_skill' => 'Delete Skill',
   'edit_skill' => 'Edit Skill',
+  'give_feedback_to_student' => 'Give feedback to student',
+  'feedback_complete' => ':skill_points',
   'reset_bubbles' => 'Reset Bubbles',
   'skill' => 'Skill',
   'skill_added' => 'Skill Added',
