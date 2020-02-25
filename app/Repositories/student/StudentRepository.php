@@ -281,7 +281,7 @@ class StudentRepository
             }
         }
 
-        $query = $this->student_record->with('student','admission','batch','batch.course','student.bloodGroup','student.religion','student.caste','student.category','student.parent')
+        $query = $this->student_record->with('student','admission','batch','batch.course','student.bloodGroup','student.religion','student.caste','student.category','student.parent', 'student_behaviour_point')
             ->whereNull('date_of_exit')
             ->filterbySession()
             ->whereIn('batch_id', $batch_id)
