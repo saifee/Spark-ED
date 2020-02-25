@@ -30,6 +30,7 @@ Route::post('/secret/data/importer/books', function (\Illuminate\Http\Request $r
             'uuid' => \Illuminate\Support\Str::uuid(),
             'options' => array(),
         ]);
+        if (filled($newBook->bookPosts)) { continue; }
         $book_post = \App\Models\Library\BookPost::create([
             'book_id' => $newBook->id,
             'date_of_addition' => '2019-01-01',
