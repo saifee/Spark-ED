@@ -104,6 +104,14 @@ export default [
         component: () => import(/* webpackChunkName: "js/student/behaviour/index" */ '@views/student/behaviour/index')
     },
     {
+        path: '/student/behaviour/story',
+        component: () => import(/* webpackChunkName: "js/student/behaviour/story" */ '@views/student/behaviour/story')
+    },
+    {
+        path: '/student/behaviour/messages',
+        component: () => import(/* webpackChunkName: "js/student/behaviour/messages" */ '@views/student/behaviour/messages')
+    },
+    {
         path: '/student/roll/number',
         component: () => import(/* webpackChunkName: "js/student/rollNumber/index" */ '@views/student/roll-number/index')
     },

@@ -20,4 +20,8 @@
   'skill_positive' => 'Positive',
   'skill_updated' => 'Skill Updated',
   'view_reports' => 'View Reports',
+  'class_story' => 'Class Story',
+  'class_story_description' => 'Class Story is the easiest way to share classroom moments, photos, and updates with parents.',
+  'messages' => 'Messages',
+  'messages_description' => 'Send instant messages to parents.',
 );
