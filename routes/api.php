@@ -819,6 +819,15 @@ Route::group(['middleware' => ['auth:api']], function () {
 	*/
 
 	/*
+		     * Behaviour Routes Start
+	*/
+	Route::get('/student/behaviour/pre-requisite', 'Student\BehaviourController@preRequisite');
+	Route::post('/student/behaviour', 'Student\BehaviourController@store');
+	/*
+		     * Behaviour Routes End
+	*/
+
+	/*
 		     * Exam Routes Start
 	*/
 	Route::get('/exam/schedule/pre-requisite', 'Exam\ScheduleController@preRequisite');
