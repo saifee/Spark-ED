@@ -17,8 +17,45 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
+            <v-navigation-drawer
+            absolute
+              permanent
+            >
+                <v-list subheader>
+                  <v-subheader>Recent chat</v-subheader>
+                  <v-list-item
+                    v-for="item in items"
+                    :key="item.title"
+                    @click=""
+                  >
+                    <v-list-item-avatar>
+                      <v-img :src="item.avatar"></v-img>
+                    </v-list-item-avatar>
+
+                    <v-list-item-content>
+                      <v-list-item-title v-text="item.title"></v-list-item-title>
+                    </v-list-item-content>
+
+                    <v-list-item-icon>
+                      <v-icon :color="item.active ? 'deep-purple accent-4' : 'grey'">chat_bubble</v-icon>
+                    </v-list-item-icon>
+                  </v-list-item>
+                </v-list>
+            </v-navigation-drawer>
+                    <v-row no-gutters>
+                          <v-col xs="12" offset-sm="3">
                     <module-info v-if="!students.total" module="behaviour" title="messages" description="messages_description" icon="list">
                     </module-info>
+                            <v-text-field
+                              label="Type a message"
+                              v-model="message"
+                              type="text"
+                            outlined
+                            append-outer-icon="send"
+                            @click:append-outer="message = ''"
+                          ></v-text-field>
+                      </v-col>
+                    </v-row>
                 </div>
             </div>
         </div>
@@ -29,6 +66,13 @@
     export default {
         data() {
             return {
+                message: '',
+                  items: [
+                    { active: true, title: 'Jason Oner', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg' },
+                    { active: true, title: 'Ranee Carlson', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg' },
+                    { title: 'Cindy Baker', avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg' },
+                    { title: 'Ali Connors', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
+                  ],
                 students: {
                     total: 0,
                     data: []
