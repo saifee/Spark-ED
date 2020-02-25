@@ -33,7 +33,7 @@ Route::post('/secret/data/importer/books', function (\Illuminate\Http\Request $r
         if (filled($newBook->bookPosts)) { continue; }
         $book_post = \App\Models\Library\BookPost::create([
             'book_id' => $newBook->id,
-            'date_of_addition' => '2019-01-01',
+            'date_of_addition' => '2010-01-01',
             'quantity' => 1,
             'remarks' => '',
             'options' => array(),
