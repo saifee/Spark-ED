@@ -70,6 +70,11 @@ class StudentRecord extends Model
         return $this->hasOne('App\Models\Student\TransferCertificate', 'student_record_id');
     }
 
+    public function student_behaviour_point()
+    {
+        return $this->hasOne('App\Models\Student\StudentBehaviourPoint');
+    }
+
     public function getOption(string $option)
     {
         return array_get($this->options, $option);
