@@ -311,7 +311,6 @@
                 this.batchId = student.batch_id
                 this.studentRecordId = student.id
                 this.showFeedbackModal = true
-                // console.log(student.batch_id)
             },
             giveFeedbackToStudentComplete(student){
                 this.getStudents()
