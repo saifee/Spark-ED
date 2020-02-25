@@ -52,7 +52,7 @@
                               type="text"
                             outlined
                             append-outer-icon="send"
-                            @click:append-outer="message = ''"
+                            @click:append-outer="sendMessage"
                           ></v-text-field>
                       </v-col>
                     </v-row>
@@ -82,6 +82,9 @@
         mounted(){
         },
         methods: {
+            sendMessage(){
+                return this.message = '';
+            },
             hasPermission(permission){
                 return helper.hasPermission(permission);
             },
