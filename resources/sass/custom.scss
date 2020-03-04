@@ -776,6 +776,10 @@ Install page
   }
 }
 
+.accordion > .card{
+  overflow: visible;
+}
+
 .dropdown-toggle{
   &.no-caret::before {
       display: none;
