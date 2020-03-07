@@ -60,7 +60,7 @@
             <div class="col-12 col-sm-4">
                 <div class="form-group">
                     <label for="">{{trans('reception.postal_record_date')}}</label>
-                    <datepicker v-model="postalRecordForm.date" :bootstrapStyling="true" @selected="postalRecordForm.errors.clear('date')" :placeholder="trans('reception.date')"></datepicker>
+                    <datepicker v-model="postalRecordForm.date" :bootstrapStyling="true" @selected="postalRecordForm.errors.clear('date')" :placeholder="trans('reception.date')" typeable></datepicker>
                     <show-error :form-name="postalRecordForm" prop-name="date"></show-error>
                 </div>
             </div>

@@ -22,7 +22,7 @@
                             <div class="col-12 col-sm-4">
                                 <div class="form-group">
                                     <label for="">{{trans('configuration.institute_foundation_date')}}</label>
-                                    <datepicker v-model="configForm.institute_foundation_date" :bootstrapStyling="true" @selected="configForm.errors.clear('institute_foundation_date')" :placeholder="trans('configuration.institute_foundation_date')"></datepicker>
+                                    <datepicker v-model="configForm.institute_foundation_date" :bootstrapStyling="true" @selected="configForm.errors.clear('institute_foundation_date')" :placeholder="trans('configuration.institute_foundation_date')" typeable></datepicker>
                                     <show-error :form-name="configForm" prop-name="institute_foundation_date"></show-error>
                                 </div>
                             </div>

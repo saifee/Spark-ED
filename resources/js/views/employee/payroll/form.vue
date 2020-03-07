@@ -17,14 +17,14 @@
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
                         <label for="">{{trans('employee.payroll_start_date')}}</label>
-                        <datepicker v-model="payrollForm.start_date" :bootstrapStyling="true" @selected="payrollForm.errors.clear('start_date')" :placeholder="trans('employee.payroll_start_date')"></datepicker>
+                        <datepicker v-model="payrollForm.start_date" :bootstrapStyling="true" @selected="payrollForm.errors.clear('start_date')" :placeholder="trans('employee.payroll_start_date')" typeable></datepicker>
                         <show-error :form-name="payrollForm" prop-name="start_date"></show-error>
                     </div>
                 </div>
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
                         <label for="">{{trans('employee.payroll_end_date')}}</label>
-                        <datepicker v-model="payrollForm.end_date" :bootstrapStyling="true" @selected="payrollForm.errors.clear('end_date')" :placeholder="trans('employee.payroll_end_date')"></datepicker>
+                        <datepicker v-model="payrollForm.end_date" :bootstrapStyling="true" @selected="payrollForm.errors.clear('end_date')" :placeholder="trans('employee.payroll_end_date')" typeable></datepicker>
                         <show-error :form-name="payrollForm" prop-name="end_date"></show-error>
                     </div>
                 </div>

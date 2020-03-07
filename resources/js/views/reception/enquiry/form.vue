@@ -5,7 +5,7 @@
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
                         <label for="">{{trans('reception.date_of_enquiry')}}</label>
-                        <datepicker v-model="enquiryForm.date_of_enquiry" :bootstrapStyling="true" @selected="enquiryForm.errors.clear('date_of_enquiry')" :placeholder="trans('reception.date_of_enquiry')"></datepicker>
+                        <datepicker v-model="enquiryForm.date_of_enquiry" :bootstrapStyling="true" @selected="enquiryForm.errors.clear('date_of_enquiry')" :placeholder="trans('reception.date_of_enquiry')" typeable></datepicker>
                         <show-error :form-name="enquiryForm" prop-name="date_of_enquiry"></show-error>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                     <div class="col-12 col-sm-2">
                         <div class="form-group">
                             <label for="">{{trans('student.date_of_birth')}}</label>
-                            <datepicker v-model="student.date_of_birth" :bootstrapStyling="true" @selected="enquiryForm.errors.clear(getDateOfBirthName(index))" :placeholder="trans('student.date_of_birth')"></datepicker>
+                            <datepicker v-model="student.date_of_birth" :bootstrapStyling="true" @selected="enquiryForm.errors.clear(getDateOfBirthName(index))" :placeholder="trans('student.date_of_birth')" typeable></datepicker>
                             <show-error :form-name="enquiryForm" :prop-name="getDateOfBirthName(index)"></show-error>
                         </div>
                     </div>

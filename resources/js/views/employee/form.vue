@@ -98,14 +98,14 @@
             <div class="col-12 col-sm-3">
                 <div class="form-group">
                     <label for="">{{trans('employee.date_of_birth')}}</label>
-                    <datepicker v-model="employeeForm.date_of_birth" :bootstrapStyling="true" @selected="employeeForm.errors.clear('date_of_birth')" :placeholder="trans('employee.date_of_birth')"></datepicker>
+                    <datepicker v-model="employeeForm.date_of_birth" :bootstrapStyling="true" @selected="employeeForm.errors.clear('date_of_birth')" :placeholder="trans('employee.date_of_birth')" typeable></datepicker>
                     <show-error :form-name="employeeForm" prop-name="date_of_birth"></show-error>
                 </div>
             </div>
             <div class="col-12 col-sm-3">
                 <div class="form-group">
                     <label for="">{{trans('employee.date_of_joining')}}</label>
-                    <datepicker v-model="employeeForm.date_of_joining" :bootstrapStyling="true" @selected="employeeForm.errors.clear('date_of_joining')" :placeholder="trans('employee.date_of_joining')"></datepicker>
+                    <datepicker v-model="employeeForm.date_of_joining" :bootstrapStyling="true" @selected="employeeForm.errors.clear('date_of_joining')" :placeholder="trans('employee.date_of_joining')" typeable></datepicker>
                     <show-error :form-name="employeeForm" prop-name="date_of_joining"></show-error>
                 </div>
             </div>

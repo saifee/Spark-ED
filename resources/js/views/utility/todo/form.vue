@@ -11,7 +11,7 @@
             <div class="col-12 col-sm-3">
                 <div class="form-group">
                     <label for="">{{trans('utility.todo_date')}}</label>
-                    <datepicker v-model="todoForm.date" :bootstrapStyling="true" @selected="todoForm.errors.clear('date')" :placeholder="trans('utility.todo_date')"></datepicker>
+                    <datepicker v-model="todoForm.date" :bootstrapStyling="true" @selected="todoForm.errors.clear('date')" :placeholder="trans('utility.todo_date')" typeable></datepicker>
                     <show-error :form-name="todoForm" prop-name="date"></show-error>
                 </div>
             </div>

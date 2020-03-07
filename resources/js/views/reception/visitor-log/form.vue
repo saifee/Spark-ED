@@ -100,7 +100,7 @@
             <div class="col-12 col-sm-3">
                 <div class="form-group">
                     <label for="">{{trans('reception.date_of_visit')}}</label>
-                    <datepicker v-model="visitorLogForm.date_of_visit" :bootstrapStyling="true" @selected="visitorLogForm.errors.clear('date_of_visit')" :placeholder="trans('reception.date_of_visit')"></datepicker>
+                    <datepicker v-model="visitorLogForm.date_of_visit" :bootstrapStyling="true" @selected="visitorLogForm.errors.clear('date_of_visit')" :placeholder="trans('reception.date_of_visit')" typeable></datepicker>
                     <show-error :form-name="visitorLogForm" prop-name="date_of_visit"></show-error>
                 </div>
             </div>

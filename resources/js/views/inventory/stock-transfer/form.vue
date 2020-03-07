@@ -5,14 +5,14 @@
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
                         <label for="">{{trans('inventory.stock_transfer_date')}}</label>
-                        <datepicker v-model="stockTransferForm.date" :bootstrapStyling="true" @selected="stockTransferForm.errors.clear('date')" :placeholder="trans('inventory.stock_transfer_date')"></datepicker>
+                        <datepicker v-model="stockTransferForm.date" :bootstrapStyling="true" @selected="stockTransferForm.errors.clear('date')" :placeholder="trans('inventory.stock_transfer_date')" typeable></datepicker>
                         <show-error :form-name="stockTransferForm" prop-name="date"></show-error>
                     </div>
                 </div>
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
                         <label for="">{{trans('inventory.stock_transfer_return_due_date')}}</label>
-                        <datepicker v-model="stockTransferForm.return_due_" :bootstrapStyling="true" @selected="stockTransferForm.errors.clear('return_due_')" :placeholder="trans('inventory.stock_transfer_return_due_date')"></datepicker>
+                        <datepicker v-model="stockTransferForm.return_due_" :bootstrapStyling="true" @selected="stockTransferForm.errors.clear('return_due_')" :placeholder="trans('inventory.stock_transfer_return_due_date')" typeable></datepicker>
                         <show-error :form-name="stockTransferForm" prop-name="return_due_"></show-error>
                     </div>
                 </div>

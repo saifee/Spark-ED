@@ -49,14 +49,14 @@
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
                                     <label for="">{{trans('employee.leave_request_start_date')}}</label>
-                                    <datepicker v-model="leaveRequestForm.start_date" :bootstrapStyling="true" @selected="leaveRequestForm.errors.clear('start_date')" :placeholder="trans('employee.leave_request_start_date')"></datepicker>
+                                    <datepicker v-model="leaveRequestForm.start_date" :bootstrapStyling="true" @selected="leaveRequestForm.errors.clear('start_date')" :placeholder="trans('employee.leave_request_start_date')" typeable></datepicker>
                                     <show-error :form-name="leaveRequestForm" prop-name="start_date"></show-error>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
                                     <label for="">{{trans('employee.leave_request_end_date')}}</label>
-                                    <datepicker v-model="leaveRequestForm.end_date" :bootstrapStyling="true" @selected="leaveRequestForm.errors.clear('end_date')" :placeholder="trans('employee.leave_request_end_date')"></datepicker>
+                                    <datepicker v-model="leaveRequestForm.end_date" :bootstrapStyling="true" @selected="leaveRequestForm.errors.clear('end_date')" :placeholder="trans('employee.leave_request_end_date')" typeable></datepicker>
                                     <show-error :form-name="leaveRequestForm" prop-name="end_date"></show-error>
                                 </div>
                             </div>

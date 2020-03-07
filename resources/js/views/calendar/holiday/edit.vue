@@ -20,7 +20,7 @@
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
                                     <label for="">{{trans('calendar.holiday_date')}}</label>
-                                    <datepicker v-model="holidayForm.date" :bootstrapStyling="true" @selected="holidayForm.errors.clear('date')" :placeholder="trans('calendar.holiday_date')" :disabledDates="disabled"></datepicker>
+                                    <datepicker v-model="holidayForm.date" :bootstrapStyling="true" @selected="holidayForm.errors.clear('date')" :placeholder="trans('calendar.holiday_date')" :disabledDates="disabled" typeable></datepicker>
                                     <show-error :form-name="holidayForm" prop-name="date"></show-error>
                                 </div>
                             </div>

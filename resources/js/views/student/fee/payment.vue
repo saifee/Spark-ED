@@ -91,7 +91,7 @@
                                         <div class="col-12 col-sm-6" v-if="getPaymentMethodDetail('instrument_date')">
                                             <div class="form-group">
                                                 <label for="">{{trans('finance.instrument_date')}}</label>
-                                                <datepicker v-model="feePaymentForm.instrument_date" :bootstrapStyling="true" @selected="feePaymentForm.errors.clear('instrument_date')" :placeholder="trans('finance.instrument_date')"></datepicker>
+                                                <datepicker v-model="feePaymentForm.instrument_date" :bootstrapStyling="true" @selected="feePaymentForm.errors.clear('instrument_date')" :placeholder="trans('finance.instrument_date')" typeable></datepicker>
                                                 <show-error :form-name="feePaymentForm" prop-name="instrument_date"></show-error>
                                             </div>
                                         </div>
@@ -105,7 +105,7 @@
                                         <div class="col-12 col-sm-6" v-if="getPaymentMethodDetail('instrument_clearing_date')">
                                             <div class="form-group">
                                                 <label for="">{{trans('finance.instrument_clearing_date')}}</label>
-                                                <datepicker v-model="feePaymentForm.instrument_clearing_date" :bootstrapStyling="true" @selected="feePaymentForm.errors.clear('instrument_clearing_date')" :placeholder="trans('finance.instrument_clearing_date')"></datepicker>
+                                                <datepicker v-model="feePaymentForm.instrument_clearing_date" :bootstrapStyling="true" @selected="feePaymentForm.errors.clear('instrument_clearing_date')" :placeholder="trans('finance.instrument_clearing_date')" typeable></datepicker>
                                                 <show-error :form-name="feePaymentForm" prop-name="instrument_clearing_date"></show-error>
                                             </div>
                                         </div>

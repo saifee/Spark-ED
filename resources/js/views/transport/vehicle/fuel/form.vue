@@ -30,7 +30,7 @@
 	            <div class="col-12 col-sm-3">
 	                <div class="form-group">
 	                    <label for="">{{trans('transport.date_of_fueling')}}</label>
-	                    <datepicker v-model="vehicleFuelForm.date_of_fueling" :bootstrapStyling="true" @selected="vehicleFuelForm.errors.clear('date_of_fueling')" :placeholder="trans('academic.date_of_fueling')"></datepicker>
+	                    <datepicker v-model="vehicleFuelForm.date_of_fueling" :bootstrapStyling="true" @selected="vehicleFuelForm.errors.clear('date_of_fueling')" :placeholder="trans('academic.date_of_fueling')" typeable></datepicker>
 	                    <show-error :form-name="vehicleFuelForm" prop-name="date_of_fueling"></show-error>
 	                </div>
 	            </div>

@@ -5,14 +5,14 @@
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="">{{trans('reception.date_of_follow_up')}}</label>
-                        <datepicker v-model="followUpForm.date_of_follow_up" :bootstrapStyling="true" @selected="followUpForm.errors.clear('date_of_follow_up')" :placeholder="trans('reception.date_of_follow_up')"></datepicker>
+                        <datepicker v-model="followUpForm.date_of_follow_up" :bootstrapStyling="true" @selected="followUpForm.errors.clear('date_of_follow_up')" :placeholder="trans('reception.date_of_follow_up')" typeable></datepicker>
                         <show-error :form-name="followUpForm" prop-name="date_of_follow_up"></show-error>
                     </div>
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="">{{trans('reception.date_of_next_follow_up')}}</label>
-                        <datepicker v-model="followUpForm.date_of_next_follow_up" :bootstrapStyling="true" @selected="followUpForm.errors.clear('date_of_next_follow_up')" :placeholder="trans('reception.date_of_next_follow_up')"></datepicker>
+                        <datepicker v-model="followUpForm.date_of_next_follow_up" :bootstrapStyling="true" @selected="followUpForm.errors.clear('date_of_next_follow_up')" :placeholder="trans('reception.date_of_next_follow_up')" typeable></datepicker>
                         <show-error :form-name="followUpForm" prop-name="date_of_next_follow_up"></show-error>
                     </div>
                 </div>

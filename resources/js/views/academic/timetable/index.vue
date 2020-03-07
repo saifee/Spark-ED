@@ -44,7 +44,7 @@
                             </div>
                             <div class="col-12 col-sm-3">
                                 <div class="form-group">
-                                    <datepicker v-model="filter.date_effective" :bootstrapStyling="true" :placeholder="trans('academic.date_effective')" :clear-button="true"></datepicker>
+                                    <datepicker v-model="filter.date_effective" :bootstrapStyling="true" :placeholder="trans('academic.date_effective')" :clear-button="true" typeable></datepicker>
                                 </div>
                             </div>
                         </div>

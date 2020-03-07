@@ -74,7 +74,7 @@
                 <template v-if="! record.has_no_exam">
                     <div class="col-12 col-sm-3">
                         <div class="form-group">
-                            <datepicker v-model="record.date" :bootstrapStyling="true" @selected="scheduleForm.errors.clear(getScheduleDateName(index))" :placeholder="trans('exam.schedule_date')"></datepicker>
+                            <datepicker v-model="record.date" :bootstrapStyling="true" @selected="scheduleForm.errors.clear(getScheduleDateName(index))" :placeholder="trans('exam.schedule_date')" typeable></datepicker>
                             <show-error :form-name="scheduleForm" :prop-name="getScheduleDateName(index)"></show-error>
                         </div>
                     </div>

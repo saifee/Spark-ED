@@ -16,7 +16,7 @@
 	            <div class="col-12 col-sm-3">
 	                <div class="form-group">
 	                    <label for="">{{trans('academic.date_effective')}}</label>
-	                    <datepicker v-model="timetableForm.date_effective" :bootstrapStyling="true" @selected="timetableForm.errors.clear('date_effective')" :placeholder="trans('academic.date_effective')"></datepicker>
+	                    <datepicker v-model="timetableForm.date_effective" :bootstrapStyling="true" @selected="timetableForm.errors.clear('date_effective')" :placeholder="trans('academic.date_effective')" typeable></datepicker>
 	                    <show-error :form-name="timetableForm" prop-name="date_effective"></show-error>
 	                </div>
 	            </div>

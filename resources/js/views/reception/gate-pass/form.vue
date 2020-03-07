@@ -16,7 +16,7 @@
             <div class="col-12 col-sm-4">
                 <div class="form-group">
                     <label for="">{{trans('reception.gate_pass_date')}}</label>
-                    <datepicker v-model="gatePassForm.date" :bootstrapStyling="true" @selected="gatePassForm.errors.clear('date')" :placeholder="trans('reception.gate_pass_date')"></datepicker>
+                    <datepicker v-model="gatePassForm.date" :bootstrapStyling="true" @selected="gatePassForm.errors.clear('date')" :placeholder="trans('reception.gate_pass_date')" typeable></datepicker>
                     <show-error :form-name="gatePassForm" prop-name="date"></show-error>
                 </div>
             </div>

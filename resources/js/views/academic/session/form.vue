@@ -11,14 +11,14 @@
             <div class="col-12 col-sm-3">
                 <div class="form-group">
                     <label for="">{{trans('academic.session_start_date')}}</label>
-                    <datepicker v-model="academicSessionForm.start_date" :bootstrapStyling="true" @selected="academicSessionForm.errors.clear('start_date')" :placeholder="trans('academic.session_start_date')" :disabled="id ? true : false"></datepicker>
+                    <datepicker v-model="academicSessionForm.start_date" :bootstrapStyling="true" @selected="academicSessionForm.errors.clear('start_date')" :placeholder="trans('academic.session_start_date')" :disabled="id ? true : false" typeable></datepicker>
                     <show-error :form-name="academicSessionForm" prop-name="start_date"></show-error>
                 </div>
             </div>
             <div class="col-12 col-sm-3">
                 <div class="form-group">
                     <label for="">{{trans('academic.session_end_date')}}</label>
-                    <datepicker v-model="academicSessionForm.end_date" :bootstrapStyling="true" @selected="academicSessionForm.errors.clear('end_date')" :placeholder="trans('academic.session_end_date')" :disabled="id ? true : false"></datepicker>
+                    <datepicker v-model="academicSessionForm.end_date" :bootstrapStyling="true" @selected="academicSessionForm.errors.clear('end_date')" :placeholder="trans('academic.session_end_date')" :disabled="id ? true : false" typeable></datepicker>
                     <show-error :form-name="academicSessionForm" prop-name="end_date"></show-error>
                 </div>
             </div>

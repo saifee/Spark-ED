@@ -50,14 +50,14 @@
 	            <div class="col-12 col-sm-4">
 	                <div class="form-group">
 	                    <label for="">{{trans('employee.date_of_birth')}}</label>
-	                    <datepicker v-model="basicForm.date_of_birth" :bootstrapStyling="true" @selected="basicForm.errors.clear('date_of_birth')" :placeholder="trans('employee.date_of_birth')"></datepicker>
+	                    <datepicker v-model="basicForm.date_of_birth" :bootstrapStyling="true" @selected="basicForm.errors.clear('date_of_birth')" :placeholder="trans('employee.date_of_birth')" typeable></datepicker>
 	                    <show-error :form-name="basicForm" prop-name="date_of_birth"></show-error>
 	                </div>
 	            </div>
 	            <div class="col-12 col-sm-4">
 	                <div class="form-group">
 	                    <label for="">{{trans('employee.date_of_anniversary')}}</label>
-	                    <datepicker v-model="basicForm.date_of_anniversary" :bootstrapStyling="true" @selected="basicForm.errors.clear('date_of_anniversary')" :placeholder="trans('employee.date_of_anniversary')"></datepicker>
+	                    <datepicker v-model="basicForm.date_of_anniversary" :bootstrapStyling="true" @selected="basicForm.errors.clear('date_of_anniversary')" :placeholder="trans('employee.date_of_anniversary')" typeable></datepicker>
 	                    <show-error :form-name="basicForm" prop-name="date_of_anniversary"></show-error>
 	                </div>
 	            </div>

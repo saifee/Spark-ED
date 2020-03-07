@@ -22,14 +22,14 @@
                 <div class="col-12 col-sm-4">
                     <div class="form-group">
                         <label for="">{{trans('employee.leave_allocation_start_date')}}</label>
-                        <datepicker v-model="leaveAllocationForm.start_date" :bootstrapStyling="true" @selected="leaveAllocationForm.errors.clear('start_date')" :placeholder="trans('employee.leave_allocation_start_date')"></datepicker>
+                        <datepicker v-model="leaveAllocationForm.start_date" :bootstrapStyling="true" @selected="leaveAllocationForm.errors.clear('start_date')" :placeholder="trans('employee.leave_allocation_start_date')" typeable></datepicker>
                         <show-error :form-name="leaveAllocationForm" prop-name="start_date"></show-error>
                     </div>
                 </div>
                 <div class="col-12 col-sm-4">
                     <div class="form-group">
                         <label for="">{{trans('employee.leave_allocation_end_date')}}</label>
-                        <datepicker v-model="leaveAllocationForm.end_date" :bootstrapStyling="true" @selected="leaveAllocationForm.errors.clear('end_date')" :placeholder="trans('employee.leave_allocation_end_date')"></datepicker>
+                        <datepicker v-model="leaveAllocationForm.end_date" :bootstrapStyling="true" @selected="leaveAllocationForm.errors.clear('end_date')" :placeholder="trans('employee.leave_allocation_end_date')" typeable></datepicker>
                         <show-error :form-name="leaveAllocationForm" prop-name="end_date"></show-error>
                     </div>
                 </div>

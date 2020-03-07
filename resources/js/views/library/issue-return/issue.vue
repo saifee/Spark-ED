@@ -24,7 +24,7 @@
 						            <div class="col-12 col-sm-6">
 						                <div class="form-group">
 						                    <label for="">{{trans('library.date_of_issue')}}</label>
-						                    <datepicker v-model="issueForm.date_of_issue" :bootstrapStyling="true" @selected="issueForm.errors.clear('date_of_issue')" :placeholder="trans('library.date_of_issue')"></datepicker>
+						                    <datepicker v-model="issueForm.date_of_issue" :bootstrapStyling="true" @selected="issueForm.errors.clear('date_of_issue')" :placeholder="trans('library.date_of_issue')" typeable></datepicker>
 						                    <show-error :form-name="issueForm" prop-name="date_of_issue"></show-error>
 						                </div>
 						            </div>

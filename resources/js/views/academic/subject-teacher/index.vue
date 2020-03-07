@@ -92,7 +92,7 @@
                                         <show-error :form-name="subjectTeacherForm" :prop-name="getEmployeeFieldName(index)"></show-error>
                                     </div>
                                     <div class="col-12 col-sm-4">
-                                        <datepicker v-model="subject.date_effective" :bootstrapStyling="true" :name="getDateEffectiveFieldName(index)" @selected="subjectTeacherForm.errors.clear(getDateEffectiveFieldName(index))" :placeholder="trans('academic.date_effective')"></datepicker>
+                                        <datepicker v-model="subject.date_effective" :bootstrapStyling="true" :name="getDateEffectiveFieldName(index)" @selected="subjectTeacherForm.errors.clear(getDateEffectiveFieldName(index))" :placeholder="trans('academic.date_effective')" typeable></datepicker>
                                         <show-error :form-name="subjectTeacherForm" :prop-name="getDateEffectiveFieldName(index)"></show-error> 
                                     </div>
                                     <div class="col-12 col-sm-4">

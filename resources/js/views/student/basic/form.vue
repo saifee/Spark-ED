@@ -38,7 +38,7 @@
 	            <div class="col-12 col-sm-4">
 	                <div class="form-group">
 	                    <label for="">{{trans('student.date_of_birth')}}</label>
-	                    <datepicker v-model="basicForm.date_of_birth" :bootstrapStyling="true" @selected="basicForm.errors.clear('date_of_birth')" :placeholder="trans('student.date_of_birth')"></datepicker>
+	                    <datepicker v-model="basicForm.date_of_birth" :bootstrapStyling="true" @selected="basicForm.errors.clear('date_of_birth')" :placeholder="trans('student.date_of_birth')" typeable></datepicker>
 	                    <show-error :form-name="basicForm" prop-name="date_of_birth"></show-error>
 	                </div>
 	            </div>

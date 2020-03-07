@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <label for="">{{trans('employee.date_of_joining')}}</label>
                     <template v-if="!tid">
-                        <datepicker v-model="termForm.date_of_joining" :bootstrapStyling="true" @selected="termForm.errors.clear('date_of_joining')" :placeholder="trans('employee.date_of_joining')"></datepicker>
+                        <datepicker v-model="termForm.date_of_joining" :bootstrapStyling="true" @selected="termForm.errors.clear('date_of_joining')" :placeholder="trans('employee.date_of_joining')" typeable></datepicker>
                         <show-error :form-name="termForm" prop-name="date_of_joining"></show-error>
                     </template>
                     <template v-else>
@@ -62,7 +62,7 @@
                     <div class="form-group">
                         <label for="">{{trans('employee.date_of_leaving')}}</label>
                         <template v-if="tid">
-                            <datepicker v-model="termForm.date_of_leaving" :bootstrapStyling="true" @selected="termForm.errors.clear('date_of_leaving')" :placeholder="trans('employee.date_of_leaving')"></datepicker>
+                            <datepicker v-model="termForm.date_of_leaving" :bootstrapStyling="true" @selected="termForm.errors.clear('date_of_leaving')" :placeholder="trans('employee.date_of_leaving')" typeable></datepicker>
                             <show-error :form-name="termForm" prop-name="date_of_leaving"></show-error>
                         </template>
                         <template v-else>

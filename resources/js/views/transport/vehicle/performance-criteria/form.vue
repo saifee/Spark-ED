@@ -15,7 +15,7 @@
             <div class="col-12 col-sm-3">
                 <div class="form-group">
                     <label for="">{{trans('transport.vehicle_performance_criteria_date_effective')}}</label>
-                    <datepicker v-model="vehiclePerformanceCriteriaForm.date_effective" :bootstrapStyling="true" @selected="vehiclePerformanceCriteriaForm.errors.clear('date_effective')" :placeholder="trans('transport.vehicle_performance_criteria_date_effective')"></datepicker>
+                    <datepicker v-model="vehiclePerformanceCriteriaForm.date_effective" :bootstrapStyling="true" @selected="vehiclePerformanceCriteriaForm.errors.clear('date_effective')" :placeholder="trans('transport.vehicle_performance_criteria_date_effective')" typeable></datepicker>
                     <show-error :form-name="vehiclePerformanceCriteriaForm" prop-name="date_effective"></show-error>
                 </div>
             </div>

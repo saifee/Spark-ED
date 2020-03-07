@@ -45,14 +45,14 @@
 				            <div class="col-12 col-sm-3">
 				                <div class="form-group">
 				                    <label for="">{{trans('student.date_of_application')}}</label>
-				                    <datepicker v-model="transferCertificateForm.date_of_application" name="date_of_application" :bootstrapStyling="true" @selected="transferCertificateForm.errors.clear('date_of_application')" :placeholder="trans('student.date_of_application')"></datepicker>
+				                    <datepicker v-model="transferCertificateForm.date_of_application" name="date_of_application" :bootstrapStyling="true" @selected="transferCertificateForm.errors.clear('date_of_application')" :placeholder="trans('student.date_of_application')" typeable></datepicker>
 				                    <show-error :form-name="transferCertificateForm" prop-name="date_of_application"></show-error>
 				                </div>
 				            </div>
 				            <div class="col-12 col-sm-3">
 				                <div class="form-group">
 				                    <label for="">{{trans('student.date_of_issue')}}</label>
-				                    <datepicker v-model="transferCertificateForm.date_of_issue" name="date_of_issue" :bootstrapStyling="true" @selected="transferCertificateForm.errors.clear('date_of_issue')" :placeholder="trans('student.date_of_issue')"></datepicker>
+				                    <datepicker v-model="transferCertificateForm.date_of_issue" name="date_of_issue" :bootstrapStyling="true" @selected="transferCertificateForm.errors.clear('date_of_issue')" :placeholder="trans('student.date_of_issue')" typeable></datepicker>
 				                    <show-error :form-name="transferCertificateForm" prop-name="date_of_issue"></show-error>
 				                </div>
 				            </div>

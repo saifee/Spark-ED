@@ -67,7 +67,7 @@
 				            <div class="col-12 col-sm-3">
 				                <div class="form-group">
 				                    <label for="">{{trans('student.date_of_attendance')}}</label>
-				                    <datepicker :disabled="disable_filter" v-model="attendanceForm.date_of_attendance" :bootstrapStyling="true" @selected="dateSelected" :disabledDates="disabled" :placeholder="trans('student.date_of_attendance')"></datepicker>
+				                    <datepicker :disabled="disable_filter" v-model="attendanceForm.date_of_attendance" :bootstrapStyling="true" @selected="dateSelected" :disabledDates="disabled" :placeholder="trans('student.date_of_attendance')" typeable></datepicker>
 				                    <show-error :form-name="attendanceForm" prop-name="date_of_attendance"></show-error>
 				                </div>
 				            </div>

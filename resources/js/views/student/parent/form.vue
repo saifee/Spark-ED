@@ -40,14 +40,14 @@
 	            <div class="col-12 col-sm-6">
 	                <div class="form-group">
 	                    <label for="">{{trans('student.father_date_of_birth')}}</label>
-	                    <datepicker v-model="parentForm.father_date_of_birth" :bootstrapStyling="true" @selected="parentForm.errors.clear('father_date_of_birth')" :placeholder="trans('student.father_date_of_birth')"></datepicker>
+	                    <datepicker v-model="parentForm.father_date_of_birth" :bootstrapStyling="true" @selected="parentForm.errors.clear('father_date_of_birth')" :placeholder="trans('student.father_date_of_birth')" typeable></datepicker>
 	                    <show-error :form-name="parentForm" prop-name="father_date_of_birth"></show-error>
 	                </div>
 	            </div>
 	            <div class="col-12 col-sm-6">
 	                <div class="form-group">
 	                    <label for="">{{trans('student.mother_date_of_birth')}}</label>
-	                    <datepicker v-model="parentForm.mother_date_of_birth" :bootstrapStyling="true" @selected="parentForm.errors.clear('mother_date_of_birth')" :placeholder="trans('student.mother_date_of_birth')"></datepicker>
+	                    <datepicker v-model="parentForm.mother_date_of_birth" :bootstrapStyling="true" @selected="parentForm.errors.clear('mother_date_of_birth')" :placeholder="trans('student.mother_date_of_birth')" typeable></datepicker>
 	                    <show-error :form-name="parentForm" prop-name="mother_date_of_birth"></show-error>
 	                </div>
 	            </div>

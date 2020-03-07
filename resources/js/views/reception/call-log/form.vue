@@ -50,7 +50,7 @@
             <div class="col-12 col-sm-4">
                 <div class="form-group">
                     <label for="">{{trans('reception.date')}}</label>
-                    <datepicker v-model="callLogForm.date" :bootstrapStyling="true" @selected="callLogForm.errors.clear('date')" :placeholder="trans('reception.date')"></datepicker>
+                    <datepicker v-model="callLogForm.date" :bootstrapStyling="true" @selected="callLogForm.errors.clear('date')" :placeholder="trans('reception.date')" typeable></datepicker>
                     <show-error :form-name="callLogForm" prop-name="date"></show-error>
                 </div>
             </div>

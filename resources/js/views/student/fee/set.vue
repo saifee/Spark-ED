@@ -57,7 +57,7 @@
                                     </div>
                                     <div class="col-12 col-sm-2">
                                         <div class="form-group">
-                                            <datepicker v-model="installment.due_date" :bootstrapStyling="true" @selected="studentFeeRecordForm.errors.clear(getDueDateFieldName(installment))" :placeholder="trans('finance.fee_installment_due_date')" :name="getDueDateFieldName(installment)" :disabled="installment.status != 'unpaid'"></datepicker>
+                                            <datepicker v-model="installment.due_date" :bootstrapStyling="true" @selected="studentFeeRecordForm.errors.clear(getDueDateFieldName(installment))" :placeholder="trans('finance.fee_installment_due_date')" :name="getDueDateFieldName(installment)" :disabled="installment.status != 'unpaid'" typeable></datepicker>
                                             <show-error :form-name="studentFeeRecordForm" :prop-name="getDueDateFieldName(installment)"></show-error>
                                         </div>
                                     </div>

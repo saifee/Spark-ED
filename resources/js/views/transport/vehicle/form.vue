@@ -160,7 +160,7 @@
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
                         <label for="">{{trans('transport.vehicle_registration_date')}}</label>
-                        <datepicker v-model="vehicleForm.registration_date" :bootstrapStyling="true" @selected="vehicleForm.errors.clear('registration_date')" :placeholder="trans('transport.vehicle_registration_date')"></datepicker>
+                        <datepicker v-model="vehicleForm.registration_date" :bootstrapStyling="true" @selected="vehicleForm.errors.clear('registration_date')" :placeholder="trans('transport.vehicle_registration_date')" typeable></datepicker>
                         <show-error :form-name="vehicleForm" prop-name="registration_date"></show-error>
                     </div>
                 </div>
@@ -177,7 +177,7 @@
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
                         <label for="">{{trans('transport.vehicle_sale_date')}}</label>
-                        <datepicker v-model="vehicleForm.sale_date" :bootstrapStyling="true" @selected="vehicleForm.errors.clear('sale_date')" :placeholder="trans('transport.vehicle_sale_date')"></datepicker>
+                        <datepicker v-model="vehicleForm.sale_date" :bootstrapStyling="true" @selected="vehicleForm.errors.clear('sale_date')" :placeholder="trans('transport.vehicle_sale_date')" typeable></datepicker>
                         <show-error :form-name="vehicleForm" prop-name="sale_date"></show-error>
                     </div>
                 </div>

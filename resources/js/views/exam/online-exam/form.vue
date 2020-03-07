@@ -46,7 +46,7 @@
                 <div class="col-12 col-sm-4">
                     <div class="form-group">
                         <label for="">{{trans('exam.online_exam_date')}}</label>
-                        <datepicker v-model="onlineExamForm.date" :bootstrapStyling="true" @selected="onlineExamForm.errors.clear('date')" :placeholder="trans('exam.online_exam_date')"></datepicker>
+                        <datepicker v-model="onlineExamForm.date" :bootstrapStyling="true" @selected="onlineExamForm.errors.clear('date')" :placeholder="trans('exam.online_exam_date')" typeable></datepicker>
                         <show-error :form-name="onlineExamForm" prop-name="date"></show-error>
                     </div>
                 </div>

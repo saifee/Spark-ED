@@ -15,7 +15,7 @@
             <div class="col-12 col-sm-3">
                 <div class="form-group">
                     <label for="">{{trans('transport.vehicle_log_date_of_log')}}</label>
-                    <datepicker v-model="vehicleLogForm.date_of_log" :bootstrapStyling="true" @selected="vehicleLogForm.errors.clear('date_of_log')" :placeholder="trans('transport.vehicle_log_date_of_log')"></datepicker>
+                    <datepicker v-model="vehicleLogForm.date_of_log" :bootstrapStyling="true" @selected="vehicleLogForm.errors.clear('date_of_log')" :placeholder="trans('transport.vehicle_log_date_of_log')" typeable></datepicker>
                     <show-error :form-name="vehicleLogForm" prop-name="date_of_log"></show-error>
                 </div>
             </div>

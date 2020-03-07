@@ -34,7 +34,7 @@
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
                         <label for="">{{trans('finance.date_of_income')}}</label>
-                        <datepicker v-model="incomeForm.date_of_income" :bootstrapStyling="true" @selected="incomeForm.errors.clear('date_of_income')" :placeholder="trans('finance.date_of_income')"></datepicker>
+                        <datepicker v-model="incomeForm.date_of_income" :bootstrapStyling="true" @selected="incomeForm.errors.clear('date_of_income')" :placeholder="trans('finance.date_of_income')" typeable></datepicker>
                         <show-error :form-name="incomeForm" prop-name="date_of_income"></show-error>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
 	            <div class="col-12 col-sm-3" v-if="getPaymentMethodDetail('instrument_date')">
 	                <div class="form-group">
 	                    <label for="">{{trans('finance.instrument_date')}}</label>
-	                    <datepicker v-model="incomeForm.instrument_date" :bootstrapStyling="true" @selected="incomeForm.errors.clear('instrument_date')" :placeholder="trans('finance.instrument_date')"></datepicker>
+	                    <datepicker v-model="incomeForm.instrument_date" :bootstrapStyling="true" @selected="incomeForm.errors.clear('instrument_date')" :placeholder="trans('finance.instrument_date')" typeable></datepicker>
 	                    <show-error :form-name="incomeForm" prop-name="instrument_date"></show-error>
 	                </div>
 	            </div>
@@ -73,7 +73,7 @@
 	            <div class="col-12 col-sm-3" v-if="getPaymentMethodDetail('instrument_clearing_date')">
 	                <div class="form-group">
 	                    <label for="">{{trans('finance.instrument_clearing_date')}}</label>
-	                    <datepicker v-model="incomeForm.instrument_clearing_date" :bootstrapStyling="true" @selected="incomeForm.errors.clear('instrument_clearing_date')" :placeholder="trans('finance.instrument_clearing_date')"></datepicker>
+	                    <datepicker v-model="incomeForm.instrument_clearing_date" :bootstrapStyling="true" @selected="incomeForm.errors.clear('instrument_clearing_date')" :placeholder="trans('finance.instrument_clearing_date')" typeable></datepicker>
 	                    <show-error :form-name="incomeForm" prop-name="instrument_clearing_date"></show-error>
 	                </div>
 	            </div>

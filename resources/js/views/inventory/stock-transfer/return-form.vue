@@ -5,7 +5,7 @@
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="">{{trans('inventory.stock_transfer_return_date')}}</label>
-                        <datepicker v-model="returnForm.date" :bootstrapStyling="true" @selected="returnForm.errors.clear('date')" :placeholder="trans('inventory.stock_transfer_return_date')"></datepicker>
+                        <datepicker v-model="returnForm.date" :bootstrapStyling="true" @selected="returnForm.errors.clear('date')" :placeholder="trans('inventory.stock_transfer_return_date')" typeable></datepicker>
                         <show-error :form-name="returnForm" prop-name="date"></show-error>
                     </div>
                 </div>

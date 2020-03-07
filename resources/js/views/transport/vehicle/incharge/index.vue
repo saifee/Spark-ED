@@ -92,7 +92,7 @@
                                         <show-error :form-name="vehicleInchargeForm" :prop-name="getEmployeeFieldName(index)"></show-error>
                                     </div>
                                     <div class="col-12 col-sm-4">
-                                        <datepicker v-model="vehicle.date_effective" :bootstrapStyling="true" :name="getDateEffectiveFieldName(index)" @selected="vehicleInchargeForm.errors.clear(getDateEffectiveFieldName(index))" :placeholder="trans('transport.date_effective')"></datepicker>
+                                        <datepicker v-model="vehicle.date_effective" :bootstrapStyling="true" :name="getDateEffectiveFieldName(index)" @selected="vehicleInchargeForm.errors.clear(getDateEffectiveFieldName(index))" :placeholder="trans('transport.date_effective')" typeable></datepicker>
                                         <show-error :form-name="vehicleInchargeForm" :prop-name="getDateEffectiveFieldName(index)"></show-error> 
                                     </div>
                                     <div class="col-12 col-sm-4">

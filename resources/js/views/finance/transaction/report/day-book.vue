@@ -34,7 +34,7 @@
                         <div class="row">
                             <div class="col-12 col-sm-4">
                                 <div class="form-group">
-                                    <datepicker v-model="filter.date" :bootstrapStyling="true"></datepicker>
+                                    <datepicker v-model="filter.date" :bootstrapStyling="true" typeable></datepicker>
                                 </div>
                             </div>
                         </div>

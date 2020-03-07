@@ -36,7 +36,7 @@
                                     <input type="checkbox" class="custom-control-input" v-model="eventForm.no_time" value="1">
                                     <span class="custom-control-label">{{trans('calendar.event_no_time')}}</span>
                                 </label>
-                                <datepicker v-model="eventForm.start_date" :bootstrapStyling="true" @selected="eventForm.errors.clear('start_date')" :placeholder="trans('calendar.event_start_date')"></datepicker>
+                                <datepicker v-model="eventForm.start_date" :bootstrapStyling="true" @selected="eventForm.errors.clear('start_date')" :placeholder="trans('calendar.event_start_date')" typeable></datepicker>
                                 <show-error :form-name="eventForm" prop-name="start_date"></show-error>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <label for="">{{trans('calendar.event_end_date')}}</label>
-                                <datepicker v-model="eventForm.end_date" :bootstrapStyling="true" @selected="eventForm.errors.clear('end_date')" :placeholder="trans('calendar.event_end_date')"></datepicker>
+                                <datepicker v-model="eventForm.end_date" :bootstrapStyling="true" @selected="eventForm.errors.clear('end_date')" :placeholder="trans('calendar.event_end_date')" typeable></datepicker>
                                 <show-error :form-name="eventForm" prop-name="end_date"></show-error>
                             </div>
                         </div>

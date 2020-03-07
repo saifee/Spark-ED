@@ -28,12 +28,12 @@
                     </div>
                     <div class="form-group">
                         <label for="">{{trans('resource.date_of_assignment')}}</label>
-                        <datepicker v-model="assignmentForm.date_of_assignment" :bootstrapStyling="true" @selected="assignmentForm.errors.clear('date_of_assignment')" :placeholder="trans('resource.date_of_assignment')"></datepicker>
+                        <datepicker v-model="assignmentForm.date_of_assignment" :bootstrapStyling="true" @selected="assignmentForm.errors.clear('date_of_assignment')" :placeholder="trans('resource.date_of_assignment')" typeable></datepicker>
                         <show-error :form-name="assignmentForm" prop-name="date_of_assignment"></show-error>
                     </div>
                     <div class="form-group">
                         <label for="">{{trans('resource.due_date_of_assignment')}}</label>
-                        <datepicker v-model="assignmentForm.due_date" :bootstrapStyling="true" @selected="assignmentForm.errors.clear('due_date')" :placeholder="trans('resource.due_date_of_assignment')"></datepicker>
+                        <datepicker v-model="assignmentForm.due_date" :bootstrapStyling="true" @selected="assignmentForm.errors.clear('due_date')" :placeholder="trans('resource.due_date_of_assignment')" typeable></datepicker>
                         <show-error :form-name="assignmentForm" prop-name="due_date"></show-error>
                     </div>
                     <div class="form-group">

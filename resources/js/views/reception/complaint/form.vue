@@ -15,7 +15,7 @@
             <div class="col-12 col-sm-4">
                 <div class="form-group">
                     <label for="">{{trans('reception.date_of_complaint')}}</label>
-                    <datepicker v-model="complaintForm.date_of_complaint" :bootstrapStyling="true" @selected="complaintForm.errors.clear('date_of_complaint')" :placeholder="trans('reception.date_of_complaint')"></datepicker>
+                    <datepicker v-model="complaintForm.date_of_complaint" :bootstrapStyling="true" @selected="complaintForm.errors.clear('date_of_complaint')" :placeholder="trans('reception.date_of_complaint')" typeable></datepicker>
                     <show-error :form-name="complaintForm" prop-name="date_of_complaint"></show-error>
                 </div>
             </div>
@@ -67,7 +67,7 @@
             <div class="col-12 col-sm-3">
                 <div class="form-group">
                     <label for="">{{trans('reception.date_of_resolution')}}</label>
-                    <datepicker v-model="complaintForm.date_of_resolution" :bootstrapStyling="true" @selected="complaintForm.errors.clear('date_of_resolution')" :placeholder="trans('reception.date_of_resolution')"></datepicker>
+                    <datepicker v-model="complaintForm.date_of_resolution" :bootstrapStyling="true" @selected="complaintForm.errors.clear('date_of_resolution')" :placeholder="trans('reception.date_of_resolution')" typeable></datepicker>
                     <show-error :form-name="complaintForm" prop-name="date_of_resolution"></show-error>
                 </div>
             </div>

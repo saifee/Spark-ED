@@ -35,7 +35,7 @@
                             <div class="row justify-content-end px-4" v-if="hasPermission('customize-fee-date')">
                                 <div class="col-12 col-sm-3">
                                     <div class="form-group">
-                                        <datepicker v-model="feePayment.date" :bootstrapStyling="true" :placeholder="trans('student.date_of_payment')"></datepicker>
+                                        <datepicker v-model="feePayment.date" :bootstrapStyling="true" :placeholder="trans('student.date_of_payment')" typeable></datepicker>
                                     </div>
                                 </div>
                             </div>

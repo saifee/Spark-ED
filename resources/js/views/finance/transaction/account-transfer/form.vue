@@ -34,7 +34,7 @@
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
                         <label for="">{{trans('finance.date_of_account_transfer')}}</label>
-                        <datepicker v-model="accountTransferForm.date_of_account_transfer" :bootstrapStyling="true" @selected="accountTransferForm.errors.clear('date_of_account_transfer')" :placeholder="trans('finance.date_of_account_transfer')"></datepicker>
+                        <datepicker v-model="accountTransferForm.date_of_account_transfer" :bootstrapStyling="true" @selected="accountTransferForm.errors.clear('date_of_account_transfer')" :placeholder="trans('finance.date_of_account_transfer')" typeable></datepicker>
                         <show-error :form-name="accountTransferForm" prop-name="date_of_account_transfer"></show-error>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
 	            <div class="col-12 col-sm-3" v-if="getPaymentMethodDetail('instrument_date')">
 	                <div class="form-group">
 	                    <label for="">{{trans('finance.instrument_date')}}</label>
-	                    <datepicker v-model="accountTransferForm.instrument_date" :bootstrapStyling="true" @selected="accountTransferForm.errors.clear('instrument_date')" :placeholder="trans('finance.instrument_date')"></datepicker>
+	                    <datepicker v-model="accountTransferForm.instrument_date" :bootstrapStyling="true" @selected="accountTransferForm.errors.clear('instrument_date')" :placeholder="trans('finance.instrument_date')" typeable></datepicker>
 	                    <show-error :form-name="accountTransferForm" prop-name="instrument_date"></show-error>
 	                </div>
 	            </div>
@@ -73,7 +73,7 @@
 	            <div class="col-12 col-sm-3" v-if="getPaymentMethodDetail('instrument_clearing_date')">
 	                <div class="form-group">
 	                    <label for="">{{trans('finance.instrument_clearing_date')}}</label>
-	                    <datepicker v-model="accountTransferForm.instrument_clearing_date" :bootstrapStyling="true" @selected="accountTransferForm.errors.clear('instrument_clearing_date')" :placeholder="trans('finance.instrument_clearing_date')"></datepicker>
+	                    <datepicker v-model="accountTransferForm.instrument_clearing_date" :bootstrapStyling="true" @selected="accountTransferForm.errors.clear('instrument_clearing_date')" :placeholder="trans('finance.instrument_clearing_date')" typeable></datepicker>
 	                    <show-error :form-name="accountTransferForm" prop-name="instrument_clearing_date"></show-error>
 	                </div>
 	            </div>

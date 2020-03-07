@@ -5,7 +5,7 @@
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
                         <label for="">{{trans('library.date_of_addition')}}</label>
-                        <datepicker v-model="bookPostForm.date_of_addition" :bootstrapStyling="true" @selected="bookPostForm.errors.clear('date_of_addition')" :placeholder="trans('library.date_of_addition')"></datepicker>
+                        <datepicker v-model="bookPostForm.date_of_addition" :bootstrapStyling="true" @selected="bookPostForm.errors.clear('date_of_addition')" :placeholder="trans('library.date_of_addition')" typeable></datepicker>
                         <show-error :form-name="bookPostForm" prop-name="date_of_addition"></show-error>
                     </div>
                 </div>

@@ -95,7 +95,7 @@
                                                 <show-error :form-name="classTeacherForm" :prop-name="getEmployeeFieldName(index)"></show-error>
                                             </div>
                                             <div class="col-12 col-sm-4">
-                                                <datepicker v-model="batch.date_effective" :bootstrapStyling="true" :name="getDateEffectiveFieldName(index)" @selected="classTeacherForm.errors.clear(getDateEffectiveFieldName(index))" :placeholder="trans('academic.date_effective')"></datepicker>
+                                                <datepicker v-model="batch.date_effective" :bootstrapStyling="true" :name="getDateEffectiveFieldName(index)" @selected="classTeacherForm.errors.clear(getDateEffectiveFieldName(index))" :placeholder="trans('academic.date_effective')" typeable></datepicker>
                                                 <show-error :form-name="classTeacherForm" :prop-name="getDateEffectiveFieldName(index)"></show-error> 
                                             </div>
                                             <div class="col-12 col-sm-4">

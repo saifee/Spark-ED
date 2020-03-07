@@ -72,14 +72,14 @@
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
                                     <label for="">{{trans('resource.syllabus_topic_start_date')}}</label>
-                                    <datepicker v-model="topic.start_date" :bootstrapStyling="true" @selected="syllabusForm.errors.clear(getTopicStartDateName(index))" :placeholder="trans('resource.syllabus_start_date')"></datepicker>
+                                    <datepicker v-model="topic.start_date" :bootstrapStyling="true" @selected="syllabusForm.errors.clear(getTopicStartDateName(index))" :placeholder="trans('resource.syllabus_start_date')" typeable></datepicker>
                                     <show-error :form-name="syllabusForm" :prop-name="getTopicStartDateName(index)"></show-error>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
                                     <label for="">{{trans('resource.syllabus_topic_end_date')}}</label>
-                                    <datepicker v-model="topic.end_date" :bootstrapStyling="true" @selected="syllabusForm.errors.clear(getTopicEndDateName(index))" :placeholder="trans('resource.syllabus_end_date')"></datepicker>
+                                    <datepicker v-model="topic.end_date" :bootstrapStyling="true" @selected="syllabusForm.errors.clear(getTopicEndDateName(index))" :placeholder="trans('resource.syllabus_end_date')" typeable></datepicker>
                                     <show-error :form-name="syllabusForm" :prop-name="getTopicEndDateName(index)"></show-error>
                                 </div>
                             </div>

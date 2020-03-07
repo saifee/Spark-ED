@@ -27,7 +27,7 @@
                 <div class="col-12 col-sm-4">
                     <div class="form-group">
                         <label for="">{{trans('employee.salary_structure_date_effective')}}</label>
-                        <datepicker v-model="salaryStructureForm.date_effective" :bootstrapStyling="true" @selected="salaryStructureForm.errors.clear('date_effective')" :placeholder="trans('employee.salary_structure_date_effective')"></datepicker>
+                        <datepicker v-model="salaryStructureForm.date_effective" :bootstrapStyling="true" @selected="salaryStructureForm.errors.clear('date_effective')" :placeholder="trans('employee.salary_structure_date_effective')" typeable></datepicker>
                         <show-error :form-name="salaryStructureForm" prop-name="date_effective"></show-error>
                     </div>
                 </div>

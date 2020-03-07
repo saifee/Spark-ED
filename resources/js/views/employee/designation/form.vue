@@ -26,7 +26,7 @@
             <div class="col-12 col-sm-6">
                 <div class="form-group">
                     <label for="">{{trans('employee.date_effective')}}</label>
-                    <datepicker v-model="designationForm.date_effective" :bootstrapStyling="true" @selected="designationForm.errors.clear('date_effective')" :placeholder="trans('employee.date_effective')"></datepicker>
+                    <datepicker v-model="designationForm.date_effective" :bootstrapStyling="true" @selected="designationForm.errors.clear('date_effective')" :placeholder="trans('employee.date_effective')" typeable></datepicker>
                     <show-error :form-name="designationForm" prop-name="date_effective"></show-error>
                 </div>
             </div>

@@ -20,7 +20,7 @@
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
                         <label for="">{{trans('institute.document_date_of_expiry')}}</label>
-                        <datepicker v-model="instituteDocumentForm.date_of_expiry" :bootstrapStyling="true" @selected="instituteDocumentForm.errors.clear('date_of_expiry')" :placeholder="trans('institute.document_date_of_expiry')"></datepicker>
+                        <datepicker v-model="instituteDocumentForm.date_of_expiry" :bootstrapStyling="true" @selected="instituteDocumentForm.errors.clear('date_of_expiry')" :placeholder="trans('institute.document_date_of_expiry')" typeable></datepicker>
                         <show-error :form-name="instituteDocumentForm" prop-name="date_of_expiry"></show-error>
                     </div>
                 </div>

@@ -19,7 +19,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">{{trans('post.date_of_article')}}</label>
-                        <datepicker v-model="articleForm.date_of_article" :bootstrapStyling="true" @selected="articleForm.errors.clear('date_of_article')" :placeholder="trans('post.date_of_article')"></datepicker>
+                        <datepicker v-model="articleForm.date_of_article" :bootstrapStyling="true" @selected="articleForm.errors.clear('date_of_article')" :placeholder="trans('post.date_of_article')" typeable></datepicker>
                         <show-error :form-name="articleForm" prop-name="date_of_article"></show-error>
                     </div>
                     <div class="form-group">

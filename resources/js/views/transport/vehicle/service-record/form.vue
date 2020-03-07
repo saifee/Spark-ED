@@ -27,7 +27,7 @@
 	            <div class="col-12 col-sm-3">
 	                <div class="form-group">
 	                    <label for="">{{trans('transport.date_of_service')}}</label>
-	                    <datepicker v-model="vehicleServiceRecordForm.date_of_service" :bootstrapStyling="true" @selected="vehicleServiceRecordForm.errors.clear('date_of_service')" :placeholder="trans('transport.date_of_service')"></datepicker>
+	                    <datepicker v-model="vehicleServiceRecordForm.date_of_service" :bootstrapStyling="true" @selected="vehicleServiceRecordForm.errors.clear('date_of_service')" :placeholder="trans('transport.date_of_service')" typeable></datepicker>
 	                    <show-error :form-name="vehicleServiceRecordForm" prop-name="date_of_service"></show-error>
 	                </div>
 	            </div>
@@ -48,7 +48,7 @@
 	            <div class="col-12 col-sm-3">
 	                <div class="form-group">
 	                    <label for="">{{trans('transport.vehicle_service_record_next_due_date')}}</label>
-	                    <datepicker v-model="vehicleServiceRecordForm.next_due_date" :bootstrapStyling="true" @selected="vehicleServiceRecordForm.errors.clear('vehicle_service_record_next_due_date')" :placeholder="trans('transport.vehicle_service_record_next_due_date')"></datepicker>
+	                    <datepicker v-model="vehicleServiceRecordForm.next_due_date" :bootstrapStyling="true" @selected="vehicleServiceRecordForm.errors.clear('vehicle_service_record_next_due_date')" :placeholder="trans('transport.vehicle_service_record_next_due_date')" typeable></datepicker>
 	                    <show-error :form-name="vehicleServiceRecordForm" prop-name="next_due_date"></show-error>
 	                </div>
 	            </div>

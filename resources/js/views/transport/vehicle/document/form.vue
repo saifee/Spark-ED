@@ -34,7 +34,7 @@
 	            <div class="col-12 col-sm-3" v-if="expiry_date">
 	                <div class="form-group">
 	                    <label for="">{{trans('transport.date_of_expiry')}}</label>
-	                    <datepicker v-model="vehicleDocumentForm.date_of_expiry" :bootstrapStyling="true" @selected="vehicleDocumentForm.errors.clear('date_of_expiry')" :placeholder="trans('transport.date_of_expiry')"></datepicker>
+	                    <datepicker v-model="vehicleDocumentForm.date_of_expiry" :bootstrapStyling="true" @selected="vehicleDocumentForm.errors.clear('date_of_expiry')" :placeholder="trans('transport.date_of_expiry')" typeable></datepicker>
 	                    <show-error :form-name="vehicleDocumentForm" prop-name="date_of_expiry"></show-error>
 	                </div>
 	            </div>
@@ -56,7 +56,7 @@
                     <div class="col-12 col-sm-3">
                         <div class="form-group">
                             <label for="">{{trans('transport.vehicle_insurance_date')}}</label>
-                            <datepicker v-model="vehicleDocumentForm.insurance_date" :bootstrapStyling="true" @selected="vehicleDocumentForm.errors.clear('insurance_date')" :placeholder="trans('transport.vehicle_insurance_date')"></datepicker>
+                            <datepicker v-model="vehicleDocumentForm.insurance_date" :bootstrapStyling="true" @selected="vehicleDocumentForm.errors.clear('insurance_date')" :placeholder="trans('transport.vehicle_insurance_date')" typeable></datepicker>
                             <show-error :form-name="vehicleDocumentForm" prop-name="insurance_date"></show-error>
                         </div>
                     </div>
