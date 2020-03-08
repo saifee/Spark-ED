@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Academic\AcademicSession;
+use App\Models\Configuration\Behaviour\EmployeeSkill;
 use App\Models\Configuration\Behaviour\Skill;
 use App\Models\Configuration\Behaviour\SkillIcon;
 use App\Repositories\Academic\BatchRepository;
@@ -73,6 +74,21 @@ class BehaviourInit extends Command
                 Skill::firstOrCreate([
                     'academic_session_id' => $default_academic_session,
                     'batch_id' => $batch->id,
+                    'name' => $skill['name'],
+                ], [
+                    'points' => $skill['points'],
+                    'positive' => $skill['positive'],
+                    'skill_icon_id' => optional(SkillIcon::where('name',$skill['icon'])->first())->id,
+                    'options' => [],
+                ]);
+            }
+        }
+
+        $employee_skills = $configurations['employee_skills'];
+
+        foreach ($batches as $batch) {
+            foreach ($employee_skills as $skill) {
+                EmployeeSkill::firstOrCreate([
                     'name' => $skill['name'],
                 ], [
                     'points' => $skill['points'],
