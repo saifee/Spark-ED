@@ -105,6 +105,16 @@ export default [
         meta: { menu: 'module-configuration'}
     },
     {
+        path: '/configuration/behaviour/skill/icon',
+        component: () => import(/* webpackChunkName: "js/configuration/behaviour/skillIcon/index" */ '@views/configuration/behaviour/skill-icon/index'),
+        meta: { menu: 'module-configuration'}
+    },
+    {
+        path: '/configuration/behaviour/skill/icon/:id/edit',
+        component: () => import(/* webpackChunkName: "js/configuration/behaviour/skillIcon/edit" */ '@views/configuration/behaviour/skill-icon/edit'),
+        meta: { menu: 'module-configuration'}
+    },
+    {
         path: '/configuration/academic/institute',
         component: () => import(/* webpackChunkName: "js/configuration/academic/institute/index" */ '@views/configuration/academic/institute/index'),
         meta: { menu: 'module-configuration'}
