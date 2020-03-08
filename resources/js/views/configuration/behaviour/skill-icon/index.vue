@@ -41,6 +41,7 @@
                         <table class="table table-sm">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>{{trans('behaviour.skill_icon_name')}}</th>
                                     <th>{{trans('behaviour.skill_icon_description')}}</th>
                                     <th class="table-option">{{trans('general.action')}}</th>
@@ -48,6 +49,7 @@
                             </thead>
                             <tbody>
                                 <tr v-for="skill_icon in skill_icons.data">
+                                    <td><v-icon v-text="skill_icon.name"></v-icon></td>
                                     <td v-text="skill_icon.name"></td>
                                     <td v-text="skill_icon.description"></td>
                                     <td class="table-option">
