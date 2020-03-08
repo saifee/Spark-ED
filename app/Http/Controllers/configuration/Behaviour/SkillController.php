@@ -31,7 +31,7 @@ class SkillController extends Controller
     }
 
     /**
-     * Used to get all Behaviour Course Categories
+     * Used to get all Skills
      * @get ("/api/skill")
      * @return Response
      */
@@ -41,34 +41,34 @@ class SkillController extends Controller
     }
 
     /**
-     * Used to print all Behaviour Course Categories
+     * Used to print all Skills
      * @post ("/api/skill/print")
      * @return Response
      */
     public function print()
     {
-        $categories = $this->repo->print(request('filter'));
+        $skills = $this->repo->print(request('filter'));
 
-        return view('print.behaviour.skill', compact('categories'))->render();
+        return view('print.behaviour.skill', compact('skills'))->render();
     }
 
     /**
-     * Used to generate pdf all Behaviour Course Categories
+     * Used to generate pdf all Skills
      * @post ("/api/skill/pdf")
      * @return Response
      */
     public function pdf()
     {
-        $categories = $this->repo->print(request('filter'));
+        $skills = $this->repo->print(request('filter'));
 
         $uuid = Str::uuid();
-        $pdf = \PDF::loadView('print.behaviour.skill', compact('categories'))->save('../storage/app/downloads/'.$uuid.'.pdf');
+        $pdf = \PDF::loadView('print.behaviour.skill', compact('skills'))->save('../storage/app/downloads/'.$uuid.'.pdf');
 
         return $uuid;
     }
 
     /**
-     * Used to store Behaviour Skill
+     * Used to store Skill
      * @post ("/api/skill")
      * @param ({
      *      @Parameter("name", type="string", required="true", description="Name of Skill"),
@@ -84,10 +84,10 @@ class SkillController extends Controller
     }
 
     /**
-     * Used to get Behaviour Skill detail
+     * Used to get Skill detail
      * @get ("/api/skill/{id}")
      * @param ({
-     *      @Parameter("id", type="integer", required="true", description="Id of Behaviour Skill"),
+     *      @Parameter("id", type="integer", required="true", description="Id of Skill"),
      * })
      * @return Response
      */
@@ -97,10 +97,10 @@ class SkillController extends Controller
     }
 
     /**
-     * Used to update Behaviour Skill
+     * Used to update Skill
      * @patch ("/api/skill/{id}")
      * @param ({
-     *      @Parameter("id", type="integer", required="true", description="Id of Behaviour Skill"),
+     *      @Parameter("id", type="integer", required="true", description="Id of Skill"),
      *      @Parameter("name", type="string", required="true", description="Name of Skill"),
      *      @Parameter("description", type="text", required="true", description="Description of Skill"),
      * })
@@ -116,10 +116,10 @@ class SkillController extends Controller
     }
 
     /**
-     * Used to delete Behaviour Skill
+     * Used to delete Skill
      * @delete ("/api/skill/{id}")
      * @param ({
-     *      @Parameter("id", type="integer", required="true", description="Id of Behaviour Skill"),
+     *      @Parameter("id", type="integer", required="true", description="Id of Skill"),
      * })
      * @return Response
      */
