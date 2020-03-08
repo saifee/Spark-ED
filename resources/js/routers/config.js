@@ -115,6 +115,16 @@ export default [
         meta: { menu: 'module-configuration'}
     },
     {
+        path: '/configuration/behaviour/skill/employee',
+        component: () => import(/* webpackChunkName: "js/configuration/behaviour/employeeSkill/index" */ '@views/configuration/behaviour/employee-skill/index'),
+        meta: { menu: 'module-configuration'}
+    },
+    {
+        path: '/configuration/behaviour/skill/employee/:id/edit',
+        component: () => import(/* webpackChunkName: "js/configuration/behaviour/employeeSkill/edit" */ '@views/configuration/behaviour/employee-skill/edit'),
+        meta: { menu: 'module-configuration'}
+    },
+    {
         path: '/configuration/academic/institute',
         component: () => import(/* webpackChunkName: "js/configuration/academic/institute/index" */ '@views/configuration/academic/institute/index'),
         meta: { menu: 'module-configuration'}

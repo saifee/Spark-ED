@@ -273,6 +273,14 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::patch('/behaviour/skill-icon/{id}', 'Configuration\Behaviour\SkillIconController@update');
 	Route::delete('/behaviour/skill-icon/{id}', 'Configuration\Behaviour\SkillIconController@destroy');
 
+	Route::get('/behaviour/employee-skill', 'Configuration\Behaviour\EmployeeSkillController@index');
+	Route::get('/behaviour/employee-skill/{id}', 'Configuration\Behaviour\EmployeeSkillController@show');
+	Route::post('/behaviour/employee-skill', 'Configuration\Behaviour\EmployeeSkillController@store');
+	Route::post('/behaviour/employee-skill/print', 'Configuration\Behaviour\EmployeeSkillController@print');
+	Route::post('/behaviour/employee-skill/pdf', 'Configuration\Behaviour\EmployeeSkillController@pdf');
+	Route::patch('/behaviour/employee-skill/{id}', 'Configuration\Behaviour\EmployeeSkillController@update');
+	Route::delete('/behaviour/employee-skill/{id}', 'Configuration\Behaviour\EmployeeSkillController@destroy');
+
 	Route::get('/employee/group', 'Configuration\Employee\EmployeeGroupController@index');
 	Route::get('/employee/group/{id}', 'Configuration\Employee\EmployeeGroupController@show');
 	Route::post('/employee/group', 'Configuration\Employee\EmployeeGroupController@store');

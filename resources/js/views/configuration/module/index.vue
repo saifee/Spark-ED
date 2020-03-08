@@ -97,6 +97,12 @@
                             <p class="font-80pc">{{trans('behaviour.skill_icon_module_description')}}</p>
                             <router-link to="/configuration/behaviour/skill/icon" class="btn btn-info btn-sm">{{trans('general.go_to_link', {link: trans('behaviour.skill_icon')})}}</router-link>
                         </div>
+                        <div class="col-12 col-sm-3">
+                            <h6 class="card-title">{{trans('behaviour.employee_skill')}}
+                            </h6>
+                            <p class="font-80pc">{{trans('behaviour.employee_skill_module_description')}}</p>
+                            <router-link to="/configuration/behaviour/skill/employee" class="btn btn-info btn-sm">{{trans('general.go_to_link', {link: trans('behaviour.employee_skill')})}}</router-link>
+                        </div>
                     </div>
                 </div>
             </div>
