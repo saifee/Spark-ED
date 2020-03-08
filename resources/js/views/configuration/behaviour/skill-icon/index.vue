@@ -101,7 +101,6 @@
             };
         },
         mounted(){
-            console.log('test')
             if(!helper.hasPermission('access-configuration')){
                 helper.notAccessibleMsg();
                 this.$router.push('/dashboard');
