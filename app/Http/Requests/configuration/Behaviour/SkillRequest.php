@@ -36,7 +36,7 @@ class SkillRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => trans('academic.skill_name')
+            'name' => trans('behaviour.skill_name')
         ];
     }
 
