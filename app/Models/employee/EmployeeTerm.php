@@ -35,6 +35,11 @@ class EmployeeTerm extends Model
         return $this->hasMany('App\Models\Employee\EmployeeDesignation');
     }
 
+    public function employeeBehaviourPoint()
+    {
+        return $this->hasOne('App\Models\Employee\EmployeeBehaviourPoint');
+    }
+
     public function getOption(string $option)
     {
         return array_get($this->options, $option);

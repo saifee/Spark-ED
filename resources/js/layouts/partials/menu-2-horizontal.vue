@@ -1043,6 +1043,15 @@
           </v-list-item-content>
         </v-list-item>
         <v-list-item
+          v-if="showMenu('employee_behaviour')"
+          to="/employee/behaviour"
+        >
+          <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ trans('behaviour.behaviour') }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
           v-if="hasPermission('generate-employee-id-card') && showMenu('employee_id_card')"
           to="/employee/id-card"
         >

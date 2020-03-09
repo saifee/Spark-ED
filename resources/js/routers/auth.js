@@ -193,6 +193,10 @@ export default [
         component: () => import(/* webpackChunkName: "js/employee/attendance/production" */ '@views/employee/attendance/production')
     },
     {
+        path: '/employee/behaviour',
+        component: () => import(/* webpackChunkName: "js/employee/behaviour/index" */ '@views/employee/behaviour/index')
+    },
+    {
         path: '/employee/list',
         component: () => import(/* webpackChunkName: "js/employee/list" */ '@views/employee/list')
     },

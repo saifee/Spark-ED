@@ -248,6 +248,12 @@
 					"translation": "employee.payroll",
 					"visibility": true,
 					"submenu": []
+				},
+				{
+					"name": "employee_behaviour",
+					"translation": "behaviour.behaviour",
+					"visibility": true,
+					"submenu": []
 				}
 			]
 		}

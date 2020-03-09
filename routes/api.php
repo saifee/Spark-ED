@@ -839,6 +839,9 @@ Route::group(['middleware' => ['auth:api']], function () {
 	*/
 	Route::get('/student/behaviour/pre-requisite', 'Student\BehaviourController@preRequisite');
 	Route::post('/student/behaviour', 'Student\BehaviourController@store');
+	
+	Route::get('/employee/behaviour/pre-requisite', 'Employee\BehaviourController@preRequisite');
+	Route::post('/employee/behaviour', 'Employee\BehaviourController@store');
 	/*
 		     * Behaviour Routes End
 	*/

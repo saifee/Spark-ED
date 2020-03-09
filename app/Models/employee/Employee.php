@@ -167,7 +167,7 @@ class Employee extends Model
     {
         return $q->with(['caste:id,name','category:id,name','religion:id,name','bloodGroup:id,name','employeeTerms' => function ($q1) {
             $q1->where('date_of_joining', '<=', date('Y-m-d'))->orderBy('date_of_joining', 'desc');
-        },'employeeDesignations' => function ($q2) {
+        },'employeeTerms.employeeBehaviourPoint','employeeDesignations' => function ($q2) {
             $q2->where('date_effective', '<=', date('Y-m-d'))->orderBy('date_effective', 'desc');
         },'employeeDesignations.department','employeeDesignations.designation','employeeDesignations.designation.employeeCategory','user','user.roles']);
     }
