@@ -56,15 +56,15 @@ class BehaviourRepository
         }
 
         \DB::beginTransaction();
-        $employee_behaviour_point = $employee_term->employee_behaviour_point;
+        $employee_behaviour_point = $employee_term->employeeBehaviourPoint;
         if (!$employee_behaviour_point) {
-            $employee_term->employee_behaviour_point()->create([
+            $employee_term->employeeBehaviourPoint()->create([
                 'employee_term_id' => $employee_term_id,
                 'total'            => $employee_skill_points,
                 'options'          => [],
             ]);
         } else {
-            $employee_term->employee_behaviour_point()->increment('total', $employee_skill_points);
+            $employee_term->employeeBehaviourPoint()->increment('total', $employee_skill_points);
         }
 
         // $options = $employee_behaviour_point->options;

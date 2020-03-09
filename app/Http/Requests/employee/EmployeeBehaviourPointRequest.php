@@ -26,7 +26,7 @@ class EmployeeBehaviourPointRequest extends FormRequest
         return [
             'employee_term_id'  => 'required',
             'employee_skill_id' => 'required',
-            'skill_points'      => 'required',
+            'employee_skill_points'      => 'required',
         ];
     }
 
@@ -40,7 +40,7 @@ class EmployeeBehaviourPointRequest extends FormRequest
         return [
             'employee_term_id'  => trans('employee.employee'),
             'employee_skill_id' => trans('behaviour.employee_skill_id'),
-            'skill_points'      => trans('behaviour.skill_points'),
+            'employee_skill_points'      => trans('behaviour.employee_skill_points'),
         ];
     }
 }

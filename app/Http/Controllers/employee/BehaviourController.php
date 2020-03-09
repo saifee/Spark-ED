@@ -41,7 +41,7 @@ class BehaviourController extends Controller
         $registration = $this->repo->create($request->all());
 
         return $this->success(['message' => trans('behaviour.feedback_complete', [
-            'skill_points' => $request->input('skill_points'),
+            'skill_points' => $request->input('employee_skill_points'),
         ])]);
     }
 }
