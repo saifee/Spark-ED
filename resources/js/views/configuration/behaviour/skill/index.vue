@@ -19,6 +19,7 @@
                             <div :class="['dropdown-menu',getConfig('direction') == 'ltr' ? 'dropdown-menu-right' : '']" aria-labelledby="moreOption">
                                 <button class="dropdown-item custom-dropdown" @click="print"><i class="fas fa-print"></i> {{trans('general.print')}}</button>
                                 <button class="dropdown-item custom-dropdown" @click="pdf"><i class="fas fa-file-pdf"></i> {{trans('general.generate_pdf')}}</button>
+                                <button class="dropdown-item custom-dropdown" @click="$router.push('/configuration/behaviour/skill/icon')"><i class="fas fa-icons"></i> {{trans('behaviour.skill_icon')}}</button>
                             </div>
                         </div>
                         <help-button @clicked="help_topic = 'configuration.behaviour.skill'"></help-button>
