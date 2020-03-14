@@ -273,6 +273,11 @@
           <v-list-item-title>{{ trans('behaviour.skill') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item to="/configuration/behaviour/skill/employee">
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('behaviour.employee_skill') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list-group>
     <v-list-group
       v-show="moduleConfigMenu && hasPermission('access-configuration')"
