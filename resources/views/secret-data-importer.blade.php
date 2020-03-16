@@ -5,6 +5,11 @@
     <title>Document</title>
 </head>
 <body>
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
     <form method="post" enctype="multipart/form-data">
         {!! csrf_field(); !!}
         <input type="file" name="csv_file">

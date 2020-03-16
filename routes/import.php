@@ -46,7 +46,7 @@ Route::post('/secret/data/importer/books', function (\Illuminate\Http\Request $r
         ]);
     }
     \App\Models\Library\Book::reguard();
-    return "done.";
+    return back()->with('status', 'File uploaded!');
 });
 
 Route::get('/secret/data/importer/students', function () {
