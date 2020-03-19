@@ -11,6 +11,9 @@
  */
 
 Route::get('/test', 'HomeController@test');
+Route::get('/custom', function() {
+    return;
+});
 Route::get('/cache', 'Configuration\ConfigurationController@clearCache');
 
 Route::group(['middleware' => ['auth:api']], function () {
@@ -44,7 +47,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     Route::get('/institute/document/{id}/attachment/{attachment_uuid}/download', 'Institute\InstituteDocumentController@download');
 
-    Route::get('/academic/timetable/batch/{uuid}/print', 'Academic\TimetableController@printBatchTimetable');
+    Route::get('/academic/timetable/batch/{uuid}/print', 'Academic\TimetableController@printIndividualBatchTimetable');
     Route::get('/academic/certificate/{uuid}/print', 'Academic\CertificateController@printCertificate');
 
     Route::get('/resource/lesson/plan/{uuid}/print', 'Resource\LessonPlanController@printLessonPlan');
@@ -56,6 +59,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/resource/syllabus/{uuid}/attachment/{attachment_uuid}/download', 'Resource\SyllabusController@download');
 
     Route::get('/exam/schedule/{id}/admit-card/print', 'Exam\ScheduleController@printAdmitCard');
+    Route::get('/exam/report-card/{batch_id}/{record_id}/print', 'Exam\ReportController@printReportCard');
 
     Route::get('/reception/gate/pass/{uuid}/print', 'Reception\GatePassController@printDetail');
     Route::get('/reception/visitor/pass/{uuid}/print', 'Reception\VisitorLogController@printDetail');

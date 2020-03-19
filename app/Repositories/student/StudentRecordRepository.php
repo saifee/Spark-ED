@@ -377,7 +377,7 @@ class StudentRecordRepository {
 	 * @param StudentRecord $student_record
 	 * @return StudentRecord
 	 */
-	private function loadFeeData(StudentRecord $student_record) {
+	public function loadFeeData(StudentRecord $student_record) {
 		return $student_record->load('academicSession', 'student', 'student.parent', 'studentFeeRecords', 'batch', 'batch.course', 'batch.course.courseGroup', 'admission', 'studentFeeRecords.transportCircle', 'studentFeeRecords.feeConcession', 'studentFeeRecords.feeConcession.feeConcessionDetails', 'studentFeeRecords.studentOptionalFeeRecords', 'studentFeeRecords.transactions', 'feeAllocation', 'feeAllocation.feeAllocationGroups', 'feeAllocation.feeAllocationGroups.feeGroup', 'feeAllocation.feeAllocationGroups.feeGroup.feeHeads', 'feeAllocation.feeAllocationGroups.feeInstallments', 'feeAllocation.feeAllocationGroups.feeInstallments.transportFee', 'feeAllocation.feeAllocationGroups.feeInstallments.transportFee.transportFeeDetails', 'feeAllocation.feeAllocationGroups.feeInstallments.feeInstallmentDetails', 'feeAllocation.feeAllocationGroups.feeInstallments.feeInstallmentDetails.feeHead');
 	}
 
@@ -1320,21 +1320,16 @@ class StudentRecordRepository {
 			return [];
 		}
 
-        $array_of_name = explode(' ', $q);
-        $first_name = gv($array_of_name, 0);
-        $middle_name = (str_word_count($q) > 2) ? gv($array_of_name, 1) : '';
-        $last_name = gv($array_of_name, (str_word_count($q) > 2) ? 2 : 1);
-
-		$query = $this->student_record->select('id', 'student_id', 'batch_id')
+		$query = $this->student_record->select('id', 'student_id', 'batch_id', 'admission_id')
 			->with([
-				'student:id,uuid,student_parent_id,first_name,middle_name,last_name,contact_number',
+				'student:id,uuid,student_parent_id,first_name,middle_name,last_name,contact_number,date_of_birth,gender',
 				'student.parent:id,first_guardian_name',
 				'batch:id,course_id,name',
 				'batch.course:id,name',
 				'admission:id,number,prefix',
-			])->where(function ($q1) use ($q, $first_name, $middle_name, $last_name) {
-			$q1->whereHas('student', function ($q2) use ($q, $first_name, $middle_name, $last_name) {
-				$q2->filterByFirstName($first_name)->filterByMiddleName($middle_name)->filterByLastName($last_name);
+			])->where(function ($q1) use ($q) {
+			$q1->whereHas('student', function ($q2) use ($q) {
+				$q2->where(\DB::raw('(SELECT concat_ws(" ", first_name,middle_name,last_name))'), 'LIKE', '%' . $q . '%');
 			})->orWhereHas('admission', function ($q3) use ($q) {
 				$q3->where(\DB::raw('concat_ws(prefix," ",LPAD(number, ' . config('config.admission_number_digit') . ', 0))'), 'LIKE', '%' . $q . '%');
 			});

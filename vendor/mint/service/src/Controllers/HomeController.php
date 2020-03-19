@@ -30,4 +30,13 @@ class HomeController extends Controller
     {
         return $this->repo->helpDoc(request('subject'));
     }
+
+    /**
+     * Used to validate service for license request
+     * @return array
+     */
+    public function licenseValidate()
+    {
+        return $this->repo->licenseValidate();
+    }
 }

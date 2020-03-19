@@ -12,16 +12,16 @@
                     <td><span style="font-size:12px;">{{trans('list.'.$timetable_allocation->day)}}</span></td>
                     @foreach($timetable_allocation->TimetableAllocationDetails as $session)
                         <td>
-                            @if($filter['show_session_name'])
+                            @if((isset($filter) && $filter['show_session_name']) || !isset($filter)) 
                                 <span style="font-size:11px;">{{$session->ClassTimingSession->name}}</span><br />
                             @endif
-                            @if($filter['show_session_subject_name'])
+                            @if((isset($filter) && $filter['show_session_subject_name']) || !isset($filter))
                                 <span style="font-size:12px;">{{$session->subject_id ? $session->Subject->name : ''}}</span><br />
                             @endif
-                            @if($filter['show_session_teacher_name'])
+                            @if((isset($filter) && $filter['show_session_teacher_name']) || !isset($filter))
                                 <span style="font-size:12px;">{{$session->subject_id ? getSubjectTeacher($session->Subject, $timetable->date_effective) : ''}}</span><br />
                             @endif
-                            @if($filter['show_session_timing'])
+                            @if((isset($filter) && $filter['show_session_timing']) || !isset($filter))
                                 <span style="font-size:10px;">{{showTime($session->ClassTimingSession->start).' '.trans('general.from').' '.showTime($session->ClassTimingSession->end)}}</span>
                             @endif
                         </td>

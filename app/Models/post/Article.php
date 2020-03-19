@@ -113,7 +113,7 @@ class Article extends Model
         }
 
         return $q->where(function ($q1) use ($keyword) {
-            $q1->where('title', 'like', '%'.$keyword.'%')->where('description', 'like', '%'.$keyword.'%');
+            $q1->where('title', 'like', '%'.$keyword.'%')->orWhere('description', 'like', '%'.$keyword.'%');
         });
     }
 

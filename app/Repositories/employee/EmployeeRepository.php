@@ -200,7 +200,7 @@ class EmployeeRepository {
 		$department_id = gv($params, 'department_id');
 		$employee_category_id = gv($params, 'employee_category_id');
 		$employee_group_id = gv($params, 'employee_group_id');
-		$self = gv($params, 'self', 0);
+		$self = gv($params, 'self', 1);
 		$date = toDate(gv($params, 'date', date('Y-m-d')));
 
 		$this->employee->whereNull('prefix')->update(['prefix' => config('config.employee_code_prefix')]);
@@ -926,12 +926,12 @@ class EmployeeRepository {
 			$q->role(config('system.default_role.admin'));
 		})->get()->pluck('id')->all();
 
-		return $this->employee->select('id', 'uuid', 'first_name', 'middle_name', 'last_name', 'code', 'contact_number')
+		return $this->employee->select('id', 'uuid', 'first_name', 'middle_name', 'last_name', 'code', 'contact_number','date_of_birth','prefix', 'gender')
 			->with('employeeTerms:id,employee_id,date_of_joining,date_of_leaving', 'employeeDesignations:id,employee_id,designation_id,date_effective,date_end', 'employeeDesignations.designation:id,name,employee_category_id', 'employeeDesignations.designation.employeeCategory:id,name')
 			->whereNotIn('id', $system_admins)
 			->whereIn('id', $this->getAccessibleEmployeeId())
 			->where(function ($q1) use ($q) {
-				$q1->where(\DB::raw('concat_ws(first_name," ",middle_name," ",last_name)'), 'LIKE', '%' . $q . '%')
+				$q1->where(\DB::raw('(SELECT concat_ws(" ", first_name,middle_name,last_name))'), 'LIKE', '%' . $q . '%')
 					->orWhere(\DB::raw('concat_ws(prefix," ",LPAD(code, ' . config('config.employee_code_digit') . ', 0))'), 'LIKE', '%' . $q . '%');
 			})->take(10)->get();
 	}

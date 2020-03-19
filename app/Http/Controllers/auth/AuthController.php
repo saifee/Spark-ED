@@ -138,7 +138,7 @@ class AuthController extends Controller
      */
     public function validatePasswordReset()
     {
-        $this->repo->validateResetPasswordToken(request('token'));
+        $this->repo->validateResetPasswordToken(request('token'), request('email'));
 
         return $this->success(['message' => '']);
     }

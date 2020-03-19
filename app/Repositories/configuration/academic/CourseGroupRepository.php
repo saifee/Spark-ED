@@ -98,22 +98,36 @@ class CourseGroupRepository
      */
     public function getCourseOption($session_id = null)
     {
-        $course_groups = $this->course_group->with('courses')->filterBySession($session_id)->orderBy('position','asc')->get();
+        $course_groups = $this->course_group->with('courses', 'courses.batches')->filterBySession($session_id)->orderBy('position','asc')->get();
+
+        $is_student_or_parent = 0;
+        if (\Auth::user()->hasAnyRole([
+                config('system.default_role.parent'),
+                config('system.default_role.student'),
+            ])
+        ) {
+            $is_student_or_parent = 1;
+            $student_batch_ids = getAuthUserBatchId();
+        }
 
         $courses = array();
         foreach ($course_groups as $course_group) {
             $data = array();
             foreach ($course_group->courses->sortBy('position')->all() as $course) {
-                $data[] = array(
-                    'id' => $course->id,
-                    'name' => $course->name
-                );
+                if (! $is_student_or_parent || ($is_student_or_parent && count(array_intersect($student_batch_ids, $course->batches->pluck('id')->all())))) {
+                    $data[] = array(
+                        'id' => $course->id,
+                        'name' => $course->name
+                    );
+                }
             }
 
-            $courses[] = array(
-                'course_group' => $course_group->name,
-                'courses' => $data
-            );
+            if ($data) {
+                $courses[] = array(
+                    'course_group' => $course_group->name,
+                    'courses' => $data
+                );
+            }
         }
 
         return $courses;
@@ -165,23 +179,37 @@ class CourseGroupRepository
     {
         $course_groups = $this->course_group->with(['courses','courses.batches'])->filterBySession($session_id)->orderBy('position','asc')->get();
 
+        $is_student_or_parent = 0;
+        if (\Auth::user()->hasAnyRole([
+                config('system.default_role.parent'),
+                config('system.default_role.student'),
+            ])
+        ) {
+            $is_student_or_parent = 1;
+            $student_batch_ids = getAuthUserBatchId();
+        }
+
         $batches = array();
         foreach ($course_groups as $course_group) {
             $batch_data = array();
             foreach ($course_group->courses->sortBy('position')->all() as $course) {
                 $course_batches = $course->batches->sortBy('position')->values()->all();
                 foreach ($course_batches as $batch) {
-                    $batch_data[] = array(
-                        'id' => $batch->id,
-                        'name' => $course->name.' '.$batch->name
-                    );
+                    if (! $is_student_or_parent || ($is_student_or_parent && in_array($batch->id, $student_batch_ids))) {
+                        $batch_data[] = array(
+                            'id' => $batch->id,
+                            'name' => $course->name.' '.$batch->name
+                        );
+                    }
                 }
             }
 
-            $batches[] = array(
-                'course_group' => $course_group->name,
-                'batches' => $batch_data
-            );
+            if ($batch_data) {
+                $batches[] = array(
+                    'course_group' => $course_group->name,
+                    'batches' => $batch_data
+                );
+            }
         }
 
         return $batches;

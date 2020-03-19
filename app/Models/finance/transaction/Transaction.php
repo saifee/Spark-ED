@@ -48,6 +48,7 @@ class Transaction extends Model
     protected static $logFillable = true;
     protected static $logOnlyDirty = true;
     protected static $ignoreChangedAttributes = ['updated_at'];
+    protected $appends = ['voucher_number'];
     
     public function user()
     {

@@ -8,6 +8,10 @@
 		*{font-family:'Helvetica'; font-size: 14px; color: #ffffff; }
 	    body{width:auto; max-width:800px;margin:0 auto;font-size:12px; margin-top: 20px;}
 	    p {line-height: 8px;}
+
+	    @if (! $id_card_template->getOption('background_image'))
+	    	*{color: #000000;}
+	    @endif
 	</style>
 </head>
 <body>
@@ -25,8 +29,8 @@
 						<p>{{trans('student.date_of_admission')}}: <strong>{{showDate($student_record->admission->date_of_admission)}}</strong></p>
 					</td>
 					<td valign="middle" align="center" style="max-width: 130px;">
-						@if($student_record->student->photo)
-							<img src="{{url($student_record->student->photo)}}" style="max-width: 120px;">
+						@if($student_record->student->student_photo)
+							<img src="{{url($student_record->student->student_photo)}}" style="max-width: 120px;">
 						@else
 							<img src="{{$student_record->student->gender == 'male' ? url('/images/male.png') : url('/images/female.png')}}" style="max-width: 120px;">
 						@endif

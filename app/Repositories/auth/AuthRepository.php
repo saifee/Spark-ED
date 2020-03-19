@@ -74,7 +74,7 @@ class AuthRepository
             $auth_user = $this->user->findByUsername($email_or_username);
         }
 
-        $this->validateStatus($auth_user);
+        $name = $this->validateStatus($auth_user);
 
         event(new UserLogin($auth_user));
 
@@ -83,10 +83,12 @@ class AuthRepository
         $this->checkPreference($auth_user);
 
         $auth_user = $auth_user->fresh();
-
+        $payload = auth()->payload();
 
         return $this->prepareLoginData([
             'token' => $token,
+            'name' => $name,
+            'expires_on' => $payload->get('exp'),
             'auth_user' => $auth_user
         ]);
     }
@@ -126,7 +128,9 @@ class AuthRepository
             $credentials = array('username' => $email_or_username, 'password' => $password);
         }
 
-        if (! $token = auth()->attempt($credentials)) {
+        $ttl = request('device_name') ? config('config.mobile_token_lifetime') : config('config.token_lifetime');
+
+        if (! $token = auth()->setTTL($ttl)->attempt($credentials)) {
             $this->throttle->update();
 
             throw ValidationException::withMessages(['email_or_username' => trans('auth.failed')]);
@@ -181,8 +185,11 @@ class AuthRepository
             if (! $valid_student) {
                 throw ValidationException::withMessages(['email_or_username' => trans('student.login_permission_disabled')]);
             }
+
+            return $student->name;
         } elseif (in_array(config('system.default_role.parent'), $user_roles)) {
-            $student_ids = $auth_user->Parent->Students->pluck('id')->all();
+            $parent = $auth_user->Parent;
+            $student_ids = $parent->Students->pluck('id')->all();
 
             $valid_student = $this->student->whereIn('id', $student_ids)->whereHas('studentRecords', function ($q) {
                 $q->whereNull('date_of_exit')->whereIsPromoted(0);
@@ -191,6 +198,8 @@ class AuthRepository
             if (! $valid_student) {
                 throw ValidationException::withMessages(['email_or_username' => trans('student.login_permission_disabled')]);
             }
+
+            return $parent->first_guardian_name;
         } elseif (
             count(array_diff($user_roles, [config('system.default_role.admin'),config('system.default_role.student'),config('system.default_role.parent')]))
         ) {
@@ -203,6 +212,10 @@ class AuthRepository
             if (! $valid_employee) {
                 throw ValidationException::withMessages(['email_or_username' => trans('employee.login_permission_disabled')]);
             }
+
+            return $employee->name;
+        } else {
+            return optional($auth_user->Employee)->name;
         }
     }
 
@@ -304,16 +317,21 @@ class AuthRepository
         \Cache::forget('otp_'.$auth_user->id);
         \Cache::forget('otp_from_mobile_'.$mobile);
 
-        $token = auth()->login($auth_user);
+        $ttl = request('device_name') ? config('config.mobile_token_lifetime') : config('config.token_lifetime');
 
-        $this->validateStatus($auth_user);
+        $token = auth()->setTTL($ttl)->login($auth_user);
+
+        $name = $this->validateStatus($auth_user);
 
         event(new UserLogin($auth_user));
 
         $this->checkPreference($auth_user);
+        $payload = auth()->payload();
 
         return $this->prepareLoginData([
             'token' => $token,
+            'name' => $name,
+            'expires_on' => $payload->get('exp'),
             'auth_user' => $auth_user
         ]);
     }
@@ -327,6 +345,7 @@ class AuthRepository
     {
         $auth_user                   = $params['auth_user'];
         $token                       = $params['token'];
+        $name                        = $params['name'];
         $auth_user->user_roles       = $auth_user->roles()->pluck('name')->all();
         $auth_user->user_permissions = $auth_user->getAllPermissions()->pluck('name')->all();
 
@@ -341,9 +360,12 @@ class AuthRepository
 
         activity('login')->log('login');
 
+        $auth_user['name'] = $name;
+
         return [
             'message'           => trans('auth.logged_in'),
             'token'             => $token,
+            'expires_on'        => Carbon::createFromTimestamp(gv($params, 'expires_on'))->toDateTimeString(),
             'user'              => $auth_user,
             'reload'            => $reload,
             'config'            => $config,
@@ -444,7 +466,7 @@ class AuthRepository
 
         $user = $this->validateUserAndStatusForResetPassword($email);
 
-        $token = Str::uuid();
+        $token = rand(100000, 99999999);
         \DB::table('password_resets')->insert([
             'email' => $email,
             'token' => $token,
@@ -461,13 +483,9 @@ class AuthRepository
      * @param email $email
      * @return null
      */
-    public function validateResetPasswordToken($token, $email = null)
+    public function validateResetPasswordToken($token, $email)
     {
-        if ($email) {
-            $reset = \DB::table('password_resets')->where('email', '=', $email)->where('token', '=', $token)->first();
-        } else {
-            $reset = \DB::table('password_resets')->where('token', '=', $token)->first();
-        }
+        $reset = \DB::table('password_resets')->where('email', '=', $email)->where('token', '=', $token)->first();
 
         if (! $reset) {
             throw ValidationException::withMessages(['message' => trans('passwords.token')]);

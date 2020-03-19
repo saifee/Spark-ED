@@ -127,4 +127,28 @@ class InitRepository
         */
         return 'Content';
     }
+
+    public function licenseValidate() 
+    {
+        /*
+        $ac = \Storage::exists('.access_code') ? \Storage::get('.access_code') : null;
+        $e = \Storage::exists('.account_email') ? \Storage::get('.account_email') : null;
+        $c = \Storage::exists('.app_installed') ? \Storage::get('.app_installed') : null;
+        $v = \Storage::exists('.version') ? \Storage::get('.version') : null;
+        $l = \Auth::check() ? \Auth::user()->email : null;
+
+        $url = config('app.verifier').'/api/cc?a=product&u='.url()->current().'&ac='.$ac.'&i='.config('app.item').'&e='.$e.'&c='.$c.'&v='.$v.'&l='.$l;
+        $response = curlIt($url);
+
+        $status = (isset($response['status']) && $response['status']) ? 1 : 0;
+
+        if (! $status && request('force-remove')) {
+            // \Storage::delete(['.access_code','.account_email','.access_log']);
+            // \Storage::put('.app_installed', '');
+        }
+        */
+
+        $status = 1;
+        return compact('status');
+    }
 }

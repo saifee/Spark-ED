@@ -8,6 +8,10 @@
 		*{font-family:'Helvetica'; font-size: 14px; color: #ffffff; }
 	    body{width:auto; max-width:800px;margin:0 auto;font-size:12px; margin-top: 20px;}
 	    p {line-height: 14px;}
+
+	    @if (! $id_card_template->getOption('background_image'))
+	    	*{color: #000000;}
+	    @endif
 	</style>
 </head>
 <body>

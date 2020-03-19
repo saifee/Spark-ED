@@ -90,13 +90,13 @@ class HomeRepository
 
         $events = array();
         if (\Auth::user()->can('list-event')) {
-            $event_query =  $this->event->with('eventType')->filterBySession()->where('start_date','>=',date('Y-m-d'))->orderBy('start_date', 'asc');
+            $event_query =  $this->event->with('eventType')->filterBySession()->where('start_date','>=',date('Y-m-d'));
 
             if (\Auth::user()->hasAnyRole([config('system.default_role.student'), config('system.default_role.parent')])) {
                 $event_query->whereIn('audience',['everyone','selected_course','selected_batch']);
             }
 
-            $events = $event_query->take(5)->get();
+            $events = $event_query->orderBy('start_date', 'asc')->take(5)->get();
         }
         
         $books = array();

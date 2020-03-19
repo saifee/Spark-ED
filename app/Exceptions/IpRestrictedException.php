@@ -2,16 +2,17 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use Throwable;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
-class IpRestrictedException extends Exception
+class IpRestrictedException extends ExceptionHandler
 {
     /**
      * Report the exception.
      *
      * @return void
      */
-    public function report()
+    public function report(Throwable $exception)
     {
         //
     }
@@ -22,7 +23,7 @@ class IpRestrictedException extends Exception
      * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function render($request)
+    public function render($request, Throwable $exception)
     {
         return view()->make('errors.ip-restricted');
     }

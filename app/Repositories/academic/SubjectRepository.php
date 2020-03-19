@@ -140,6 +140,15 @@ class SubjectRepository
                 $q->orderBy('position','asc');
             }
         ])->filterBySession()->has('subjects', '>', 0);
+        
+
+        if (\Auth::user()->hasAnyRole([
+                config('system.default_role.parent'),
+                config('system.default_role.student'),
+            ])
+        ) {
+            $query->whereIn('id', getAuthUserBatchId());
+        }
 
         if (count($course_id)) {
             $query->whereIn('course_id', $course_id);

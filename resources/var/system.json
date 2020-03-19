@@ -17,7 +17,8 @@
 	    "from_name": "Hello",
 	    "logo": "",
 	    "icon": "",
-	    "token_lifetime": 120,
+	    "token_lifetime": 1440,
+	    "mobile_token_lifetime": 43200,
 	    "reset_password_token_lifetime": 30,
 	    "activity_log": 1,
 	    "email_log": 1,
@@ -70,6 +71,7 @@
 		"home","contact","events","articles","teachers","calendar"
 	],
 	"hidden_field": "xxxxxxxxxx",
+	"mobile_app_compatible": "2.5.0",
 	"private_config_variables": [
 		"smtp_username",
 		"smtp_password",
@@ -136,7 +138,7 @@
 		"employee_photo": "uploads/employee_photo"
 	},
 	"pagination": [
-		"1","5","10","25","50","100"
+		"1","5","10","12","25","50","100"
 	],
 	"mail_drivers": [
 		{
@@ -150,10 +152,6 @@
 		{
 			"text": "Mailgun",
 			"value": "mailgun"
-		},
-		{
-			"text": "Mandrill",
-			"value": "mandrill"
 		},
 		{
 			"text": "SMTP",

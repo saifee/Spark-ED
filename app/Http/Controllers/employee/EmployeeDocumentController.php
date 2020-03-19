@@ -61,7 +61,7 @@ class EmployeeDocumentController extends Controller
 
         $employee = $this->employee->findByUuidOrFail($uuid);
 
-        $this->employee->isAccessible($employee);
+        $this->employee->isAccessible($employee, 1);
 
         return $this->ok($this->repo->paginate($employee->id, $this->request->all()));
     }
@@ -103,7 +103,7 @@ class EmployeeDocumentController extends Controller
     {
         $employee = $this->employee->findByUuidOrFail($uuid);
 
-        $this->employee->isAccessible($employee);
+        $this->employee->isAccessible($employee, 1);
 
         $this->authorize('update', Employee::class);
 

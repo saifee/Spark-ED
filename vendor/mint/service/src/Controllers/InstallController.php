@@ -24,6 +24,16 @@ class InstallController extends Controller
         $this->request = $request;
     }
 
+    public function forceMigrate() {
+        if (\Storage::exists('.app_installed')) {
+            // return 'Could not migrate!';
+        }
+
+        \Artisan::call('migrate', ['--force' => true]);
+        
+        return 'Migration completed!';
+    }
+
     /**
      * Used to get pre requisites of server and folder
      */

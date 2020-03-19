@@ -3,9 +3,10 @@
 <head>
 	<title>{{config('app.name') ? : env('APP_NAME')}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <style>
     	*{font-family:'Helvetica';}
-	    body{width:auto; @if(! gv(isset($print_options) ? $print_options : [], 'full_width')) max-width:800px; @endif margin:0 auto;font-size:12px;}
+	    body{width:auto; @if(! gv(isset($print_options) ? $print_options : [], 'full_width')) max-width:800px; @endif min-width: 600px; margin:0 auto;font-size:12px;}
 	    h2{font-size: 16px;font-weight: bold;}
 	    .heading{font-size: 16px;font-weight: bold;}
 	    .font-weight-bold{font-weight: bold;}
@@ -56,8 +57,16 @@
 		.table-padded-lg td {
 		    padding: 0.8em;
 		}
+		.pagination {
+			list-style: none;
+			display: flex;
+		}
+		.pagination .page-item {
+			margin-right: 10px;
+		}
 		@media print {
 		    .hide-print {display:none;}
+		    .pagination {display:none;}
 		}
     </style>
 </head>

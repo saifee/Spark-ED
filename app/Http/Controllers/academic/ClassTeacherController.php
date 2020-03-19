@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Academic\ClassTeacher;
 use App\Repositories\Academic\ClassTeacherRepository;
+use App\Http\Resources\Academic\ClassTeacherBatchWiseCollection;
 
 class ClassTeacherController extends Controller
 {
@@ -26,6 +27,22 @@ class ClassTeacherController extends Controller
         $this->repo = $repo;
 
         $this->middleware('academic.session.set');
+    }
+
+    /**
+     * Used to get lists batch wise
+     * @get ("/api/class-teacher")
+     * @return Response
+     */
+    public function list()
+    {
+        $this->authorize('list', ClassTeacher::class);
+
+        $filters = $this->repo->getFilters();
+
+        return (new ClassTeacherBatchWiseCollection($this->repo->getBatchWiseList($this->request->all())))->additional(['meta' => [
+                'courses' => gv($filters, 'courses', [])
+            ]]);
     }
 
     /**

@@ -75,6 +75,8 @@ class User extends Authenticatable implements JWTSubject
     {
         if ($this->hasRole(config('system.default_role.student'))) {
             $profile = $this->Student;
+        } else if ($this->hasRole(config('system.default_role.parent'))) {
+            $profile = $this->Parent;
         } else {
             $profile = $this->Employee;
         }
@@ -86,12 +88,20 @@ class User extends Authenticatable implements JWTSubject
     {
         $profile = $this->getProfile();
 
+        if ($profile->first_guardian_name) {
+            return $profile->first_guardian_name;
+        }
+
         return $profile->first_name.' '.$profile->middle_name.' '.$profile->last_name;
     }
 
     public function getNameWithEmailAttribute()
     {
         $profile = $this->getProfile();
+
+        if ($profile->first_guardian_name) {
+            return $profile->first_guardian_name.' ('.$this->email.')';
+        }
 
         return $profile->first_name.' '.$profile->middle_name.' '.$profile->last_name.' ('.$this->email.')';
     }

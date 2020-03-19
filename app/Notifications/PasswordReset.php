@@ -45,14 +45,15 @@ class PasswordReset extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url('/password/reset/'.$this->token);
+        $url = url('/password/reset');
 
         return (new MailMessage)
                     ->subject('Password Reset | '.config('app.name'))
                     ->greeting('Hello '.$this->user->name)
                     ->line('We have recevied password reset request from you!')
-                    ->line('Click on the below link to reset your password.')
+                    ->line('Your password reset code is ' . $this->token)
                     ->action('Reset Password', $url)
+                    ->line('This password reset code is valid for '. config('config.reset_password_token_lifetime'). ' minutes.')
                     ->line('If you haven\'t requested for password reset, please ignore this email.')
                     ->line('Thank you!');
     }

@@ -74,6 +74,30 @@ class ReportController extends Controller
     }
 
     /**
+     * Used to get exam reports
+     * @post ("/exam/report-card/{batch_id}/{record_id}/print")
+     * 
+     * @return Response
+     */
+    public function printReportCard($batch_id, $record_id)
+    {
+        $this->authorize('report', Record::class);
+
+        $data = $this->repo->getReport(array(
+            'batch_id' => $batch_id,
+            'student_record_id' => $record_id,
+            'type' => request('type')
+        ));
+        
+        $summary = gv($data, 'summary');
+
+        $student_record = gv($data, 'student_record');
+        $print_options = array('no_border' => true, 'margin_before_signature' => "40px");
+
+        return view('print.exam.report', compact('student_record','summary','print_options'));
+    }
+
+    /**
      * Used to generate pdf of result
      * @post ("/api/exam/report/pdf")
      * @return Response
@@ -107,5 +131,18 @@ class ReportController extends Controller
         $print_options = array('no_border' => true, 'full_width' => true);
 
         return view('print.exam.topper_report', compact('data', 'print_options'));
+    }
+
+    /**
+     * Used to get student exam report
+     * @param  string $uuid      
+     * @param  integer $record_id 
+     * @return array
+     */
+    public function studentExamReport($uuid, $record_id)
+    {
+        $this->authorize('report', Record::class);
+
+        return $this->ok($this->repo->studentExamReport($uuid, $record_id));
     }
 }

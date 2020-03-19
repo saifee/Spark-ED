@@ -6,6 +6,7 @@ Route::group(['prefix' => 'api'], function () {
     Route::post('/license', 'Mint\Service\Controllers\LicenseController@verify');
 
     Route::post('/biometric', 'Mint\Service\Controllers\AttendanceController@read');
+    Route::post('/biometric/v2', 'Mint\Service\Controllers\AttendanceController@readV2');
 
     Route::get('/about', 'Mint\Service\Controllers\HomeController@about');
     Route::get('/support', 'Mint\Service\Controllers\SupportController@index');
@@ -14,4 +15,6 @@ Route::group(['prefix' => 'api'], function () {
     Route::post('/download', 'Mint\Service\Controllers\UpdateController@download');
     Route::post('/update', 'Mint\Service\Controllers\UpdateController@update');
     Route::post('/help/content', 'Mint\Service\Controllers\HomeController@helpDoc');
+
+    Route::get('/license/validate', 'Mint\Service\Controllers\HomeController@licenseValidate');
 });

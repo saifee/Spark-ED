@@ -8,12 +8,14 @@ use App\Http\Requests\Student\WalletPaymentRequest;
 use App\Http\Requests\Student\RecordUpdateRequest;
 use App\Models\Student\StudentRecord;
 use App\Repositories\Student\StudentRecordRepository;
+use App\Repositories\Student\StudentFeeRecordRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class StudentRecordController extends Controller {
 	protected $request;
 	protected $repo;
+	protected $fee_repo;
 
 	/**
 	 * Instantiate a new controller instance.
@@ -22,10 +24,12 @@ class StudentRecordController extends Controller {
 	 */
 	public function __construct(
 		Request $request,
-		StudentRecordRepository $repo
+		StudentRecordRepository $repo,
+		StudentFeeRecordRepository $fee_repo
 	) {
 		$this->request = $request;
 		$this->repo = $repo;
+		$this->fee_repo = $fee_repo;
 	}
 
 	/**
@@ -67,6 +71,21 @@ class StudentRecordController extends Controller {
 		$record = $this->repo->findByUuidOrFail($uuid, $record_id);
 
 		return $this->success($this->repo->fee($record));
+	}
+
+	/**
+	 * Used to get student fee record detail
+	 * @get ("/api/student/{uuid}/fee/{record_id}/detail")
+	 * @return Response
+	 */
+	public function feeDetail($uuid, $record_id) {
+		$this->authorize('listFee', StudentRecord::class);
+
+		$record = $this->repo->findByUuidOrFail($uuid, $record_id);
+
+		$record = $this->repo->loadFeeData($record);
+
+		return $this->ok($this->fee_repo->feeDetail($record));
 	}
 
 	/**

@@ -54,9 +54,12 @@ class FeeAllocation extends Model
 
     public function scopeInfo($q)
     {
-        return $q->with('course', 'batch', 'batch.course', 'feeAllocationGroups', 'feeAllocationGroups.feeGroup', 'feeAllocationGroups.feeGroup.feeHeads', 'feeAllocationGroups.feeInstallments', 'feeAllocationGroups.feeInstallments.feeInstallmentDetails', 'feeAllocationGroups.feeInstallments.feeInstallmentDetails.feeHead', 'feeAllocationGroups.feeInstallments.transportFee')->withCount(['studentFeeRecords as paid_count' => function($q){
-                $q->whereIn('status',['paid','partially_paid']);
-        }]);
+        // return $q->with('course', 'batch', 'batch.course', 'feeAllocationGroups', 'feeAllocationGroups.feeGroup', 'feeAllocationGroups.feeGroup.feeHeads', 'feeAllocationGroups.feeInstallments', 'feeAllocationGroups.feeInstallments.feeInstallmentDetails', 'feeAllocationGroups.feeInstallments.feeInstallmentDetails.feeHead', 'feeAllocationGroups.feeInstallments.transportFee')->withCount(['studentFeeRecords as paid_count' => function($q) {
+        //         $q->whereIn('status',['paid','partially_paid']);
+        //     }
+        // ]);
+
+        return $q->with('course', 'batch', 'batch.course', 'feeAllocationGroups', 'feeAllocationGroups.feeGroup', 'feeAllocationGroups.feeGroup.feeHeads', 'feeAllocationGroups.feeInstallments', 'feeAllocationGroups.feeInstallments.feeInstallmentDetails', 'feeAllocationGroups.feeInstallments.feeInstallmentDetails.feeHead', 'feeAllocationGroups.feeInstallments.transportFee')->withCount(['studentFeeRecords as paid_count']);
     }
     
     public function scopeFilterById($q, $id)

@@ -7,6 +7,8 @@
   'database_setup' => 'Database Setup',
   'db_database' => 'Database Name',
   'db_host' => 'Hostname',
+  'db_import_instruction' => 'If you have already put database detail in .env & imported database & want to complete installation, then check this box. Use this option only if you understand database import, leave it unchecked if you are not sure.',
+  'db_import_mismatch' => 'Your database import mismatch with required database structure.',
   'db_password' => 'Database Password',
   'db_port' => 'Database Port',
   'db_username' => 'Database Username',

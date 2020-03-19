@@ -13,7 +13,7 @@
 
 // Guest Routes
 Route::group(['prefix' => 'auth'], function () {
-	Route::post('/login', 'Auth\AuthController@login');
+	Route::post('/login', 'Auth\AuthController@login')->name('login');
 	Route::post('/login/otp', 'Auth\AuthController@otp');
 	Route::post('/check', 'Auth\AuthController@check');
 	Route::post('/password', 'Auth\AuthController@password');
@@ -594,6 +594,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::patch('/certificate/{uuid}', 'Academic\CertificateController@update');
 	Route::delete('/certificate/{uuid}', 'Academic\CertificateController@destroy');
 
+	Route::get('/class-teacher', 'Academic\ClassTeacherController@list');
 	Route::get('/class/teacher', 'Academic\ClassTeacherController@index');
 	Route::post('/class/teacher', 'Academic\ClassTeacherController@store');
 	Route::post('/class/teacher/print', 'Academic\ClassTeacherController@print');
@@ -796,6 +797,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::get('/student/{uuid}/fee/{record_id}', 'Student\StudentRecordController@fee');
 	Route::get('/student/{uuid}/wallet/{record_id}', 'Student\StudentRecordController@wallet');
 	Route::post('/student/{uuid}/wallet_payment/{record_id}', 'Student\StudentRecordController@walletPayment');
+	Route::get('/student/{uuid}/fee/{record_id}/detail', 'Student\StudentRecordController@feeDetail');
 	Route::get('/student/{uuid}/fee/{record_id}/{fee_record_id}', 'Student\StudentRecordController@getPaymentDetail');
 	Route::post('/student/{uuid}/payment/{record_id}', 'Student\StudentRecordController@makePayment');
 	Route::post('/student/{uuid}/payment/{record_id}/rzp', 'Student\StudentFeePaymentController@razorpayPayment');
@@ -808,6 +810,9 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('/student/{uuid}/fee/{record_id}/pdf', 'Student\StudentRecordController@pdf');
 	Route::patch('/student/{uuid}/fee/{record_id}', 'Student\StudentRecordController@setFee');
 	Route::patch('/student/{uuid}/fee/{record_id}/reset', 'Student\StudentRecordController@resetFee');
+
+	Route::get('/student/{uuid}/record/{record_id}/attendance', 'Student\AttendanceController@studentMonthlyReport');
+	Route::get('/student/{uuid}/record/{record_id}/exam', 'Exam\ReportController@studentExamReport');
 
 	Route::get('/student/{uuid}/document/pre-requisite', 'Student\StudentDocumentController@preRequisite');
 	Route::get('/student/{uuid}/document', 'Student\StudentDocumentController@index');

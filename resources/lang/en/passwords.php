@@ -6,8 +6,10 @@
   'password_mismatch' => 'Old password does not match. Please try again.',
   'reset' => 'Your password has been reset.',
   'reset_password' => 'Reset Password',
-  'sent' => 'We have e-mailed your password reset link.',
+  'reset_token' => 'Password Reset Token',
+  'sent' => 'We have e-mailed your password reset token.',
   'token' => 'This password reset token is invalid.',
   'token_expired' => 'Password reset token is expired. Please request reset password again.',
   'user' => 'We can\'t find a user with that e-mail address.',
+  'validate_token' => 'Validate Token',
 );

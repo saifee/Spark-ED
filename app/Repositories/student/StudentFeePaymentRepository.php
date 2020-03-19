@@ -111,7 +111,7 @@ class StudentFeePaymentRepository
             throw ValidationException::withMessages(['message' => trans('finance.cannot_process_if_amount_is_zero')]);
         }
 
-        if ($fee + $handling_fee != $amount / 100) {
+        if ($fee + $handling_fee != ($amount / 100)) {
             throw ValidationException::withMessages(['message' => trans('finance.total_mismatch')]);
         }
 

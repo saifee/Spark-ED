@@ -105,6 +105,22 @@ class TimetableController extends Controller
     }
 
     /**
+     * Used to print given Timetables
+     * @post ("/academic/timetable/batch/{uuid}/batch")
+     * @return Response
+     */
+    public function printIndividualBatchTimetable($uuid)
+    {
+        $this->authorize('list', Timetable::class);
+
+        $timetable = $this->repo->findByUuidOrFail($uuid);
+
+        $timetable->max_session = $this->repo->getMaxSessionOfTimetable($timetable);
+
+        return view('print.academic.batch-timetable', compact('timetable'));
+    }
+
+    /**
      * Used to generate pdf of given Timetables
      * @post ("/api/timetable/pdf/print")
      * @return Response

@@ -37,6 +37,16 @@ function envu($data = array())
     return true;
 }
 
+function my_version_compare($ver1, $ver2, $operator = null)
+{
+    $p = '#(\.0+)+($|-)#';
+    $ver1 = preg_replace($p, '', $ver1);
+    $ver2 = preg_replace($p, '', $ver2);
+    return isset($operator) ?
+        version_compare($ver1, $ver2, $operator) :
+        version_compare($ver1, $ver2);
+}
+
 function getHostNameForCachePrefix()
 {
     return isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
@@ -720,6 +730,10 @@ function currency($amount, $symbol = 0)
 {
     $currency = getDefaultCurrency();
 
+    if (! is_numeric($amount)) {
+        return;
+    }
+
     if (! $currency) {
         return round($amount, 2);
     }
@@ -944,6 +958,53 @@ function getLateFeeFrequenciesInDays($frequency)
     } else {
         return 1;
     }
+}
+
+function getAuthUserBatchId()
+{
+    if (\Auth::user()->hasRole(config('system.default_role.student'))) {
+        return getAuthStudentBatch();
+    } else if (\Auth::user()->hasRole(config('system.default_role.parent'))) {
+        return getAuthParentStudentsBatch();
+    } else {
+        return [];
+    }
+}
+
+function getAuthStudentBatch()
+{
+
+    $student = \App\Models\Student\Student::with('studentRecords')->filterById(\Auth::user()->Student->id)->first();
+
+    if (! $student) {
+        return [];
+    }
+
+    return $student->studentRecords->where('academic_session_id', config('config.default_academic_session.id'))->pluck('batch_id')->all();
+}
+
+function getAuthParentStudentsBatch()
+{
+    if (! \Auth::user()->hasRole(config('system.default_role.parent'))) {
+        return [];
+    }
+
+    $student_ids = \Auth::user()->Parent->Students->pluck('id')->all();
+    $students = \App\Models\Student\Student::with('studentRecords')->whereIn('id', $student_ids)->get();
+
+    if (! $students) {
+        return [];
+    }
+
+    $batch_id = array();
+    foreach ($students as $student) {
+        $student_records = $student->studentRecords->where('academic_session_id', config('config.default_academic_session.id'))->where('date_of_exit',null)->all();
+        foreach ($student_records as $student_record) {
+            $batch_id[] = $student_record->batch_id;
+        }
+    }
+
+    return $batch_id;
 }
 
 function getRollNumber($student_record){

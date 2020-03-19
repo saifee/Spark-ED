@@ -62,6 +62,11 @@ class ConfigurationRepository
 
     public function getConfig()
     {
+        if (!\Storage::exists('.app_installed')) {
+           // $config['failed_install'] = 1;
+           // return  $config;
+        }
+
         $system_variables = getVar('system');
         $default_config = isset($system_variables['default_config']) ? $system_variables['default_config'] : [];
 
@@ -94,6 +99,7 @@ class ConfigurationRepository
         $config['pb']                 = gbv($config_variables, 'pb');
         $config['default_currency'] = getDefaultCurrency();
         $config['current_date']       = today();
+        $config['mobile_app_compatible'] = my_version_compare(\Storage::get('.version'), config('system.mobile_app_compatible'), '>=');
 
         $config['made'] = env('MADE');
 
@@ -359,6 +365,10 @@ class ConfigurationRepository
         $default_config = isset($system_variables['default_config']) ? $system_variables['default_config'] : [];
         foreach ($default_config as $key => $value) {
             config(['config.'.$key => $value]);
+        }
+        
+        if (!\Storage::exists('.app_installed')) {
+            // return false;
         }
 
         config(['config' => $this->getAll()]);

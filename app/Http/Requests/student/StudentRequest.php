@@ -31,7 +31,7 @@ class StudentRequest extends FormRequest
             'date_of_birth'                 => 'required_if:type,basic|date',
             'gender'                        => 'required_if:type,basic',
             'first_guardian_name'           => 'required_if:type,parent|min:3',
-            'first_guardian_relation'       => 'required|different:second_guardian_relation|in:'.$relations,
+            'first_guardian_relation'       => 'required_if:type,parent|different:second_guardian_relation|in:'.$relations,
             'second_guardian_relation'      => 'required_with:second_guardian_name|different:first_guardian_relation|in:'.$relations,
             'first_guardian_email'          => 'sometimes|email',
             'second_guardian_email'         => 'sometimes|email',

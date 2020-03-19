@@ -2,16 +2,17 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use Throwable;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
-class MaintenanceModeException extends Exception
+class MaintenanceModeException extends ExceptionHandler
 {
     /**
      * Report the exception.
      *
      * @return void
      */
-    public function report()
+    public function report(Throwable $exception)
     {
         //
     }
@@ -22,7 +23,7 @@ class MaintenanceModeException extends Exception
      * @param  \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function render($request)
+    public function render($request, Throwable $exception)
     {
         return response()->json(['message' => config('config.maintenance_mode_message')], 422);
 

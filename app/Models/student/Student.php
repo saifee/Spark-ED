@@ -2,6 +2,7 @@
 
 namespace App\Models\Student;
 
+use App\Helper\Cal;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -52,7 +53,7 @@ class Student extends Model
     protected static $logFillable = true;
     protected static $logOnlyDirty = true;
     protected static $ignoreChangedAttributes = ['updated_at'];
-    protected $appends = ['present_address','permanent_address'];
+    protected $appends = ['present_address','permanent_address','name', 'age'];
     
     public function parent()
     {
@@ -144,6 +145,11 @@ class Student extends Model
         $data = array_filter($data);
 
         return implode(', ', $data);
+    }
+
+    public function getAgeAttribute()
+    {
+        return $this->date_of_birth ? Cal::getAge($this->date_of_birth) : null;
     }
     
     public function scopeFilterById($q, $id)

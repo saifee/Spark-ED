@@ -29,6 +29,8 @@ class StudentRecord extends Model
     protected static $logFillable = true;
     protected static $logOnlyDirty = true;
     protected static $ignoreChangedAttributes = ['updated_at'];
+    protected $appends = ['full_roll_number'];
+    protected $with = ['batch'];
     
     public function academicSession()
     {
@@ -78,6 +80,17 @@ class StudentRecord extends Model
     public function getOption(string $option)
     {
         return array_get($this->options, $option);
+    }
+
+    public function getFullRollNumberAttribute()
+    {
+        if ($this->batch->getOption('roll_number_digit')) {
+            $roll_number = str_pad($this->roll_number, $this->batch->getOption('roll_number_digit'), '0', STR_PAD_LEFT);    
+        } else {
+            $roll_number = $this->roll_number;
+        }
+        
+        return $this->batch->getOption('roll_number_prefix').$roll_number;
     }
 
     public function scopeFilterBySession($q, $session_id = null)

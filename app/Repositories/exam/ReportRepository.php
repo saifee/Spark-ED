@@ -137,7 +137,7 @@ class ReportRepository
             }
         }
 
-        $student_records = $query->get();
+        $student_records = $query->select('student_records.*', \DB::raw('(SELECT concat_ws(" ", first_name,middle_name,last_name) FROM students WHERE student_records.student_id = students.id ) as name'))->orderBy('name','asc')->get();
 
         $students = new StudentListCollection($student_records);
 
@@ -260,7 +260,7 @@ class ReportRepository
         $subject_assessment_total = array();
         $exam_assessment_total = array();
         $assessment_total = array();
-        $last_date = null;
+        $last_date = config('config.default_academic_session.start_date');
         foreach ($student_record->batch->subjects->sortBy('position') as $subject) {
             $marks = array();
             $has_no_exam = false;
@@ -277,7 +277,11 @@ class ReportRepository
                 $date = $record ? toDate($record->date) : null;
 
                 $student_mark = searchByKey($student_marks, 'id', $student_record->id);
-                $last_date = ($date && $student_marks) ? $date : $last_date;
+
+                if ($date && $student_marks) {
+                    $last_date = $last_date > $date ? $last_date : $date;
+                }
+
                 $is_absent = gbv($student_mark, 'is_absent');
                 $obtained_marks = gv($student_mark, 'assessment_details', []);
 
@@ -369,7 +373,8 @@ class ReportRepository
             }
             $subjects[] = array(
                 'id'        => $subject->id,
-                'name'      => $subject->code,
+                'code'      => $subject->code,
+                'name'      => $subject->name,
                 'shortcode' => $subject->shortcode,
                 'marks'     => $marks
             );
@@ -398,7 +403,7 @@ class ReportRepository
                 $include_term = 0;
                 foreach ($exam_term->exams as $exam) {
                     $schedule = $exam->schedules->first();
-                    if ($schedule->observation_marks) {
+                    if ($schedule && $schedule->observation_marks) {
                         array_push($observation_header, array(
                             'exam_id' => $exam->id,
                             'name' => $exam->name,
@@ -755,5 +760,133 @@ class ReportRepository
         $data['grade'] = $exam_schedule->grade ? true : false;
 
         return $data;
+    }
+
+    /**
+     * Get student exam report
+     * @param  string $student_uuid
+     * @param  integer $student_record_id
+     * @return array
+     */
+    public function studentExamReport($student_uuid, $student_record_id)
+    {
+        $query = $this->student_record->with('batch', 'batch.subjects')->filterBySession()->whereId($student_record_id);
+
+        if (\Auth::user()->hasRole(config('system.default_role.student'))) {
+            $query->whereHas('student', function($q) use($student_uuid) {
+                $q->whereUuid($student_uuid)->whereId(\Auth::user()->Student->id);
+            });
+        } else if (\Auth::user()->hasRole(config('system.default_role.parent'))) {
+            $query->whereHas('student', function($q) use($student_uuid) {
+                $q->whereUuid($student_uuid)->whereIn('id', \Auth::user()->Parent->Students->pluck('id')->all());
+            });
+        } else {
+            $query->whereHas('student', function($q) use($student_uuid) {
+                $q->whereUuid($student_uuid);
+            });
+        }
+
+        $student_record = $query->first();
+
+        if (! $student_record) {
+            throw ValidationException::withMessages(['message' => trans('student.could_not_find')]);
+        }
+
+        $exam_schedules = $this->exam_schedule->with('exam', 'records', 'assessment', 'assessment.details')->filterBySession()->whereBatchId($student_record->batch_id)->get();
+
+        $rows = array();
+        $header[] = array('key' => 'subject_name', 'label' => trans('academic.subject'), 'description' => '');
+        foreach($exam_schedules as $index => $exam_schedule) {
+
+            $exam_assessment_details = $exam_schedule->assessment->details->sortBy('position');
+
+            $exam_total = 0;
+            $exam_max_mark_total = 0;
+            $columns = array();
+            $no_exams = $exam_schedule->records->count();
+            foreach ($student_record->batch->subjects as $subject_index => $subject) {
+                if ($index === 0) {
+                    $header[] = array('key' => 'subject_'.$subject->id, 'label' => $subject->name, 'description' => '');
+                }
+
+                if ($subject_index === 0) {
+                    $columns[] = array('key' => 'exam_schedule_'.$exam_schedule->id, 'label' => $exam_schedule->exam->name, 'description' => '');
+                }
+
+                $record = $exam_schedule->records->where('date','!=',null)->where('subject_id', $subject->id)->first();
+
+                if (! $record) {
+                    $no_exams--;
+                    $columns[] = array('key' => 'marks_'.$exam_schedule->id.'_'.$subject->id, 'label' => '-', 'description' => '');
+                } else {
+
+                    $marks = $record->marks ? : [];
+                    $student_marks = searchByKey($marks, 'id', $student_record->id);
+                    $assessment_marks = gv($student_marks, 'assessment_details', []);
+                    $is_absent = gbv($student_marks, 'is_absent');
+
+                    $ob_marks = array();
+                    $subject_total = 0;
+                    $max_mark = 0;
+                    $no_subject_exam = $exam_assessment_details->count();
+                    foreach ($exam_assessment_details as $exam_assessment_detail) {
+                        $assessment_detail_is_applicable = 1;
+                        $assessment_detail_max_mark = $exam_assessment_detail->max_mark;
+
+                        if ($record->getOption('assessment_details')) {
+                            if ($exam_assessment_detail->id > 0) {
+                                $assess_detail = searchByKey($record->getOption('assessment_details'), 'id', $exam_assessment_detail->id);
+                                $assessment_detail_is_applicable = gbv($assess_detail, 'is_applicable');
+                                $assessment_detail_max_mark = ($assessment_detail_is_applicable) ? gv($assess_detail, 'max_mark', 0) : 0;
+                            }
+                        }
+
+                        $max_mark += $assessment_detail_max_mark;
+
+                        $obtained_mark = searchByKey($assessment_marks, 'id', $exam_assessment_detail->id);
+
+                        if ($assessment_detail_is_applicable) {
+                            if ($is_absent) {
+                                $mark = trans('exam.absent_code');
+                            } elseif ($obtained_mark) {
+                                $is_absent = gbv($obtained_mark, 'is_absent');
+                                $mark = $is_absent ? config('exam.absent_code') : (float) gv($obtained_mark, 'ob', 0);
+                            } else {
+                                $no_subject_exam--;
+                                $mark = '';
+                            }
+                        } else {
+                            $mark = '-';
+                        }
+
+                        $ob_marks[] = array(
+                            'assessment_detail_name' => $exam_assessment_detail->name,
+                            'assessment_detail_code' => $exam_assessment_detail->code,
+                            'assessment_detail_max_mark' => $assessment_detail_max_mark,
+                            'mark' => $mark
+                        );
+                        $subject_total += (is_numeric($mark)) ? $mark : 0;
+                        $exam_total += (is_numeric($mark)) ? $mark : 0;
+                        $exam_max_mark_total += $assessment_detail_max_mark;
+                    }
+
+                    if ($no_subject_exam === 0) {
+                        $no_exams--;
+                    }
+
+                    $columns[] = array('key' => 'marks_'.$exam_schedule->id.'_'.$subject->id, 'label' => $subject_total, 'detail' => $ob_marks, 'description' => '');
+                }
+            }
+
+            $columns[] = array('key' => 'total_'.$exam_schedule->id, 'label' => $exam_total.'/'.$exam_max_mark_total, 'detail' => '', 'no_exams' => ($no_exams === 0 ? 1 : 0), 'description' => '');
+            $columns[] = array('key' => 'percentage_'.$exam_schedule->id, 'label' => ($exam_max_mark_total ? round(($exam_total / $exam_max_mark_total) * 100, 2) : ''), 'detail' => '', 'no_exams' => ($no_exams === 0 ? 1 : 0), 'description' => '');
+
+            $rows[] = $columns;
+        }
+
+        $header[] = array('key' => 'total', 'label' => trans('general.total'), 'description' => '');
+        $header[] = array('key' => 'percentage', 'label' => trans('exam.percentage'), 'description' => '');
+
+        return compact('header', 'rows');
     }
 }

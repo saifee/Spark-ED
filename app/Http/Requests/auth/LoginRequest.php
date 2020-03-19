@@ -23,13 +23,13 @@ class LoginRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'password' => 'required'
-        ];
+        $rules = [];
 
         if (! \Auth::check()) {
             $rules['email_or_username'] = 'required';
         }
+
+        $rules['password'] = 'required';
 
         return $rules;
     }

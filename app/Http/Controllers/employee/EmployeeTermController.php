@@ -84,9 +84,9 @@ class EmployeeTermController extends Controller
     {
         $employee = $this->employee->findByUuidOrFail($uuid);
 
-        $this->employee->isAccessible($employee);
+        $this->employee->isAccessible($employee, 1);
 
-        $this->authorize('update', Employee::class);
+        // $this->authorize('update', Employee::class);
 
         $employee_term = $this->repo->findOrFail($employee->id, $id);
 

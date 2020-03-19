@@ -81,11 +81,23 @@ class InstallRepository
             throw ValidationException::withMessages(['message' => trans('install.connection_not_established')]);
         }
 
+        if (request('db_imported')) {
+            $migrations = array();
+            foreach (\File::allFiles(base_path('/database/migrations')) as $file) {
+                $migrations[] = basename($file, '.php');
+            }
+            $db_migrations = \DB::table('migrations')->get()->pluck('migration')->all();
+
+            if (array_diff($migrations, $db_migrations)) {
+                throw ValidationException::withMessages(['message' => trans('install.db_import_mismatch')]);
+            }
+        } else {
         $count_table_query = mysqli_query($link, "show tables");
         $count_table = mysqli_num_rows($count_table_query);
 
         if ($count_table) {
             throw ValidationException::withMessages(['message' => trans('install.existing_table_in_database')]);
+        }
         }
 
         return true;
@@ -176,7 +188,10 @@ class InstallRepository
      */
     public function migrateDB()
     {
+        if (! request('db_imported')) {
         $db = \Artisan::call('migrate');
+        }
+        
         $key = \Artisan::call('key:generate');
     }
 

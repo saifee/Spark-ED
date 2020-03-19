@@ -40,5 +40,8 @@
         <script src="/js/lang"></script>
         <script src="{{ mix('/js/app.js') }}"></script>
         <script src="{{ mix('/js/plugin.js') }}"></script>
+        @if(config('config.stripe'))
+            <script src="https://js.stripe.com/v2"></script>
+        @endif
     </body>
 </html>

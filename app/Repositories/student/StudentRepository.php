@@ -230,8 +230,8 @@ class StudentRepository
      */
     public function getData($params)
     {
-        $sort_by              = gv($params, 'sort_by', 'created_at');
-        $order                = gv($params, 'order', 'desc');
+        $sort_by              = gv($params, 'sort_by', 'first_name');
+        $order                = gv($params, 'order', 'asc');
         $batch_id             = gv($params, 'batch_id');
         $blood_group_id       = gv($params, 'blood_group_id');
         $religion_id          = gv($params, 'religion_id');
@@ -349,7 +349,7 @@ class StudentRepository
         } else if ($sort_by == 'date_of_birth') {
             $query->select('student_records.*', \DB::raw('(SELECT date_of_birth FROM students WHERE student_records.student_id = students.id ) as sort_by'));
         } else {
-            $query->select('student_records.*', \DB::raw('(SELECT date_of_entry FROM student_records) as sort_by'));
+            $query->select('student_records.*', 'date_of_entry as sort_by');
         }
 
         return $query->orderBy('sort_by', $order);
@@ -1008,22 +1008,6 @@ class StudentRepository
     }
 
     /**
-     * Get authenticated student's batch
-     *
-     * @return integer $batch_id
-     */
-    public function getAuthStudentBatch()
-    {
-        $student = $this->student->with('studentRecords')->filterById(\Auth::user()->Student->id)->first();
-
-        if (! $student) {
-            return null;
-        }
-
-        return optional($student->studentRecords->where('academic_session_id', config('config.default_academic_session.id'))->sortByDesc('date_of_entry')->first())->batch_id;
-    }
-
-    /**
      * Get authenticated student's record
      *
      * @param  integer batch_id
@@ -1038,30 +1022,5 @@ class StudentRepository
         }
 
         return $student->studentRecords->where('academic_session_id', config('config.default_academic_session.id'))->where('batch_id', $batch_id)->first();
-    }
-
-    /**
-     * Get authenticated parent's batch
-     *
-     * @return integer $batch_id
-     */
-    public function getAuthParentStudentsBatch()
-    {
-        $student_ids = \Auth::user()->Parent->Students->pluck('id')->all();
-        $students = $this->student->with('studentRecords')->whereIn('id', $student_ids)->get();
-
-        if (! $students) {
-            return null;
-        }
-
-        $batch_id = array();
-        foreach ($students as $student) {
-            $student_record = $student->studentRecords->where('academic_session_id', config('config.default_academic_session.id'))->where('date_of_exit',null)->first();
-            if ($student_record) {
-                $batch_id[] = $student_record->batch_id;
-            }
-        }
-
-        return $batch_id;
     }
 }

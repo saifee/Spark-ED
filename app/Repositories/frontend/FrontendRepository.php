@@ -197,7 +197,7 @@ class FrontendRepository {
 	public function getEvent($uuid) {
 		// $page = $this->getPageContent('events');
 
-		$query = $this->event->filterByUuid($uuid)->upcomingAndLive();
+		$query = $this->event->info()->filterByUuid($uuid)->upcomingAndLive();
 
 		if (!\Auth::check()) {
 			$query->filterByAudience('everyone');

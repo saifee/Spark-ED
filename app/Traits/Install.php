@@ -8,16 +8,6 @@ trait Install
     /**
      * Used to compare version of packages
      */
-    public function my_version_compare($ver1, $ver2, $operator = null)
-    {
-        $p = '#(\.0+)+($|-)#';
-        $ver1 = preg_replace($p, '', $ver1);
-        $ver2 = preg_replace($p, '', $ver2);
-        return isset($operator) ?
-            version_compare($ver1, $ver2, $operator) :
-            version_compare($ver1, $ver2);
-    }
-
     /**
      * Used to check whether pre requisites are fulfilled or not and returns array of success/error type with message
      */
@@ -33,7 +23,7 @@ trait Install
     public function installPreRequisite()
     {
         $server[] = $this->check((dirname($_SERVER['REQUEST_URI']) != '/' && str_replace('\\', '/', dirname($_SERVER['REQUEST_URI'])) != '/'), 'Installation directory is valid.', 'Please use root directory or point your sub directory to domain/subdomain to install.', true);
-        $server[] = $this->check($this->my_version_compare(phpversion(), '7.1.3', '>='), sprintf('Min PHP version 7.1.3 (%s)', 'Current Version '. phpversion()), 'Current Version '.phpversion(), true);
+        $server[] = $this->check(my_version_compare(phpversion(), '7.2.5', '>='), sprintf('Min PHP version 7.1.3 (%s)', 'Current Version '. phpversion()), 'Current Version '.phpversion(), true);
         $server[] = $this->check(extension_loaded('fileinfo'), 'Fileinfo PHP extension enabled.', 'Install and enable Fileinfo extension.', true);
         // $server[] = $this->check(extension_loaded('mcrypt'), 'Mcrypt PHP extension enabled.', 'Install and enable Mcrypt extension.', true);
         $server[] = $this->check(extension_loaded('openssl'), 'OpenSSL PHP extension enabled.', 'Install and enable OpenSSL extension.', true);

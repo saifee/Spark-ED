@@ -76,8 +76,8 @@ class OnlineExam extends Model
 
     public function getStatusAttribute()
     {
-        $start_time = Carbon::parse($this->date.' '.$this->start_time);
-        $end_time = Carbon::parse($this->date.' '.$this->end_time);
+        $start_time = Carbon::parse(toDate($this->date).' '.$this->start_time);
+        $end_time = Carbon::parse(toDate($this->date).' '.$this->end_time);
 
         if ($start_time > Carbon::now()) {
             return 'upcoming';

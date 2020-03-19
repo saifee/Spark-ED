@@ -137,7 +137,7 @@ class EmployeeController extends Controller {
 	public function show($uuid) {
 		$employee = $this->repo->findByUuidOrFail($uuid);
 
-		$this->repo->isAccessible($employee);
+		$this->repo->isAccessible($employee, 1);
 
 		$this->authorize('show', Employee::class);
 

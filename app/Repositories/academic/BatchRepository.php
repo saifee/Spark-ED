@@ -198,6 +198,15 @@ class BatchRepository
             $q->whereNull('date_of_exit');
         }])->filterBySession();
 
+        if (\Auth::user()->hasAnyRole([
+                config('system.default_role.parent'),
+                config('system.default_role.student'),
+            ])
+        ) {
+            $student_batch_ids = getAuthUserBatchId();
+            $query->whereIn('id', $student_batch_ids);
+        }
+
         if (count($course_id)) {
             $query->whereIn('course_id', $course_id);
         }

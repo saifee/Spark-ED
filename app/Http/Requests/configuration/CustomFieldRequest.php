@@ -32,7 +32,7 @@ class CustomFieldRequest extends FormRequest
             'max_length' => 'integer|gte:min_length',
             'min_vavlue' => 'integer',
             'max_vavlue' => 'integer|gte:min_value',
-            'decimal_place' => 'integer|min:1|max:5'
+            'decimal_place' => 'integer|min:0|max:5'
         ];
     }
 

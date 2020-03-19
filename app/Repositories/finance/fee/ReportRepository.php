@@ -391,6 +391,7 @@ class ReportRepository
 
                             if ($amount) {
                                 $concession[] = array(
+                                    'id' => $student_record->id.'_'.$fee_concession_detail->id,
                                     'name' => $fee_concession_detail->feeHead->name,
                                     'value' => currency($amount, 1)
                                 );
@@ -484,7 +485,7 @@ class ReportRepository
             throw ValidationException::withMessages(['message' => trans('validation.numeric', ['attribute' => trans('finance.amount')])]);
         }
 
-        $query = $this->student_fee_record->filterByStatus('unpaid')->whereHas('studentRecord', function($q) {
+        $query = $this->student_fee_record->where('status','!=','paid')->whereHas('studentRecord', function($q) {
             $q->filterBySession()->where(function($q1) {
                 $q1->whereNull('date_of_exit')->orWhere('date_of_exit','>',today());
             });
@@ -592,6 +593,20 @@ class ReportRepository
                 $late_fee_frequency = getLateFeeFrequenciesInWord($student_fee_record->late_fee_frequency ? : $student_fee_record->feeInstallment->late_fee_frequency);
                 $late_fee = currency($student_fee_record->late_fee ? : $student_fee_record->feeInstallment->late_fee,1).' /'.$late_fee_frequency;
             }
+            
+            $transaction_paid = 0;
+            foreach ($student_fee_record->transactions as $transaction) {
+                if (! $transaction->is_cancelled) {
+                    $transaction_additional_fee_charge = $transaction->getOption('additional_fee_charge');
+                    $transaction_additional_fee_discount = $transaction->getOption('additional_fee_discount');
+                    $total_installment += gv($transaction_additional_fee_charge, 'amount', 0);
+                    $total_installment -= gv($transaction_additional_fee_discount, 'amount', 0);
+                    $transaction_paid += $transaction->amount;
+                }
+            }
+
+            $total_installment += $student_fee_record->late_fee_charged;
+            $total_installment -= $transaction_paid;
 
             $list[] = array(
                 'id'                  => $student_fee_record->id,

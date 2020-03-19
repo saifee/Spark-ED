@@ -2,6 +2,7 @@
 
 namespace App\Models\Employee;
 
+use App\Helper\Cal;
 use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
@@ -59,7 +60,7 @@ class Employee extends Model
     protected static $logFillable = true;
     protected static $logOnlyDirty = true;
     protected static $ignoreChangedAttributes = ['updated_at'];
-    protected $appends = ['present_address','permanent_address'];
+    protected $appends = ['present_address','permanent_address','name', 'age', 'employee_code'];
     
     public function user()
     {
@@ -124,6 +125,11 @@ class Employee extends Model
     public function getNameAttribute()
     {
         return $this->first_name.' '.($this->middle_name ? ($this->middle_name.' ') : '').$this->last_name;
+    }
+
+    public function getAgeAttribute()
+    {
+        return $this->date_of_birth ? Cal::getAge($this->date_of_birth) : null;
     }
 
     public function getNameWithCodeAttribute()

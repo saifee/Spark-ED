@@ -59,3 +59,5 @@
 </html>
 <div style="page-break-after: always;"></div>
 @endforeach
+
+{{ $student_records->links() }}

@@ -25,6 +25,10 @@ class IpRestricted
      */
     public function handle($request, Closure $next)
     {
+        if (!\Storage::exists('.app_installed')) {
+            // return $next($request);
+        }
+
         $ip_filters = $this->ip_filter->getAll();
 
         if (config('config.ip_filter') && $ip_filters->count() && ! validateIp($ip_filters)) {

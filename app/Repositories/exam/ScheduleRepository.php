@@ -141,20 +141,13 @@ class ScheduleRepository
 
         $query = $this->exam_schedule->info()->filterBySession();
 
-        if (\Auth::user()->hasRole(config('system.default_role.parent'))) {
-            $student_batch_ids = $this->student->getAuthParentStudentsBatch();
-
-            if ($student_batch_ids) {
-                $batch_id = array_diff($student_batch_ids, $batch_id);
-            }
-        }
-
-        if (\Auth::user()->hasRole(config('system.default_role.student'))) {
-            $student_batch_id = $this->student->getAuthStudentBatch();
-
-            if ($student_batch_id) {
-                $batch_id = [$student_batch_id];
-            }
+        if (\Auth::user()->hasAnyRole([
+                config('system.default_role.parent'),
+                config('system.default_role.student'),
+            ])
+        ) {
+            $student_batch_ids = getAuthUserBatchId();
+            $batch_id = $batch_id ? array_intersect($student_batch_ids, $batch_id) : $student_batch_ids;
         }
 
         $batch_id = array_unique($batch_id);

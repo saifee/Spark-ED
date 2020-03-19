@@ -160,4 +160,16 @@ class AttendanceController extends Controller
 
         return $this->success(['message' => trans('student.attendance_removed')]);
     }
+
+    /**
+     * Used to get monthly student attendance
+     * @get ("/api/student/{uuid}/record/{record_id}/attendance")
+     * @return Response
+     */
+    public function studentMonthlyReport($uuid, $record_id)
+    {
+        $this->authorize('list', StudentAttendance::class);
+
+        return $this->ok($this->repo->studentMonthlyReport($uuid, $record_id));
+    }
 }

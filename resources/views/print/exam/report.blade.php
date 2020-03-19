@@ -71,7 +71,7 @@
 			<tr>
 				<td>{{$loop->index + 1}}</td>
 				<td>
-					{{$subject['name']}}
+					{{$subject['code']}}
 					@if (gv($subject, 'shortcode'))
 						({{gv($subject, 'shortcode')}})
 					@endif

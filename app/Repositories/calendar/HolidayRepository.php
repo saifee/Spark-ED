@@ -109,6 +109,7 @@ class HolidayRepository
         $sort_by   = gv($params, 'sort_by', 'date');
         $order     = gv($params, 'order', 'desc');
         $keyword     = gv($params, 'keyword');
+        $upcoming = gbv($params, 'upcoming');
 
         $date_start_date = gv($params, 'date_start_date');
         $date_end_date   = gv($params, 'date_end_date');
@@ -116,7 +117,9 @@ class HolidayRepository
         $query = $this->holiday->filterBySession()->filterByKeyword($keyword)->dateBetween([
                 'start_date' => $date_start_date,
                 'end_date' => $date_end_date
-            ]);
+            ])->when($upcoming, function ($query1, $upcoming) {
+                return $query1->where('date', '>=', date('Y-m-d'));
+            });
 
         return $query->orderBy($sort_by, $order);
     }

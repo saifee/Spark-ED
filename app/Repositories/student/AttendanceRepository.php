@@ -101,7 +101,7 @@ class AttendanceRepository
         }
 
         $batch = $this->batch->findOrFail($batch_id);
-        $holiday_except = $batch->getOption('holiday_except') ? : [];
+        $holiday_except = $batch->getOption('holidays_except') ? : [];
         $course = $batch->Course;
         $subjects = $batch->subjects->pluck('id')->all();
 
@@ -129,7 +129,9 @@ class AttendanceRepository
         $daily_present = array();
         for ($i = 1; $i <= $days; $i++) {
             array_push($header, $i);
-            $daily_present[$i] = 0;
+            $daily_present[$i]['day'] = $i;
+            $daily_present[$i]['key'] = 'summary_'.$i;
+            $daily_present[$i]['count'] = 0;
         }
         array_push($header, '');
 
@@ -152,13 +154,13 @@ class AttendanceRepository
                 $attendance_detail = array();
 
                 if ($date < toDate($student_record->date_of_entry) || (toDate($student_record->date_of_exit) && $date > toDate($student_record->date_of_exit))) {
-                    $attendance_detail = array('label' => 'unavailable', 'icon' => '');
+                    $attendance_detail = array('day' => $i, 'key' => $i.'_'.$student_record->id, 'label' => 'unavailable', 'icon' => '');
                 } else {
                     if (! $date_attendance) {
                         if (! in_array($date, $holiday_except) && $holiday) {
-                            $attendance_detail = array('label' => 'holiday', 'icon' => 'fa-hospital', 'description' => $holiday->description);
+                            $attendance_detail = array('day' => $i, 'key' => $i.'_'.$student_record->id, 'label' => 'holiday', 'icon' => 'fa-hospital', 'description' => $holiday->description);
                         } else {
-                            $attendance_detail = array('label' => 'unmarked', 'icon' => '');
+                            $attendance_detail = array('day' => $i, 'key' => $i.'_'.$student_record->id, 'label' => 'unmarked', 'icon' => '');
                         }
                     } else {
                         $late_attendance = $date_attendance->getAttendance('late') ? : [];
@@ -166,20 +168,20 @@ class AttendanceRepository
                         $half_day_attendance = $date_attendance->getAttendance('half_day') ? : [];
 
                         if (searchByKey($late_attendance, 'id', $student_record->id)) {
-                            $attendance_detail = array('label' => 'late', 'icon' => 'fa-history');
-                            $daily_present[$i]++;
+                            $attendance_detail = array('day' => $i, 'key' => $i.'_'.$student_record->id, 'label' => 'late', 'icon' => 'fa-history');
+                            $daily_present[$i]['count']++;
                             $student_present[$student_record->id]++;
                         } else if (searchByKey($absent_attendance, 'id', $student_record->id)) {
-                            $attendance_detail = array('label' => 'absent', 'icon' => 'fa-times');
+                            $attendance_detail = array('day' => $i, 'key' => $i.'_'.$student_record->id, 'label' => 'absent', 'icon' => 'fa-times');
                         } else if (searchByKey($half_day_attendance, 'id', $student_record->id)) {
-                            $attendance_detail = array('label' => 'half_day', 'icon' => 'fa-coffee');
-                            $daily_present[$i]++;
+                            $attendance_detail = array('day' => $i, 'key' => $i.'_'.$student_record->id, 'label' => 'half_day', 'icon' => 'fa-coffee');
+                            $daily_present[$i]['count']++;
                             $student_present[$student_record->id]++;
                         } else if (! in_array($date, $holiday_except) && $holiday) {
-                            $attendance_detail = array('label' => 'holiday', 'icon' => 'fa-hospital', 'description' => $holiday->description);
+                            $attendance_detail = array('day' => $i, 'key' => $i.'_'.$student_record->id, 'label' => 'holiday', 'icon' => 'fa-hospital', 'description' => $holiday->description);
                         } else {
-                            $attendance_detail = array('label' => 'present', 'icon' => 'fa-check');
-                            $daily_present[$i]++;
+                            $attendance_detail = array('day' => $i, 'key' => $i.'_'.$student_record->id, 'label' => 'present', 'icon' => 'fa-check');
+                            $daily_present[$i]['count']++;
                             $student_present[$student_record->id]++;
                         }
                     }
@@ -422,6 +424,8 @@ class AttendanceRepository
         }
 
         $batch = $this->batch->findOrFail($batch_id);
+        $holiday_except = $batch->getOption('holidays_except') ? : [];
+
         $subjects = $batch->subjects->pluck('id')->all();
 
         $this->validateAttendance($subjects, $params);
@@ -858,5 +862,135 @@ class AttendanceRepository
         $class_timing_session = $class_timing->classTimingSessions()->first();
 
         return optional($class_timing_session)->start;
+    }
+
+    /**
+     * Get monthly student attendance
+     * @param  uuid $student_uuid
+     * @param  integer $student_record_id
+     * @return array
+     */
+    public function studentMonthlyReport($student_uuid, $student_record_id)
+    {
+        $query = $this->student_record->with('batch')->filterBySession()->whereId($student_record_id);
+
+        if (\Auth::user()->hasRole(config('system.default_role.student'))) {
+            $query->whereHas('student', function($q) use($student_uuid) {
+                $q->whereUuid($student_uuid)->whereId(\Auth::user()->Student->id);
+            });
+        } else if (\Auth::user()->hasRole(config('system.default_role.parent'))) {
+            $query->whereHas('student', function($q) use($student_uuid) {
+                $q->whereUuid($student_uuid)->whereIn('id', \Auth::user()->Parent->Students->pluck('id')->all());
+            });
+        } else {
+            $query->whereHas('student', function($q) use($student_uuid) {
+                $q->whereUuid($student_uuid);
+            });
+        }
+
+        $student_record = $query->first();
+
+        if (! $student_record) {
+            throw ValidationException::withMessages(['message' => trans('student.could_not_find')]);
+        }
+
+        $holidays = $this->holiday->filterBySession()->get();
+        $holidays_except = $student_record->batch->getOption('holidays_except') ? : [];
+
+        $attendances = $this->student_attendance->dateOfAttendanceBetween(['start_date' => config('config.default_academic_session.start_date'), 'end_date' => config('config.default_academic_session.end_date')])->whereBatchId($student_record->batch_id)->where(function ($q) {
+            $q->where(function ($q1) {
+                $q1->whereNull('subject_id')->whereNull('session')->whereIsDefault(0);
+            })->orWhere('is_default', 1);
+        })->get();
+
+        $month = date('n', strtotime(config('config.default_academic_session.start_date')));
+
+        $year = date('Y', strtotime(config('config.default_academic_session.start_date')));
+
+        $header[] = array('key' => 'day', 'label' => trans('general.day'));
+
+        $rows = array();
+        for ($day = 1; $day <= 31; $day++) {
+            $columns = array();
+            $columns[] = array('key' => '0_'.$day, 'label' => $day, 'description' => '', 'icon' => '', 'class' => '');
+
+            $current_year = $year;
+
+            for ($i = 1; $i <= 12; $i++) {
+
+                $date = date($current_year.'-'.str_pad($month, 2, 0, STR_PAD_LEFT).'-').str_pad($day, 2, '0', STR_PAD_LEFT);
+
+                $month_name = date('M', strtotime($date));
+
+                if ($day === 1) {
+                    $monthly_present[$i] = 0;
+                    array_push($header, array('key' => $month_name, 'label' => $month_name.' '.$current_year));
+                }
+
+                if (validateDate($date)) {
+
+                    if ($date < toDate($student_record->date_of_entry) || (toDate($student_record->date_of_exit) && $date > toDate($student_record->date_of_exit))) {
+                        $columns[] = array('key' => $day.'_'.$i, 'day' => $day, 'month' => $i, 'label' => '', 'text' => 'unavailable', 'icon' => '', 'class' => 'disabled', 'description' => trans('student.attendance_label_unavailable'));
+                    } else {
+
+                        $date_attendance = $attendances->firstWhere('date_of_attendance', getDateTime($date));
+                        $holiday = $holidays->firstWhere('date', getDateTime($date));
+
+                        if (! $date_attendance) {
+
+                            if (! in_array($date, $holidays_except) && $holiday) {
+
+                                $columns[] = array('key' => $day.'_'.$i, 'day' => $day, 'month' => $i, 'label' => 'H', 'text' => 'holiday', 'icon' => 'fa-hospital-symbol', 'class' => 'holiday', 'description' => optional($holiday)->description);
+
+                            } else {
+                                $columns[] = array('key' => $day.'_'.$i, 'day' => $day, 'month' => $i, 'label' => '', 'text' => '', 'icon' => '', 'class' => '', 'description' => trans('student.attendance_label_empty'));
+                            }
+                        } else {
+
+                            $late_attendance = $date_attendance->getAttendance('late') ? : [];
+                            $absent_attendance = $date_attendance->getAttendance('data') ? : [];
+                            $half_day_attendance = $date_attendance->getAttendance('half_day') ? : [];
+
+                            if (searchByKey($late_attendance, 'id', $student_record->id)) {
+                                $columns[] = array('key' => $day.'_'.$i, 'day' => $day, 'month' => $i, 'label' => 'L', 'text' => 'late', 'icon' => 'fa-history', 'class' => 'info', 'description' => trans('student.attendance_label_late'));
+                                $monthly_present[$i]++;
+                            } else if (searchByKey($absent_attendance, 'id', $student_record->id)) {
+                                $columns[] = array('key' => $day.'_'.$i, 'day' => $day, 'month' => $i, 'label' => 'A', 'text' => 'absent', 'icon' => 'fa-times', 'class' => 'danger', 'description' => trans('student.attendance_label_absent'));
+                            } else if (searchByKey($half_day_attendance, 'id', $student_record->id)) {
+                                $columns[] = array('key' => $day.'_'.$i, 'day' => $day, 'month' => $i, 'label' => 'HD', 'text' => 'half_day', 'icon' => 'fa-coffee', 'class' => 'warning', 'description' => trans('student.attendance_label_half_day'));
+                                $monthly_present[$i]++;
+                            } else if (! in_array($date, $holidays_except) && $holiday) {
+
+                                $columns[] = array('key' => $day.'_'.$i, 'day' => $day, 'month' => $i, 'label' => 'H', 'text' => 'holiday', 'icon' => 'fa-hospital-symbol', 'class' => 'holiday', 'description' => optional($holiday)->description);
+
+                            } else {
+                                $columns[] = array('key' => $day.'_'.$i, 'day' => $day, 'month' => $i, 'label' => 'P', 'text' => 'present', 'icon' => 'fa-check', 'class' => 'success', 'description' => trans('student.attendance_label_present'));
+                                $monthly_present[$i]++;
+                            }
+                        }
+                    }
+                }
+    
+                $month++;
+
+                if ($month > 12) {
+                    $month = 1;
+                    $current_year++;
+                }
+            }
+            
+            $rows[] = $columns;
+        }
+
+        $footer[] = array('key' => 'total', 'label' => trans('general.total'), 'description' => '', 'icon' => '', 'class' => '');
+        $total_attendance = 0;
+        foreach($monthly_present as $key => $value) {
+            $footer[] = array('key' => 'total_'.$key, 'label' => $value, 'description' => '', 'icon' => '', 'class' => '');
+            $total_attendance += $value;
+        }
+
+        $rows[] = $footer;
+
+        return compact('header', 'rows', 'total_attendance');
     }
 }
