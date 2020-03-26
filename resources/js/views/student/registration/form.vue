@@ -20,7 +20,7 @@
                 <div class="col-12 col-sm-6" v-if="registrationForm.student_type != 'new'">
                     <div class="col-12 col-sm-8" v-if="registrationForm.student_id">
                         <div class="form-group">
-                            <div v-if="registrationForm.student_id">{{trans('student.name')+': '+getStudentName(selected_student)}} {{trans('student.father_name')+': '+selected_student.parent.father_name}}</div>
+                            <div v-if="registrationForm.student_id">{{trans('student.name')+': '+getStudentName(selected_student)}} {{trans('student.first_guardian_name')+': '+selected_student.parent.first_guardian_name}}</div>
                         </div>
                     </div>
                     <div class="col-12 col-sm-4">
@@ -119,31 +119,51 @@
                     </div>
                 </div>
                 <template v-if="registrationForm.parent_type == 'new'">
-                    <div class="col-12 col-sm-3">
+                    <div class="col-12 col-sm-6">
+                        <div class="row">
+                    <div class="col-12 col-sm-6">
                         <div class="form-group">
-                            <label for="">{{trans('student.father_name')}}</label>
-                            <input class="form-control" type="text" v-model="registrationForm.father_name" name="father_name" :placeholder="trans('student.father_name')">
-                            <show-error :form-name="registrationForm" prop-name="father_name"></show-error>
-                        </div>
-                        <div class="form-group">
-                            <label for="">{{trans('student.mother_name')}}</label>
-                            <input class="form-control" type="text" v-model="registrationForm.mother_name" name="mother_name" :placeholder="trans('student.mother_name')">
-                            <show-error :form-name="registrationForm" prop-name="mother_name"></show-error>
+                            <label for="">{{trans('student.first_guardian_name')}}</label>
+                            <input class="form-control" type="text" v-model="registrationForm.first_guardian_name" name="first_guardian_name" :placeholder="trans('student.first_guardian_name')">
+                            <show-error :form-name="registrationForm" prop-name="first_guardian_name"></show-error>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-3">
+                    <div class="col-12 col-sm-6">
                         <div class="form-group">
-                            <label for="">{{trans('student.father_contact_number')}}</label>
-                            <input class="form-control" type="text" v-model="registrationForm.father_contact_number_1" name="father_contact_number_1" :placeholder="trans('student.father_contact_number')">
-                            <show-error :form-name="registrationForm" prop-name="father_contact_number_1"></show-error>
+                            <label for="">{{trans('student.first_guardian_relation')}}</label>
+                            <input class="form-control" type="text" v-model="registrationForm.first_guardian_relation" name="first_guardian_relation" :placeholder="trans('student.first_guardian_relation')">
+                            <show-error :form-name="registrationForm" prop-name="first_guardian_relation"></show-error>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label for="">{{trans('student.second_guardian_name')}}</label>
+                            <input class="form-control" type="text" v-model="registrationForm.second_guardian_name" name="second_guardian_name" :placeholder="trans('student.second_guardian_name')">
+                            <show-error :form-name="registrationForm" prop-name="second_guardian_name"></show-error>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label for="">{{trans('student.second_guardian_relation')}}</label>
+                            <input class="form-control" type="text" v-model="registrationForm.second_guardian_relation" name="second_guardian_relation" :placeholder="trans('student.second_guardian_relation')">
+                            <show-error :form-name="registrationForm" prop-name="second_guardian_relation"></show-error>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label for="">{{trans('student.first_guardian_contact_number')}}</label>
+                            <input class="form-control" type="text" v-model="registrationForm.first_guardian_contact_number_1" name="first_guardian_contact_number_1" :placeholder="trans('student.first_guardian_contact_number')">
+                            <show-error :form-name="registrationForm" prop-name="first_guardian_contact_number_1"></show-error>
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </template>
                 <template v-else>
                     <div class="col-12 col-sm-3" v-if="registrationForm.student_parent_id">
                         <div class="form-group">
-                            <div v-if="registrationForm.student_parent_id">{{trans('student.father_name')+': '+selected_parent.father_name}}</div>
-                            <div v-if="registrationForm.student_parent_id">{{trans('student.mother_name')+': '+selected_parent.mother_name}}</div>
+                            <div v-if="registrationForm.student_parent_id">{{trans('student.first_guardian_name')+': '+selected_parent.first_guardian_name}}</div>
+                            <div v-if="registrationForm.student_parent_id">{{trans('student.second_guardian_relation')+': '+selected_parent.second_guardian_relation}}</div>
                         </div>
                     </div>
                     <div class="col-12 col-sm-1">
@@ -206,9 +226,11 @@
                     student_type: 'new',
                     student_id: '',
                     student_parent_id: '',
-                    father_name: '',
-                    mother_name: '',
-                    father_contact_number_1: '',
+                    first_guardian_name: '',
+                    first_guardian_relation: '',
+                    second_guardian_name: '',
+                    second_guardian_relation: '',
+                    first_guardian_contact_number_1: '',
                     date_of_birth: '',
                     gender: '',
                     course_id: '',
