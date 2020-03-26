@@ -24,6 +24,8 @@
   'include_alternate_email' => 'Include all alternate emails',
   'include_alternate_number' => 'Include all alternate numbers',
   'include_list' => 'Include List',
+  'individual_employees' => 'Selected Employees',
+  'individual_students' => 'Selected Students',
   'message' => 'Message',
   'number_count' => ':count Number',
   'number_email_submitted' => ':count Email submitted.',

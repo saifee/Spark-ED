@@ -92,6 +92,75 @@ class StudentFeePaymentRepository
     }
 
     /**
+     * Complete Paystack payment
+     *
+     * @param array $params
+     * @return null
+     */
+    public function paystackPayment(StudentRecord $student_record, $params)
+    {
+        $transaction_id     = gv($params, 'transaction_id');
+        $installments       = gv($params, 'installments',[]);
+        $fee_installment_id = gv($params, 'fee_installment_id');
+
+        $client = new \GuzzleHttp\Client();
+        $request = $client->get('https://api.paystack.co/transaction/verify/'.$transaction_id, [
+            'headers' => [
+                'Authorization' =>'Bearer '.config('config.paystack_secret_key')
+            ]
+        ]);
+        $response = json_decode($request->getBody(), true);
+
+        $status = gv($response, 'status');
+
+        if (! $status) {
+            throw ValidationException::withMessages(['message' => trans('general.invalid_action')]);
+        }
+
+        $data = gv($response, 'data', []);
+        $metadata = gv($data, 'metadata', []);
+        $custom_fields = gv($metadata, 'custom_fields', []);
+        $student_record_id_array = searchByKey($custom_fields, 'variable_name', 'student_record_id');
+        $student_record_id = gv($student_record_id_array, 'value');
+
+        $fee_array = searchByKey($custom_fields, 'variable_name', 'fee');
+        $fee = gv($fee_array, 'value');
+
+        $handling_fee_array = searchByKey($custom_fields, 'variable_name', 'handling_fee');
+        $handling_fee = gv($handling_fee_array, 'value');
+
+        if ($student_record->id != $student_record_id) {
+            throw ValidationException::withMessages(['message' => trans('general.invalid_action')]);
+        }
+
+        $amount = gv($data, 'amount', 0);
+        $amount = $amount / 100;
+
+        if ($fee + $handling_fee != $amount) {
+            throw ValidationException::withMessages(['message' => trans('finance.total_mismatch')]);
+        }
+
+        $calculated_handling_fee = getPaymentGatewayHandlingFee('paystack', $fee);
+
+        if ($calculated_handling_fee != $handling_fee) {
+            throw ValidationException::withMessages(['message' => trans('finance.handling_fee_mismatch')]);
+        }
+
+        $params['date'] = date('Y-m-d');
+        $params['amount'] = $amount - $handling_fee;
+        $params['handling_fee'] = $handling_fee;
+        $params['is_online_payment'] = 1;
+        $params['gateway'] = 'paystack';
+        $params['source'] = 'Paystack';
+        $params['gateway_token'] = $transaction_id;
+        $params['reference_number'] = strtoupper(randomString(20));
+        $params['installment_id'] = $fee_installment_id;
+        $params['installments'] = $installments;
+
+        $this->student_record_repo->makePayment($student_record, $params);
+    }
+
+    /**
      * Complete Stripe payment
      *
      * @param array $params

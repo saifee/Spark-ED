@@ -801,6 +801,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::get('/student/{uuid}/fee/{record_id}/{fee_record_id}', 'Student\StudentRecordController@getPaymentDetail');
 	Route::post('/student/{uuid}/payment/{record_id}', 'Student\StudentRecordController@makePayment');
 	Route::post('/student/{uuid}/payment/{record_id}/rzp', 'Student\StudentFeePaymentController@razorpayPayment');
+	Route::post('/student/{uuid}/payment/{record_id}/paystack', 'Student\StudentFeePaymentController@paystackPayment');
 	Route::post('/student/{uuid}/payment/{record_id}/stripe', 'Student\StudentFeePaymentController@stripePayment');
 	Route::post('/student/{uuid}/payment/{record_id}/paypal', 'Student\StudentFeePaymentController@paypalPayment');
 	Route::post('/student/{uuid}/fee/{record_id}/{fee_record_id}/cancel', 'Student\StudentRecordController@cancelEmptyPayment');

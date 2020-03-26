@@ -56,6 +56,17 @@ class StudentFeePaymentController extends Controller
         return $this->success(['message' => trans('finance.fee_paid')]);
 	}
 
+    public function paystackPayment($uuid, $record_id)
+    {
+        $this->authorize('makePaymentAsParent', StudentRecord::class);
+
+        $student_record = $this->student_record->findByUuidOrFail($uuid, $record_id);
+
+        $this->repo->paystackPayment($student_record, $this->request->all());
+
+        return $this->success(['message' => trans('finance.fee_paid')]);
+    }
+
 	public function stripePayment($uuid, $record_id)
 	{
         $this->authorize('makePaymentAsParent', StudentRecord::class);

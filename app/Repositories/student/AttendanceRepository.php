@@ -904,8 +904,12 @@ class AttendanceRepository
         })->get();
 
         $month = date('n', strtotime(config('config.default_academic_session.start_date')));
-
         $year = date('Y', strtotime(config('config.default_academic_session.start_date')));
+        $start_session_date = date($year.'-'.str_pad($month, 2, 0, STR_PAD_LEFT).'-').'01';
+
+        $end_month = date('n', strtotime(config('config.default_academic_session.end_date')));
+        $end_year = date('Y', strtotime(config('config.default_academic_session.end_date')));
+        $end_session_date = date($end_year.'-'.str_pad($end_month, 2, 0, STR_PAD_LEFT).'-').'01';
 
         $header[] = array('key' => 'day', 'label' => trans('general.day'));
 
@@ -914,9 +918,10 @@ class AttendanceRepository
             $columns = array();
             $columns[] = array('key' => '0_'.$day, 'label' => $day, 'description' => '', 'icon' => '', 'class' => '');
 
-            $current_year = $year;
-
-            for ($i = 1; $i <= 12; $i++) {
+            $i = 1;
+            for ($date_range = $start_session_date; $date_range <= $end_session_date; $date_range = date("Y-m-d", strtotime("+1 month", strtotime($date_range)))) {
+                $month = date('n', strtotime($date_range));
+                $current_year = date('Y', strtotime($date_range));
 
                 $date = date($current_year.'-'.str_pad($month, 2, 0, STR_PAD_LEFT).'-').str_pad($day, 2, '0', STR_PAD_LEFT);
 
@@ -971,12 +976,7 @@ class AttendanceRepository
                     }
                 }
     
-                $month++;
-
-                if ($month > 12) {
-                    $month = 1;
-                    $current_year++;
-                }
+                $i++;
             }
             
             $rows[] = $columns;

@@ -28,7 +28,7 @@ class StudentPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-student');
+        return $user->hasRole('super-admin') || $user->can('list-student') || $user->can('list-class-teacher-wise-student') || $user->can('edit-student');
     }
 
     /**

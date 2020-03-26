@@ -23,10 +23,9 @@
   'married' => 'Married',
   'minute' => 'Minute',
   'monday' => 'Monday',
+  'month' => 'Month',
   'monthly' => 'Monthly',
   'mother' => 'Mother',
-  'year' => 'Year',
-  'month' => 'Month',
   'multi_line_input' => 'Multi Line Input',
   'ninth' => 'Ninth',
   'no' => 'No',
@@ -53,5 +52,6 @@
   'wednesday' => 'Wednesday',
   'weekly' => 'Weekly',
   'widowed' => 'Widowed',
+  'year' => 'Year',
   'yes' => 'Yes',
 );

@@ -63,6 +63,8 @@ class ReportRepository
 
         $exams = $this->exam->summary()->filterBySession()->get();
 
+        $exam_terms = $this->exam_term->filterBySession()->get();
+
         $data = array();
 
         foreach ($exams as $exam) {
@@ -80,26 +82,16 @@ class ReportRepository
             );
         }
 
-        $term_exam = $exams->where('exam_term_id', '!=', null)->count();
-
-        if ($term_exam == count($exams)) {
-            $types = [
-                array('text' => trans('exam.term_wise_report'), 'value' => 'term')
-            ];
-        } elseif (! $term_exam) {
-            $types = [
-                array('text' => trans('exam.no_term_wise_report'), 'value' => 'no_term')
-            ];
-        } else {
-            $types = [
-                array('text' => trans('exam.term_wise_report'), 'value' => 'term'),
-                array('text' => trans('exam.no_term_wise_report'), 'value' => 'no_term')
-            ];
-        }
+        $types = [
+            array('text' => trans('exam.all_term_report'), 'value' => 'all_term'),
+            array('text' => trans('exam.term_wise_report'), 'value' => 'term_wise'),
+            array('text' => trans('exam.exam_wise_report'), 'value' => 'exam_wise'),
+            array('text' => trans('exam.no_term_wise_report'), 'value' => 'no_term')
+        ];
 
         $exams = $data;
 
-        return compact('batches', 'types', 'exams');
+        return compact('batches', 'types', 'exams', 'exam_terms');
     }
 
     /**
@@ -197,12 +189,22 @@ class ReportRepository
         }
 
         $type = gv($params, 'type');
+        $exam_term_id = gv($params, 'exam_term_id');
+        $exam_id = gv($params, 'exam_id');
+
+        if ($type == 'term_wise' && ! $exam_term_id) {
+            throw ValidationException::withMessages(['message' => trans('validation.required', ['attribute' => trans('exam.term')])]);
+        }
+
+        if ($type == 'exam_wise' && ! $exam_id) {
+            throw ValidationException::withMessages(['message' => trans('validation.required', ['attribute' => trans('exam.exam')])]);
+        }
 
         $summary = array();
         $term_header = array();
         $header = array();
 
-        if ($type == 'term') {
+        if ($type == 'all_term' || $type == 'term_wise') {
             $exam_terms = $this->exam_term->with([
                 'exams',
                 'exams.schedules' => function ($q1) use ($batch_id) {
@@ -216,6 +218,8 @@ class ReportRepository
                 $q2->whereHas('schedules', function ($q3) use ($batch_id) {
                     $q3->where('batch_id', $batch_id);
                 });
+            })->when($exam_term_id, function ($query, $exam_term_id) {
+                    return $query->where('id', $exam_term_id);
             })->orderBy('position', 'asc')->get();
 
             $previous_colspan = 0;
@@ -234,7 +238,7 @@ class ReportRepository
                 $previous_colspan = $colspan;
             }
         } else {
-            $exams = $this->exam->whereNull('exam_term_id')->filterBySession()->with([
+            $exams = $this->exam->filterBySession()->with([
                 'schedules' => function ($q1) use ($batch_id) {
                     $q1->where('batch_id', $batch_id);
                 },
@@ -246,6 +250,10 @@ class ReportRepository
                 'schedules.records.subject'
             ])->whereHas('schedules', function ($q2) use ($batch_id) {
                 $q2->where('batch_id', $batch_id);
+            })->when($exam_id, function ($query, $exam_id) {
+                return $query->where('id', $exam_id);
+            })->when($type === 'no_term', function($query, $type) {
+                return $query->where('exam_term_id', null);
             })->orderBy('position', 'asc')->get();
 
             $header = $this->getHeader($exams, $header);
