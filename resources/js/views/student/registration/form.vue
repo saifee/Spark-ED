@@ -130,8 +130,13 @@
                     </div>
                     <div class="col-12 col-sm-6">
                         <div class="form-group">
-                            <label for="">{{trans('student.first_guardian_relation')}}</label>
-                            <input class="form-control" type="text" v-model="registrationForm.first_guardian_relation" name="first_guardian_relation" :placeholder="trans('student.first_guardian_relation')">
+                            <label for="">{{trans('general.relation')}}</label>
+                            <select class="form-control" v-model="registrationForm.first_guardian_relation" name="first_guardian_relation" :placeholder="trans('student.first_guardian_relation')">
+                                <option value="">{{ trans('general.select_one') }}</option>
+                                <template v-for="relation in guardian_relations">
+                                    <option :value="relation.id">{{ relation.name }}</option>
+                                </template>
+                            </select>
                             <show-error :form-name="registrationForm" prop-name="first_guardian_relation"></show-error>
                         </div>
                     </div>
@@ -144,8 +149,13 @@
                     </div>
                     <div class="col-12 col-sm-6">
                         <div class="form-group">
-                            <label for="">{{trans('student.second_guardian_relation')}}</label>
-                            <input class="form-control" type="text" v-model="registrationForm.second_guardian_relation" name="second_guardian_relation" :placeholder="trans('student.second_guardian_relation')">
+                            <label for="">{{trans('general.relation')}}</label>
+                            <select v-model="registrationForm.second_guardian_relation" name="second_guardian_relation" class="custom-select col-12">
+                                <option value="">{{ trans('general.select_one') }}</option>
+                                <template v-for="relation in guardian_relations">
+                                    <option :value="relation.id">{{ relation.name }}</option>
+                                </template>
+                            </select>
                             <show-error :form-name="registrationForm" prop-name="second_guardian_relation"></show-error>
                         </div>
                     </div>
@@ -243,6 +253,7 @@
                 courses: [],
                 course_details: [],
                 previous_institutes: [],
+                guardian_relations: [],
                 selected_previous_institute: null,
                 selected_course: null,
                 genders: [],
@@ -277,6 +288,7 @@
                         this.course_details = response.course_details;
                         this.previous_institutes = response.previous_institutes;
                         this.custom_fields = response.custom_fields;
+                        this.guardian_relations = response.guardian_relations;
                         loader.hide();
                     })
                     .catch(error => {
