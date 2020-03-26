@@ -20,7 +20,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \App\Http\Middleware\ScriptMint::class,
+        \App\Http\Middleware\Administrator::class,
         \App\Http\Middleware\RedirectSecureIfRequired::class,
         \App\Http\Middleware\XSSProtection::class,
         \App\Http\Middleware\IpRestricted::class
