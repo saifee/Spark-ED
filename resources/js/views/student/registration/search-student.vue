@@ -44,8 +44,8 @@
                                         <tbody>
                                             <tr v-for="student in students.data">
                                                 <td v-text="getStudentName(student)"></td>
-                                                <td v-text="student.parent.father_name"></td>
-                                                <td v-text="student.parent.mother_name"></td>
+                                                <td v-text="student.parent.first_guardian_name"></td>
+                                                <td v-text="student.parent.second_guardian_name"></td>
                                                 <td class="table-option">
                                                     <div class="btn-group">
                                                         <button class="btn btn-info btn-sm" :key="student.id" v-confirm="{ok: confirm(student)}" v-tooltip="trans('student.add_student')"><i class="fas fa-user-plus"></i></button>

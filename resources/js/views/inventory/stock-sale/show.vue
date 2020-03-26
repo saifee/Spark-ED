@@ -35,7 +35,7 @@
                                             <td>
                                                 <template v-if="stock_sale.type == 'student'">
                                                     {{trans('student.student_name')+': '+getStudentName(stock_sale.student)}} <br />
-                                                    {{trans('student.father_name')+': '+stock_sale.student.parent.father_name}} <br />
+                                                    {{trans('student.father_name')+': '+stock_sale.student.parent.first_guardian_name}} <br />
                                                     {{trans('student.contact_number')+': '+stock_sale.student.contact_number}} <br />
                                                 </template>
                                             </td>

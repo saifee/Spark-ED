@@ -84,7 +84,7 @@
                                         </template>
                                         <template v-else-if="stock_transfer.type == 'student'">
                                             {{trans('student.student_name')+': '+getStudentName(stock_transfer.student)}} <br />
-                                            {{trans('student.father_name')+': '+stock_transfer.student.parent.father_name}} <br />
+                                            {{trans('student.father_name')+': '+stock_transfer.student.parent.first_guardian_name}} <br />
                                             {{trans('student.contact_number')+': '+stock_transfer.student.contact_number}} <br />
                                         </template>
                                         <template v-else-if="stock_transfer.type == 'room'">

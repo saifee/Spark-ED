@@ -119,7 +119,7 @@
                                             <span class="label label-info">{{trans('student.online_registration')}}</span>
                                         </span>
                                     </td>
-                                    <td v-text="registration.student.parent ? registration.student.parent.father_name : ''"></td>
+                                    <td v-text="registration.student.parent ? registration.student.parent.first_guardian_name : ''"></td>
                                     <td>{{registration.student.date_of_birth | moment}}</td>
                                     <td v-text="registration.student.contact_number"></td>
                                     <td v-text="registration.course.name"></td>

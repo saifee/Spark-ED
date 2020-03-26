@@ -14,7 +14,7 @@
 	                <div class="item-info">
 	                    <h5 class="item-heading">{{getStudentName(result.student)}}</h5>
 	                    <div class="item-meta">
-	                        <span class="father-name">{{result.student.parent.father_name}}</span>
+	                        <span class="father-name">{{result.student.parent.first_guardian_name}}</span>
 	                        <span class="contact"> / {{result.student.contact_number}}</span>
 	                    </div>
 	                    <div class="item-meta">

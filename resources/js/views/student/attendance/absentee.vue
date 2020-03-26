@@ -145,8 +145,8 @@
                                     </td>
                                     <td v-text="getAdmissionNumber(student_record.admission)"></td>
                                     <td v-text="getStudentName(student_record.student)"></td>
-                                    <td v-text="student_record.student.parent.father_name"></td>
-                                    <td v-text="student_record.student.parent.mother_name"></td>
+                                    <td v-text="student_record.student.parent.first_guardian_name"></td>
+                                    <td v-text="student_record.student.parent.second_guardian_name"></td>
                                     <td>{{student_record.admission.date_of_admission | moment}}</td>
                                     <td v-text="student_record.batch.course.name+' '+student_record.batch.name"></td>
                                 </tr>
@@ -394,7 +394,7 @@
 
                 return sms.replace("#NAME#", this.getStudentName(item.student))
                     .replace("#BATCH#", item.batch.course.name+' '+item.batch.name)
-                    .replace("#FATHER_NAME#", item.student.parent.father_name)
+                    .replace("#FATHER_NAME#", item.student.parent.first_guardian_name)
                     .replace("#DATE#", helper.formatDate(this.filter.date));
             },
             characterCount(){

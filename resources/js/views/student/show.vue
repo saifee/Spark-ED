@@ -173,11 +173,11 @@
                                         </tr>
                                         <tr>
                                             <td>{{trans('student.father_name')}}</td>
-                                            <td>{{student.parent ? student.parent.father_name : ''}}</td>
+                                            <td>{{student.parent ? student.parent.first_guardian_name : ''}}</td>
                                         </tr>
                                         <tr>
                                             <td>{{trans('student.mother_name')}}</td>
-                                            <td>{{student.parent ? student.parent.mother_name : ''}}</td>
+                                            <td>{{student.parent ? student.parent.second_guardian_name : ''}}</td>
                                         </tr>
                                         <tr v-if="student.student_records">
                                             <td>{{trans('academic.batch')}}</td>

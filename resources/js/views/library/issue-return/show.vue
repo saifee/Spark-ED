@@ -55,7 +55,7 @@
                                             </tr>
                                             <tr>
                                                 <td>{{trans('student.father_name')}}</td>
-                                                <td>{{book_log.student_record.student.parent.father_name}}</td>
+                                                <td>{{book_log.student_record.student.parent.first_guardian_name}}</td>
                                             </tr>
                                             <tr>
                                                 <td>{{trans('student.contact_number')}}</td>

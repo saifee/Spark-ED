@@ -43,11 +43,11 @@
                     <tbody>
                         <tr>
                             <td class="font-weight-bold">{{trans('student.father_name')}}</td>
-                            <td>{{student_record.student.parent ? student_record.student.parent.father_name : ''}}</td>
+                            <td>{{student_record.student.parent ? student_record.student.parent.first_guardian_name : ''}}</td>
                         </tr>
                         <tr>
                             <td class="font-weight-bold">{{trans('student.mother_name')}}</td>
-                            <td>{{student_record.student.parent ? student_record.student.parent.mother_name : ''}}</td>
+                            <td>{{student_record.student.parent ? student_record.student.parent.second_guardian_name : ''}}</td>
                         </tr>
                         <tr>
                             <td class="font-weight-bold">{{trans('student.contact_number')}}</td>

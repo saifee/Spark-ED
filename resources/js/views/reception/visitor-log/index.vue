@@ -120,8 +120,8 @@
                                             <template v-if="visitor_log.name">{{trans('reception.visitor_name')+': '+visitor_log.name}} <br /></template>
                                             <template v-if="visitor_log.relation_with_student">{{trans('reception.relation_with_student')+': '+visitor_log.relation_with_student}} <br /></template>
                                             {{trans('student.name')+': '+getStudentName(visitor_log.student)}} <br />
-                                            {{trans('student.father_name')+': '+visitor_log.student.parent.father_name}} <br />
-                                            {{trans('student.mother_name')+': '+visitor_log.student.parent.mother_name}} <br />
+                                            {{trans('student.father_name')+': '+visitor_log.student.parent.first_guardian_name}} <br />
+                                            {{trans('student.mother_name')+': '+visitor_log.student.parent.second_guardian_name}} <br />
                                             {{trans('student.contact_number')+': '+visitor_log.student.contact_number}} <br />
                                         </template>
                                         <template v-else>

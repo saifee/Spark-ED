@@ -225,8 +225,8 @@
                                     <td v-if="isColumnVisible('middle_name')" v-text="student.student.middle_name"></td>
                                     <td>{{student.student.last_name || ''}}</td>
                                     <td v-if="isColumnVisible('gender')">{{trans('list.'+student.student.gender)}}</td>
-                                    <td v-if="isColumnVisible('father_name')" v-text="student.student.parent ? student.student.parent.father_name : ''"></td>
-                                    <td v-if="isColumnVisible('mother_name')" v-text="student.student.parent ? student.student.parent.mother_name : ''"></td>
+                                    <td v-if="isColumnVisible('father_name')" v-text="student.student.parent ? student.student.parent.first_guardian_name : ''"></td>
+                                    <td v-if="isColumnVisible('mother_name')" v-text="student.student.parent ? student.student.parent.second_guardian_name : ''"></td>
                                     <td v-if="isColumnVisible('date_of_birth')">{{student.student.date_of_birth | moment}}</td>
                                     <td v-if="isColumnVisible('date_of_admission')">{{getAdmissionDate(student) | moment}}</td>
                                     <td v-if="isColumnVisible('date_of_promotion')">{{getPromotionDate(student)}}</td>
@@ -239,7 +239,7 @@
                                     <td v-if="isColumnVisible('caste')" v-text="student.student.caste ? student.student.caste.name : ''"></td>
                                     <td v-if="isColumnVisible('category')" v-text="student.student.category ? student.student.category.name : ''"></td>
                                     <td v-if="isColumnVisible('unique_identification_number')" v-text="student.student.unique_identification_number"></td>
-                                    <td v-if="isColumnVisible('father_contact_number_1')" v-text="student.student.parent.father_contact_number_1"></td>
+                                    <td v-if="isColumnVisible('father_contact_number_1')" v-text="student.student.parent.first_guardian_contact_number_1"></td>
                                     <td v-if="isColumnVisible('mother_contact_number_1')" v-text="student.student.parent.mother_contact_number_1"></td>
                                     <td v-if="isColumnVisible('emergency_contact_name')" v-text="student.student.emergency_contact_name"></td>
                                     <td v-if="isColumnVisible('emergency_contact_number')" v-text="student.student.emergency_contact_number"></td>

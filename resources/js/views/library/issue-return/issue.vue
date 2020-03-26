@@ -273,7 +273,7 @@
                 return helper.getStudentName(student);
             },
             getStudentFatherName(student){
-            	return student.parent.father_name;
+            	return student.parent.first_guardian_name;
             },
             getStudentBatch(student){
             	let student_record = student.student_records[0];

@@ -296,7 +296,7 @@
 						date_of_birth: student_record.student.date_of_birth,
 						contact_number: student_record.student.contact_number,
 						admission_number: helper.getAdmissionNumber(student_record.admission),
-						father_name: student_record.student.parent.father_name,
+						father_name: student_record.student.parent.first_guardian_name,
 						roll_number: this.getRollNumber(student_record),
 						student_attendances: student_attendances,
 						attendance: current_date_attendance

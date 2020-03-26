@@ -99,8 +99,8 @@
                                 <tr v-for="student_record in student_records.data">
                                     <td v-text="getAdmissionNumber(student_record.admission)"></td>
                                     <td v-text="getStudentName(student_record.student)"></td>
-                                    <td v-text="student_record.student.parent.father_name"></td>
-                                    <td v-text="student_record.student.parent.mother_name"></td>
+                                    <td v-text="student_record.student.parent.first_guardian_name"></td>
+                                    <td v-text="student_record.student.parent.second_guardian_name"></td>
                                     <td>{{student_record.admission.date_of_admission | moment}}</td>
                                     <td v-text="student_record.batch.course.name+' '+student_record.batch.name"></td>
                                     <td>{{student_record.date_of_exit | moment}}</td>
