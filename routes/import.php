@@ -21,12 +21,14 @@ Route::post('/secret/data/importer/books', function (\Illuminate\Http\Request $r
         // create book
         $newBook = \App\Models\Library\Book::updateOrCreate(['title' => trim($line[1])], [
             'isbn_number' => $line[2],
-            'book_author_id' => \App\Models\Configuration\Library\BookAuthor::firstOrCreate(['name'=>isset($line[3]) && filled($line[3]) ? $line[3] : 'Unknown'])->id,
-            'book_language_id' => \App\Models\Configuration\Library\BookLanguage::firstOrCreate(['name'=>isset($line[4]) && filled($line[4]) ? $line[4] : 'Unknown'])->id,
-            'book_topic_id' => \App\Models\Configuration\Library\BookTopic::firstOrCreate(['name'=>isset($line[8]) && filled($line[8]) ? $line[8] : 'Unknown'])->id,
-            'book_publisher_id' => \App\Models\Configuration\Library\BookPublisher::firstOrCreate(['name'=>isset($line[7]) && filled($line[7]) ? $line[7] : 'Unknown'])->id,
+            'book_author_id' => \App\Models\Configuration\Library\BookAuthor::firstOrCreate(['name'=>isset($line[3]) && filled($line[3]) ? $line[3] : '—'])->id,
+            'book_language_id' => \App\Models\Configuration\Library\BookLanguage::firstOrCreate(['name'=>isset($line[4]) && filled($line[4]) ? $line[4] : '—'])->id,
+            'book_topic_id' => \App\Models\Configuration\Library\BookTopic::firstOrCreate(['name'=>isset($line[8]) && filled($line[8]) ? $line[8] : '—'])->id,
+            'book_publisher_id' => \App\Models\Configuration\Library\BookPublisher::firstOrCreate(['name'=>isset($line[7]) && filled($line[7]) ? $line[7] : '—'])->id,
             'page' => isset($line[5]) && filled($line[5]) && is_numeric($line[5]) ? $line[5] : 0,
             'price' => isset($line[6]) && filled($line[6]) ? $line[6] : 0,
+            'type' => isset($line[9]) && filled($line[9]) ? $line[9] : 0,
+            'description' => isset($line[10]) && filled($line[10]) ? $line[10] : 0,
             'uuid' => \Illuminate\Support\Str::uuid(),
             'options' => array(),
         ]);
