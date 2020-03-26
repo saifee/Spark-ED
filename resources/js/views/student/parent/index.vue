@@ -35,13 +35,13 @@
                         <div class="row">
                             <div class="col-12 col-sm-2">
                                 <div class="form-group">
-                                    <label for="">{{trans('student.father_name')}}</label>
+                                    <label for="">{{trans('student.first_guardian_name')}}</label>
                                     <input class="form-control" name="father_name" v-model="filter.father_name">
                                 </div>
                             </div>
                             <div class="col-12 col-sm-2">
                                 <div class="form-group">
-                                    <label for="">{{trans('student.mother_name')}}</label>
+                                    <label for="">{{trans('student.second_guardian_name')}}</label>
                                     <input class="form-control" name="mother_name" v-model="filter.mother_name">
                                 </div>
                             </div>
@@ -67,8 +67,8 @@
                         <table class="table table-sm">
                             <thead>
                                 <tr>
-                                    <th>{{trans('student.father_name')}}</th>
-                                    <th>{{trans('student.mother_name')}}</th>
+                                    <th>{{trans('student.first_guardian_name')}}</th>
+                                    <th>{{trans('student.second_guardian_name')}}</th>
                                     <th>{{trans('student.father_contact_number')}}</th>
                                     <th class="table-option">{{trans('general.action')}}</th>
                                 </tr>
@@ -125,11 +125,11 @@
                     },
                     {
                         value: 'father_name',
-                        translation: i18n.student.father_name
+                        translation: i18n.student.first_guardian_name
                     },
                     {
                         value: 'mother_name',
-                        translation: i18n.student.mother_name
+                        translation: i18n.student.second_guardian_name
                     }
                 ],
                 showCreatePanel: false,

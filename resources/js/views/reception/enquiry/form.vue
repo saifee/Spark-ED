@@ -33,15 +33,15 @@
                 </div>
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
-                        <label for="">{{trans('student.father_name')}}</label>
-                        <input class="form-control" type="text" v-model="enquiryForm.father_name" name="father_name" :placeholder="trans('student.father_name')">
+                        <label for="">{{trans('student.first_guardian_name')}}</label>
+                        <input class="form-control" type="text" v-model="enquiryForm.father_name" name="father_name" :placeholder="trans('student.first_guardian_name')">
                         <show-error :form-name="enquiryForm" prop-name="father_name"></show-error>
                     </div>
                 </div>
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
-                        <label for="">{{trans('student.mother_name')}}</label>
-                        <input class="form-control" type="text" v-model="enquiryForm.mother_name" name="mother_name" :placeholder="trans('student.mother_name')">
+                        <label for="">{{trans('student.second_guardian_name')}}</label>
+                        <input class="form-control" type="text" v-model="enquiryForm.mother_name" name="mother_name" :placeholder="trans('student.second_guardian_name')">
                         <show-error :form-name="enquiryForm" prop-name="mother_name"></show-error>
                     </div>
                 </div>

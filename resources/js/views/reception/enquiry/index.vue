@@ -114,8 +114,8 @@
                                 <tr v-for="enquiry in enquiries.data">
                                     <td v-text="enquiry.id"></td>
                                     <td>
-                                        <span v-if="enquiry.father_name">{{trans('student.father_name')+': '+enquiry.father_name}} <br /></span>
-                                        <span v-if="enquiry.mother_name">{{trans('student.mother_name')+': '+enquiry.mother_name}} <br /></span>
+                                        <span v-if="enquiry.father_name">{{trans('student.first_guardian_name')+': '+enquiry.father_name}} <br /></span>
+                                        <span v-if="enquiry.mother_name">{{trans('student.second_guardian_name')+': '+enquiry.mother_name}} <br /></span>
                                         <span v-if="enquiry.guardian_name">{{trans('student.guardian_name')+': '+enquiry.guardian_name}} <br /></span>
                                     </td>
                                     <td v-text="enquiry.enquiry_type.name"></td>

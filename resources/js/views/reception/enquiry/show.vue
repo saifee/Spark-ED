@@ -39,11 +39,11 @@
                                         	<td>{{enquiry.enquiry_source.name}}</td>
                                         </tr>
                                         <tr>
-                                        	<td>{{trans('student.father_name')}}</td>
+                                        	<td>{{trans('student.first_guardian_name')}}</td>
                                         	<td>{{enquiry.father_name}}</td>
                                         </tr>
                                         <tr>
-                                        	<td>{{trans('student.mother_name')}}</td>
+                                        	<td>{{trans('student.second_guardian_name')}}</td>
                                         	<td>{{enquiry.mother_name}}</td>
                                         </tr>
                                         <tr>

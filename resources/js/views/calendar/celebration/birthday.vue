@@ -57,7 +57,7 @@
                                     <th>{{trans('general.age')}}</th>
                                     <th v-if="filter.type == 'student'">{{trans('student.name')}}</th>
                                     <th v-if="filter.type == 'student'">{{trans('academic.batch')}}</th>
-                                    <th v-if="filter.type == 'student'">{{trans('student.father_name')}}</th>
+                                    <th v-if="filter.type == 'student'">{{trans('student.first_guardian_name')}}</th>
                                     <th v-if="filter.type == 'student'">{{trans('student.contact_number')}}</th>
                                     <th v-if="filter.type == 'employee'">{{trans('employee.name')}}</th>
                                     <th v-if="filter.type == 'employee'">{{trans('employee.code')}}</th>

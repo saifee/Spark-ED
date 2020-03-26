@@ -172,11 +172,11 @@
                                             <td>{{getStudentName(student)}}</td>
                                         </tr>
                                         <tr>
-                                            <td>{{trans('student.father_name')}}</td>
+                                            <td>{{trans('student.first_guardian_name')}}</td>
                                             <td>{{student.parent ? student.parent.first_guardian_name : ''}}</td>
                                         </tr>
                                         <tr>
-                                            <td>{{trans('student.mother_name')}}</td>
+                                            <td>{{trans('student.second_guardian_name')}}</td>
                                             <td>{{student.parent ? student.parent.second_guardian_name : ''}}</td>
                                         </tr>
                                         <tr v-if="student.student_records">

@@ -85,14 +85,14 @@
                         <div class="row">
                             <div class="col-12 col-sm-4">
                                 <div class="form-group">
-                                    <label for="">{{trans('student.father_name')}}</label>
+                                    <label for="">{{trans('student.first_guardian_name')}}</label>
                                     <input class="form-control" type="text" v-model="registrationForm.father_name" name="father_name" :placeholder="trans('student.contact_name')">
                                     <show-error :form-name="registrationForm" prop-name="father_name"></show-error>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-4">
                                 <div class="form-group">
-                                    <label for="">{{trans('student.mother_name')}}</label>
+                                    <label for="">{{trans('student.second_guardian_name')}}</label>
                                     <input class="form-control" type="text" v-model="registrationForm.mother_name" name="mother_name" :placeholder="trans('student.contact_name')">
                                     <show-error :form-name="registrationForm" prop-name="mother_name"></show-error>
                                 </div>

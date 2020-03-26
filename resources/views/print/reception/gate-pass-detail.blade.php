@@ -8,8 +8,8 @@
 	            <td valign="top">
 	            	@if($gate_pass->type == 'student')
                         {{trans('student.name').': '.$gate_pass->Student->name}} <br />
-                        {{trans('student.father_name').': '.$gate_pass->Student->Parent->father_name}} <br />
-                        {{trans('student.mother_name').': '.$gate_pass->Student->Parent->mother_name}} <br />
+                        {{trans('student.first_guardian_name').': '.$gate_pass->Student->Parent->father_name}} <br />
+                        {{trans('student.second_guardian_name').': '.$gate_pass->Student->Parent->mother_name}} <br />
                         {{trans('student.contact_number').': '.$gate_pass->Student->contact_number}} <br />
                     @else
                         {{$gate_pass->Employee->name}} <br />

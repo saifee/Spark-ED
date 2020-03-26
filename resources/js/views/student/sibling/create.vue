@@ -34,8 +34,8 @@
 						                    <tr>
 						                        <th>{{trans('student.admission_number_short')}}</th>
 						                        <th>{{trans('student.name')}}</th>
-						                        <th>{{trans('student.father_name')}}</th>
-						                        <th>{{trans('student.mother_name')}}</th>
+						                        <th>{{trans('student.first_guardian_name')}}</th>
+						                        <th>{{trans('student.second_guardian_name')}}</th>
 						                        <th>{{trans('academic.batch')}}</th>
 						                        <th class="table-option">{{trans('general.action')}}</th>
 						                    </tr>

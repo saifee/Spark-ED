@@ -25,15 +25,15 @@
 	        <div class="row">
 	            <div class="col-12 col-sm-6">
 	                <div class="form-group">
-	                    <label for="">{{trans('student.father_name')}}</label>
-	                    <input class="form-control" type="text" v-model="parentForm.father_name" name="father_name" :placeholder="trans('student.father_name')">
+	                    <label for="">{{trans('student.first_guardian_name')}}</label>
+	                    <input class="form-control" type="text" v-model="parentForm.father_name" name="father_name" :placeholder="trans('student.first_guardian_name')">
 	                    <show-error :form-name="parentForm" prop-name="father_name"></show-error>
 	                </div>
 	            </div>
 	            <div class="col-12 col-sm-6">
 	                <div class="form-group">
-	                    <label for="">{{trans('student.mother_name')}}</label>
-	                    <input class="form-control" type="text" v-model="parentForm.mother_name" name="mother_name" :placeholder="trans('student.mother_name')">
+	                    <label for="">{{trans('student.second_guardian_name')}}</label>
+	                    <input class="form-control" type="text" v-model="parentForm.mother_name" name="mother_name" :placeholder="trans('student.second_guardian_name')">
 	                    <show-error :form-name="parentForm" prop-name="mother_name"></show-error>
 	                </div>
 	            </div>
@@ -109,8 +109,8 @@
 	            </div>
 	            <div class="col-12 col-sm-6">
 	                <div class="form-group">
-	                    <label for="">{{trans('student.father_contact_number_1')}}</label>
-	                    <input class="form-control" type="text" v-model="parentForm.father_contact_number_1" name="father_contact_number_1" :placeholder="trans('student.father_contact_number_1')">
+	                    <label for="">{{trans('student.first_guardian_contact_number_1')}}</label>
+	                    <input class="form-control" type="text" v-model="parentForm.father_contact_number_1" name="father_contact_number_1" :placeholder="trans('student.first_guardian_contact_number_1')">
 	                    <show-error :form-name="parentForm" prop-name="father_contact_number_1"></show-error>
 	                </div>
 	            </div>

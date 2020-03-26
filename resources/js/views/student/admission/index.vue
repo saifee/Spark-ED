@@ -72,13 +72,13 @@
                             </div>
                             <div class="col-12 col-sm-2">
                                 <div class="form-group">
-                                    <label for="">{{trans('student.father_name')}}</label>
+                                    <label for="">{{trans('student.first_guardian_name')}}</label>
                                     <input class="form-control" name="father_name" v-model="filter.father_name">
                                 </div>
                             </div>
                             <div class="col-12 col-sm-2">
                                 <div class="form-group">
-                                    <label for="">{{trans('student.mother_name')}}</label>
+                                    <label for="">{{trans('student.second_guardian_name')}}</label>
                                     <input class="form-control" name="mother_name" v-model="filter.mother_name">
                                 </div>
                             </div>
@@ -188,8 +188,8 @@
                                     <th v-if="isColumnVisible('middle_name')">{{trans('student.middle_name')}}</th>
                                     <th>{{trans('student.last_name')}}</th>
                                     <th v-if="isColumnVisible('gender')">{{trans('student.gender')}}</th>
-                                    <th v-if="isColumnVisible('father_name')">{{trans('student.father_name')}}</th>
-                                    <th v-if="isColumnVisible('mother_name')">{{trans('student.mother_name')}}</th>
+                                    <th v-if="isColumnVisible('father_name')">{{trans('student.first_guardian_name')}}</th>
+                                    <th v-if="isColumnVisible('mother_name')">{{trans('student.second_guardian_name')}}</th>
                                     <th v-if="isColumnVisible('date_of_birth')">{{trans('student.date_of_birth')}}</th>
                                     <th v-if="isColumnVisible('date_of_admission')">{{trans('student.date_of_admission')}}</th>
                                     <th v-if="isColumnVisible('date_of_promotion')">{{trans('student.date_of_promotion')}}</th>
@@ -202,7 +202,7 @@
                                     <th v-if="isColumnVisible('caste')">{{trans('misc.caste')}}</th>
                                     <th v-if="isColumnVisible('category')">{{trans('misc.category')}}</th>
                                     <th v-if="isColumnVisible('unique_identification_number')">{{trans('student.unique_identification_number')}}</th>
-                                    <th v-if="isColumnVisible('father_contact_number_1')">{{trans('student.father_contact_number_1')}}</th>
+                                    <th v-if="isColumnVisible('father_contact_number_1')">{{trans('student.first_guardian_contact_number_1')}}</th>
                                     <th v-if="isColumnVisible('mother_contact_number_1')">{{trans('student.mother_contact_number_1')}}</th>
                                     <th v-if="isColumnVisible('emergency_contact_name')">{{trans('student.emergency_contact_name')}}</th>
                                     <th v-if="isColumnVisible('emergency_contact_number')">{{trans('student.emergency_contact_number')}}</th>
@@ -387,11 +387,11 @@
                     },
                     {
                         value: 'father_name',
-                        translation: i18n.student.father_name
+                        translation: i18n.student.first_guardian_name
                     },
                     {
                         value: 'mother_name',
-                        translation: i18n.student.mother_name
+                        translation: i18n.student.second_guardian_name
                     },
                     {
                         value: 'date_of_birth',
@@ -412,11 +412,11 @@
                         value: 'middle_name'
                     },
                     {
-                        text: i18n.student.father_name,
+                        text: i18n.student.first_guardian_name,
                         value: 'father_name'
                     },
                     {
-                        text: i18n.student.mother_name,
+                        text: i18n.student.second_guardian_name,
                         value: 'mother_name'
                     },
                     {
@@ -464,7 +464,7 @@
                         value: 'unique_identification_number'
                     },
                     {
-                        text: i18n.student.father_contact_number_1,
+                        text: i18n.student.first_guardian_contact_number_1,
                         value: 'father_contact_number_1'
                     },
                     {

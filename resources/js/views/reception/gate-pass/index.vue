@@ -104,8 +104,8 @@
                                     <td>
                                         <template v-if="gate_pass.type == 'student'">
                                             {{trans('student.name')+': '+getStudentName(gate_pass.student)}} <br />
-                                            {{trans('student.father_name')+': '+gate_pass.student.parent.first_guardian_name}} <br />
-                                            {{trans('student.mother_name')+': '+gate_pass.student.parent.second_guardian_name}} <br />
+                                            {{trans('student.first_guardian_name')+': '+gate_pass.student.parent.first_guardian_name}} <br />
+                                            {{trans('student.second_guardian_name')+': '+gate_pass.student.parent.second_guardian_name}} <br />
                                             {{trans('student.contact_number')+': '+gate_pass.student.contact_number}} <br />
                                         </template>
                                         <template v-if="gate_pass.type == 'employee'">

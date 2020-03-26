@@ -54,7 +54,7 @@
                                                 <td>{{getStudentName(book_log.student_record.student)}}</td>
                                             </tr>
                                             <tr>
-                                                <td>{{trans('student.father_name')}}</td>
+                                                <td>{{trans('student.first_guardian_name')}}</td>
                                                 <td>{{book_log.student_record.student.parent.first_guardian_name}}</td>
                                             </tr>
                                             <tr>

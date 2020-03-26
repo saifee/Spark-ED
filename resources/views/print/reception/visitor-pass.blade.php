@@ -16,8 +16,8 @@
 							{{trans('reception.relation_with_student').': '.$visitor_log->relation_with_student}} <br />
 	                    @endif
 	                    {{trans('student.name').': '.$visitor_log->student->name}} <br />
-	                    {{trans('student.father_name').': '.$visitor_log->student->parent->father_name}} <br />
-	                    {{trans('student.mother_name').': '.$visitor_log->student->parent->mother_name}} <br />
+	                    {{trans('student.first_guardian_name').': '.$visitor_log->student->parent->father_name}} <br />
+	                    {{trans('student.second_guardian_name').': '.$visitor_log->student->parent->mother_name}} <br />
 	                    {{trans('student.contact_number').': '.$visitor_log->student->contact_number}} <br />
 	                @else
 	                    {{trans('reception.visitor_name').': '.$visitor_log->name}} <br />

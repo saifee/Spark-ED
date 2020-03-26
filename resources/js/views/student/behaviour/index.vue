@@ -195,11 +195,11 @@
                         value: 'middle_name'
                     },
                     {
-                        text: i18n.student.father_name,
+                        text: i18n.student.first_guardian_name,
                         value: 'father_name'
                     },
                     {
-                        text: i18n.student.mother_name,
+                        text: i18n.student.second_guardian_name,
                         value: 'mother_name'
                     },
                     {
@@ -247,7 +247,7 @@
                         value: 'unique_identification_number'
                     },
                     {
-                        text: i18n.student.father_contact_number_1,
+                        text: i18n.student.first_guardian_contact_number_1,
                         value: 'father_contact_number_1'
                     },
                     {

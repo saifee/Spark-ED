@@ -52,7 +52,7 @@
 						            	<div class="m-b-20" v-if="issueForm.type == 'student' && selected_student">
 						            		<div class="row">
 						            			<div class="col-6">{{trans('student.name')+': '+getStudentName(selected_student)}}</div>
-						            			<div class="col-6">{{trans('student.father_name')+': '+getStudentFatherName(selected_student)}} <br /></div>
+						            			<div class="col-6">{{trans('student.first_guardian_name')+': '+getStudentFatherName(selected_student)}} <br /></div>
 						            			<div class="col-6">{{trans('academic.batch')+': '+getStudentBatch(selected_student)}}</div>
 						            			<div class="col-6">{{trans('student.contact_number')+': '+selected_student.contact_number}}</div>
 						            		</div>
@@ -131,7 +131,7 @@
 						            				<tr>
 						            					<th>{{trans('student.name')}}</th>
 						            					<th>{{trans('academic.batch')}}</th>
-						            					<th>{{trans('student.father_name')}}</th>
+						            					<th>{{trans('student.first_guardian_name')}}</th>
 						            					<th>{{trans('student.contact_number')}}</th>
 						            					<th></th>
 						            				</tr>

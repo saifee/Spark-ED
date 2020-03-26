@@ -93,7 +93,7 @@
                                     <th>{{trans('student.admission_number_short')}}</th>
                                     <th>{{trans('student.name')}}</th>
                                     <th>{{trans('academic.batch')}}</th>
-                                    <th>{{trans('student.father_name')}}</th>
+                                    <th>{{trans('student.first_guardian_name')}}</th>
                                     <th>{{trans('student.contact_number')}}</th>
                                     <th>{{trans('finance.fee_group')}}</th>
                                     <th>{{trans('finance.total_fee')}}</th>
@@ -214,7 +214,7 @@
                     },
                     {
                         value: 'father_name',
-                        translation: i18n.student.father_name
+                        translation: i18n.student.first_guardian_name
                     },
                     {
                         value: 'total',

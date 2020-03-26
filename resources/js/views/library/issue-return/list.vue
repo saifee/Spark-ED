@@ -110,7 +110,7 @@
                                         <template v-if="book_log.student_record_id">
                                             <span>{{trans('student.name')+': '+getStudentName(book_log.student_record.student)}}</span> <br />
                                             <span>{{trans('academic.batch')+': '+getStudentBatch(book_log.student_record.batch)}}</span><br />
-                                            <span>{{trans('student.father_name')+': '+book_log.student_record.student.parent.first_guardian_name}}</span>
+                                            <span>{{trans('student.first_guardian_name')+': '+book_log.student_record.student.parent.first_guardian_name}}</span>
                                         </template>
                                         <template v-if="book_log.employee_id">
                                             <span>{{trans('employee.name')+': '+getEmployeeName(book_log.employee)}}</span> <br />

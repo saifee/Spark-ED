@@ -101,7 +101,7 @@
                             <thead>
                                 <tr>
                                     <th>{{trans('student.name')}}</th>
-                                    <th>{{trans('student.father_name')}}</th>
+                                    <th>{{trans('student.first_guardian_name')}}</th>
                                     <th>{{trans('student.date_of_birth')}}</th>
                                     <th>{{trans('student.contact_number')}}</th>
                                     <th>{{trans('academic.course')}}</th>
