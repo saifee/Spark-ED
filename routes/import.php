@@ -27,8 +27,8 @@ Route::post('/secret/data/importer/books', function (\Illuminate\Http\Request $r
             'book_publisher_id' => \App\Models\Configuration\Library\BookPublisher::firstOrCreate(['name'=>isset($line[7]) && filled($line[7]) ? $line[7] : '—'])->id,
             'page' => isset($line[5]) && filled($line[5]) && is_numeric($line[5]) ? $line[5] : 0,
             'price' => isset($line[6]) && filled($line[6]) ? $line[6] : 0,
-            'type' => isset($line[9]) && filled($line[9]) ? $line[9] : 0,
-            'description' => isset($line[10]) && filled($line[10]) ? $line[10] : 0,
+            'type' => isset($line[10]) && filled($line[10]) ? $line[10] : 0,
+            'description' => isset($line[11]) && filled($line[11]) ? $line[11] : 0,
             'uuid' => \Illuminate\Support\Str::uuid(),
             'options' => array(),
         ]);
