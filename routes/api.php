@@ -127,6 +127,8 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::delete('/todo/{id}', 'Utility\TodoController@destroy');
 	Route::post('/todo/{id}/status', 'Utility\TodoController@toggleStatus');
 
+	Route::get('/activity-log', 'Utility\ActivityLogController@index');
+
 	Route::get('/email-log', 'Utility\EmailLogController@index');
 	Route::get('/email-log/{id}', 'Utility\EmailLogController@show');
 	Route::delete('/email-log/{id}', 'Utility\EmailLogController@destroy');
@@ -253,6 +255,31 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('/student/group/pdf', 'Configuration\Student\StudentGroupController@pdf');
 	Route::patch('/student/group/{id}', 'Configuration\Student\StudentGroupController@update');
 	Route::delete('/student/group/{id}', 'Configuration\Student\StudentGroupController@destroy');
+
+	Route::get('/behaviour/skill', 'Configuration\Behaviour\SkillController@index');
+	Route::get('/behaviour/skill/{id}', 'Configuration\Behaviour\SkillController@show');
+	Route::post('/behaviour/skill', 'Configuration\Behaviour\SkillController@store');
+	Route::post('/behaviour/skill/reorder', 'Configuration\Behaviour\SkillController@reorder');
+	Route::post('/behaviour/skill/print', 'Configuration\Behaviour\SkillController@print');
+	Route::post('/behaviour/skill/pdf', 'Configuration\Behaviour\SkillController@pdf');
+	Route::patch('/behaviour/skill/{id}', 'Configuration\Behaviour\SkillController@update');
+	Route::delete('/behaviour/skill/{id}', 'Configuration\Behaviour\SkillController@destroy');
+
+	Route::get('/behaviour/skill-icon', 'Configuration\Behaviour\SkillIconController@index');
+	Route::get('/behaviour/skill-icon/{id}', 'Configuration\Behaviour\SkillIconController@show');
+	Route::post('/behaviour/skill-icon', 'Configuration\Behaviour\SkillIconController@store');
+	Route::post('/behaviour/skill-icon/print', 'Configuration\Behaviour\SkillIconController@print');
+	Route::post('/behaviour/skill-icon/pdf', 'Configuration\Behaviour\SkillIconController@pdf');
+	Route::patch('/behaviour/skill-icon/{id}', 'Configuration\Behaviour\SkillIconController@update');
+	Route::delete('/behaviour/skill-icon/{id}', 'Configuration\Behaviour\SkillIconController@destroy');
+
+	Route::get('/behaviour/employee-skill', 'Configuration\Behaviour\EmployeeSkillController@index');
+	Route::get('/behaviour/employee-skill/{id}', 'Configuration\Behaviour\EmployeeSkillController@show');
+	Route::post('/behaviour/employee-skill', 'Configuration\Behaviour\EmployeeSkillController@store');
+	Route::post('/behaviour/employee-skill/print', 'Configuration\Behaviour\EmployeeSkillController@print');
+	Route::post('/behaviour/employee-skill/pdf', 'Configuration\Behaviour\EmployeeSkillController@pdf');
+	Route::patch('/behaviour/employee-skill/{id}', 'Configuration\Behaviour\EmployeeSkillController@update');
+	Route::delete('/behaviour/employee-skill/{id}', 'Configuration\Behaviour\EmployeeSkillController@destroy');
 
 	Route::get('/employee/group', 'Configuration\Employee\EmployeeGroupController@index');
 	Route::get('/employee/group/{id}', 'Configuration\Employee\EmployeeGroupController@show');
@@ -760,6 +787,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('/student/action/group', 'Student\StudentController@groupAction');
 	Route::patch('/student/{uuid}', 'Student\StudentController@update');
 	Route::patch('/student/{uuid}/user/login', 'Student\StudentController@updateUserLogin');
+	Route::patch('/student/{uuid}/wallet/status', 'Student\StudentController@updateWalletStatus');
 
 	Route::get('/student/fee/pre-requisite', 'Student\StudentRecordController@feePreRequisite');
 	Route::get('/student/record/pre-requisite', 'Student\StudentRecordController@recordPreRequisite');
@@ -767,6 +795,8 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::get('/student/{uuid}/record/{record_id}', 'Student\StudentRecordController@index');
 	Route::post('/student/{uuid}/fee/{record_id}', 'Student\StudentRecordController@store');
 	Route::get('/student/{uuid}/fee/{record_id}', 'Student\StudentRecordController@fee');
+	Route::get('/student/{uuid}/wallet/{record_id}', 'Student\StudentRecordController@wallet');
+	Route::post('/student/{uuid}/wallet_payment/{record_id}', 'Student\StudentRecordController@walletPayment');
 	Route::get('/student/{uuid}/fee/{record_id}/detail', 'Student\StudentRecordController@feeDetail');
 	Route::get('/student/{uuid}/fee/{record_id}/{fee_record_id}', 'Student\StudentRecordController@getPaymentDetail');
 	Route::post('/student/{uuid}/payment/{record_id}', 'Student\StudentRecordController@makePayment');
@@ -808,6 +838,18 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::delete('/student/{type}/photo/remove/{uuid}', 'Student\StudentController@removePhoto');
 	/*
 		     * Student Routes End
+	*/
+
+	/*
+		     * Behaviour Routes Start
+	*/
+	Route::get('/student/behaviour/pre-requisite', 'Student\BehaviourController@preRequisite');
+	Route::post('/student/behaviour', 'Student\BehaviourController@store');
+	
+	Route::get('/employee/behaviour/pre-requisite', 'Employee\BehaviourController@preRequisite');
+	Route::post('/employee/behaviour', 'Employee\BehaviourController@store');
+	/*
+		     * Behaviour Routes End
 	*/
 
 	/*
@@ -989,6 +1031,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('/employee/action/group', 'Employee\EmployeeController@groupAction');
 	Route::patch('/employee/{uuid}', 'Employee\EmployeeController@update');
 	Route::patch('/employee/{uuid}/user/login', 'Employee\EmployeeController@updateUserLogin');
+	Route::delete('/employee/{id}', 'Employee\EmployeeController@destroy');
 
 	Route::get('/employee/id-card/pre-requisite', 'Employee\EmployeeController@idCardPreRequisite');
 	
@@ -1429,6 +1472,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::get('/stock/transfer/pre-requisite', 'Inventory\StockTransferController@preRequisite');
 	Route::get('/stock/transfer', 'Inventory\StockTransferController@index');
 	Route::get('/stock/transfer/{id}', 'Inventory\StockTransferController@show');
+	Route::post('/stock/transfer/{id}/print', 'Inventory\StockTransferController@printDetail');
 	Route::post('/stock/transfer/{id}/return', 'Inventory\StockTransferController@returnItem');
 	Route::delete('/stock/transfer/{id}/return/{return_id}', 'Inventory\StockTransferController@destroyReturn');
 	Route::post('/stock/transfer', 'Inventory\StockTransferController@store');
