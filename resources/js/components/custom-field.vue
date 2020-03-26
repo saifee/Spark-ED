@@ -118,7 +118,6 @@
                     return;
                 }
 
-                console.log('test');
                 this.customFieldForm.customFields = [];
                 this.customFieldForm.customFields = this.fields.map(field => {
                     let value = field.type == 'checkbox_input' ? [] : null;
