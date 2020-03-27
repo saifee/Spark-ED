@@ -620,7 +620,7 @@ class ReportRepository
                 'fee_group'           => $student_fee_record->feeInstallment->feeAllocationGroup->feeGroup->name,
                 'total'               => $total_installment,
                 'due_date'            => $due_date,
-                'overdue'             => dateDiff($due_date, date('Y-m-d')),
+                'overdue'             => dateDiff($due_date, date('Y-m-d')) + 1,
                 'late_fee'            => $late_fee
             );
 

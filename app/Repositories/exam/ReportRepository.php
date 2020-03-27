@@ -405,8 +405,8 @@ class ReportRepository
         $observation_header = array();
         $batch->load('observation', 'observation.details', 'grade', 'grade.details');
 
-        if ($type == 'term') {
-            $observation_exam_terms = $this->getExams($batch, 'term');
+        if ($type == 'all_term' || $type == 'term_wise') {
+            $observation_exam_terms = $this->getExams($batch, $exam_term_id, null, $type);
             foreach ($observation_exam_terms as $exam_term) {
                 $include_term = 0;
                 foreach ($exam_term->exams as $exam) {
@@ -430,7 +430,7 @@ class ReportRepository
                 }
             }
         } else {
-            $observation_exams = $this->getExams($batch);
+            $observation_exams = $this->getExams($batch, null, $exam_id ? $exam_id : null, $type);
             foreach ($observation_exams as $exam) {
                 $schedule = $exam->schedules->first();
                 if ($schedule->observation_marks) {
@@ -451,6 +451,7 @@ class ReportRepository
             foreach ($observation_header as $exam) {
                 $schedule = gv($exam, 'schedule');
                 $observation_marks = $schedule->observation_marks;
+
                 if ($schedule->observation_marks) {
                     $observation_enabled = 1;
                 }
@@ -580,6 +581,10 @@ class ReportRepository
             return;
         }
 
+        if (! $grade) {
+            return;
+        }
+
         $percentage = round(formatNumber(($mark / $max_mark) * 100));
 
         $grade_detail = $grade->details->sortByDesc('min_percentage')->filter(function ($elem, $key) use ($percentage) {
@@ -599,13 +604,13 @@ class ReportRepository
      * @param  string $type
      * @return array
      */
-    private function getExams($batch, $type = null)
+    private function getExams($batch, $exam_term_id, $exam_id, $type = null)
     {
         if (! $batch->exam_observation_id) {
             return  [];
         }
 
-        if ($type == 'term') {
+        if ($type == 'all_term' || $type == 'term_wise') {
             return $this->exam_term->with([
                 'exams',
                 'exams.schedules' => function ($q1) use ($batch) {
@@ -615,14 +620,24 @@ class ReportRepository
                 $q2->whereHas('schedules', function ($q3) use ($batch) {
                     $q3->where('batch_id', $batch->id);
                 });
+            })->when($exam_term_id, function ($query, $exam_term_id) {
+                    return $query->where('id', $exam_term_id);
             })->orderBy('position', 'asc')->get();
         } else {
-            return $this->exam->whereNull('exam_term_id')->filterBySession()->with([
+            $query = $this->exam->filterBySession();
+
+            if ($type != 'exam_wise') {
+                $query->whereNull('exam_term_id');
+            }
+
+            return $query->with([
                 'schedules' => function ($q1) use ($batch) {
                     $q1->where('batch_id', $batch->id);
                 }
             ])->whereHas('schedules', function ($q2) use ($batch) {
                 $q2->where('batch_id', $batch->id);
+            })->when($exam_id, function ($query, $exam_id) {
+                    return $query->where('id', $exam_id);
             })->orderBy('position', 'asc')->get();
         }
     }

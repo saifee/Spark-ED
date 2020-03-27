@@ -78,6 +78,7 @@
   'select_event_type' => 'Select Event Type',
   'upcoming_events' => 'Upcoming Events',
   'work_anniversary' => 'Work Anniversary',
+  'work_anniversary_short' => 'Work Anniv..',
   'work_anniversary_between' => 'Work Anniversary between :start_date to :end_date',
   'work_anniversary_module_description' => 'Get all work anniversaries of your employees at one place, filter by dates, take print out',
   'work_anniversary_module_title' => 'Listing all Work Anniversaries here!',

@@ -926,7 +926,7 @@ class EmployeeRepository {
 			$q->role(config('system.default_role.admin'));
 		})->get()->pluck('id')->all();
 
-		return $this->employee->select('id', 'uuid', 'first_name', 'middle_name', 'last_name', 'code', 'contact_number','date_of_birth','prefix', 'gender')
+		return $this->employee->select('id', 'uuid', 'first_name', 'middle_name', 'last_name', 'code', 'contact_number','date_of_birth','prefix', 'gender', 'photo')
 			->with('employeeTerms:id,employee_id,date_of_joining,date_of_leaving', 'employeeDesignations:id,employee_id,designation_id,date_effective,date_end', 'employeeDesignations.designation:id,name,employee_category_id', 'employeeDesignations.designation.employeeCategory:id,name')
 			->whereNotIn('id', $system_admins)
 			->whereIn('id', $this->getAccessibleEmployeeId())

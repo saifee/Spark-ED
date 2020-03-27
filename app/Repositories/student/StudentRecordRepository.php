@@ -1320,11 +1320,11 @@ class StudentRecordRepository {
 			return [];
 		}
 
-		$query = $this->student_record->select('id', 'student_id', 'batch_id', 'admission_id')
+		$query = $this->student_record->select('id', 'student_id', 'batch_id', 'admission_id', 'roll_number')
 			->with([
-				'student:id,uuid,student_parent_id,first_name,middle_name,last_name,contact_number,date_of_birth,gender',
+				'student:id,uuid,student_parent_id,first_name,middle_name,last_name,contact_number,date_of_birth,gender,student_photo',
 				'student.parent:id,first_guardian_name',
-				'batch:id,course_id,name',
+				'batch:id,course_id,name,options',
 				'batch.course:id,name',
 				'admission:id,number,prefix',
 			])->where(function ($q1) use ($q) {
