@@ -105,7 +105,7 @@ export default [
     },
     {
         path: '/student/behaviour/story',
-        component: () => import(/* webpackChunkName: "js/student/behaviour/story" */ '@views/student/behaviour/story')
+        component: () => import(/* webpackChunkName: "js/student/behaviour/story/index" */ '@views/student/behaviour/story/index')
     },
     {
         path: '/student/behaviour/messages',
