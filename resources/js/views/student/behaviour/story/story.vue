@@ -134,9 +134,15 @@
     </v-card-actions>
     <v-expand-transition>
       <div v-show="show">
-        <template v-for="comment in comments">
-          <v-divider class="my-0" />
-          <v-list-item dense>
+        <template v-for="(comment, i) in comments">
+          <v-divider
+            :key="`commentDivider${comment.id}_${i}`"
+            class="my-0"
+          />
+          <v-list-item
+            :key="`commentListItem${comment.id}_${i}`"
+            dense
+          >
             <v-list-item-avatar color="grey lighten-1 white--text">
               <i class="fas fa-user fa-fw" />
             </v-list-item-avatar>
