@@ -81,6 +81,9 @@
               this.store();
             },
             store(){
+                if (this.storyForm.type === '') {
+                  this.storyForm.type = 'text'
+                }
                 let loader = this.$loading.show();
                 this.storyForm.post('/api/behaviour/stories')
                     .then(response => {
