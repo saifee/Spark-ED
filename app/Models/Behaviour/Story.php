@@ -59,7 +59,7 @@ class Story extends Model
 
     public function scopeInfo($q)
     {
-        return $q->with(['batch.course', 'user.employee', 'user.student', 'user.parent']);
+        return $q->with(['batch:id,course_id,name', 'batch.course:id,name', 'user:id', 'user.employee:user_id,first_name,middle_name,last_name', 'user.student:user_id,first_name,middle_name,last_name', 'user.parent:user_id,first_guardian_name']);
     }
     
     public function scopeFilterByUuid($q, $uuid)
