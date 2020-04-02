@@ -202,6 +202,7 @@
               axios.get(`/api/behaviour/stories/${this.story.id}/comments`)
                   .then(response => {
                       this.comments = response
+                      this.$set(this.story, 'comments_count', response.length);
                   })
                   .catch(error => {
                       helper.showErrorMsg(error);
