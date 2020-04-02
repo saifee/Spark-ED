@@ -79,9 +79,8 @@
     <v-card-actions>
       <v-btn
         outlined
-        color="primary"
+        :color="likeColor"
         small
-        v-bind:class="{ 'red--text': liked }"
         @click="likeStory"
       >
         <v-icon
@@ -179,6 +178,11 @@
           liked: false,
           comments: [],
         }),
+        computed: {
+            likeColor(){
+                return this.liked ? 'danger' : 'primary'
+            }
+        },
         watch: {
           show(val) {
             val && this.getStoryComments()
