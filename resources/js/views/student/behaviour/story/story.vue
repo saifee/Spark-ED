@@ -19,7 +19,7 @@
           align="center"
           justify="end"
         >
-          <span class="subheading">{{ story.created_at }}</span>
+          <span class="subheading">{{ getStoryTime(story.created_at) }}</span>
         </v-row>
       </v-list-item>
       <v-row>
@@ -175,6 +175,9 @@
         mounted(){
         },
         methods: {
+          getStoryTime(createdAt) {
+            return moment(createdAt).fromNow()
+          },
         },
     }
 </script>
