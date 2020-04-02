@@ -81,7 +81,8 @@
         outlined
         color="primary"
         small
-        @click=""
+        v-bind:class="{ 'red--text': liked }"
+        @click="likeStory"
       >
         <v-icon
           left
@@ -134,14 +135,18 @@
     </v-card-actions>
     <v-expand-transition>
       <div v-show="show">
-        <template v-for="comment in story.comments">
+        <template v-for="comment in comments">
           <v-divider class="my-0" />
           <v-list-item dense>
             <v-list-item-avatar color="grey lighten-1 white--text">
               <i class="fas fa-user fa-fw" />
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>{{ comment.user.name }}</v-list-item-title>
+              <v-list-item-title>
+                <span v-if="comment.user.employee">{{ comment.user.employee.name }}</span>
+                <span v-if="comment.user.student">{{ comment.user.student.name }}</span>
+                <span v-if="comment.user.parent">{{ comment.user.parent.name }}</span>
+              </v-list-item-title>
               <v-list-item-subtitle>{{ comment.content }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -152,13 +157,7 @@
             <i class="fas fa-user fa-fw" />
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-text-field
-              :label="trans('story.write_a_comment')"
-              type="text"
-              outlined
-              dense
-              hide-details
-            />
+            <comment-form :story-id="story.id" @completed="getStoryComments" />
           </v-list-item-content>
         </v-list-item>
       </div>
@@ -167,16 +166,48 @@
 </template>
 
 <script>
+    import commentForm from './comment-form'
+
     export default {
+        components : { commentForm, },
         props: ['story'],
         data: () => ({
           show: false,
+          liked: false,
+          comments: [],
         }),
         mounted(){
+        },
+        watch: {
+          show(val) {
+            val && this.getStoryComments()
+          },
         },
         methods: {
           getStoryTime(createdAt) {
             return moment(createdAt).fromNow()
+          },
+          getStoryComments() {
+              axios.get(`/api/behaviour/stories/${this.story.id}/comments`)
+                  .then(response => {
+                      this.comments = response
+                  })
+                  .catch(error => {
+                      helper.showErrorMsg(error);
+                  });
+          },
+          likeStory() {
+              if (this.liked) {
+                return
+              }
+              axios.post(`/api/behaviour/stories/${this.story.id}/likes`)
+                  .then(response => {
+                      this.$set(this.story, 'likes_count', +response);
+                      this.liked = true
+                  })
+                  .catch(error => {
+                      helper.showErrorMsg(error);
+                  });
           },
         },
     }
