@@ -126,7 +126,7 @@
           <v-list-item @click="">
             <v-list-item-title>{{ trans('general.edit') }}</v-list-item-title>
           </v-list-item>
-          <v-list-item @click="">
+          <v-list-item v-confirm="{ok: confirmDelete()}">
             <v-list-item-title>{{ trans('general.delete') }}</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -227,6 +227,22 @@
                           helper.showErrorMsg(error);
                       });
               }
+          },
+          confirmDelete(){
+              return dialog => this.deleteStory();
+          },
+          deleteStory() {
+              let loader = this.$loading.show();
+              axios.delete(`/api/behaviour/stories/${this.story.id}`)
+                  .then(response => {
+                        toastr.success(response.message);
+                        this.$emit('deleted');
+                        loader.hide();
+                  })
+                  .catch(error => {
+                        loader.hide();
+                        helper.showErrorMsg(error);
+                  });
           },
         },
     }

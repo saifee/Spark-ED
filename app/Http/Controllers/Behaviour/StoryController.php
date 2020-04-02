@@ -101,6 +101,8 @@ class StoryController extends Controller
      */
     public function destroy(Story $story)
     {
-        //
+        $story->delete();
+
+        return $this->success(['message' => trans('story.story_deleted')]);
     }
 }

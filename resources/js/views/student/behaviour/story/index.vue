@@ -36,6 +36,7 @@
             <story-template
               :key="`story${story.id}_${i}`"
               :story="story"
+              @deleted="getStories"
             />
           </template>
         </v-col>
