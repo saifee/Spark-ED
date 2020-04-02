@@ -82,7 +82,7 @@
             },
             store(){
                 let loader = this.$loading.show();
-                this.storyForm.post('/api/behaviour/story')
+                this.storyForm.post('/api/behaviour/stories')
                     .then(response => {
                         toastr.success(response.message);
                         this.$emit('completed');

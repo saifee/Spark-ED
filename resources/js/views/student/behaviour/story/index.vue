@@ -80,7 +80,7 @@
                     page = 1;
                 }
                 let url = helper.getFilterURL(this.filter);
-                axios.get('/api/behaviour/story?page=' + page + url)
+                axios.get('/api/behaviour/stories?page=' + page + url)
                     .then(response => {
                         this.stories = response;
                         loader.hide();
