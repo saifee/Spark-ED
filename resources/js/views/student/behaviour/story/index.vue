@@ -27,7 +27,10 @@
           cols="5"
           offset="2"
         >
-          <story-form class="mb-4" @completed="getStories" />
+          <story-form
+            class="mb-4"
+            @completed="getStories"
+          />
 
           <template v-for="story in stories.data">
             <story-template :story="story" />
