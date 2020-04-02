@@ -209,7 +209,14 @@
           },
           toggleLike() {
               if (this.liked) {
-                return
+                  axios.delete(`/api/behaviour/stories/${this.story.id}/likes/x`)
+                      .then(response => {
+                          this.$set(this.story, 'likes_count', +response);
+                          this.liked = false
+                      })
+                      .catch(error => {
+                          helper.showErrorMsg(error);
+                      });
               } else {
                   axios.post(`/api/behaviour/stories/${this.story.id}/likes`)
                       .then(response => {
