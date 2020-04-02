@@ -81,7 +81,7 @@
         outlined
         :color="likeColor"
         small
-        @click="likeStory"
+        @click="toggleLike"
       >
         <v-icon
           left
@@ -207,18 +207,19 @@
                       helper.showErrorMsg(error);
                   });
           },
-          likeStory() {
+          toggleLike() {
               if (this.liked) {
                 return
+              } else {
+                  axios.post(`/api/behaviour/stories/${this.story.id}/likes`)
+                      .then(response => {
+                          this.$set(this.story, 'likes_count', +response);
+                          this.liked = true
+                      })
+                      .catch(error => {
+                          helper.showErrorMsg(error);
+                      });
               }
-              axios.post(`/api/behaviour/stories/${this.story.id}/likes`)
-                  .then(response => {
-                      this.$set(this.story, 'likes_count', +response);
-                      this.liked = true
-                  })
-                  .catch(error => {
-                      helper.showErrorMsg(error);
-                  });
           },
         },
     }
