@@ -17,6 +17,7 @@ class CommentController extends Controller
      */
     public function index(Story $story)
     {
+        $story->comments->load(['user:id', 'user.employee:user_id,first_name,middle_name,last_name', 'user.student:user_id,first_name,middle_name,last_name', 'user.parent:user_id,first_guardian_name']);
         return $story->comments;
     }
 
@@ -40,7 +41,12 @@ class CommentController extends Controller
      */
     public function store(Request $request, Story $story)
     {
-        //
+        $story->comments()->create([
+            'user_id' => auth()->user()->id, 
+            'content' => $request->input('content'),
+        ]);
+        $story->increment('comments_count');
+        return $story->comments_count;
     }
 
     /**
