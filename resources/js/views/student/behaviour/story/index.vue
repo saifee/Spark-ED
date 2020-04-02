@@ -32,8 +32,11 @@
             @completed="getStories"
           />
 
-          <template v-for="story in stories.data">
-            <story-template :story="story" />
+          <template v-for="(story, i) in stories.data">
+            <story-template
+              :key="`story${story.id}_${i}`"
+              :story="story"
+            />
           </template>
         </v-col>
         <v-col cols="3">
