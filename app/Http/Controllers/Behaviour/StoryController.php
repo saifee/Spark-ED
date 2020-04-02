@@ -17,7 +17,14 @@ class StoryController extends Controller
      */
     public function index()
     {
-        return Story::info()->paginate();
+        $query = Story::query();
+        $query = $query->info();
+
+        $sort_by = request()->input('sort_by', 'id');
+        $order   = request()->input('order', 'asc');
+
+        $query = $query->orderBy($sort_by, $order);
+        return $query->paginate();
     }
 
     /**
