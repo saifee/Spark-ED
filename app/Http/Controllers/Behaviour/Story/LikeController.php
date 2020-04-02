@@ -92,8 +92,12 @@ class LikeController extends Controller
      * @param  \App\Models\Behaviour\Story\Like  $like
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Story $story, Like $like)
+    public function destroy(Story $story, $id)
     {
-        //
+        $deleted = $story->likes()->where('user_id', auth()->user()->id)->delete();
+        if ($deleted) {
+            $story->decrement('likes_count');
+        }
+        return $story->likes_count;
     }
 }
