@@ -157,7 +157,10 @@
             <i class="fas fa-user fa-fw" />
           </v-list-item-avatar>
           <v-list-item-content>
-            <comment-form :story-id="story.id" @completed="getStoryComments" />
+            <comment-form
+              :story-id="story.id"
+              @completed="getStoryComments"
+            />
           </v-list-item-content>
         </v-list-item>
       </div>
@@ -176,8 +179,6 @@
           liked: false,
           comments: [],
         }),
-        mounted(){
-        },
         watch: {
           show(val) {
             val && this.getStoryComments()
