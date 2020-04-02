@@ -56,7 +56,7 @@
         },
         data:() => ({
             filter: {
-                sort_by: 'created_at',
+                sort_by: 'id',
                 order: 'desc',
                 page_length: helper.getConfig('page_length')
             },
