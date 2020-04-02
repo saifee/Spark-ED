@@ -19,7 +19,6 @@ class CreateLikesTable extends Migration
             $table->foreign('story_id')->references('id')->on('stories')->onDelete('cascade');
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->text('options')->nullable();
             $table->timestamps();
         });
     }
