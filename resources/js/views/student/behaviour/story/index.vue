@@ -44,7 +44,9 @@
             <v-card-text>
               <v-row>
                 <v-col cols="12">
-                  <p class="text-center grey--text">No stories yet.</p>
+                  <p class="text-center grey--text">
+                    No stories yet.
+                  </p>
                 </v-col>
               </v-row>
             </v-card-text>
