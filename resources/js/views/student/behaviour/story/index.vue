@@ -51,6 +51,17 @@
               </v-row>
             </v-card-text>
           </v-card>
+
+          <v-card
+            v-if="filter.current_page && filter.current_page !== filter.last_page"
+            v-intersect.quiet="onIntersect"
+          >
+            <v-card-text class="text-center">
+              <v-icon class="grey--text">
+                more_horiz
+              </v-icon>
+            </v-card-text>
+          </v-card>
         </v-col>
         <v-col cols="3">
           <v-card class="mb-4">
@@ -101,7 +112,13 @@
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/behaviour/stories?page=' + page + url)
                     .then(response => {
+                        this.filter.current_page = response.current_page
+                        this.filter.last_page = response.last_page
+                        if (response.current_page > 1) {
+                            this.stories.data.push.apply(this.stories.data, response.data)
+                        } else {
                         this.stories = response;
+                        }
                         loader.hide();
                     })
                     .catch(error => {
@@ -117,6 +134,9 @@
             },
             getConfig(config){
                 return helper.getConfig(config);
+            },
+            onIntersect (entries, observer, isIntersecting) {
+                isIntersecting && this.getStories(this.filter.current_page+1)
             },
         },
     }
