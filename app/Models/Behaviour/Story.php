@@ -22,6 +22,7 @@ class Story extends Model
                             'options',
                         ];
     protected $casts = ['options' => 'array'];
+    protected $appends = ['liked'];
     protected static $logName = 'story';
     protected static $logFillable = true;
     protected static $logOnlyDirty = true;
@@ -55,6 +56,11 @@ class Story extends Model
     public function getOption(string $option)
     {
         return array_get($this->options, $option);
+    }
+
+    public function getLikedAttribute()
+    {
+        return filled($this->likes()->where('user_id', auth()->user()->id)->first()) ? true : false;
     }
 
     public function scopeInfo($q)
