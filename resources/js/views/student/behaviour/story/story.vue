@@ -89,7 +89,8 @@
         >
           favorite_border
         </v-icon>
-        {{ trans('story.like') }}
+        <span v-if="!liked">{{ trans('story.like') }}</span>
+        <span v-else>{{ trans('story.liked') }}</span>
       </v-btn>
       <v-btn
         outlined
