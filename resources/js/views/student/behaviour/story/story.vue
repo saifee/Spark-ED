@@ -89,7 +89,7 @@
         >
           favorite_border
         </v-icon>
-        <span v-if="!liked">{{ trans('story.like') }}</span>
+        <span v-if="!story.liked">{{ trans('story.like') }}</span>
         <span v-else>{{ trans('story.liked') }}</span>
       </v-btn>
       <v-btn
@@ -182,12 +182,11 @@
         props: ['story'],
         data: () => ({
           show: false,
-          liked: false,
           comments: [],
         }),
         computed: {
             likeColor(){
-                return this.liked ? 'red' : 'primary'
+                return this.story.liked ? 'red' : 'primary'
             }
         },
         watch: {
@@ -210,11 +209,11 @@
                   });
           },
           toggleLike() {
-              if (this.liked) {
+              if (this.story.liked) {
                   axios.delete(`/api/behaviour/stories/${this.story.id}/likes/x`)
                       .then(response => {
                           this.$set(this.story, 'likes_count', +response);
-                          this.liked = false
+                          this.$set(this.story, 'liked', false);
                       })
                       .catch(error => {
                           helper.showErrorMsg(error);
@@ -223,7 +222,7 @@
                   axios.post(`/api/behaviour/stories/${this.story.id}/likes`)
                       .then(response => {
                           this.$set(this.story, 'likes_count', +response);
-                          this.liked = true
+                          this.$set(this.story, 'liked', true);
                       })
                       .catch(error => {
                           helper.showErrorMsg(error);
