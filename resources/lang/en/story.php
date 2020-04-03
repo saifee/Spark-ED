@@ -1,6 +1,7 @@
 <?php return array (
   'comment' => 'Comment',
   'like' => 'Like',
+  'liked' => 'Liked',
   'no_upcoming_events' => 'No upcoming events',
   'photo' => 'Photo',
   'story_added' => 'Story Added',
