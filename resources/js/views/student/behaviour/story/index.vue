@@ -39,6 +39,16 @@
               @deleted="getStories"
             />
           </template>
+
+          <v-card v-if="stories.total == 0">
+            <v-card-text>
+              <v-row>
+                <v-col cols="12">
+                  <p class="text-center grey--text">No stories yet.</p>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
         </v-col>
         <v-col cols="3">
           <v-card class="mb-4">
