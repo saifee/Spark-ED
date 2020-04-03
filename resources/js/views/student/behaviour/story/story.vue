@@ -187,7 +187,7 @@
         }),
         computed: {
             likeColor(){
-                return this.liked ? 'danger' : 'primary'
+                return this.liked ? 'red' : 'primary'
             }
         },
         watch: {
