@@ -103,9 +103,18 @@
                     :key="`message${i}`"
                     :class="{ 'd-flex flex-row-reverse': msg.me }"
                   >
-                    <v-chip>
-                      {{ msg.content }}
-                    </v-chip>
+                    <v-tooltip bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-chip
+                          :color="msg.me ? 'primary' : ''"
+                          dark
+                          v-on="on"
+                        >
+                          {{ msg.content }}
+                        </v-chip>
+                      </template>
+                      <span>11:11 PM</span>
+                    </v-tooltip>
                   </v-list-item>
                 </template>
                 <module-info
