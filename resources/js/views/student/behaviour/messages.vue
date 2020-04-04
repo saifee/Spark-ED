@@ -167,6 +167,7 @@
             sendMessage(){
                 this.parent.messages.push({
                     content: this.message,
+                    timestamp: moment().format('LT'),
                     me: true,
                 })
                 this.message = ''
