@@ -103,18 +103,37 @@
                     :key="`message${i}`"
                     :class="{ 'd-flex flex-row-reverse': msg.me }"
                   >
-                    <v-tooltip bottom>
+                    <v-menu offset-y>
                       <template v-slot:activator="{ on }">
-                        <v-chip
-                          :color="msg.me ? 'primary' : ''"
-                          dark
-                          v-on="on"
+                        <v-hover
+                          v-slot:default="{ hover }"
                         >
-                          {{ msg.content }}
-                        </v-chip>
+                          <v-chip
+                            :color="msg.me ? 'primary' : ''"
+                            dark
+                            style="height:auto;white-space: normal;"
+                            class="pa-4 mb-2"
+                            v-on="on"
+                          >
+                            {{ msg.content }}
+                            <sub
+                              style="font-size: 0.5rem;"
+                            >{{ msg.timestamp }}</sub>
+                            <v-icon
+                              v-if="hover"
+                              small
+                            >
+                              expand_more
+                            </v-icon>
+                          </v-chip>
+                        </v-hover>
                       </template>
-                      <span>11:11 PM</span>
-                    </v-tooltip>
+                      <v-list>
+                        <v-list-item v-confirm="{ok: confirmDelete()}">
+                          <v-list-item-title>{{ trans('general.delete') }}</v-list-item-title>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
                   </v-list-item>
                 </template>
                 <module-info
@@ -200,6 +219,8 @@
                         helper.showErrorMsg(error);
                     });
             },
+          confirmDelete(){
+          },
             hasPermission(permission){
                 return helper.hasPermission(permission);
             },
