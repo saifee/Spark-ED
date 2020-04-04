@@ -108,9 +108,15 @@
                     </v-chip>
                   </v-list-item>
                 </template>
+                <module-info
+                  v-if="!parent.messages.length"
+                  module="messages"
+                  description="no_messages_yet"
+                  icon="list"
+                />
                 <v-text-field
                   v-model="message"
-                  label="Type a message"
+                  :label="trans('messages.type_a_message')"
                   type="text"
                   no-details
                   outlined
