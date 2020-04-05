@@ -24,6 +24,7 @@ class StoryController extends Controller
         $order   = request()->input('order', 'asc');
 
         $query = $query->orderBy($sort_by, $order);
+        $query = $query->where('batch_id', request()->input('batch_id'));
         return $query->paginate();
     }
 
