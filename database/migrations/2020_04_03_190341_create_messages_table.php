@@ -15,10 +15,10 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('employee_id')->unsigned()->nullable();
-            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
-            $table->bigInteger('student_parent_id')->unsigned()->nullable();
-            $table->foreign('student_parent_id')->references('id')->on('student_parents')->onDelete('cascade');
+            $table->bigInteger('sender_id')->unsigned()->nullable();
+            $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
+            $table->bigInteger('receiver_id')->unsigned()->nullable();
+            $table->foreign('receiver_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('student_record_id')->unsigned()->nullable();
             $table->foreign('student_record_id')->references('id')->on('students')->onDelete('cascade');
             $table->text('content')->nullable();
@@ -37,8 +37,8 @@ class CreateMessagesTable extends Migration
     {
         Schema::table('messages', function(Blueprint $table)
         {
-            $table->dropForeign('messages_employee_id_foreign');
-            $table->dropForeign('messages_student_parent_id_foreign');
+            $table->dropForeign('messages_sender_id_foreign');
+            $table->dropForeign('messages_receiver_id_foreign');
             $table->dropForeign('messages_student_record_id_foreign');
         });
 

@@ -10,10 +10,9 @@ class Message extends Model
     use SoftDeletes;
 
     protected $fillable = [
-                            'employee_id',
-                            'student_parent_id',
-                            'messages_student_id_foreign',
-                            'messages_batch_id_foreign',
+                            'sender_id',
+                            'receiver_id',
+                            'student_record_id',
                             'content',
                             'read_at',
                         ];
