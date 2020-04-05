@@ -48,7 +48,7 @@ class StoryController extends Controller
         Story::create([
             'uuid'                => Str::uuid(),
             'academic_session_id' => config('config.default_academic_session.id'),
-            'batch_id'            => Batch::all()->random()->id,
+            'batch_id'            => $request->input('batch_id'),
             'type'                => $request->input('type'),
             'content'             => $request->input('content'),
             'attachment'          => $request->has('attachment') ? null : null,
