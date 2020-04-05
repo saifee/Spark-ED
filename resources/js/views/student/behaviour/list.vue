@@ -295,6 +295,8 @@
                 this.$router.push('/dashboard');
             }
 
+            this.filter.batch_id.push(this.$route.params.batch_id)
+
             this.getStudents();
             helper.showDemoNotification(['student_admission']);
         },
