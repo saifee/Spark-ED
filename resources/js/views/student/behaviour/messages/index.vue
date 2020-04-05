@@ -137,7 +137,7 @@
                   </v-list-item>
                 </template>
                 <module-info
-                  v-if="!parent.messages.length"
+                  v-if="parent.messages.total == 0"
                   module="messages"
                   description="no_messages_yet"
                   icon="list"
