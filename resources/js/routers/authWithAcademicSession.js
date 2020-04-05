@@ -109,7 +109,7 @@ export default [
     },
     {
         path: '/student/behaviour/messages',
-        component: () => import(/* webpackChunkName: "js/student/behaviour/messages" */ '@views/student/behaviour/messages')
+        component: () => import(/* webpackChunkName: "js/student/behaviour/messages/index" */ '@views/student/behaviour/messages/index')
     },
     {
         path: '/student/roll/number',
