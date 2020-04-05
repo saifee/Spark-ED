@@ -11,11 +11,11 @@
         <div class="col-12 col-sm-6">
           <div class="action-buttons pull-right">
             <button
-              v-tooltip="trans('behaviour.behaviour')"
+              v-tooltip="trans('behaviour.classroom')"
               class="btn btn-info btn-sm"
               @click="$router.push(`/student/behaviour/${$route.params.batch_id}`)"
             >
-              <i class="fas fa-gem" /> <span class="d-none d-sm-inline">{{ trans('behaviour.behaviour') }}</span>
+              <i class="fas fa-gem" /> <span class="d-none d-sm-inline">{{ trans('behaviour.classroom') }}</span>
             </button>
           </div>
         </div>

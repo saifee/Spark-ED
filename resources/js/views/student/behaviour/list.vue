@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-12 col-sm-6">
                     <v-btn icon @click="$router.push('/student/behaviour')"><v-icon>arrow_back</v-icon></v-btn>
-                    <h3 class="text-themecolor d-inline-block">{{trans('behaviour.behaviour')}}
+                    <h3 class="text-themecolor d-inline-block">{{trans('behaviour.classroom')}}
                         <span class="card-subtitle d-none d-sm-inline" v-if="students.total">{{trans('general.total_result_found',{count : students.total, from: students.from, to: students.to})}}</span>
                         <span class="card-subtitle d-none d-sm-inline" v-else>{{trans('general.no_result_found')}}</span>
                     </h3>

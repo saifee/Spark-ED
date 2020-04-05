@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 col-sm-6">
           <h3 class="text-themecolor">
-            {{ trans('academic.batch') }}
+            {{ trans('behaviour.behaviour') }}
             <span
               v-if="batches.total"
               class="card-subtitle d-none d-sm-inline"
