@@ -109,10 +109,11 @@
                 <module-info
                   v-if="parent.messages.total == 0"
                   module="messages"
-                  description="no_messages_yet"
+                  :description="parent.receiver_id ? 'no_messages_yet' : 'parent_account_not_activated'"
                   icon="list"
                 />
                 <message-form
+                  v-if="parent.receiver_id"
                   :receiver-id="parent.receiver_id"
                   :student-record-id="parent.student_record_id"
                   @completed="getMessages"
@@ -172,7 +173,7 @@
                         let parents = []
                         students.data.forEach(student => {
                             parents.push({
-                                receiver_id: 2,
+                                receiver_id: student.student.parent.user_id,
                                 student_record_id: student.id,
                                 student_name: student.student.name,
                                 student_parent_id: student.student.parent.id,
@@ -195,6 +196,9 @@
             },
             getMessages(page){
                 if (!this.activeChat) {
+                  return
+                }
+                if (!this.parent.receiver_id) {
                   return
                 }
                 let loader = this.$loading.show();
