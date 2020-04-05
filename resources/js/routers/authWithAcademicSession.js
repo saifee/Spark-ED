@@ -104,6 +104,10 @@ export default [
         component: () => import(/* webpackChunkName: "js/student/behaviour/index" */ '@views/student/behaviour/index')
     },
     {
+        path: '/student/behaviour/:batch_id',
+        component: () => import(/* webpackChunkName: "js/student/behaviour/list" */ '@views/student/behaviour/list')
+    },
+    {
         path: '/student/behaviour/story',
         component: () => import(/* webpackChunkName: "js/student/behaviour/story/index" */ '@views/student/behaviour/story/index')
     },

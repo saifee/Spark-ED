@@ -10,8 +10,8 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
-                        <button class="btn btn-info btn-sm" @click="$router.push('/student/behaviour/story')" v-tooltip="trans('behaviour.class_story')"><i class="fas fa-quote-right"></i> <span class="d-none d-sm-inline">{{trans('behaviour.class_story')}}</span></button>
-                        <button class="btn btn-info btn-sm" @click="$router.push('/student/behaviour/messages')" v-tooltip="trans('behaviour.messages')"><i class="fas fa-comment"></i> <span class="d-none d-sm-inline">{{trans('behaviour.messages')}}</span></button>
+                        <button class="btn btn-info btn-sm" @click="$router.push('/student/behaviour/x/story')" v-tooltip="trans('behaviour.class_story')"><i class="fas fa-quote-right"></i> <span class="d-none d-sm-inline">{{trans('behaviour.class_story')}}</span></button>
+                        <button class="btn btn-info btn-sm" @click="$router.push('/student/behaviour/x/messages')" v-tooltip="trans('behaviour.messages')"><i class="fas fa-comment"></i> <span class="d-none d-sm-inline">{{trans('behaviour.messages')}}</span></button>
                         <template v-if="hasNotAnyRole(['student','parent'])">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-info btn-sm dropdown-toggle no-caret " role="menu" id="moreOption" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-tooltip="trans('general.more_option')">
