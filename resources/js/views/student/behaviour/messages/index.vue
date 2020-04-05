@@ -201,7 +201,7 @@
                     page = 1;
                 }
                 let url = helper.getFilterURL(this.filter)
-                axios.get('/api/behaviour/stories?page=' + page + url)
+                axios.get('/api/student?page=' + page + url)
                     .then(response => {
                         let students = response.student_records
                         let parents = []
