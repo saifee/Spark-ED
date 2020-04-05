@@ -86,6 +86,7 @@
         },
         data:() => ({
             filter: {
+                batch_id: null,
                 sort_by: 'id',
                 order: 'desc',
                 page_length: helper.getConfig('page_length')
@@ -101,6 +102,7 @@
             }
         },
         mounted(){
+            this.filter.batch_id = this.$route.params.batch_id
             this.getStories();
         },
         methods: {
