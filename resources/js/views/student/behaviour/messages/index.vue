@@ -180,6 +180,7 @@
             },
         },
         mounted(){
+            this.filter.batch_id = this.$route.params.batch_id
             this.getStudents()
         },
         methods: {
