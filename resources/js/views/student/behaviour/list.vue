@@ -3,15 +3,16 @@
         <div class="page-titles">
             <div class="row">
                 <div class="col-12 col-sm-6">
-                    <h3 class="text-themecolor">{{trans('behaviour.behaviour')}}
+                    <v-btn icon @click="$router.push('/student/behaviour')"><v-icon>arrow_back</v-icon></v-btn>
+                    <h3 class="text-themecolor d-inline-block">{{trans('behaviour.behaviour')}}
                         <span class="card-subtitle d-none d-sm-inline" v-if="students.total">{{trans('general.total_result_found',{count : students.total, from: students.from, to: students.to})}}</span>
                         <span class="card-subtitle d-none d-sm-inline" v-else>{{trans('general.no_result_found')}}</span>
                     </h3>
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
-                        <button class="btn btn-info btn-sm" @click="$router.push('/student/behaviour/x/story')" v-tooltip="trans('behaviour.class_story')"><i class="fas fa-quote-right"></i> <span class="d-none d-sm-inline">{{trans('behaviour.class_story')}}</span></button>
-                        <button class="btn btn-info btn-sm" @click="$router.push('/student/behaviour/x/messages')" v-tooltip="trans('behaviour.messages')"><i class="fas fa-comment"></i> <span class="d-none d-sm-inline">{{trans('behaviour.messages')}}</span></button>
+                        <button class="btn btn-info btn-sm" @click="$router.push(`/student/behaviour/${$route.params.batch_id}/story`)" v-tooltip="trans('behaviour.class_story')"><i class="fas fa-quote-right"></i> <span class="d-none d-sm-inline">{{trans('behaviour.class_story')}}</span></button>
+                        <button class="btn btn-info btn-sm" @click="$router.push(`/student/behaviour/${$route.params.batch_id}/messages`)" v-tooltip="trans('behaviour.messages')"><i class="fas fa-comment"></i> <span class="d-none d-sm-inline">{{trans('behaviour.messages')}}</span></button>
                         <template v-if="hasNotAnyRole(['student','parent'])">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-info btn-sm dropdown-toggle no-caret " role="menu" id="moreOption" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-tooltip="trans('general.more_option')">
