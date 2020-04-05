@@ -77,6 +77,7 @@
           }),
         }),
         mounted(){
+          this.storyForm.batch_id = this.$route.params.batch_id
         },
         methods: {
             proceed(){
