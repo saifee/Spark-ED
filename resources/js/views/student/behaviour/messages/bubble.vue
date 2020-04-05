@@ -1,5 +1,5 @@
 <template>
-  <v-list-item
+  <div
     :class="{ 'd-flex flex-row-reverse': message.receiver_id === parent.receiver_id }"
   >
     <v-menu offset-y>
@@ -35,7 +35,7 @@
         </v-list-item>
       </v-list>
     </v-menu>
-  </v-list-item>
+  </div>
 </template>
 
 <script>
