@@ -177,8 +177,8 @@
                                 student_record_id: student.id,
                                 student_name: student.student.name,
                                 student_parent_id: student.student.parent.id,
-                                title: student.student.parent.first_guardian_name,
-                                relation: student.student.parent.first_guardian_relation,
+                                title: helper.hasRole('parent') ? student.batch.class_teachers[0].employee.name : student.student.parent.first_guardian_name,
+                                relation: helper.hasRole('parent') ? 'teacher' : student.student.parent.first_guardian_relation,
                                 active: false,
                                 messages: {
                                   total: 0,
