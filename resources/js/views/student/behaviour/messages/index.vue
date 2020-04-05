@@ -98,7 +98,7 @@
               <v-card-subtitle>{{ parent.student_name }} {{ parent.relation }}</v-card-subtitle>
               <v-divider class="my-0" />
               <v-card-text class="flex-grow-1 fill-height">
-                <template v-for="(msg, i) in parent.messages">
+                <template v-for="(msg, i) in parent.messages.data">
                   <v-list-item
                     :key="`message${i}`"
                     :class="{ 'd-flex flex-row-reverse': msg.me }"
@@ -182,6 +182,11 @@
                 return helper.getAuthToken();
             },
         },
+        watch:{
+            activeChat(val){
+              val && this.getMessages()
+            },
+        },
         mounted(){
             this.filter.batch_id = this.$route.params.batch_id
             this.getStudents()
@@ -213,7 +218,10 @@
                                 title: student.student.parent.first_guardian_name,
                                 relation: student.student.parent.first_guardian_relation,
                                 active: false,
-                                messages: [],
+                                messages: {
+                                  total: 0,
+                                  data: [],
+                                },
                             });
                         })
                         this.parents = parents
@@ -226,6 +234,27 @@
             },
           confirmDelete(){
           },
+            getMessages(page){
+                if (!this.activeChat) {
+                  return
+                }
+                let loader = this.$loading.show();
+                if (typeof page !== 'number') {
+                    page = 1;
+                }
+                let url = helper.getFilterURL({
+                  student_record_id: this.parent.student_record_id,
+                })
+                axios.get(`/api/behaviour/messages?page=${page}${url}`)
+                    .then(response => {
+                        this.parent.messages = response;
+                        loader.hide();
+                    })
+                    .catch(error => {
+                        loader.hide();
+                        helper.showErrorMsg(error);
+                    });
+            },
             hasPermission(permission){
                 return helper.hasPermission(permission);
             },
