@@ -16,6 +16,7 @@
           >
             {{ message.content }}
             <sub
+              class="ml-2"
               style="font-size: 0.5rem;"
             >{{ getTime(message.created_at) }}</sub>
             <v-icon
