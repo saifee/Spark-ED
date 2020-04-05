@@ -73,6 +73,7 @@
         data: () => ({
           storyForm: new Form({
               type : 'text',
+              batch_id : '',
               content : '',
           }),
         }),
