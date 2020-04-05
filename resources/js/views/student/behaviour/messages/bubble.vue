@@ -14,6 +14,7 @@
             class="pa-4 mb-2"
             v-on="on"
           >
+            <span v-if="!message.read_at && message.receiver_id !== parent.receiver_id">*</span>
             {{ message.content }}
             <sub
               class="ml-2"

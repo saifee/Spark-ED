@@ -31,4 +31,26 @@ class Message extends Model
     {
         return $q->with([]);
     }
+
+    public function scopeMy($q)
+    {
+        return $q->where(function($q) {
+            $q->where('sender_id', auth()->user()->id)
+                ->orWhere('receiver_id', auth()->user()->id);
+        });
+    }
+
+    public function scopeToMe($q)
+    {
+        return $q->where('receiver_id', auth()->user()->id);
+    }
+
+    public function scopeFilterByStudentRecordID($q, $student_record_id)
+    {
+        if (! $student_record_id) {
+            return $q;
+        }
+
+        return $q->where('student_record_id', '=', $student_record_id);
+    }
 }
