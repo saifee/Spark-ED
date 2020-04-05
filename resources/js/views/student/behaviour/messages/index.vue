@@ -166,6 +166,9 @@
         data() {
             return {
                 loading: false,
+                filter: {
+                  batch_id: [],
+                },
                 activeChat: null,
                 message: '',
                 parents: [],
@@ -197,7 +200,8 @@
                 if (typeof page !== 'number') {
                     page = 1;
                 }
-                axios.get('/api/student?page=' + page)
+                let url = helper.getFilterURL(this.filter)
+                axios.get('/api/behaviour/stories?page=' + page + url)
                     .then(response => {
                         let students = response.student_records
                         let parents = []
