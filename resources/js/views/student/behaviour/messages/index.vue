@@ -99,42 +99,12 @@
               <v-divider class="my-0" />
               <v-card-text class="flex-grow-1 fill-height">
                 <template v-for="(msg, i) in parent.messages.data">
-                  <v-list-item
+                  <message-bubble
                     :key="`message${i}`"
-                    :class="{ 'd-flex flex-row-reverse': msg.me }"
-                  >
-                    <v-menu offset-y>
-                      <template v-slot:activator="{ on }">
-                        <v-hover
-                          v-slot:default="{ hover }"
-                        >
-                          <v-chip
-                            :color="msg.me ? 'primary' : ''"
-                            dark
-                            style="height:auto;white-space: normal;"
-                            class="pa-4 mb-2"
-                            v-on="on"
-                          >
-                            {{ msg.content }}
-                            <sub
-                              style="font-size: 0.5rem;"
-                            >{{ msg.timestamp }}</sub>
-                            <v-icon
-                              v-if="hover"
-                              small
-                            >
-                              expand_more
-                            </v-icon>
-                          </v-chip>
-                        </v-hover>
-                      </template>
-                      <v-list>
-                        <v-list-item v-confirm="{ok: confirmDelete()}">
-                          <v-list-item-title>{{ trans('general.delete') }}</v-list-item-title>
-                        </v-list-item>
-                      </v-list>
-                    </v-menu>
-                  </v-list-item>
+                    :message="msg"
+                    :parent="parent"
+                    @deleted="getMessages"
+                  />
                 </template>
                 <module-info
                   v-if="parent.messages.total == 0"
@@ -142,15 +112,10 @@
                   description="no_messages_yet"
                   icon="list"
                 />
-                <v-text-field
-                  v-model="message"
-                  :label="trans('messages.type_a_message')"
-                  type="text"
-                  no-details
-                  outlined
-                  append-outer-icon="send"
-                  @keyup.enter="sendMessage"
-                  @click:append-outer="sendMessage"
+                <message-form
+                  :receiver-id="parent.receiver_id"
+                  :student-record-id="parent.student_record_id"
+                  @completed="getMessages"
                 />
               </v-card-text>
             </v-card>
@@ -162,7 +127,11 @@
 </template>
 
 <script>
+    import messageForm from './form'
+    import messageBubble from './bubble'
+
     export default {
+        components : { messageForm, messageBubble, },
         data() {
             return {
                 loading: false,
@@ -170,7 +139,6 @@
                   batch_id: [],
                 },
                 activeChat: null,
-                message: '',
                 parents: [],
             };
         },
@@ -192,14 +160,6 @@
             this.getStudents()
         },
         methods: {
-            sendMessage(){
-                this.parent.messages.push({
-                    content: this.message,
-                    timestamp: moment().format('LT'),
-                    me: true,
-                })
-                this.message = ''
-            },
             getStudents(page){
                 this.loading = true
                 if (typeof page !== 'number') {
@@ -212,6 +172,7 @@
                         let parents = []
                         students.data.forEach(student => {
                             parents.push({
+                                receiver_id: 2,
                                 student_record_id: student.id,
                                 student_name: student.student.name,
                                 student_parent_id: student.student.parent.id,
@@ -232,8 +193,6 @@
                         helper.showErrorMsg(error);
                     });
             },
-          confirmDelete(){
-          },
             getMessages(page){
                 if (!this.activeChat) {
                   return
