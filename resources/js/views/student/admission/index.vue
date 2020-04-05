@@ -208,6 +208,7 @@
                                     <th v-if="isColumnVisible('emergency_contact_number')">{{trans('student.emergency_contact_number')}}</th>
                                     <th v-if="isColumnVisible('present_address')">{{trans('student.present_address')}}</th>
                                     <th v-if="isColumnVisible('permanent_address')">{{trans('student.permanent_address')}}</th>
+                                    <th class="table-option" v-if="hasRole('parent')"></th>
                                     <th class="table-option">{{trans('general.action')}}</th>
                                 </tr>
                             </thead>
@@ -261,6 +262,11 @@
                                             <span v-if="student.student.permanent_zipcode">, {{student.student.permanent_zipcode}}</span>
                                             <span v-if="student.student.permanent_country"><br /> {{student.student.permanent_country}}</span>
                                         </template>
+                                    </td>
+                                    <td class="table-option" v-if="hasRole('parent')">
+                                        <button class="btn btn-info btn-sm" v-tooltip="trans('behaviour.messages')" @click="$router.push('/student/behaviour/'+student.batch_id+'/messages')">
+                                            <i class="fas fa-comment"></i> {{trans('behaviour.messages')}}
+                                        </button>
                                     </td>
                                     <td class="table-option">
                                         <div class="btn-group" v-if="hasNotAnyRole(['student','parent'])">
@@ -522,6 +528,9 @@
             },
             hasNotAnyRole(roles){
                 return helper.hasNotAnyRole(roles);
+            },
+            hasRole(role){
+                return helper.hasRole(role);
             },
             getConfig(config){
                 return helper.getConfig(config);

@@ -173,7 +173,7 @@
                         let parents = []
                         students.data.forEach(student => {
                             parents.push({
-                                receiver_id: student.student.parent.user_id,
+                                receiver_id: helper.hasRole('parent') ? student.batch.class_teachers[0].employee.user_id : student.student.parent.user_id,
                                 student_record_id: student.id,
                                 student_name: student.student.name,
                                 student_parent_id: student.student.parent.id,
