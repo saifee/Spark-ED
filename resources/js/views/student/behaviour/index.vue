@@ -74,14 +74,6 @@
 
 <script>
     export default {
-        filters: {
-          moment(date) {
-            return helper.formatDate(date);
-          },
-          momentDateTime(date) {
-            return helper.formatDateTime(date);
-          }
-        },
         data() {
             return {
                 batches: {
@@ -101,8 +93,6 @@
                     }
                 ],
                 courses: [],
-                selected_courses: null,
-                showFilterPanel: false,
             };
         },
         computed: {
@@ -110,25 +100,8 @@
                 return helper.getAuthToken();
             }
         },
-        watch: {
-            'filter.sort_by': function(val){
-                this.getBatches();
-            },
-            'filter.order': function(val){
-                this.getBatches();
-            },
-            'filter.page_length': function(val){
-                this.getBatches();
-            }
-        },
         mounted(){
-            if(!helper.hasPermission('list-batch')){
-                helper.notAccessibleMsg();
-                this.$router.push('/dashboard');
-            }
-
             this.getBatches();
-            helper.showDemoNotification(['academic']);
         },
         methods: {
             hasPermission(permission){
@@ -139,32 +112,12 @@
                 if (typeof page !== 'number') {
                     page = 1;
                 }
-                let url = helper.getFilterURL(this.filter);
-                axios.get('/api/batch?page=' + page + url)
+                axios.get('/api/batch?page=' + page)
                     .then(response => {
                         this.batches = response.batches;
-                        this.courses = response.filters.courses;
                         loader.hide();
                     })
                     .catch(error => {
-                        loader.hide();
-                        helper.showErrorMsg(error);
-                    });
-            },
-            editBatch(batch){
-                this.$router.push('/academic/batch/'+batch.id+'/edit');
-            },
-            confirmDelete(batch){
-                return dialog => this.deleteBatch(batch);
-            },
-            deleteBatch(batch){
-                let loader = this.$loading.show();
-                axios.delete('/api/batch/'+batch.id)
-                    .then(response => {
-                        toastr.success(response.message);
-                        this.getBatches();
-                        loader.hide();
-                    }).catch(error => {
                         loader.hide();
                         helper.showErrorMsg(error);
                     });
@@ -172,37 +125,6 @@
             getConfig(config) {
                 return helper.getConfig(config)
             },
-            print(){
-                let loader = this.$loading.show();
-                axios.post('/api/batch/print',{filter: this.filter})
-                    .then(response => {
-                        let print = window.open("/print");
-                        loader.hide();
-                        print.document.write(response);
-                    })
-                    .catch(error => {
-                        loader.hide();
-                        helper.showErrorMsg(error);
-                    });
-            },
-            pdf(){
-                let loader = this.$loading.show();
-                axios.post('/api/batch/pdf',{filter: this.filter})
-                    .then(response => {
-                        loader.hide();
-                        window.open('/download/report/'+response+'?token='+this.authToken);
-                    })
-                    .catch(error => {
-                        loader.hide();
-                        helper.showErrorMsg(error);
-                    });
-            },
-            onCourseSelect(selectedOption){
-                this.filter.course_id.push(selectedOption.id);
-            },
-            onCourseRemove(removedOption){
-                this.filter.course_id.splice(this.filter.course_id.indexOf(removedOption.id), 1);
-            }
         }
     }
 </script>
