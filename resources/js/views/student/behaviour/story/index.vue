@@ -13,7 +13,7 @@
             <button
               v-tooltip="trans('behaviour.behaviour')"
               class="btn btn-info btn-sm"
-              @click="$router.push('/student/behaviour')"
+              @click="$router.push('/student/behaviour/x')"
             >
               <i class="fas fa-gem" /> <span class="d-none d-sm-inline">{{ trans('behaviour.behaviour') }}</span>
             </button>

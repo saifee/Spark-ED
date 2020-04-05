@@ -108,11 +108,11 @@ export default [
         component: () => import(/* webpackChunkName: "js/student/behaviour/list" */ '@views/student/behaviour/list')
     },
     {
-        path: '/student/behaviour/story',
+        path: '/student/behaviour/:batch_id/story',
         component: () => import(/* webpackChunkName: "js/student/behaviour/story/index" */ '@views/student/behaviour/story/index')
     },
     {
-        path: '/student/behaviour/messages',
+        path: '/student/behaviour/:batch_id/messages',
         component: () => import(/* webpackChunkName: "js/student/behaviour/messages/index" */ '@views/student/behaviour/messages/index')
     },
     {
