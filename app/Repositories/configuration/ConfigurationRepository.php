@@ -99,7 +99,7 @@ class ConfigurationRepository
         $config['pb']                 = gbv($config_variables, 'pb');
         $config['default_currency'] = getDefaultCurrency();
         $config['current_date']       = today();
-        $config['mobile_app_compatible'] = my_version_compare(\Storage::get('.version'), config('system.mobile_app_compatible'), '>=');
+        $config['mobile_app_compatible'] = true; // my_version_compare(\Storage::get('.version'), config('system.mobile_app_compatible'), '>=');
 
         $config['made'] = env('MADE');
 
