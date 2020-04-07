@@ -20,7 +20,7 @@
               :size="40"
               color="grey lighten-1 white--text"
             >
-              <i class="fas fa-user fa-fw" />
+              <v-icon dark>person</v-icon>
             </v-avatar>
           </template>
         </v-textarea>

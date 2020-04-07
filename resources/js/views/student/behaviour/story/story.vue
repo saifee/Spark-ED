@@ -3,7 +3,7 @@
     <v-card-text class="pb-0">
       <v-list-item class="grow">
         <v-list-item-avatar color="grey lighten-1 white--text">
-          <i class="fas fa-user fa-fw" />
+          <v-icon dark>person</v-icon>
         </v-list-item-avatar>
 
         <v-list-item-content>
@@ -48,8 +48,8 @@
             outlined
             x-small
           >
-            <v-icon 
-              left 
+            <v-icon
+              left
               x-small
             >
               favorite_border
@@ -64,8 +64,8 @@
             x-small
             @click="show = !show"
           >
-            <v-icon 
-              left 
+            <v-icon
+              left
               x-small
             >
               chat_bubble_outline
@@ -145,7 +145,7 @@
             dense
           >
             <v-list-item-avatar color="grey lighten-1 white--text">
-              <i class="fas fa-user fa-fw" />
+              <v-icon dark>person</v-icon>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>
@@ -160,7 +160,7 @@
         <v-divider class="my-0" />
         <v-list-item dense>
           <v-list-item-avatar color="grey lighten-1 white--text">
-            <i class="fas fa-user fa-fw" />
+            <v-icon dark>person</v-icon>
           </v-list-item-avatar>
           <v-list-item-content>
             <comment-form
