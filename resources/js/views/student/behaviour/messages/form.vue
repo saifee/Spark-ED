@@ -7,7 +7,7 @@
       v-model="messageForm.content"
       :label="trans('messages.type_a_message')"
       type="text"
-      no-details
+      hide-details
       outlined
       append-outer-icon="send"
       @click:append-outer="proceed"

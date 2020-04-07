@@ -90,14 +90,14 @@
           >
             <v-card
               flat
-              class="fill-height"
+              class="d-flex flex-column fill-height"
             >
               <v-card-title>
                 {{ parent.title }}
               </v-card-title>
               <v-card-subtitle>{{ parent.student_name }} {{ parent.relation }}</v-card-subtitle>
               <v-divider class="my-0" />
-              <v-card-text class="flex-grow-1 fill-height">
+              <v-card-text class="flex-grow-1 overflow-y-auto">
                 <template v-for="(msg, i) in parent.messages.data">
                   <message-bubble
                     :key="`message${i}`"
@@ -112,8 +112,12 @@
                   :description="parent.receiver_id ? 'no_messages_yet' : 'parent_account_not_activated'"
                   icon="list"
                 />
+              </v-card-text>
+              <v-card-text
+                v-if="parent.receiver_id"
+                class="flex-shrink-1"
+              >
                 <message-form
-                  v-if="parent.receiver_id"
                   :receiver-id="parent.receiver_id"
                   :student-record-id="parent.student_record_id"
                   @completed="getMessages"
