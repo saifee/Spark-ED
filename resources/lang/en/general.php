@@ -8,6 +8,11 @@
   'am' => 'AM',
   'and_count_other' => 'and :count other',
   'anniversary' => 'Anniversary',
+  'any_search_hint' => 'Type anything to search...',
+  'any_search_loaded' => 'search result found, Use Tab key to move',
+  'any_search_loading' => 'Loading search result...',
+  'any_search_title' => 'Type anywhere to start search...',
+  'any_search_type_atleast_3_characters' => 'Type atleast 3 characters, Press Esc to cancel search',
   'as_on' => 'as on',
   'ascending' => 'Ascending',
   'attachment' => 'Attachment',
@@ -159,9 +164,4 @@
   'wait_while_loading' => 'Please wait while we are loading details.',
   'work_anniversary' => 'Work Anniversary',
   'years' => 'Yrs',
-  'any_search_title' => 'Type anywhere to start search...',
-  'any_search_hint' => 'Type anything to search...',
-  'any_search_type_atleast_3_characters' => 'Type atleast 3 characters, Press Esc to cancel search',
-  'any_search_loading' => 'Loading search result...',
-  'any_search_loaded' => 'search result found, Use Tab key to move'
 );
