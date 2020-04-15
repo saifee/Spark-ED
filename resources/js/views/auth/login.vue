@@ -4,16 +4,16 @@
             <div class="login-box card guest-box">
                 <div class="card-body p-4">
                     <img :src="getLogo" class="org-logo" />
-                    <form class="form-horizontal form-material" id="loginform" @submit.prevent="process" @keydown="loginForm.errors.clear($event.target.name)">
+                    <form id="loginform" @submit.prevent="process" @keydown="loginForm.errors.clear($event.target.name)">
                         <h3 class="box-title m-t-20 m-b-10">{{trans('auth.login')}}</h3>
                         <social-login v-if="getConfig('made') === 'saudi'" />
                         <div v-if="! login_with_otp">
-                            <div class="form-group ">
-                                <input type="text" name="email_or_username" class="form-control" :placeholder="trans('auth.email_or_username')" v-model="loginForm.email_or_username">
+                            <div>
+                                <v-text-field color="primary" type="text" name="email_or_username" :label="trans('auth.email_or_username')" v-model="loginForm.email_or_username" @keyup.enter="process" />
                                 <show-error :form-name="loginForm" prop-name="email_or_username"></show-error>
                             </div>
-                            <div class="form-group">
-                                <input type="password" name="password" class="form-control" :placeholder="trans('auth.password')" v-model="loginForm.password">
+                            <div>
+                                <v-text-field color="primary" type="password" name="password" :label="trans('auth.password')" v-model="loginForm.password" @keyup.enter="process" />
                                 <show-error :form-name="loginForm" prop-name="password"></show-error>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="g-recaptcha" v-if="getConfig('recaptcha') && getConfig('login_recaptcha')" :data-sitekey="getConfig('recaptcha_key')"></div>
                         <div class="form-group text-center m-t-20">
-                            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">{{trans('auth.sign_in')}}</button>
+                            <v-btn block x-large dark color="primary">{{trans('auth.sign_in')}}</v-btn>
                         </div>
                         <div class="form-group m-b-0">
                             <div class="col-sm-12 text-center">
