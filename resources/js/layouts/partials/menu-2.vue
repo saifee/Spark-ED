@@ -717,6 +717,7 @@
       <v-list-item
         v-if="hasPermission('list-enquiry') && showMenu('enquiry')"
         to="/reception/enquiry"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('reception.admission_enquiry') }}</v-list-item-title>
@@ -725,6 +726,7 @@
       <v-list-item
         v-if="hasPermission('list-visitor-log') && showMenu('visitor_log')"
         to="/reception/visitor/log"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('reception.visitor_log') }}</v-list-item-title>
@@ -733,6 +735,7 @@
       <v-list-item
         v-if="hasPermission('list-call-log') && showMenu('call_log')"
         to="/reception/call/log"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('reception.call_log') }}</v-list-item-title>
@@ -741,6 +744,7 @@
       <v-list-item
         v-if="hasPermission('list-postal-record') && showMenu('postal_record')"
         to="/reception/postal/record"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('reception.postal_record') }}</v-list-item-title>
@@ -749,6 +753,7 @@
       <v-list-item
         v-if="hasPermission('list-complaint') && showMenu('complaint')"
         to="/reception/complaint"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('reception.complaint') }}</v-list-item-title>
@@ -757,6 +762,7 @@
       <v-list-item
         v-if="hasPermission('list-gate-pass') && showMenu('gate_pass')"
         to="/reception/gate/pass"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('reception.gate_pass') }}</v-list-item-title>
@@ -765,6 +771,7 @@
       <v-list-item
         v-if="hasPermission('list-visitor-message') && showMenu('visitor_message')"
         to="/reception/visitor/message"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('reception.visitor_message') }}</v-list-item-title>
@@ -784,6 +791,7 @@
       <v-list-item
         v-if="hasPermission('list-academic-session') && showMenu('academic_session')"
         to="/academic/session"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.academic_session') }}</v-list-item-title>
@@ -792,6 +800,7 @@
       <v-list-item
         v-if="hasPermission('list-course') && showMenu('course')"
         to="/academic/course"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.course') }}</v-list-item-title>
@@ -800,6 +809,7 @@
       <v-list-item
         v-if="hasPermission('list-batch') && showMenu('batch')"
         to="/academic/batch"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.batch') }}</v-list-item-title>
@@ -808,6 +818,7 @@
       <v-list-item
         v-if="hasPermission('list-class-teacher') && showMenu('class_teacher')"
         to="/academic/class/teacher"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.class_teacher') }}</v-list-item-title>
@@ -816,6 +827,7 @@
       <v-list-item
         v-if="hasPermission('list-subject') && showMenu('subject')"
         to="/academic/subject"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.subject') }}</v-list-item-title>
@@ -824,6 +836,7 @@
       <v-list-item
         v-if="hasPermission('list-subject-teacher') && showMenu('subject_teacher')"
         to="/academic/subject/teacher"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.subject_teacher') }}</v-list-item-title>
@@ -832,6 +845,7 @@
       <v-list-item
         v-if="hasPermission('list-class-timing') && showMenu('class_timing')"
         to="/academic/class/timing"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.class_timing') }}</v-list-item-title>
@@ -840,6 +854,7 @@
       <v-list-item
         v-if="hasPermission('list-timetable') && showMenu('timetable')"
         to="/academic/timetable"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.timetable') }}</v-list-item-title>
@@ -848,6 +863,7 @@
       <v-list-item
         v-if="hasPermission('list-certificate') && showMenu('certificate')"
         to="/academic/certificate"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.certificate') }}</v-list-item-title>
@@ -867,6 +883,7 @@
       <v-list-item
         v-if="hasPermission('import-student') && showMenu('student_import')"
         to="/student/import"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('student.import') }}</v-list-item-title>
@@ -875,6 +892,7 @@
       <v-list-item
         v-if="hasPermission('list-registration') && showMenu('registration')"
         to="/student/registration"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('student.registration') }}</v-list-item-title>
@@ -883,6 +901,7 @@
       <v-list-item
         v-if="(hasPermission('list-student') || hasPermission('list-class-teacher-wise-student')) && showMenu('student_list')"
         to="/student/admission"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('student.admission') }}</v-list-item-title>
@@ -891,6 +910,7 @@
       <v-list-item
         v-if="(hasPermission('list-student') || hasPermission('list-class-teacher-wise-student')) && showMenu('student_behaviour')"
         to="/student/behaviour"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('behaviour.behaviour') }}</v-list-item-title>
@@ -899,6 +919,7 @@
       <v-list-item
         v-if="hasPermission('edit-roll-number') && showMenu('roll_number')"
         to="/student/roll/number"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('student.roll_number') }}</v-list-item-title>
@@ -907,6 +928,7 @@
       <v-list-item
         v-if="hasPermission('generate-student-id-card') && showMenu('student_id_card')"
         to="/student/id-card"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('student.id_card') }}</v-list-item-title>
@@ -915,6 +937,7 @@
       <v-list-item
         v-if="hasPermission('edit-student') && showMenu('student_image_upload')"
         to="/student/image"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('student.image_upload') }}</v-list-item-title>
@@ -923,6 +946,7 @@
       <v-list-item
         v-if="hasPermission('list-student-attendance') && showMenu('student_attendance')"
         to="/student/attendance"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('student.attendance') }}</v-list-item-title>
@@ -931,6 +955,7 @@
       <v-list-item
         v-if="hasPermission('promote-student') && showMenu('promotion')"
         to="/student/promotion"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('student.promotion') }}</v-list-item-title>
@@ -939,6 +964,7 @@
       <v-list-item
         v-if="hasPermission('terminate-student') && showMenu('termination')"
         to="/student/termination"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('student.termination') }}</v-list-item-title>
@@ -947,6 +973,7 @@
       <v-list-item
         v-if="hasPermission('edit-student') && showMenu('student_parent')"
         to="/student/parent"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('student.parent') }}</v-list-item-title>
@@ -966,6 +993,7 @@
       <v-list-item
         v-if="hasPermission('import-employee') && showMenu('employee_import')"
         to="/employee/import"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.import') }}</v-list-item-title>
@@ -974,6 +1002,7 @@
       <v-list-item
         v-if="showMenu('employee_list')"
         to="/employee/list"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.employee_list') }}</v-list-item-title>
@@ -982,6 +1011,7 @@
       <v-list-item
         v-if="showMenu('employee_behaviour')"
         to="/employee/behaviour"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('behaviour.behaviour') }}</v-list-item-title>
@@ -990,6 +1020,7 @@
       <v-list-item
         v-if="hasPermission('generate-employee-id-card') && showMenu('employee_id_card')"
         to="/employee/id-card"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.id_card') }}</v-list-item-title>
@@ -998,6 +1029,7 @@
       <v-list-item
         v-if="showMenu('employee_attendance')"
         to="/employee/attendance"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.attendance') }}</v-list-item-title>
@@ -1006,6 +1038,7 @@
       <v-list-item
         v-if="showMenu('employee_leave')"
         to="/employee/leave"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.leave') }}</v-list-item-title>
@@ -1014,6 +1047,7 @@
       <v-list-item
         v-if="showMenu('employee_payroll')"
         to="/employee/payroll"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.payroll') }}</v-list-item-title>
@@ -1033,6 +1067,7 @@
       <v-list-item
         v-if="hasPermission('list-exam-schedule') && showMenu('exam_schedule')"
         to="/exam/schedule"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('exam.schedule') }}</v-list-item-title>
@@ -1041,6 +1076,7 @@
       <v-list-item
         v-if="hasPermission('list-exam-mark') && showMenu('exam_record_mark')"
         to="/exam/record"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('exam.record') }}</v-list-item-title>
@@ -1049,6 +1085,7 @@
       <v-list-item
         v-if="hasAnyPermission(['access-exam-report','access-class-teacher-wise-exam-report']) && showMenu('exam_report_card')"
         to="/exam/report"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('exam.report') }}</v-list-item-title>
@@ -1058,6 +1095,7 @@
         <v-list-item
           v-if="hasAnyPermission(['access-exam-report','access-class-teacher-wise-exam-report'])"
           to="/exam/report/topper"
+          exact
         >
           <v-list-item-content>
             <v-list-item-title>{{ trans('exam.topper_report') }}</v-list-item-title>
@@ -1067,6 +1105,7 @@
       <v-list-item
         v-if="hasPermission('list-online-exam') && showMenu('online_exam')"
         to="/online-exam"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('exam.online_exam') }}</v-list-item-title>
@@ -1086,6 +1125,7 @@
       <v-list-item
         v-if="hasPermission('list-fee-group') && showMenu('fee_group')"
         to="/finance/fee/group"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('finance.fee_group') }}</v-list-item-title>
@@ -1094,6 +1134,7 @@
       <v-list-item
         v-if="hasPermission('list-fee-head') && showMenu('fee_head')"
         to="/finance/fee/head"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('finance.fee_head') }}</v-list-item-title>
@@ -1102,6 +1143,7 @@
       <v-list-item
         v-if="hasPermission('list-transport-fee') && showMenu('transport_fee')"
         to="/transport/fee"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('transport.fee') }}</v-list-item-title>
@@ -1110,6 +1152,7 @@
       <v-list-item
         v-if="hasPermission('list-fee-concession') && showMenu('fee_concession')"
         to="/finance/fee/concession"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('finance.fee_concession') }}</v-list-item-title>
@@ -1118,6 +1161,7 @@
       <v-list-item
         v-if="hasPermission('list-fee-allocation') && showMenu('fee_allocation')"
         to="/finance/fee/allocation"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('finance.fee_allocation') }}</v-list-item-title>
@@ -1126,6 +1170,7 @@
       <v-list-item
         v-if="hasPermission('list-account') && showMenu('account')"
         to="/finance/account"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('finance.account') }}</v-list-item-title>
@@ -1134,6 +1179,7 @@
       <v-list-item
         v-if="hasPermission('list-income') && showMenu('income')"
         to="/finance/transaction/income"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('finance.income') }}</v-list-item-title>
@@ -1142,6 +1188,7 @@
       <v-list-item
         v-if="hasPermission('list-expense') && showMenu('expense')"
         to="/finance/transaction/expense"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('finance.expense') }}</v-list-item-title>
@@ -1150,6 +1197,7 @@
       <v-list-item
         v-if="hasPermission('list-account-transfer') && showMenu('account_transfer')"
         to="/finance/transaction/account/transfer"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('finance.account_transfer') }}</v-list-item-title>
@@ -1158,6 +1206,7 @@
       <v-list-item
         v-if="showMenu('finance_report')"
         to="/finance/report"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('general.report') }}</v-list-item-title>
@@ -1177,6 +1226,7 @@
       <v-list-item
         v-if="showMenu('transport_route')"
         to="/transport/route"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('transport.route') }}</v-list-item-title>
@@ -1185,6 +1235,7 @@
       <v-list-item
         v-if="hasPermission('list-vehicle') && showMenu('vehicle')"
         to="/transport/vehicle"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('transport.vehicle') }}</v-list-item-title>
@@ -1193,6 +1244,7 @@
       <v-list-item
         v-if="hasPermission('list-vehicle-incharge') && showMenu('vehicle_incharge')"
         to="/transport/vehicle/incharge"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('transport.vehicle_incharge') }}</v-list-item-title>
@@ -1201,6 +1253,7 @@
       <v-list-item
         v-if="hasPermission('list-vehicle-document') && showMenu('vehicle_document')"
         to="/transport/vehicle/document"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('transport.document') }}</v-list-item-title>
@@ -1209,6 +1262,7 @@
       <v-list-item
         v-if="hasPermission('list-vehicle-fuel') && showMenu('vehicle_fuel')"
         to="/transport/vehicle/fuel"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('transport.fuel') }}</v-list-item-title>
@@ -1217,6 +1271,7 @@
       <v-list-item
         v-if="hasPermission('list-vehicle-log') && showMenu('vehicle_log')"
         to="/transport/vehicle/log"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('transport.log') }}</v-list-item-title>
@@ -1225,6 +1280,7 @@
       <v-list-item
         v-if="hasPermission('list-vehicle-service-record') && showMenu('vehicle_service_record')"
         to="/transport/vehicle/service/record"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('transport.service_record') }}</v-list-item-title>
@@ -1233,6 +1289,7 @@
       <v-list-item
         v-if="hasPermission('access-transport-report') && showMenu('vehicle_report')"
         to="/transport/report"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('general.report') }}</v-list-item-title>
@@ -1252,6 +1309,7 @@
       <v-list-item
         v-if="hasPermission('list-holiday') && showMenu('holiday')"
         to="/calendar/holiday"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('calendar.holiday') }}</v-list-item-title>
@@ -1260,6 +1318,7 @@
       <v-list-item
         v-if="hasPermission('list-event') && showMenu('event')"
         to="/calendar/event"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('calendar.event') }}</v-list-item-title>
@@ -1268,6 +1327,7 @@
       <v-list-item
         v-if="hasPermission('list-birthday') && showMenu('celebration')"
         to="/calendar/celebration/birthday"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('calendar.celebration') }}</v-list-item-title>
@@ -1287,6 +1347,7 @@
       <v-list-item
         v-if="hasPermission('list-assignment') && showMenu('assignment')"
         to="/resource/assignment"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('resource.assignment') }}</v-list-item-title>
@@ -1295,6 +1356,7 @@
       <v-list-item
         v-if="hasPermission('list-notes') && showMenu('notes')"
         to="/resource/notes"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('resource.notes') }}</v-list-item-title>
@@ -1303,6 +1365,7 @@
       <v-list-item
         v-if="hasPermission('list-lesson-plan') && showMenu('lesson_plan')"
         to="/resource/lesson/plan"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('resource.lesson_plan') }}</v-list-item-title>
@@ -1311,6 +1374,7 @@
       <v-list-item
         v-if="hasPermission('list-syllabus') && showMenu('syllabus')"
         to="/resource/syllabus"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('resource.syllabus') }}</v-list-item-title>
@@ -1330,6 +1394,7 @@
       <v-list-item
         v-if="hasPermission('list-book') && showMenu('book')"
         to="/library/book"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('library.book') }}</v-list-item-title>
@@ -1338,6 +1403,7 @@
       <v-list-item
         v-if="hasPermission('issue-book') && showMenu('issue_book')"
         to="/library/issue"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('library.issue') }}</v-list-item-title>
@@ -1346,6 +1412,7 @@
       <v-list-item
         v-if="hasPermission('return-book') && showMenu('return_book')"
         to="/library/return"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('library.return') }}</v-list-item-title>
@@ -1365,6 +1432,7 @@
       <v-list-item
         v-if="showMenu('stock_category')"
         to="/inventory/stock/category"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('inventory.stock_category') }}</v-list-item-title>
@@ -1373,6 +1441,7 @@
       <v-list-item
         v-if="showMenu('stock_item')"
         to="/inventory/stock/item"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('inventory.stock_item') }}</v-list-item-title>
@@ -1381,6 +1450,7 @@
       <v-list-item
         v-if="showMenu('vendor')"
         to="/inventory/vendor"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('inventory.vendor') }}</v-list-item-title>
@@ -1389,6 +1459,7 @@
       <v-list-item
         v-if="showMenu('stock_purchase')"
         to="/inventory/stock/purchase"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('inventory.stock_purchase') }}</v-list-item-title>
@@ -1397,6 +1468,7 @@
       <v-list-item
         v-if="showMenu('stock_transfer')"
         to="/inventory/stock/transfer"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('inventory.stock_transfer') }}</v-list-item-title>
@@ -1405,6 +1477,7 @@
       <v-list-item
         v-if="showMenu('stock_sale') && getConfig('made') === 'saudi'"
         to="/inventory/stock/sale"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('inventory_sale.stock_sale') }}</v-list-item-title>
@@ -1424,6 +1497,7 @@
       <v-list-item
         v-if="showMenu('post_feed')"
         to="/post/feed"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('post.feed') }}</v-list-item-title>
@@ -1432,6 +1506,7 @@
       <v-list-item
         v-if="showMenu('article')"
         to="/post/article"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('post.article') }}</v-list-item-title>
@@ -1451,6 +1526,7 @@
       <v-list-item
         v-if="showMenu('communication_history')"
         to="/communication"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('communication.history') }}</v-list-item-title>
@@ -1459,6 +1535,7 @@
       <v-list-item
         v-if="hasPermission('send-sms') && showMenu('send_sms')"
         to="/communication/sms"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('communication.sms') }}</v-list-item-title>
@@ -1467,6 +1544,7 @@
       <v-list-item
         v-if="hasPermission('send-email') && showMenu('send_email')"
         to="/communication/email"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('communication.email') }}</v-list-item-title>
@@ -1486,6 +1564,7 @@
       <v-list-item
         v-if="showMenu('frontend_page')"
         to="/frontend/page"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('frontend.page') }}</v-list-item-title>
@@ -1494,6 +1573,7 @@
       <v-list-item
         v-if="showMenu('frontend_block')"
         to="/frontend/block"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('frontend.block') }}</v-list-item-title>
@@ -1502,6 +1582,7 @@
       <v-list-item
         v-if="showMenu('frontend_menu')"
         to="/frontend/menu"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('frontend.menu') }}</v-list-item-title>
@@ -1521,6 +1602,7 @@
       <v-list-item
         v-if="hasPermission('access-todo') && showMenu('todo')"
         to="/utility/todo"
+        exact
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('utility.todo') }}</v-list-item-title>
@@ -1530,6 +1612,7 @@
         <v-list-item
           v-if="showMenu('backup')"
           to="/utility/backup"
+          exact
         >
           <v-list-item-content>
             <v-list-item-title>{{ trans('utility.backup') }}</v-list-item-title>
@@ -1538,6 +1621,7 @@
         <v-list-item
           v-if="showMenu('ip_filter')"
           to="/utility/ip-filter"
+          exact
         >
           <v-list-item-content>
             <v-list-item-title>{{ trans('utility.ip_filter') }}</v-list-item-title>
@@ -1546,6 +1630,7 @@
         <v-list-item
           v-if="showMenu('activity_log')"
           to="/utility/activity-log"
+          exact
         >
           <v-list-item-content>
             <v-list-item-title>{{ trans('utility.activity_log') }}</v-list-item-title>
