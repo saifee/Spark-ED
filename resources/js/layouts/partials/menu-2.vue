@@ -641,7 +641,7 @@
       v-show="moduleConfigMenu && hasPermission('access-configuration')"
       v-if="getConfig('made') === 'saudi'"
       to="/configuration/custom-field"
-      aria-expanded="false"
+      exact
     >
       <v-list-item-action><i class="fas fa-cubes fa-fw" /></v-list-item-action>
       <v-list-item-content>
