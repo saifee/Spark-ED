@@ -218,31 +218,46 @@
         </v-btn>
       </template>
       <v-list dense>
-        <v-list-item to="/configuration/reception/enquiry/type">
+        <v-list-item
+          to="/configuration/reception/enquiry/type"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('reception.enquiry_type') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/reception/enquiry/source">
+        <v-list-item
+          to="/configuration/reception/enquiry/source"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('reception.enquiry_source') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/reception/visiting/purpose">
+        <v-list-item
+          to="/configuration/reception/visiting/purpose"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('reception.visiting_purpose') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/reception/calling/purpose">
+        <v-list-item
+          to="/configuration/reception/calling/purpose"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('reception.calling_purpose') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/reception/complaint/type">
+        <v-list-item
+          to="/configuration/reception/complaint/type"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('reception.complaint_type') }}</v-list-item-title>
@@ -263,25 +278,37 @@
         </v-btn>
       </template>
       <v-list dense>
-        <v-list-item to="/configuration/academic/course/group">
+        <v-list-item
+          to="/configuration/academic/course/group"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('academic.course_group') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/academic/institute">
+        <v-list-item
+          to="/configuration/academic/institute"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('academic.institute_other') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/academic/certificate/template">
+        <v-list-item
+          to="/configuration/academic/certificate/template"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('academic.certificate_template') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/academic/id-card/template">
+        <v-list-item
+          to="/configuration/academic/id-card/template"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('academic.id_card_template') }}</v-list-item-title>
@@ -302,13 +329,19 @@
         </v-btn>
       </template>
       <v-list dense>
-        <v-list-item to="/configuration/finance/transaction/category">
+        <v-list-item
+          to="/configuration/finance/transaction/category"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('finance.transaction_category') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/finance/payment/method">
+        <v-list-item
+          to="/configuration/finance/payment/method"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('finance.payment_method') }}</v-list-item-title>
@@ -329,19 +362,28 @@
         </v-btn>
       </template>
       <v-list dense>
-        <v-list-item to="/configuration/student">
+        <v-list-item
+          to="/configuration/student"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('general.general') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/student/group">
+        <v-list-item
+          to="/configuration/student/group"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('student.student_group') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/student/document/type">
+        <v-list-item
+          to="/configuration/student/document/type"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('student.document_type_only') }}</v-list-item-title>
@@ -362,13 +404,19 @@
         </v-btn>
       </template>
       <v-list dense>
-        <v-list-item to="/configuration/behaviour/skill">
+        <v-list-item
+          to="/configuration/behaviour/skill"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('behaviour.skill') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/behaviour/skill/employee">
+        <v-list-item
+          to="/configuration/behaviour/skill/employee"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('behaviour.employee_skill') }}</v-list-item-title>
@@ -389,25 +437,37 @@
         </v-btn>
       </template>
       <v-list dense>
-        <v-list-item to="/configuration/exam/term">
+        <v-list-item
+          to="/configuration/exam/term"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('exam.term') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/exam/assessment">
+        <v-list-item
+          to="/configuration/exam/assessment"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('exam.assessment') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/exam/observation">
+        <v-list-item
+          to="/configuration/exam/observation"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('exam.observation') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/exam/grade">
+        <v-list-item
+          to="/configuration/exam/grade"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('exam.grade') }}</v-list-item-title>
@@ -428,55 +488,82 @@
         </v-btn>
       </template>
       <v-list dense>
-        <v-list-item to="/configuration/employee">
+        <v-list-item
+          to="/configuration/employee"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('general.general') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/employee/category">
+        <v-list-item
+          to="/configuration/employee/category"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('employee.category') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/employee/designation">
+        <v-list-item
+          to="/configuration/employee/designation"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('employee.designation') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/employee/department">
+        <v-list-item
+          to="/configuration/employee/department"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('employee.department') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/employee/group">
+        <v-list-item
+          to="/configuration/employee/group"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('employee.employee_group') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/employee/document/type">
+        <v-list-item
+          to="/configuration/employee/document/type"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('employee.document_type_only') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/employee/leave/type">
+        <v-list-item
+          to="/configuration/employee/leave/type"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('employee.leave_type') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/employee/attendance/type">
+        <v-list-item
+          to="/configuration/employee/attendance/type"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('employee.attendance_type') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/employee/pay/head">
+        <v-list-item
+          to="/configuration/employee/pay/head"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('employee.pay_head') }}</v-list-item-title>
@@ -497,19 +584,28 @@
         </v-btn>
       </template>
       <v-list dense>
-        <v-list-item to="/configuration/transport/vehicle/document/type">
+        <v-list-item
+          to="/configuration/transport/vehicle/document/type"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('transport.vehicle_document_type_only') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/transport/vehicle/fuel/type">
+        <v-list-item
+          to="/configuration/transport/vehicle/fuel/type"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('transport.vehicle_fuel_type') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/transport/vehicle/service/center">
+        <v-list-item
+          to="/configuration/transport/vehicle/service/center"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('transport.vehicle_service_center_only') }}</v-list-item-title>
@@ -530,37 +626,55 @@
         </v-btn>
       </template>
       <v-list dense>
-        <v-list-item to="/configuration/library">
+        <v-list-item
+          to="/configuration/library"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('general.general') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/library/book/author">
+        <v-list-item
+          to="/configuration/library/book/author"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('library.book_author') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/library/book/language">
+        <v-list-item
+          to="/configuration/library/book/language"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('library.book_language') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/library/book/topic">
+        <v-list-item
+          to="/configuration/library/book/topic"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('library.book_topic') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/library/book/publisher">
+        <v-list-item
+          to="/configuration/library/book/publisher"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('library.book_publisher') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/library/book/condition">
+        <v-list-item
+          to="/configuration/library/book/condition"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('library.book_condition') }}</v-list-item-title>
@@ -581,7 +695,10 @@
         </v-btn>
       </template>
       <v-list dense>
-        <v-list-item to="/configuration/calendar/event/type">
+        <v-list-item
+          to="/configuration/calendar/event/type"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('calendar.event_type') }}</v-list-item-title>
@@ -602,7 +719,10 @@
         </v-btn>
       </template>
       <v-list dense>
-        <v-list-item to="/configuration/post/article/type">
+        <v-list-item
+          to="/configuration/post/article/type"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('post.article_type') }}</v-list-item-title>
@@ -623,13 +743,19 @@
         </v-btn>
       </template>
       <v-list dense>
-        <v-list-item to="/configuration/asset/building">
+        <v-list-item
+          to="/configuration/asset/building"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('asset.building') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/asset/room">
+        <v-list-item
+          to="/configuration/asset/room"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('asset.room') }}</v-list-item-title>
@@ -650,7 +776,10 @@
         </v-btn>
       </template>
       <v-list dense>
-        <v-list-item to="/configuration/frontend/index">
+        <v-list-item
+          to="/configuration/frontend/index"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('frontend.frontend') }}</v-list-item-title>
@@ -666,7 +795,7 @@
         <v-btn
           icon
           to="/configuration/custom-field"
-          aria-expanded="false"
+          exact
           v-on="on"
         >
           <i class="fas fa-cubes fa-fw" />
@@ -687,25 +816,37 @@
         </v-btn>
       </template>
       <v-list dense>
-        <v-list-item to="/configuration/misc/religion">
+        <v-list-item
+          to="/configuration/misc/religion"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('misc.religion') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/misc/caste">
+        <v-list-item
+          to="/configuration/misc/caste"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('misc.caste') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/misc/category">
+        <v-list-item
+          to="/configuration/misc/category"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('misc.category') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item to="/configuration/misc/blood/group">
+        <v-list-item
+          to="/configuration/misc/blood/group"
+          exact
+        >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('misc.blood_group') }}</v-list-item-title>
@@ -745,6 +886,7 @@
         <v-list-item
           v-if="hasPermission('list-enquiry') && showMenu('enquiry')"
           to="/reception/enquiry"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -754,6 +896,7 @@
         <v-list-item
           v-if="hasPermission('list-visitor-log') && showMenu('visitor_log')"
           to="/reception/visitor/log"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -763,6 +906,7 @@
         <v-list-item
           v-if="hasPermission('list-call-log') && showMenu('call_log')"
           to="/reception/call/log"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -772,6 +916,7 @@
         <v-list-item
           v-if="hasPermission('list-postal-record') && showMenu('postal_record')"
           to="/reception/postal/record"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -781,6 +926,7 @@
         <v-list-item
           v-if="hasPermission('list-complaint') && showMenu('complaint')"
           to="/reception/complaint"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -790,6 +936,7 @@
         <v-list-item
           v-if="hasPermission('list-gate-pass') && showMenu('gate_pass')"
           to="/reception/gate/pass"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -799,6 +946,7 @@
         <v-list-item
           v-if="hasPermission('list-visitor-message') && showMenu('visitor_message')"
           to="/reception/visitor/message"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -823,6 +971,7 @@
         <v-list-item
           v-if="hasPermission('list-academic-session') && showMenu('academic_session')"
           to="/academic/session"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -832,6 +981,7 @@
         <v-list-item
           v-if="hasPermission('list-course') && showMenu('course')"
           to="/academic/course"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -841,6 +991,7 @@
         <v-list-item
           v-if="hasPermission('list-batch') && showMenu('batch')"
           to="/academic/batch"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -850,6 +1001,7 @@
         <v-list-item
           v-if="hasPermission('list-class-teacher') && showMenu('class_teacher')"
           to="/academic/class/teacher"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -859,6 +1011,7 @@
         <v-list-item
           v-if="hasPermission('list-subject') && showMenu('subject')"
           to="/academic/subject"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -868,6 +1021,7 @@
         <v-list-item
           v-if="hasPermission('list-subject-teacher') && showMenu('subject_teacher')"
           to="/academic/subject/teacher"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -877,6 +1031,7 @@
         <v-list-item
           v-if="hasPermission('list-class-timing') && showMenu('class_timing')"
           to="/academic/class/timing"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -886,6 +1041,7 @@
         <v-list-item
           v-if="hasPermission('list-timetable') && showMenu('timetable')"
           to="/academic/timetable"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -895,6 +1051,7 @@
         <v-list-item
           v-if="hasPermission('list-certificate') && showMenu('certificate')"
           to="/academic/certificate"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -919,6 +1076,7 @@
         <v-list-item
           v-if="hasPermission('import-student') && showMenu('student_import')"
           to="/student/import"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -928,6 +1086,7 @@
         <v-list-item
           v-if="hasPermission('list-registration') && showMenu('registration')"
           to="/student/registration"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -937,6 +1096,7 @@
         <v-list-item
           v-if="(hasPermission('list-student') || hasPermission('list-class-teacher-wise-student')) && showMenu('student_list')"
           to="/student/admission"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -946,6 +1106,7 @@
         <v-list-item
           v-if="(hasPermission('list-student') || hasPermission('list-class-teacher-wise-student')) && showMenu('student_behaviour')"
           to="/student/behaviour"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -955,6 +1116,7 @@
         <v-list-item
           v-if="hasPermission('edit-roll-number') && showMenu('roll_number')"
           to="/student/roll/number"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -964,6 +1126,7 @@
         <v-list-item
           v-if="hasPermission('generate-student-id-card') && showMenu('student_id_card')"
           to="/student/id-card"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -973,6 +1136,7 @@
         <v-list-item
           v-if="hasPermission('edit-student') && showMenu('student_image_upload')"
           to="/student/image"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -982,6 +1146,7 @@
         <v-list-item
           v-if="hasPermission('list-student-attendance') && showMenu('student_attendance')"
           to="/student/attendance"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -991,6 +1156,7 @@
         <v-list-item
           v-if="hasPermission('promote-student') && showMenu('promotion')"
           to="/student/promotion"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1000,6 +1166,7 @@
         <v-list-item
           v-if="hasPermission('terminate-student') && showMenu('termination')"
           to="/student/termination"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1009,6 +1176,7 @@
         <v-list-item
           v-if="hasPermission('edit-student') && showMenu('student_parent')"
           to="/student/parent"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1033,6 +1201,7 @@
         <v-list-item
           v-if="hasPermission('import-employee') && showMenu('employee_import')"
           to="/employee/import"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1042,6 +1211,7 @@
         <v-list-item
           v-if="showMenu('employee_list')"
           to="/employee/list"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1051,6 +1221,7 @@
         <v-list-item
           v-if="showMenu('employee_behaviour')"
           to="/employee/behaviour"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1060,6 +1231,7 @@
         <v-list-item
           v-if="hasPermission('generate-employee-id-card') && showMenu('employee_id_card')"
           to="/employee/id-card"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1069,6 +1241,7 @@
         <v-list-item
           v-if="showMenu('employee_attendance')"
           to="/employee/attendance"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1078,6 +1251,7 @@
         <v-list-item
           v-if="showMenu('employee_leave')"
           to="/employee/leave"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1087,6 +1261,7 @@
         <v-list-item
           v-if="showMenu('employee_payroll')"
           to="/employee/payroll"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1111,6 +1286,7 @@
         <v-list-item
           v-if="hasPermission('list-exam-schedule') && showMenu('exam_schedule')"
           to="/exam/schedule"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1120,6 +1296,7 @@
         <v-list-item
           v-if="hasPermission('list-exam-mark') && showMenu('exam_record_mark')"
           to="/exam/record"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1129,6 +1306,7 @@
         <v-list-item
           v-if="hasAnyPermission(['access-exam-report','access-class-teacher-wise-exam-report']) && showMenu('exam_report_card')"
           to="/exam/report"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1139,6 +1317,7 @@
           <v-list-item
             v-if="hasAnyPermission(['access-exam-report','access-class-teacher-wise-exam-report'])"
             to="/exam/report/topper"
+            exact
           >
             <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
             <v-list-item-content>
@@ -1149,6 +1328,7 @@
         <v-list-item
           v-if="hasPermission('list-online-exam') && showMenu('online_exam')"
           to="/online-exam"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1173,6 +1353,7 @@
         <v-list-item
           v-if="hasPermission('list-fee-group') && showMenu('fee_group')"
           to="/finance/fee/group"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1182,6 +1363,7 @@
         <v-list-item
           v-if="hasPermission('list-fee-head') && showMenu('fee_head')"
           to="/finance/fee/head"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1191,6 +1373,7 @@
         <v-list-item
           v-if="hasPermission('list-transport-fee') && showMenu('transport_fee')"
           to="/transport/fee"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1200,6 +1383,7 @@
         <v-list-item
           v-if="hasPermission('list-fee-concession') && showMenu('fee_concession')"
           to="/finance/fee/concession"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1209,6 +1393,7 @@
         <v-list-item
           v-if="hasPermission('list-fee-allocation') && showMenu('fee_allocation')"
           to="/finance/fee/allocation"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1218,6 +1403,7 @@
         <v-list-item
           v-if="hasPermission('list-account') && showMenu('account')"
           to="/finance/account"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1227,6 +1413,7 @@
         <v-list-item
           v-if="hasPermission('list-income') && showMenu('income')"
           to="/finance/transaction/income"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1236,6 +1423,7 @@
         <v-list-item
           v-if="hasPermission('list-expense') && showMenu('expense')"
           to="/finance/transaction/expense"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1245,6 +1433,7 @@
         <v-list-item
           v-if="hasPermission('list-account-transfer') && showMenu('account_transfer')"
           to="/finance/transaction/account/transfer"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1254,6 +1443,7 @@
         <v-list-item
           v-if="showMenu('finance_report')"
           to="/finance/report"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1278,6 +1468,7 @@
         <v-list-item
           v-if="showMenu('transport_route')"
           to="/transport/route"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1287,6 +1478,7 @@
         <v-list-item
           v-if="hasPermission('list-vehicle') && showMenu('vehicle')"
           to="/transport/vehicle"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1296,6 +1488,7 @@
         <v-list-item
           v-if="hasPermission('list-vehicle-incharge') && showMenu('vehicle_incharge')"
           to="/transport/vehicle/incharge"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1305,6 +1498,7 @@
         <v-list-item
           v-if="hasPermission('list-vehicle-document') && showMenu('vehicle_document')"
           to="/transport/vehicle/document"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1314,6 +1508,7 @@
         <v-list-item
           v-if="hasPermission('list-vehicle-fuel') && showMenu('vehicle_fuel')"
           to="/transport/vehicle/fuel"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1323,6 +1518,7 @@
         <v-list-item
           v-if="hasPermission('list-vehicle-log') && showMenu('vehicle_log')"
           to="/transport/vehicle/log"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1332,6 +1528,7 @@
         <v-list-item
           v-if="hasPermission('list-vehicle-service-record') && showMenu('vehicle_service_record')"
           to="/transport/vehicle/service/record"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1341,6 +1538,7 @@
         <v-list-item
           v-if="hasPermission('access-transport-report') && showMenu('vehicle_report')"
           to="/transport/report"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1365,6 +1563,7 @@
         <v-list-item
           v-if="hasPermission('list-holiday') && showMenu('holiday')"
           to="/calendar/holiday"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1374,6 +1573,7 @@
         <v-list-item
           v-if="hasPermission('list-event') && showMenu('event')"
           to="/calendar/event"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1383,6 +1583,7 @@
         <v-list-item
           v-if="hasPermission('list-birthday') && showMenu('celebration')"
           to="/calendar/celebration/birthday"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1407,6 +1608,7 @@
         <v-list-item
           v-if="hasPermission('list-assignment') && showMenu('assignment')"
           to="/resource/assignment"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1416,6 +1618,7 @@
         <v-list-item
           v-if="hasPermission('list-notes') && showMenu('notes')"
           to="/resource/notes"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1425,6 +1628,7 @@
         <v-list-item
           v-if="hasPermission('list-lesson-plan') && showMenu('lesson_plan')"
           to="/resource/lesson/plan"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1434,6 +1638,7 @@
         <v-list-item
           v-if="hasPermission('list-syllabus') && showMenu('syllabus')"
           to="/resource/syllabus"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1458,6 +1663,7 @@
         <v-list-item
           v-if="hasPermission('list-book') && showMenu('book')"
           to="/library/book"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1467,6 +1673,7 @@
         <v-list-item
           v-if="hasPermission('issue-book') && showMenu('issue_book')"
           to="/library/issue"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1476,6 +1683,7 @@
         <v-list-item
           v-if="hasPermission('return-book') && showMenu('return_book')"
           to="/library/return"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1500,6 +1708,7 @@
         <v-list-item
           v-if="showMenu('stock_category')"
           to="/inventory/stock/category"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1509,6 +1718,7 @@
         <v-list-item
           v-if="showMenu('stock_item')"
           to="/inventory/stock/item"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1518,6 +1728,7 @@
         <v-list-item
           v-if="showMenu('vendor')"
           to="/inventory/vendor"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1527,6 +1738,7 @@
         <v-list-item
           v-if="showMenu('stock_purchase')"
           to="/inventory/stock/purchase"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1536,6 +1748,7 @@
         <v-list-item
           v-if="showMenu('stock_transfer')"
           to="/inventory/stock/transfer"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1545,6 +1758,7 @@
         <v-list-item
           v-if="showMenu('stock_sale') && getConfig('made') === 'saudi'"
           to="/inventory/stock/sale"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1569,6 +1783,7 @@
         <v-list-item
           v-if="showMenu('post_feed')"
           to="/post/feed"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1578,6 +1793,7 @@
         <v-list-item
           v-if="showMenu('article')"
           to="/post/article"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1602,6 +1818,7 @@
         <v-list-item
           v-if="showMenu('communication_history')"
           to="/communication"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1611,6 +1828,7 @@
         <v-list-item
           v-if="hasPermission('send-sms') && showMenu('send_sms')"
           to="/communication/sms"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1620,6 +1838,7 @@
         <v-list-item
           v-if="hasPermission('send-email') && showMenu('send_email')"
           to="/communication/email"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1644,6 +1863,7 @@
         <v-list-item
           v-if="showMenu('frontend_page')"
           to="/frontend/page"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1653,6 +1873,7 @@
         <v-list-item
           v-if="showMenu('frontend_block')"
           to="/frontend/block"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1662,6 +1883,7 @@
         <v-list-item
           v-if="showMenu('frontend_menu')"
           to="/frontend/menu"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1686,6 +1908,7 @@
         <v-list-item
           v-if="hasPermission('access-todo') && showMenu('todo')"
           to="/utility/todo"
+          exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
@@ -1696,6 +1919,7 @@
           <v-list-item
             v-if="showMenu('backup')"
             to="/utility/backup"
+            exact
           >
             <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
             <v-list-item-content>
@@ -1705,6 +1929,7 @@
           <v-list-item
             v-if="showMenu('ip_filter')"
             to="/utility/ip-filter"
+            exact
           >
             <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
             <v-list-item-content>
@@ -1714,6 +1939,7 @@
           <v-list-item
             v-if="showMenu('activity_log')"
             to="/utility/activity-log"
+            exact
           >
             <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
             <v-list-item-content>
