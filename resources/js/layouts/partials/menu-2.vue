@@ -150,27 +150,42 @@
           <v-list-item-title>{{ trans('reception.reception_configuration') }}</v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item to="/configuration/reception/enquiry/type">
+      <v-list-item
+        to="/configuration/reception/enquiry/type"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('reception.enquiry_type') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/reception/enquiry/source">
+      <v-list-item
+        to="/configuration/reception/enquiry/source"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('reception.enquiry_source') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/reception/visiting/purpose">
+      <v-list-item
+        to="/configuration/reception/visiting/purpose"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('reception.visiting_purpose') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/reception/calling/purpose">
+      <v-list-item
+        to="/configuration/reception/calling/purpose"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('reception.calling_purpose') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/reception/complaint/type">
+      <v-list-item
+        to="/configuration/reception/complaint/type"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('reception.complaint_type') }}</v-list-item-title>
         </v-list-item-content>
@@ -187,22 +202,34 @@
           <v-list-item-title>{{ trans('academic.academic_configuration') }}</v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item to="/configuration/academic/course/group">
+      <v-list-item
+        to="/configuration/academic/course/group"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.course_group') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/academic/institute">
+      <v-list-item
+        to="/configuration/academic/institute"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.institute_other') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/academic/certificate/template">
+      <v-list-item
+        to="/configuration/academic/certificate/template"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.certificate_template') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/academic/id-card/template">
+      <v-list-item
+        to="/configuration/academic/id-card/template"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.id_card_template') }}</v-list-item-title>
         </v-list-item-content>
@@ -219,12 +246,18 @@
           <v-list-item-title>{{ trans('finance.finance_configuration') }}</v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item to="/configuration/finance/transaction/category">
+      <v-list-item
+        to="/configuration/finance/transaction/category"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('finance.transaction_category') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/finance/payment/method">
+      <v-list-item
+        to="/configuration/finance/payment/method"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('finance.payment_method') }}</v-list-item-title>
         </v-list-item-content>
@@ -241,17 +274,26 @@
           <v-list-item-title>{{ trans('student.student_configuration') }}</v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item to="/configuration/student">
+      <v-list-item
+        to="/configuration/student"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('general.general') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/student/group">
+      <v-list-item
+        to="/configuration/student/group"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('student.student_group') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/student/document/type">
+      <v-list-item
+        to="/configuration/student/document/type"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('student.document_type_only') }}</v-list-item-title>
         </v-list-item-content>
@@ -268,12 +310,18 @@
           <v-list-item-title>{{ trans('behaviour.behaviour_configuration') }}</v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item to="/configuration/behaviour/skill">
+      <v-list-item
+        to="/configuration/behaviour/skill"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('behaviour.skill') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/behaviour/skill/employee">
+      <v-list-item
+        to="/configuration/behaviour/skill/employee"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('behaviour.employee_skill') }}</v-list-item-title>
         </v-list-item-content>
@@ -290,20 +338,32 @@
           <v-list-item-title>{{ trans('exam.configuration') }}</v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item to="/configuration/exam/term">
+      <v-list-item
+        to="/configuration/exam/term"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('exam.term') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/exam/assessment">
+      <v-list-item
+        to="/configuration/exam/assessment"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('exam.assessment') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/exam/observation">
+      <v-list-item
+        to="/configuration/exam/observation"
+        exact
+      >
         <v-list-item-title>{{ trans('exam.observation') }}</v-list-item-title>
       </v-list-item>
-      <v-list-item to="/configuration/exam/grade">
+      <v-list-item
+        to="/configuration/exam/grade"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('exam.grade') }}</v-list-item-title>
         </v-list-item-content>
@@ -320,47 +380,74 @@
           <v-list-item-title>{{ trans('employee.employee_configuration') }}</v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item to="/configuration/employee">
+      <v-list-item
+        to="/configuration/employee"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('general.general') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/employee/category">
+      <v-list-item
+        to="/configuration/employee/category"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.category') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/employee/designation">
+      <v-list-item
+        to="/configuration/employee/designation"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.designation') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/employee/department">
+      <v-list-item
+        to="/configuration/employee/department"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.department') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/employee/group">
+      <v-list-item
+        to="/configuration/employee/group"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.employee_group') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/employee/document/type">
+      <v-list-item
+        to="/configuration/employee/document/type"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.document_type_only') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/employee/leave/type">
+      <v-list-item
+        to="/configuration/employee/leave/type"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.leave_type') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/employee/attendance/type">
+      <v-list-item
+        to="/configuration/employee/attendance/type"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.attendance_type') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/employee/pay/head">
+      <v-list-item
+        to="/configuration/employee/pay/head"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.pay_head') }}</v-list-item-title>
         </v-list-item-content>
@@ -377,17 +464,26 @@
           <v-list-item-title>{{ trans('transport.transport_configuration') }}</v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item to="/configuration/transport/vehicle/document/type">
+      <v-list-item
+        to="/configuration/transport/vehicle/document/type"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('transport.vehicle_document_type_only') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/transport/vehicle/fuel/type">
+      <v-list-item
+        to="/configuration/transport/vehicle/fuel/type"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('transport.vehicle_fuel_type') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/transport/vehicle/service/center">
+      <v-list-item
+        to="/configuration/transport/vehicle/service/center"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('transport.vehicle_service_center_only') }}</v-list-item-title>
         </v-list-item-content>
@@ -404,32 +500,50 @@
           <v-list-item-title>{{ trans('library.library_configuration') }}</v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item to="/configuration/library">
+      <v-list-item
+        to="/configuration/library"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('general.general') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/library/book/author">
+      <v-list-item
+        to="/configuration/library/book/author"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('library.book_author') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/library/book/language">
+      <v-list-item
+        to="/configuration/library/book/language"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('library.book_language') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/library/book/topic">
+      <v-list-item
+        to="/configuration/library/book/topic"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('library.book_topic') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/library/book/publisher">
+      <v-list-item
+        to="/configuration/library/book/publisher"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('library.book_publisher') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/library/book/condition">
+      <v-list-item
+        to="/configuration/library/book/condition"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('library.book_condition') }}</v-list-item-title>
         </v-list-item-content>
@@ -446,7 +560,10 @@
           <v-list-item-title>{{ trans('calendar.calendar_configuration') }}</v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item to="/configuration/calendar/event/type">
+      <v-list-item
+        to="/configuration/calendar/event/type"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('calendar.event_type') }}</v-list-item-title>
         </v-list-item-content>
@@ -463,7 +580,10 @@
           <v-list-item-title>{{ trans('post.post_configuration') }}</v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item to="/configuration/post/article/type">
+      <v-list-item
+        to="/configuration/post/article/type"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('post.article_type') }}</v-list-item-title>
         </v-list-item-content>
@@ -480,12 +600,18 @@
           <v-list-item-title>{{ trans('asset.asset_configuration') }}</v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item to="/configuration/asset/building">
+      <v-list-item
+        to="/configuration/asset/building"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('asset.building') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/asset/room">
+      <v-list-item
+        to="/configuration/asset/room"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('asset.room') }}</v-list-item-title>
         </v-list-item-content>
@@ -502,7 +628,10 @@
           <v-list-item-title>{{ trans('frontend.frontend_configuration') }}</v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item to="/configuration/frontend/index">
+      <v-list-item
+        to="/configuration/frontend/index"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('frontend.frontend') }}</v-list-item-title>
         </v-list-item-content>
@@ -530,22 +659,34 @@
           <v-list-item-title>{{ trans('misc.misc_configuration') }}</v-list-item-title>
         </v-list-item-content>
       </template>
-      <v-list-item to="/configuration/misc/religion">
+      <v-list-item
+        to="/configuration/misc/religion"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('misc.religion') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/misc/caste">
+      <v-list-item
+        to="/configuration/misc/caste"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('misc.caste') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/misc/category">
+      <v-list-item
+        to="/configuration/misc/category"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('misc.category') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-item to="/configuration/misc/blood/group">
+      <v-list-item
+        to="/configuration/misc/blood/group"
+        exact
+      >
         <v-list-item-content>
           <v-list-item-title>{{ trans('misc.blood_group') }}</v-list-item-title>
         </v-list-item-content>
@@ -1429,6 +1570,17 @@
 export default {
   data: () => ({
   }),
+  computed: {
+    configMenu() {
+      return this.$route.meta.menu == 'configuration' ? true : false;
+    },
+    moduleConfigMenu() {
+      return this.$route.meta.menu == 'module-configuration' ? true : false;
+    },
+    moduleMenu() {
+      return this.$route.meta.menu != 'configuration' && this.$route.meta.menu != 'module-configuration' ? true : false;
+    }
+  },
   methods: {
     hasPermission(permission) {
       return helper.hasPermission(permission);
@@ -1448,17 +1600,6 @@ export default {
     showMenu(menu) {
       let menus = helper.getConfig('menu');
       return (Array.isArray(menus) && menus.findIndex(o => o === menu) >= 0) ? true : false;
-    }
-  },
-  computed: {
-    configMenu() {
-      return this.$route.meta.menu == 'configuration' ? true : false;
-    },
-    moduleConfigMenu() {
-      return this.$route.meta.menu == 'module-configuration' ? true : false;
-    },
-    moduleMenu() {
-      return this.$route.meta.menu != 'configuration' && this.$route.meta.menu != 'module-configuration' ? true : false;
     }
   }
 }
