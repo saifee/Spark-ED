@@ -1,7 +1,9 @@
 import configRoutes from './config';
 import utilityRoutes from './utility';
+import sparkRoutes from './spark';
 
 export default [
+    ...sparkRoutes,
     {
         path: '/dashboard',
         component: () => import(/* webpackChunkName: "js/dashboard" */ '@views/dashboard')

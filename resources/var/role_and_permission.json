@@ -216,6 +216,18 @@
 			"edit-payroll-transaction": ["manager"],
 			"cancel-payroll-transaction": ["manager"],
 			"generate-employee-id-card": ["manager","principal"],
+      "list-asset-category": ["manager","principal"],
+      "create-asset-category": ["manager","principal"],
+      "edit-asset-category": ["manager","principal"],
+      "delete-asset-category": ["manager"],
+      "list-asset-item": ["manager","principal"],
+      "create-asset-item": ["manager","principal"],
+      "edit-asset-item": ["manager","principal"],
+      "delete-asset-item": ["manager"],
+      "list-asset-transfer": ["manager","principal"],
+      "create-asset-transfer": ["manager","principal"],
+      "edit-asset-transfer": ["manager","principal"],
+      "delete-asset-transfer": ["manager"],
 			"import-employee": ["manager"]
 		},
 		"library": {

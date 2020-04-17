@@ -254,6 +254,12 @@
 					"translation": "behaviour.behaviour",
 					"visibility": true,
 					"submenu": []
+				},
+				{
+					"name": "employee_asset",
+					"translation": "asset.asset",
+					"visibility": true,
+					"submenu": []
 				}
 			]
 		}

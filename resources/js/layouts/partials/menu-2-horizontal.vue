@@ -569,6 +569,24 @@
             <v-list-item-title>{{ trans('employee.pay_head') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item
+          to="/configuration/employee/asset/category"
+          exact
+        >
+          <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ trans('employee_asset.asset_category') }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          to="/configuration/employee/asset/item"
+          exact
+        >
+          <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ trans('employee_asset.asset_item') }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-menu>
     <v-menu
@@ -1266,6 +1284,16 @@
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>{{ trans('employee.payroll') }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item
+          v-if="showMenu('employee_asset')"
+          to="/employee/asset/transfer"
+          exact
+        >
+          <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ trans('asset.asset') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
