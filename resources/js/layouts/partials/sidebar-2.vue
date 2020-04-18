@@ -11,10 +11,29 @@
     >
         <main-menu></main-menu>
           <template v-slot:append>
-            <v-btn-toggle borderless>
-                <v-btn v-if="hasPermission('access-configuration')" to="/configuration"><i class="fas fa-cogs"></i></v-btn>
-                <v-btn to="/change/password"><i class="fas fa-key"></i></v-btn>
-                <v-btn @click.prevent="logout"><i class="fas fa-power-off"></i></v-btn>
+            <v-btn-toggle
+              borderless
+              class="d-flex"
+            >
+              <v-btn
+                v-if="hasPermission('access-configuration')"
+                to="/configuration"
+                class="flex-grow-1"
+              >
+                <i class="fas fa-cogs" />
+              </v-btn>
+              <v-btn
+                to="/change/password"
+                class="flex-grow-1"
+              >
+                <i class="fas fa-key" />
+              </v-btn>
+              <v-btn
+                class="flex-grow-1"
+                @click.prevent="logout"
+              >
+                <i class="fas fa-power-off" />
+              </v-btn>
             </v-btn-toggle>
           </template>
     </v-navigation-drawer>
