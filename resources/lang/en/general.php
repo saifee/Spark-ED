@@ -146,6 +146,7 @@
   'system' => 'System',
   'tags' => 'Tags',
   'to' => 'to',
+  'toggle' => 'Toggle',
   'toggle_sidebar' => 'Toggle Sidebar',
   'total' => 'Total',
   'total_result_count' => 'Total :count result found',
