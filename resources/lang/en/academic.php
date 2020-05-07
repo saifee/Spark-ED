@@ -271,6 +271,7 @@
   'subject_deleted' => 'Subject deleted.',
   'subject_description' => 'Description',
   'subject_elective' => 'Elective',
+  'subject_group' => 'Subject Group',
   'subject_has_no_exam' => 'Has no Exam?',
   'subject_is_elective' => 'Is Elective?',
   'subject_max_class_per_week' => 'Max Class/Week',

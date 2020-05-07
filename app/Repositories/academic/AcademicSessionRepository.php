@@ -506,6 +506,7 @@ class AcademicSessionRepository
         ];
 
         $options['transfer_certificate_format'] = $transfer_certificate_format;
+        $options['exam_report_analysis'] = gbv($params, 'exam_report_analysis');
         $formatted['options'] = $options;
 
         if (! $academic_session_id) {

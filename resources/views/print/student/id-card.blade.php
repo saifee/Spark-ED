@@ -21,8 +21,8 @@
 				<tr>
 					<td valign="middle">
 						<p>{{trans('student.name')}}: <strong>{{$student_record->student->name}}</strong></p>
-						<p>{{trans('student.first_guardian_name')}}: <strong> {{$student_record->student->parent->father_name}}</strong></p>
-						<p>{{trans('student.second_guardian_name')}}: <strong> {{$student_record->student->parent->mother_name}}</strong></p>
+						<p>{{trans('student.father_name')}}: <strong> {{$student_record->student->parent->father_name}}</strong></p>
+						<p>{{trans('student.mother_name')}}: <strong> {{$student_record->student->parent->mother_name}}</strong></p>
 						<p>{{trans('student.date_of_birth')}}: <strong>{{showDate($student_record->student->date_of_birth)}}</strong></p>
 						<p>{{trans('academic.batch')}}: <strong>{{$batch->batch_with_course}}</strong></p>
 						<p>{{trans('student.admission_number_short')}}: <strong>{{$student_record->admission->admission_number}}</strong></p>

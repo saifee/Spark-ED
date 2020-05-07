@@ -192,7 +192,7 @@ class PageRepository
 
         $formatted = [
             'title'    => $title,
-            'body'     => clean($body),
+            'body'     => cleanBody($body),
             'is_draft' => $is_draft
         ];
 
@@ -217,8 +217,9 @@ class PageRepository
 
     private function validateSlider($params)
     {
-        if (! gbv($params, 'has_slider'))
+        if (! gbv($params, 'has_slider')) {
             return;
+        }
 
         $sliders = gv($params, 'sliders', []);
 
@@ -251,10 +252,11 @@ class PageRepository
         }
     }
 
-    private function updateSliderIfRequired(Page $page, $params) 
+    private function updateSliderIfRequired(Page $page, $params)
     {
-        if (! gbv($params, 'has_slider'))
+        if (! gbv($params, 'has_slider')) {
             return;
+        }
 
         $sliders = gv($params, 'sliders', []);
 

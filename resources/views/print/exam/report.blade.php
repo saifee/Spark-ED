@@ -12,7 +12,7 @@
 				<td style="width: 15%;">{{getRollNumber($student_record)}}</td>
 			</tr>
         	<tr>
-				<td style="width: 15%; font-weight: bold;">{{trans('student.first_guardian_name')}}</td>
+				<td style="width: 15%; font-weight: bold;">{{trans('student.father_name')}}</td>
 				<td style="width: 35%;">{{$student_record->student->parent->father_name}}</td>
 				<td style="width: 10%; font-weight: bold;">{{trans('student.date_of_admission')}}</td>
 				<td style="width: 15%;">{{showDate($student_record->admission->date_of_admission)}}</td>
@@ -20,7 +20,7 @@
 				<td style="width: 15%;">{{showDate($student_record->student->date_of_birth)}}</td>
 			</tr>
         	<tr>
-				<td style="width: 15%; font-weight: bold;">{{trans('student.second_guardian_name')}}</td>
+				<td style="width: 15%; font-weight: bold;">{{trans('student.mother_name')}}</td>
 				<td style="width: 35%;">{{$student_record->student->parent->mother_name}}</td>
 				<td style="width: 10%; font-weight: bold;">{{trans('academic.batch')}}</td>
 				<td style="width: 15%;">{{$student_record->batch->course->name.' '.$student_record->batch->name}}</td>

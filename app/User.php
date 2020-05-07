@@ -31,6 +31,11 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token','activation_token'
     ];
     
+    protected $casts = [
+                        'push_registration_tokens' => 'array',
+                        'options' => 'array'
+                    ];
+    
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -69,6 +74,16 @@ class User extends Authenticatable implements JWTSubject
     public function userPreference()
     {
         return $this->hasOne('App\UserPreference');
+    }
+
+    public function pushTokens()
+    {
+        return $this->hasMany('App\UserPushToken');
+    }
+
+    public function getOption(string $option)
+    {
+        return array_get($this->options, $option);
     }
 
     public function getProfile()

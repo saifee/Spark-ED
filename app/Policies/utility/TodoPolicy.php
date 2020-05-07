@@ -12,7 +12,7 @@ class TodoPolicy
 
     public function before($user, $ability)
     {
-        return $user->hasRole('super-admin') || $user->can('access-todo');
+        return $user->can('access-todo');
     }
 
     /**

@@ -28,7 +28,7 @@ class TransportStoppagePolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-transport-stoppage');
+        return $user->can('list-transport-stoppage');
     }
 
     /**
@@ -39,7 +39,7 @@ class TransportStoppagePolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-transport-stoppage');
+        return $user->can('create-transport-stoppage');
     }
 
     /**
@@ -51,7 +51,7 @@ class TransportStoppagePolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-transport-stoppage');
+        return $user->can('list-transport-stoppage');
     }
 
     /**
@@ -63,7 +63,7 @@ class TransportStoppagePolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-transport-stoppage');
+        return $user->can('edit-transport-stoppage');
     }
 
     /**
@@ -75,6 +75,6 @@ class TransportStoppagePolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-transport-stoppage');
+        return $user->can('delete-transport-stoppage');
     }
 }

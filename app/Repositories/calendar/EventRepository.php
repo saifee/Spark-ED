@@ -194,7 +194,7 @@ class EventRepository
         }
 
         if (count($course_id)) {
-            $query->where(function($q1) use($course_id) {
+            $query->where(function ($q1) use ($course_id) {
                 $q1->where('audience', 'everyone')->orWhereHas('courses', function ($q2) use ($course_id) {
                     $q2->whereIn('course_id', $course_id);
                 });
@@ -202,7 +202,7 @@ class EventRepository
         }
 
         if (count($batch_id)) {
-            $query->where(function($q1) use($batch_id) {
+            $query->where(function ($q1) use ($batch_id) {
                 $q1->where('audience', 'everyone')->orWhereHas('batches', function ($q2) use ($batch_id) {
                     $q2->whereIn('batch_id', $batch_id);
                 });
@@ -210,7 +210,7 @@ class EventRepository
         }
 
         if (count($department_id)) {
-            $query->where(function($q1) use($department_id) {
+            $query->where(function ($q1) use ($department_id) {
                 $q1->where('audience', 'everyone')->orWhereHas('departments', function ($q2) use ($department_id) {
                     $q2->whereIn('department_id', $department_id);
                 });
@@ -218,7 +218,7 @@ class EventRepository
         }
 
         if (count($employee_category_id)) {
-            $query->where(function($q1) use($employee_category_id) {
+            $query->where(function ($q1) use ($employee_category_id) {
                 $q1->where('audience', 'everyone')->orWhereHas('employeeCategories', function ($q2) use ($employee_category_id) {
                     $q2->whereIn('employee_category_id', $employee_category_id);
                 });
@@ -382,7 +382,7 @@ class EventRepository
             'end_date'      => toDate($end_date),
             'start_time'    => (! $no_time) ? toTime($start_time) : null,
             'end_time'      => (! $no_time) ? toTime($end_time) : null,
-            'description'   => clean($description),
+            'description'   => cleanBody($description),
             'audience'      => $audience,
             'options'       => []
         ];
@@ -520,8 +520,6 @@ class EventRepository
      */
     public function delete(Event $event)
     {
-        $this->isEditableOrFail($event);
-
         return $event->delete();
     }
 

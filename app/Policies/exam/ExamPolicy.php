@@ -28,7 +28,7 @@ class ExamPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-exam') || $user->can('edit-exam');
+        return $user->can('create-exam') || $user->can('edit-exam');
     }
 
     /**
@@ -40,7 +40,7 @@ class ExamPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-exam');
+        return $user->can('list-exam');
     }
 
     /**
@@ -51,7 +51,7 @@ class ExamPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-exam');
+        return $user->can('create-exam');
     }
 
     /**
@@ -63,7 +63,7 @@ class ExamPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-exam');
+        return $user->can('list-exam');
     }
 
     /**
@@ -75,7 +75,7 @@ class ExamPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-exam');
+        return $user->can('edit-exam');
     }
 
     /**
@@ -87,6 +87,6 @@ class ExamPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-exam');
+        return $user->can('delete-exam');
     }
 }

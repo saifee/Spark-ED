@@ -13,7 +13,7 @@ class CertificateRepository
     protected $certificate;
     protected $certificate_template;
     protected $student_record;
-	protected $employee;
+    protected $employee;
 
     /**
      * Instantiate a new instance.
@@ -24,12 +24,12 @@ class CertificateRepository
         Certificate $certificate,
         CertificateTemplateRepository $certificate_template,
         StudentRecord $student_record,
-		Employee $employee
+        Employee $employee
     ) {
         $this->certificate = $certificate;
         $this->certificate_template = $certificate_template;
         $this->student_record = $student_record;
-		$this->employee = $employee;
+        $this->employee = $employee;
     }
 
     /**
@@ -142,7 +142,7 @@ class CertificateRepository
             ]);
 
         if ($type) {
-            $query->whereHas('certificateTemplate', function($q) use($type) {
+            $query->whereHas('certificateTemplate', function ($q) use ($type) {
                 $q->where('type', $type);
             });
         }
@@ -190,13 +190,13 @@ class CertificateRepository
         $certificate_templates = array();
 
         foreach ($certificate_template_details as $certificate_template_detail) {
-        	$certificate_templates[] = array(
-        		'id' => $certificate_template_detail->id,
-        		'name' => $certificate_template_detail->name
-        	);
+            $certificate_templates[] = array(
+                'id' => $certificate_template_detail->id,
+                'name' => $certificate_template_detail->name
+            );
         }
 
-        return compact('certificate_template_details','certificate_templates');
+        return compact('certificate_template_details', 'certificate_templates');
     }
 
     /**
@@ -237,7 +237,6 @@ class CertificateRepository
         $employee_id = gv($params, 'employee_id');
 
         if ($certificate_template->type == 'student') {
-
             if (! $student_record_id) {
                 throw ValidationException::withMessages(['message' => trans('validation.required', ['attribute' => trans('student.student')])]);
             }
@@ -250,7 +249,6 @@ class CertificateRepository
         }
 
         if ($certificate_template->type == 'employee') {
-
             if (! $employee_id) {
                 throw ValidationException::withMessages(['message' => trans('validation.required', ['attribute' => trans('employee.employee')])]);
             }
@@ -262,7 +260,7 @@ class CertificateRepository
             }
         }
 
-        $body = clean(gv($params, 'body'));
+        $body = cleanBody(gv($params, 'body'));
 
         $formatted = [
             'certificate_template_id' => $certificate_template_id,

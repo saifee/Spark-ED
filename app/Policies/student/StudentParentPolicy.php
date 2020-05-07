@@ -28,7 +28,7 @@ class StudentParentPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-student');
+        return $user->can('edit-student');
     }
 
     /**
@@ -40,7 +40,7 @@ class StudentParentPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-student');
+        return $user->can('edit-student');
     }
 
     /**
@@ -52,6 +52,6 @@ class StudentParentPolicy
      */
     public function search(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('new-registration');
+        return $user->can('new-registration');
     }
 }

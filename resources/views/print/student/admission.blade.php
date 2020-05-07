@@ -19,10 +19,10 @@
                     <th>{{trans('student.gender')}}</th>
                 @endif
                 @if(isColumnVisible('father_name', $filter))
-                    <th>{{trans('student.first_guardian_name')}}</th>
+                    <th>{{trans('student.father_name')}}</th>
                 @endif
                 @if(isColumnVisible('mother_name', $filter))
-                    <th>{{trans('student.second_guardian_name')}}</th>
+                    <th>{{trans('student.mother_name')}}</th>
                 @endif
                 @if(isColumnVisible('date_of_birth', $filter))
                     <th>{{trans('student.date_of_birth')}}</th>

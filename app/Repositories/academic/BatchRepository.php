@@ -475,4 +475,14 @@ class BatchRepository
         $subject_details = $batch->subjects;
         return compact('subjects','subject_details');
     }
+
+    /**
+     * Get course id from batch ids
+     * @param  array $batch_ids
+     * @return array
+     */
+    public function getCourseIdFromBatchIds($batch_ids)
+    {
+        return $this->batch->whereIn('id', $batch_ids)->get()->pluck('course_id')->all();
+    }
 }

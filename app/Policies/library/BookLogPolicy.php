@@ -27,7 +27,7 @@ class BookLogPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->hasAnyPermission(['issue-book','return-book']);
+        return $user->hasAnyPermission(['issue-book','return-book']);
     }
 
     /**
@@ -38,7 +38,7 @@ class BookLogPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('issue-book');
+        return $user->can('issue-book');
     }
 
     /**
@@ -49,6 +49,6 @@ class BookLogPolicy
      */
     public function returnBook(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('return-book');
+        return $user->can('return-book');
     }
 }

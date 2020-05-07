@@ -128,7 +128,9 @@ class ArticleController extends Controller
 
         $is_editable = $this->repo->isEditable($article);
 
-        return $this->success(compact('article', 'attachments','is_editable'));
+        $mobile_description = mobileDescription($article->description);
+
+        return $this->success(compact('article', 'attachments','is_editable', 'mobile_description'));
     }
 
     /**

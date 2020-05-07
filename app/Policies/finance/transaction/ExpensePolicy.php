@@ -33,7 +33,7 @@ class ExpensePolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-expense') || $user->can('edit-expense');
+        return $user->can('create-expense') || $user->can('edit-expense');
     }
 
     /**
@@ -45,7 +45,7 @@ class ExpensePolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-expense');
+        return $user->can('list-expense');
     }
 
     /**
@@ -56,7 +56,7 @@ class ExpensePolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-expense');
+        return $user->can('create-expense');
     }
 
     /**
@@ -68,7 +68,7 @@ class ExpensePolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-expense');
+        return $user->can('list-expense');
     }
 
     /**

@@ -28,7 +28,7 @@ class SyllabusPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-syllabus') || $user->can('edit-syllabus');
+        return $user->can('create-syllabus') || $user->can('edit-syllabus');
     }
 
     /**
@@ -40,7 +40,7 @@ class SyllabusPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-syllabus');
+        return $user->can('list-syllabus');
     }
 
     /**
@@ -51,7 +51,7 @@ class SyllabusPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-syllabus');
+        return $user->can('create-syllabus');
     }
 
     /**
@@ -63,7 +63,7 @@ class SyllabusPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-syllabus');
+        return $user->can('list-syllabus');
     }
 
     /**
@@ -75,7 +75,7 @@ class SyllabusPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-syllabus');
+        return $user->can('edit-syllabus');
     }
 
     /**
@@ -87,6 +87,6 @@ class SyllabusPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-syllabus');
+        return $user->can('delete-syllabus');
     }
 }

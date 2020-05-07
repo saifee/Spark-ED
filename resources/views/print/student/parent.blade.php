@@ -4,8 +4,8 @@
     <table class="fancy-detail">
         <thead>
             <tr>
-                <th>{{trans('student.first_guardian_name')}}</th>
-                <th>{{trans('student.second_guardian_name')}}</th>
+                <th>{{trans('student.father_name')}}</th>
+                <th>{{trans('student.mother_name')}}</th>
                 <th>{{trans('student.spouse_name')}}</th>
                 <th>{{trans('student.first_guardian_contact_number')}}</th>
             </tr>

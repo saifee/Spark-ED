@@ -29,7 +29,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-user');
+        return $user->can('create-user');
     }
 
     /**
@@ -41,7 +41,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-user');
+        return $user->can('edit-user');
     }
 
     /**
@@ -53,7 +53,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-user');
+        return $user->can('delete-user');
     }
 
     /**
@@ -65,7 +65,7 @@ class UserPolicy
      */
     public function forceResetUserPassword(User $user, User $model)
     {
-        return $user->hasRole('super-admin') || $user->can('force-reset-user-password') && $user->id != $model->id;
+        return $user->can('force-reset-user-password') && $user->id != $model->id;
     }
 
     /**
@@ -77,7 +77,7 @@ class UserPolicy
      */
     public function email(User $user, User $model)
     {
-        return $user->hasRole('super-admin') || $user->can('email-user') && $user->id != $model->id;
+        return $user->can('email-user') && $user->id != $model->id;
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 namespace Mint\Service\Repositories;
+
 ini_set('max_execution_time', 0);
 
 use App\User;
@@ -10,6 +11,7 @@ use App\Models\Employee\Employee;
 use Spatie\Permission\Models\Role;
 use App\Models\Utility\EmailTemplate;
 use Spatie\Permission\Models\Permission;
+use \App\Models\Configuration\Configuration;
 use Illuminate\Validation\ValidationException;
 use App\Models\Configuration\Role as RoleModel;
 use App\Models\Configuration\Employee\Designation;
@@ -24,6 +26,7 @@ class InstallRepository
 {
     use Install;
 
+    protected $config;
     protected $role;
     protected $permission;
     protected $email_template;
@@ -37,6 +40,7 @@ class InstallRepository
      * @return void
      */
     public function __construct(
+        Configuration $config,
         RoleRepository $role,
         PermissionRepository $permission,
         EmailTemplateRepository $email_template,
@@ -44,6 +48,7 @@ class InstallRepository
         EmployeeCategory $employee_category,
         Designation $designation
     ) {
+        $this->config = $config;
         $this->role = $role;
         $this->permission = $permission;
         $this->email_template = $email_template;
@@ -92,12 +97,12 @@ class InstallRepository
                 throw ValidationException::withMessages(['message' => trans('install.db_import_mismatch')]);
             }
         } else {
-        $count_table_query = mysqli_query($link, "show tables");
-        $count_table = mysqli_num_rows($count_table_query);
+            $count_table_query = mysqli_query($link, "show tables");
+            $count_table = mysqli_num_rows($count_table_query);
 
-        if ($count_table) {
-            throw ValidationException::withMessages(['message' => trans('install.existing_table_in_database')]);
-        }
+            if ($count_table) {
+                throw ValidationException::withMessages(['message' => trans('install.existing_table_in_database')]);
+            }
         }
 
         return true;
@@ -147,6 +152,8 @@ class InstallRepository
 
         $this->seed(gbv($params, 'seed'));
 
+        $this->enableMenu();
+
         \Storage::put('.app_installed', isset($checksum) ? $checksum : '');
         \Storage::put('.access_code', request('access_code'));
         \Storage::put('.account_email', request('envato_email'));
@@ -189,7 +196,7 @@ class InstallRepository
     public function migrateDB()
     {
         if (! request('db_imported')) {
-        $db = \Artisan::call('migrate');
+            $db = \Artisan::call('migrate');
         }
         
         $key = \Artisan::call('key:generate');
@@ -200,8 +207,9 @@ class InstallRepository
      */
     public function seed($seed = 0)
     {
-        if (! $seed)
+        if (! $seed) {
             return;
+        }
 
         $db = \Artisan::call('db:seed');
     }
@@ -333,6 +341,37 @@ class InstallRepository
         if (count($templates)) {
             EmailTemplate::insert($templates);
         }
+    }
+
+    /**
+     * Enable menu
+     * @return [type] [description]
+     */
+    private function enableMenu()
+    {
+        $modules = getVar('modules');
+
+        $menus = [];
+        foreach ($modules as $module) {
+            $menu = gv($module, 'menu', []);
+            if (gv($menu, 'name')) {
+                $menus[] = gv($menu, 'name');
+            }
+          
+            $submenus = gv($menu, 'submenu', []);
+            foreach ($submenus as $submenu) {
+                if (gv($submenu, 'name')) {
+                    $menus[] = gv($submenu, 'name');
+                }
+            }
+        }
+
+        $config = $this->config->firstOrCreate([
+            'name' => 'menu'
+        ]);
+
+        $config->text_value = implode(',', $menus);
+        $config->save();
     }
 
     /**

@@ -1271,6 +1271,22 @@ class StudentRecordRepository {
 	}
 
 	/**
+	 * Fetch students for given batch for login
+	 *
+	 * @param Array $params
+	 * @return Array $student_records
+	 */
+	public function fetchBatchWiseStudentForLogin($params = array()) {
+		$batch_id = gv($params, 'batch_id');
+
+		$batch = $this->batch->findOrFail($batch_id);
+
+		$student_records = $this->student_record->with('student','student.user', 'student.parent','student.parent.user')->filterBySession()->filterByBatchId($batch_id)->whereNull('date_of_exit')->select('student_records.*', \DB::raw('(SELECT concat_ws(" ", first_name,middle_name,last_name) FROM students WHERE student_records.student_id = students.id ) as name'))->orderBy('name','asc')->get();
+
+		return compact('student_records', 'batch');
+	}
+
+	/**
 	 * Store roll number of students of given batch
 	 *
 	 * @param Array $params

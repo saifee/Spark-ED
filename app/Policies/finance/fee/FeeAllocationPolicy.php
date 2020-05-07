@@ -28,7 +28,7 @@ class FeeAllocationPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-fee-allocation') || $user->can('edit-fee-allocation');
+        return $user->can('create-fee-allocation') || $user->can('edit-fee-allocation');
     }
 
     /**
@@ -40,7 +40,7 @@ class FeeAllocationPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-fee-allocation');
+        return $user->can('list-fee-allocation');
     }
 
     /**
@@ -51,7 +51,7 @@ class FeeAllocationPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-fee-allocation');
+        return $user->can('create-fee-allocation');
     }
 
     /**
@@ -63,7 +63,7 @@ class FeeAllocationPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-fee-allocation');
+        return $user->can('list-fee-allocation');
     }
 
     /**
@@ -75,7 +75,7 @@ class FeeAllocationPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-fee-allocation');
+        return $user->can('edit-fee-allocation');
     }
 
     /**
@@ -87,6 +87,6 @@ class FeeAllocationPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-fee-allocation');
+        return $user->can('delete-fee-allocation');
     }
 }

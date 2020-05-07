@@ -77,8 +77,8 @@ class SMSRepository
         $params['included_numbers'] = $includes;
         $params['excluded_numbers'] = $excludes;
 
-        $options['individual_students'] = gv($params, 'individual_students', []);
-        $options['individual_employees'] = gv($params, 'individual_employees', []);
+        $options['individual_students'] = array_unique(gv($params, 'individual_students', []));
+        $options['individual_employees'] = array_unique(gv($params, 'individual_employees', []));
 
         $communication = $this->communication->create($params);
         $communication->options = $options;

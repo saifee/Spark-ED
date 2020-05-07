@@ -197,6 +197,12 @@
 					"submenu": []
 				},
 				{
+					"name": "student_login",
+					"translation": "student.login",
+					"visibility": true,
+					"submenu": []
+				},
+				{
 					"name": "student_behaviour",
 					"translation": "behaviour.behaviour",
 					"visibility": true,
@@ -607,8 +613,26 @@
 			"visibility": true,
 			"submenu": [
 				{
+					"name": "meeting",
+					"translation": "communication.meeting",
+					"visibility": true,
+					"submenu": []
+				},
+				{
+					"name": "my_meeting",
+					"translation": "communication.my_meeting",
+					"visibility": true,
+					"submenu": []
+				},
+				{
 					"name": "communication_history",
 					"translation": "communication.history",
+					"visibility": true,
+					"submenu": []
+				},
+				{
+					"name": "my_notification",
+					"translation": "communication.my_notification",
 					"visibility": true,
 					"submenu": []
 				},
@@ -621,6 +645,12 @@
 				{
 					"name": "send_email",
 					"translation": "communication.email",
+					"visibility": true,
+					"submenu": []
+				},
+				{
+					"name": "send_push_notification",
+					"translation": "communication.push_notification",
 					"visibility": true,
 					"submenu": []
 				}

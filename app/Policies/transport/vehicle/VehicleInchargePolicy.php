@@ -28,7 +28,7 @@ class VehicleInchargePolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-vehicle-incharge');
+        return $user->can('list-vehicle-incharge');
     }
 
     /**
@@ -39,7 +39,7 @@ class VehicleInchargePolicy
      */
     public function store(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('store-vehicle-incharge');
+        return $user->can('store-vehicle-incharge');
     }
 
     /**
@@ -51,6 +51,6 @@ class VehicleInchargePolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-vehicle-incharge');
+        return $user->can('delete-vehicle-incharge');
     }
 }

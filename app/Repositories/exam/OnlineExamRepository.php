@@ -253,7 +253,7 @@ class OnlineExamRepository
         $exam_types = getOnlineExamTypes();
         $online_exam_question_types = getOnlineExamQuestionTypes();
 
-        return compact('batches', 'batch_with_subjects','exam_types','online_exam_question_types');
+        return compact('batches', 'batch_with_subjects', 'exam_types', 'online_exam_question_types');
     }
 
     /**
@@ -336,7 +336,7 @@ class OnlineExamRepository
         }
 
         if (gv($params, 'exam_type') == 'mcq' && $online_exam_id) {
-            if ($this->online_exam_question->whereOnlineExamId($online_exam_id)->where('question_type','!=','mcq')->count()) {
+            if ($this->online_exam_question->whereOnlineExamId($online_exam_id)->where('question_type', '!=', 'mcq')->count()) {
                 throw ValidationException::withMessages(['exam_type' => trans('exam.online_exam_mixed_question_type_found')]);
             }
         }
@@ -353,7 +353,7 @@ class OnlineExamRepository
             'passing_percentage' => gv($params, 'passing_percentage', 0),
             'is_negative_mark_applicable' => gbv($params, 'is_negative_mark_applicable'),
             'negative_mark_percentage_per_question' => gv($params, 'negative_mark_percentage_per_question', 0),
-            'instructions'  => clean($instructions),
+            'instructions'  => cleanBody($instructions),
             'options'      => []
         ];
 
@@ -368,7 +368,7 @@ class OnlineExamRepository
     /**
      * Is online exam editable
      * @param  OnlineExam $online_exam
-     * @return boolean                 
+     * @return boolean
      */
     private function isEditable(OnlineExam $online_exam)
     {
@@ -436,7 +436,7 @@ class OnlineExamRepository
     /**
      * Find question or fail
      * @param  OnlineExam $online_exam
-     * @param  integer $id          
+     * @param  integer $id
      * @return OnlineExamQuestion
      */
     public function findQuestionOrFail(OnlineExam $online_exam, $id)
@@ -453,7 +453,7 @@ class OnlineExamRepository
     /**
      * Add question to exam
      * @param OnlineExam $online_exam
-     * @param array      $params      
+     * @param array      $params
      */
     public function addQuestion(OnlineExam $online_exam, $params = array())
     {
@@ -469,7 +469,7 @@ class OnlineExamRepository
     /**
      * Update question of exam
      * @param OnlineExam $online_exam
-     * @param array      $params      
+     * @param array      $params
      */
     public function updateQuestion(OnlineExamQuestion $online_exam_question, $params = array())
     {
@@ -488,8 +488,8 @@ class OnlineExamRepository
 
     /**
      * Format question params
-     * @param  array  $params                 
-     * @param  object $online_exam             
+     * @param  array  $params
+     * @param  object $online_exam
      * @param  integer $online_exam_question_id
      * @return array
      */
@@ -508,10 +508,10 @@ class OnlineExamRepository
         $query = $this->online_exam_question->whereOnlineExamId($online_exam->id);
 
         if ($online_exam_question_id) {
-            $query->where('id','!=',$online_exam_question_id);
+            $query->where('id', '!=', $online_exam_question_id);
         }
 
-        $question_exists = $query->where('question','=',$question)->count();
+        $question_exists = $query->where('question', '=', $question)->count();
 
         if ($question_exists) {
             throw ValidationException::withMessages(['message' => trans('exam.online_exam_question_exists')]);
@@ -621,7 +621,7 @@ class OnlineExamRepository
      * @param  OnlineExam $online_exam
      * @return void
      */
-    public function toggleStatus(OnlineExam $online_exam) 
+    public function toggleStatus(OnlineExam $online_exam)
     {
         if ($online_exam->records->count()) {
             throw ValidationException::withMessages(['message' => trans('user.permission_denied')]);
@@ -648,9 +648,9 @@ class OnlineExamRepository
     /**
      * Is online exam available to student & parent
      * @param  OnlineExam $online_exam
-     * @return boolean                 
+     * @return boolean
      */
-    public function isAvailableToStudentAndParent(OnlineExam $online_exam) 
+    public function isAvailableToStudentAndParent(OnlineExam $online_exam)
     {
         if (! \Auth::user()->hasAnyRole([
             config('system.default_role.parent'),
@@ -689,9 +689,9 @@ class OnlineExamRepository
      * @param  OnlineExam $online_exam
      * @return array
      */
-    public function getOnlineExamQuestions(OnlineExam $online_exam) 
+    public function getOnlineExamQuestions(OnlineExam $online_exam)
     {
-        $questions = $this->online_exam_question->whereOnlineExamId($online_exam->id)->orderBy('position','asc')->get();
+        $questions = $this->online_exam_question->whereOnlineExamId($online_exam->id)->orderBy('position', 'asc')->get();
 
         $data = array();
         foreach ($questions as $question) {
@@ -743,18 +743,18 @@ class OnlineExamRepository
     /**
      * Get online exam record by id
      * @param  OnlineExam $online_exam
-     * @param  integer     $id          
+     * @param  integer     $id
      * @return OnlineExamRecord
      */
     public function getOnlineExamRecordById(OnlineExam $online_exam, $id)
     {
-        return $this->online_exam_record->with('studentRecord','studentRecord.student','studentRecord.student.parent','studentRecord.batch','studentRecord.batch.course')->whereOnlineExamId($online_exam->id)->whereId($id)->first();
+        return $this->online_exam_record->with('studentRecord', 'studentRecord.student', 'studentRecord.student.parent', 'studentRecord.batch', 'studentRecord.batch.course')->whereOnlineExamId($online_exam->id)->whereId($id)->first();
     }
 
     /**
      * Store online exam records
      * @param  OnlineExam $online_exam
-     * @param  array      $params     
+     * @param  array      $params
      * @return void
      */
     public function storeExam(OnlineExam $online_exam, $params = array())
@@ -834,11 +834,11 @@ class OnlineExamRepository
     public function getStudents(OnlineExam $online_exam)
     {
         $date = toDate($online_exam->date);
-        $student_records = $this->student_record->with('student','student.parent','batch','batch.course')->filterBySession()->filterbyBatchId($online_exam->batch_id)->where('date_of_entry','<=',$date)->where(function($q) use($date) {
-            $q->where('date_of_exit',null)->orWhere(function($q1) use($date) {
-                $q1->where('date_of_exit','!=',null)->where('date_of_exit','>=',$date);
+        $student_records = $this->student_record->with('student', 'student.parent', 'batch', 'batch.course')->filterBySession()->filterbyBatchId($online_exam->batch_id)->where('date_of_entry', '<=', $date)->where(function ($q) use ($date) {
+            $q->where('date_of_exit', null)->orWhere(function ($q1) use ($date) {
+                $q1->where('date_of_exit', '!=', null)->where('date_of_exit', '>=', $date);
             });
-        })->orderBy('roll_number','asc')->get();
+        })->orderBy('roll_number', 'asc')->get();
 
         $students = array();
         $online_exam_records = $online_exam->records;
@@ -855,7 +855,7 @@ class OnlineExamRepository
             );
         }
 
-        array_multisort(array_map(function($element) {
+        array_multisort(array_map(function ($element) {
               return $element['mark'];
         }, $students), SORT_DESC, $students);
 

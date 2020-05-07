@@ -21,11 +21,11 @@
 				<td>{{$student_record->student->name}}</td>
 			</tr>
 			<tr>
-				<td>{{trans('student.second_guardian_name')}}</td>
+				<td>{{trans('student.mother_name')}}</td>
 				<td>{{$student_record->student->parent->mother_name}}</td>
 			</tr>
 			<tr>
-				<td>{{trans('student.first_guardian_name')}}</td>
+				<td>{{trans('student.father_name')}}</td>
 				<td>{{$student_record->student->parent->father_name}}</td>
 			</tr>
 			<tr>

@@ -28,7 +28,7 @@ class FeeGroupPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-fee-group');
+        return $user->can('list-fee-group');
     }
 
     /**
@@ -39,7 +39,7 @@ class FeeGroupPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-fee-group');
+        return $user->can('create-fee-group');
     }
 
     /**
@@ -51,7 +51,7 @@ class FeeGroupPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-fee-group');
+        return $user->can('list-fee-group');
     }
 
     /**
@@ -63,7 +63,7 @@ class FeeGroupPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-fee-group');
+        return $user->can('edit-fee-group');
     }
 
     /**
@@ -75,6 +75,6 @@ class FeeGroupPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-fee-group');
+        return $user->can('delete-fee-group');
     }
 }

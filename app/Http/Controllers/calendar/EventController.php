@@ -149,7 +149,9 @@ class EventController extends Controller
 
         $is_editable = $this->repo->isEditable($event);
 
-        return $this->success(compact('event', 'attachments', 'selected_audience', 'start_time', 'end_time','is_editable'));
+        $mobile_description = mobileDescription($event->description);
+
+        return $this->success(compact('event', 'attachments', 'selected_audience', 'start_time', 'end_time','is_editable', 'mobile_description'));
     }
 
     /**
@@ -186,6 +188,8 @@ class EventController extends Controller
         $this->authorize('delete', Event::class);
 
         $event = $this->repo->findByUuidOrFail($uuid);
+
+        $this->repo->isEditableOrFail($event);
 
         $this->upload->delete($this->module, $event->id);
 

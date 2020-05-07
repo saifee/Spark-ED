@@ -8,7 +8,6 @@ import frontendRoutes from '@routers/frontend';
 import guestRoutes from '@routers/guest';
 import authRoutes from '@routers/auth';
 import authWithAcademicSessionRoutes from '@routers/authWithAcademicSession';
-import licenseRoutes from '@routers/license';
 import authSecurityRoutes from '@routers/authSecurity';
 import errorRoutes from '@routers/error';
 
@@ -36,7 +35,7 @@ let routes = [
     {
         path: '/',                                       // all the routes which needs authentication + two factor authentication + lock screen
         component: () => import(/* webpackChunkName: "js/defaultPage" */ '@layouts/default-page'),
-        meta: { validate: ['is_auth','two_factor_security','is_screen_locked','has_valid_license'] },
+        meta: { validate: ['is_auth','two_factor_security','is_screen_locked'] },
         children: [
             ...authRoutes,
         ]
@@ -44,7 +43,7 @@ let routes = [
     {
         path: '/',                                       // all the routes which needs authentication + two factor authentication + lock screen
         component: () => import(/* webpackChunkName: "js/defaultPage" */ '@layouts/default-page'),
-        meta: { validate: ['is_auth','two_factor_security','is_screen_locked','has_valid_license','has_academic_session'] },
+        meta: { validate: ['is_auth','two_factor_security','is_screen_locked','has_academic_session'] },
         children: [
             ...authWithAcademicSessionRoutes,
         ]
@@ -54,7 +53,6 @@ let routes = [
         component: () => import(/* webpackChunkName: "js/defaultPage" */ '@layouts/default-page'),
         meta: { validate: ['is_auth','two_factor_security','is_screen_locked'] },
         children: [
-            ...licenseRoutes,
         ]
     },
     {
@@ -131,18 +129,6 @@ router.beforeEach((to, from, next) => {
             if (m.meta.validate.indexOf('is_screen_locked') > -1 && helper.getConfig('lock_screen') && helper.isScreenLocked()){
                 pageLoader.hide();
                 return next({ path: '/auth/lock' })
-            }
-
-            // Check for valid license; If invalid, redirect to "/license"
-            if (m.meta.validate.indexOf('has_valid_license') > -1 && !helper.getConfig('l') && to.fullPath != '/license'){
-                toastr.error(i18n.install.invalid_license);
-                pageLoader.hide();
-                if(helper.hasRole('admin')){
-                    return next({ path: '/license' })
-                } else {
-                    helper.clearSession();
-                    return next({ path: '/login' })
-                }
             }
 
             // Check for valid academic session; If invalid redirect to "/dashboard"

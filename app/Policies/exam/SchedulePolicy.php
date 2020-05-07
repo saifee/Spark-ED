@@ -28,7 +28,7 @@ class SchedulePolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-exam-schedule') || $user->can('edit-exam-schedule');
+        return $user->can('create-exam-schedule') || $user->can('edit-exam-schedule');
     }
 
     /**
@@ -40,7 +40,7 @@ class SchedulePolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-exam-schedule');
+        return $user->can('list-exam-schedule');
     }
 
     /**
@@ -51,7 +51,7 @@ class SchedulePolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-exam-schedule');
+        return $user->can('create-exam-schedule');
     }
 
     /**
@@ -63,7 +63,7 @@ class SchedulePolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-exam-schedule');
+        return $user->can('list-exam-schedule');
     }
 
     /**
@@ -75,7 +75,7 @@ class SchedulePolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-exam-schedule');
+        return $user->can('edit-exam-schedule');
     }
 
     /**
@@ -87,6 +87,6 @@ class SchedulePolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-exam-schedule');
+        return $user->can('delete-exam-schedule');
     }
 }

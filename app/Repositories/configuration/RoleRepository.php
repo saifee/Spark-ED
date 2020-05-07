@@ -156,6 +156,10 @@ class RoleRepository
         if (in_array($role->name, config('system.default_role'))) {
             throw ValidationException::withMessages(['message' => trans('configuration.default_role_cannot_be_deleted')]);
         }
+
+        if (\App\User::role($role->name)->count()) {
+            throw ValidationException::withMessages(['message' => trans('configuration.role_associated_with_user')]);
+        }
         
         return $role;
     }

@@ -28,7 +28,7 @@ class VendorPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-vendor') || $user->can('edit-vendor');
+        return $user->can('create-vendor') || $user->can('edit-vendor');
     }
 
     /**
@@ -40,7 +40,7 @@ class VendorPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-vendor');
+        return $user->can('list-vendor');
     }
 
     /**
@@ -51,7 +51,7 @@ class VendorPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-vendor');
+        return $user->can('create-vendor');
     }
 
     /**
@@ -63,7 +63,7 @@ class VendorPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-vendor');
+        return $user->can('list-vendor');
     }
 
     /**
@@ -75,7 +75,7 @@ class VendorPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-vendor');
+        return $user->can('edit-vendor');
     }
 
     /**
@@ -87,6 +87,6 @@ class VendorPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-vendor');
+        return $user->can('delete-vendor');
     }
 }

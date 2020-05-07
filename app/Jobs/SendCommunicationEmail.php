@@ -36,7 +36,7 @@ class SendCommunicationEmail implements ShouldQueue
     {
         $config->setDefault();
 
-        $body = clean(gv($this->params, 'body'));
+        $body = cleanBody(gv($this->params, 'body'));
         $subject = gv($this->params, 'subject');
 
         foreach ($this->emails as $email) {

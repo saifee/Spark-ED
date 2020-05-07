@@ -28,7 +28,7 @@ class StudentPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-student') || $user->can('list-class-teacher-wise-student') || $user->can('edit-student');
+        return $user->can('list-student') || $user->can('list-class-teacher-wise-student') || $user->can('edit-student');
     }
 
     /**
@@ -40,7 +40,7 @@ class StudentPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-student') || $user->can('list-class-teacher-wise-student');
+        return $user->can('list-student') || $user->can('list-class-teacher-wise-student');
     }
 
     /**
@@ -52,7 +52,7 @@ class StudentPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-student') || $user->can('list-class-teacher-wise-student');
+        return $user->can('list-student') || $user->can('list-class-teacher-wise-student');
     }
 
     /**
@@ -64,7 +64,7 @@ class StudentPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-student');
+        return $user->can('edit-student');
     }
 
     /**
@@ -76,7 +76,7 @@ class StudentPolicy
      */
     public function search(User $user)
     {
-        return $user->hasRole('super-admin') || $user->hasAnyPermission(['issue-book','create-certificate']);
+        return $user->hasAnyPermission(['issue-book','create-certificate']);
     }
 
     /**
@@ -88,6 +88,6 @@ class StudentPolicy
      */
     public function updateUserLogin(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-student');
+        return $user->can('edit-student');
     }
 }

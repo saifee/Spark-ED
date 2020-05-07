@@ -28,7 +28,7 @@ class RecordPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('store-exam-mark');
+        return $user->can('store-exam-mark');
     }
 
     /**
@@ -40,7 +40,7 @@ class RecordPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-exam-mark');
+        return $user->can('list-exam-mark');
     }
 
     /**
@@ -52,7 +52,7 @@ class RecordPolicy
      */
     public function store(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('store-exam-mark');
+        return $user->can('store-exam-mark');
     }
 
     /**
@@ -64,7 +64,7 @@ class RecordPolicy
      */
     public function report(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('access-exam-report') || $user->can('access-class-teacher-wise-exam-report');
+        return $user->can('access-exam-report') || $user->can('access-class-teacher-wise-exam-report');
     }
 
     /**
@@ -76,6 +76,6 @@ class RecordPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('store-exam-mark');
+        return $user->can('store-exam-mark');
     }
 }

@@ -27,7 +27,7 @@ class RegistrationPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('new-registration');
+        return $user->can('new-registration');
     }
 
     /**
@@ -39,7 +39,7 @@ class RegistrationPolicy
      */
     public function feePayment(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('make-registration-fee-payment');
+        return $user->can('make-registration-fee-payment');
     }
 
     /**
@@ -51,7 +51,7 @@ class RegistrationPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-registration');
+        return $user->can('list-registration');
     }
 
     /**
@@ -62,7 +62,7 @@ class RegistrationPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('new-registration');
+        return $user->can('new-registration');
     }
 
     /**
@@ -74,7 +74,7 @@ class RegistrationPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-registration');
+        return $user->can('list-registration');
     }
 
     /**
@@ -86,7 +86,7 @@ class RegistrationPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-registration');
+        return $user->can('edit-registration');
     }
 
     /**
@@ -98,7 +98,7 @@ class RegistrationPolicy
      */
     public function updateStatus(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('change-registration-status');
+        return $user->can('change-registration-status');
     }
 
     /**
@@ -110,6 +110,6 @@ class RegistrationPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-registration');
+        return $user->can('delete-registration');
     }
 }

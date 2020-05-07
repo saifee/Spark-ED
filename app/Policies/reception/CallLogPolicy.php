@@ -28,7 +28,7 @@ class CallLogPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-call-log') || $user->can('edit-call-log');
+        return $user->can('create-call-log') || $user->can('edit-call-log');
     }
 
     /**
@@ -40,7 +40,7 @@ class CallLogPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-call-log');
+        return $user->can('list-call-log');
     }
 
     /**
@@ -51,7 +51,7 @@ class CallLogPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-call-log');
+        return $user->can('create-call-log');
     }
 
     /**
@@ -63,7 +63,7 @@ class CallLogPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-call-log');
+        return $user->can('list-call-log');
     }
 
     /**
@@ -75,7 +75,7 @@ class CallLogPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-call-log');
+        return $user->can('edit-call-log');
     }
 
     /**
@@ -87,6 +87,6 @@ class CallLogPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-call-log');
+        return $user->can('delete-call-log');
     }
 }

@@ -28,7 +28,7 @@ class StockPurchasePolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-stock-purchase') || $user->can('edit-stock-purchase');
+        return $user->can('create-stock-purchase') || $user->can('edit-stock-purchase');
     }
 
     /**
@@ -40,7 +40,7 @@ class StockPurchasePolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-stock-purchase');
+        return $user->can('list-stock-purchase');
     }
 
     /**
@@ -51,7 +51,7 @@ class StockPurchasePolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-stock-purchase');
+        return $user->can('create-stock-purchase');
     }
 
     /**
@@ -63,7 +63,7 @@ class StockPurchasePolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-stock-purchase');
+        return $user->can('list-stock-purchase');
     }
 
     /**
@@ -75,7 +75,7 @@ class StockPurchasePolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-stock-purchase');
+        return $user->can('edit-stock-purchase');
     }
 
     /**
@@ -87,6 +87,6 @@ class StockPurchasePolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-stock-purchase');
+        return $user->can('delete-stock-purchase');
     }
 }

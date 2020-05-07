@@ -28,7 +28,7 @@ class TransportRoutePolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-transport-route') || $user->can('edit-transport-route');
+        return $user->can('create-transport-route') || $user->can('edit-transport-route');
     }
 
     /**
@@ -40,7 +40,7 @@ class TransportRoutePolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-transport-route');
+        return $user->can('list-transport-route');
     }
 
     /**
@@ -51,7 +51,7 @@ class TransportRoutePolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-transport-route');
+        return $user->can('create-transport-route');
     }
 
     /**
@@ -63,7 +63,7 @@ class TransportRoutePolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-transport-route');
+        return $user->can('list-transport-route');
     }
 
     /**
@@ -75,7 +75,7 @@ class TransportRoutePolicy
      */
     public function assign(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('assign-transport-route');
+        return $user->can('assign-transport-route');
     }
 
     /**
@@ -87,7 +87,7 @@ class TransportRoutePolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-transport-route');
+        return $user->can('edit-transport-route');
     }
 
     /**
@@ -99,6 +99,6 @@ class TransportRoutePolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-transport-route');
+        return $user->can('delete-transport-route');
     }
 }

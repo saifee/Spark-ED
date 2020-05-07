@@ -50,7 +50,7 @@ class EmailRepository
      */
     public function submit($params = array())
     {
-        $body     = clean(gv($params, 'body'));
+        $body     = cleanBody(gv($params, 'body'));
         $includes = gv($params, 'includes');
         $excludes = gv($params, 'excludes');
 
@@ -64,13 +64,13 @@ class EmailRepository
 
         foreach ($includes as $include) {
             $emails[] = $include;
-        } 
+        }
 
         $emails = array_filter($emails);
         $emails = array_diff($emails, $excludes);
 
         $validated_emails = array();
-        foreach($emails as $email) {
+        foreach ($emails as $email) {
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $validated_emails[] = $email;
             }
@@ -84,8 +84,8 @@ class EmailRepository
         $params['included_emails'] = $includes;
         $params['excluded_emails'] = $excludes;
 
-        $options['individual_students'] = gv($params, 'individual_students', []);
-        $options['individual_employees'] = gv($params, 'individual_employees', []);
+        $options['individual_students'] = array_unique(gv($params, 'individual_students', []));
+        $options['individual_employees'] = array_unique(gv($params, 'individual_employees', []));
 
         $communication = $this->communication->create($params);
         $communication->options = $options;
@@ -111,7 +111,7 @@ class EmailRepository
         $student_emails = array();
         if (in_array($audience, ['everyone','selected_course','selected_batch']) || gv($params, 'individual_students', [])) {
             $student_emails = $this->getStudentEmail($params);
-        } 
+        }
 
         $employee_emails = array();
         if (in_array($audience, ['everyone','selected_department','selected_employee_category']) || gv($params, 'individual_employees', [])) {
@@ -140,7 +140,7 @@ class EmailRepository
             $query = $this->student_record->filterBySession()->whereNull('date_of_exit');
 
             if (gv($params, 'audience') == 'selected_course') {
-                $query->whereHas('batch', function($q) use($course_id) {
+                $query->whereHas('batch', function ($q) use ($course_id) {
                     $q->whereIn('course_id', $course_id);
                 });
             }
@@ -201,8 +201,8 @@ class EmailRepository
                         $q1->where('date_end', '=', null)->orWhere(function ($q2) {
                             $q2->where('date_end', '!=', null)->where('date_end', '>=', date('Y-m-d'));
                         });
-                    })->whereHas('designation', function($q) use ($employee_category_id) {
-                        $q->whereHas('employeeCategory',function($q1) use ($employee_category_id) {
+                    })->whereHas('designation', function ($q) use ($employee_category_id) {
+                        $q->whereHas('employeeCategory', function ($q1) use ($employee_category_id) {
                             $q1->whereIn('employee_category_id', $employee_category_id);
                         });
                     });

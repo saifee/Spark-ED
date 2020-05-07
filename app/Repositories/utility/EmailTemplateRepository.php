@@ -104,7 +104,7 @@ class EmailTemplateRepository
         } elseif ($action === 'update') {
             $formatted = [
                 'subject' => gv($params, 'subject'),
-                'body'    => clean(gv($params, 'body'))
+                'body'    => cleanBody(gv($params, 'body'))
             ];
         }
 

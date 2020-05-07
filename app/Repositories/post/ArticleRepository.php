@@ -268,7 +268,7 @@ class ArticleRepository
             'article_type_id' => $article_type_id,
             'title'           => $title,
             'date_of_article' => toDate($date_of_article),
-            'description'     => clean($description),
+            'description'     => cleanBody($description, 'youtube'),
             'is_public'       => $is_public,
             'options'         => []
         ];

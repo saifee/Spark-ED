@@ -28,7 +28,7 @@ class PostalRecordPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-postal-record') || $user->can('edit-postal-record');
+        return $user->can('create-postal-record') || $user->can('edit-postal-record');
     }
 
     /**
@@ -40,7 +40,7 @@ class PostalRecordPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-postal-record');
+        return $user->can('list-postal-record');
     }
 
     /**
@@ -51,7 +51,7 @@ class PostalRecordPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-postal-record');
+        return $user->can('create-postal-record');
     }
 
     /**
@@ -63,7 +63,7 @@ class PostalRecordPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-postal-record');
+        return $user->can('list-postal-record');
     }
 
     /**
@@ -75,7 +75,7 @@ class PostalRecordPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-postal-record');
+        return $user->can('edit-postal-record');
     }
 
     /**
@@ -87,6 +87,6 @@ class PostalRecordPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-postal-record');
+        return $user->can('delete-postal-record');
     }
 }

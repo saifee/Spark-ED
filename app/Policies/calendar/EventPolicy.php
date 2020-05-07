@@ -28,7 +28,7 @@ class EventPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-event') || $user->can('edit-event');
+        return $user->can('create-event') || $user->can('edit-event');
     }
 
     /**
@@ -40,7 +40,7 @@ class EventPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-event');
+        return $user->can('list-event');
     }
 
     /**
@@ -51,7 +51,7 @@ class EventPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-event');
+        return $user->can('create-event');
     }
 
     /**
@@ -84,7 +84,7 @@ class EventPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-event');
+        return $user->can('edit-event');
     }
 
     /**
@@ -96,6 +96,6 @@ class EventPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-event');
+        return $user->can('delete-event');
     }
 }

@@ -352,6 +352,15 @@ class StudentRecordController extends Controller {
 	}
 
 	/**
+	 * Used to fetch students for given batch (login purpose)
+	 * @post ("/api/student/fetch/login")
+	 * @return Response
+	 */
+	public function fetchBatchWiseStudentForLogin() {
+		return $this->success($this->repo->fetchBatchWiseStudentForLogin($this->request->all()));
+	}
+
+	/**
 	 * Used to store roll number
 	 * @post ("/api/student/roll/number")
 	 * @return Response

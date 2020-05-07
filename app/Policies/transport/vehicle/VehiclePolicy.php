@@ -28,7 +28,7 @@ class VehiclePolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-vehicle') || $user->can('edit-vehicle');
+        return $user->can('create-vehicle') || $user->can('edit-vehicle');
     }
 
     /**
@@ -40,7 +40,7 @@ class VehiclePolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-vehicle');
+        return $user->can('list-vehicle');
     }
 
     /**
@@ -51,7 +51,7 @@ class VehiclePolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-vehicle');
+        return $user->can('create-vehicle');
     }
 
     /**
@@ -63,7 +63,7 @@ class VehiclePolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-vehicle');
+        return $user->can('list-vehicle');
     }
 
     /**
@@ -75,7 +75,7 @@ class VehiclePolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-vehicle');
+        return $user->can('edit-vehicle');
     }
 
     /**
@@ -87,6 +87,6 @@ class VehiclePolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-vehicle');
+        return $user->can('delete-vehicle');
     }
 }

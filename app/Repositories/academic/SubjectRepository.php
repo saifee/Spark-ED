@@ -271,7 +271,9 @@ class SubjectRepository
             'description'        => gv($params, 'description')
         ];
 
-        $formatted['options'] = [];
+        $formatted['options'] = [
+            'group' => ucwords(strtolower(gv($params, 'group')))
+        ];
 
         return $formatted;
     }

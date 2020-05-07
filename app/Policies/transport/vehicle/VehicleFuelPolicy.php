@@ -28,7 +28,7 @@ class VehicleFuelPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-vehicle-fuel') || $user->can('edit-vehicle-fuel');
+        return $user->can('create-vehicle-fuel') || $user->can('edit-vehicle-fuel');
     }
 
     /**
@@ -40,7 +40,7 @@ class VehicleFuelPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-vehicle-fuel');
+        return $user->can('list-vehicle-fuel');
     }
 
     /**
@@ -51,7 +51,7 @@ class VehicleFuelPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-vehicle-fuel');
+        return $user->can('create-vehicle-fuel');
     }
 
     /**
@@ -63,7 +63,7 @@ class VehicleFuelPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-vehicle-fuel');
+        return $user->can('list-vehicle-fuel');
     }
 
     /**
@@ -75,7 +75,7 @@ class VehicleFuelPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-vehicle-fuel');
+        return $user->can('edit-vehicle-fuel');
     }
 
     /**
@@ -87,6 +87,6 @@ class VehicleFuelPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-vehicle-fuel');
+        return $user->can('delete-vehicle-fuel');
     }
 }

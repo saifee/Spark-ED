@@ -99,11 +99,15 @@ class CommunicationRepository
         ]);
 
         if (! \Auth::user()->can('send-sms')) {
-            $query->where('type','!=','sms');
+            $query->where('type', '!=', 'sms');
         }
 
         if (! \Auth::user()->can('send-email')) {
-            $query->where('type','!=','email');
+            $query->where('type', '!=', 'email');
+        }
+
+        if (! \Auth::user()->can('send-push-notification')) {
+            $query->where('type', '!=', 'push_notification');
         }
 
         if (count($course_id)) {
@@ -158,6 +162,68 @@ class CommunicationRepository
     }
 
     /**
+     * Get all notification
+     *
+     * @param array $params
+     * @return array
+     */
+    public function getNotification($params = array())
+    {
+        $page_length = gv($params, 'page_length', config('config.page_length'));
+
+        if (\Auth::user()->hasRole(config('system.default_role.admin'))) {
+            return $this->communication->select('uuid', 'type', 'subject', 'body', 'created_at')->filterBySession()->orderBy('created_at', 'desc')->paginate($page_length);
+        }
+
+        return $this->communication->select('uuid', 'type', 'subject', 'body', 'created_at')->filterBySession()->where('audience', 'everyone')->orWhere(function ($q) {
+
+            if (\Auth::user()->hasAnyRole([
+                    config('system.default_role.parent'),
+                    config('system.default_role.student'),
+                ])
+            ) {
+                $student_record_ids = getAuthUserStudentRecordId();
+                $student_batch_ids = getAuthUserBatchId();
+                $student_course_ids = $this->batch->getCourseIdFromBatchIds($student_batch_ids);
+
+                $q->where(function ($q1) use ($student_course_ids) {
+                    $q1->where('audience', 'selected_course')->whereHas('courses', function ($q2) use ($student_course_ids) {
+                        $q2->whereIn('course_id', $student_course_ids);
+                    });
+                })->orWhere(function ($q3) use ($student_batch_ids) {
+                    $q3->where('audience', 'selected_batch')->whereHas('batches', function ($q4) use ($student_batch_ids) {
+                        $q4->whereIn('batch_id', $student_batch_ids);
+                    });
+                })->orWhere(function ($q5) use ($student_record_ids) {
+                    $q5->whereHas('studentRecords', function ($q6) use ($student_record_ids) {
+                        $q6->whereIn('student_record_id', $student_record_ids);
+                    });
+                });
+            } else {
+                $employee = \Auth::user()->employee;
+
+                $employee_designation = getEmployeeDesignation($employee);
+                $department_id = optional($employee_designation)->department_id;
+                $employee_category_id = $employee_designation ? $employee_designation->designation->employee_category_id : null;
+
+                $q->where(function ($q1) use ($department_id) {
+                    $q1->where('audience', 'selected_department')->whereHas('departments', function ($q2) use ($department_id) {
+                        $q2->where('department_id', $department_id);
+                    });
+                })->orWhere(function ($q3) use ($employee_category_id) {
+                    $q3->where('audience', 'selected_employee_category')->whereHas('employeeCategories', function ($q4) use ($employee_category_id) {
+                        $q4->where('employee_category_id', $employee_category_id);
+                    });
+                })->orWhere(function ($q5) use ($employee) {
+                    $q5->whereHas('employees', function ($q6) use ($employee) {
+                        $q6->where('employee_id', $employee->id);
+                    });
+                });
+            }
+        })->orderBy('created_at', 'desc')->paginate($page_length);
+    }
+
+    /**
      * Get pre requisite
      *
      * @return Array
@@ -178,9 +244,10 @@ class CommunicationRepository
         $types = [
             array('value' => 'sms', 'text' => trans('communication.sms')),
             array('value' => 'email', 'text' => trans('communication.email')),
+            array('value' => 'push_notification', 'text' => trans('communication.push_notification')),
         ];
 
-        return compact('employee_categories','departments','courses','batches','audiences','types');
+        return compact('employee_categories', 'departments', 'courses', 'batches', 'audiences', 'types');
     }
 
     /**
@@ -212,13 +279,25 @@ class CommunicationRepository
         $included_emails = gv($params, 'included_emails', []);
         $excluded_emails = gv($params, 'excluded_emails', []);
 
-        $communication->recipient_count = $communication->type == 'email' ? count($recipient_emails) : count($recipient_numbers);
+        $recipient_tokens = gv($params, 'recipient_tokens', []);
+
+        $recipient_count = 0;
+
+        if ($communication->type == 'email') {
+            $recipient_count = count($recipient_emails);
+        } else if ($communication->type == 'sms') {
+            $recipient_count = count($recipient_numbers);
+        } else if ($communication->type == 'push_notification') {
+            $recipient_count = count($recipient_tokens);
+        }
+
+        $communication->recipient_count = $recipient_count;
         $communication->recipient_numbers = implode(',', $recipient_numbers);
-        $communication->included_numbers = implode(',' , $included_numbers);
-        $communication->excluded_numbers = implode(',' , $excluded_numbers);
+        $communication->included_numbers = implode(',', $included_numbers);
+        $communication->excluded_numbers = implode(',', $excluded_numbers);
         $communication->recipient_emails = implode(',', $recipient_emails);
-        $communication->included_emails = implode(',' , $included_emails);
-        $communication->excluded_emails = implode(',' , $excluded_emails);
+        $communication->included_emails = implode(',', $included_emails);
+        $communication->excluded_emails = implode(',', $excluded_emails);
         $communication->save();
 
         return $communication;
@@ -235,13 +314,13 @@ class CommunicationRepository
     {
         $type = gv($params, 'type');
 
-        if (! in_array($type, ['email','sms'])) {
+        if (! in_array($type, ['email','sms','push_notification'])) {
             throw ValidationException::withMessages(['message' => trans('general.invalid_input')]);
         }
 
-        $subject              = gv($params, 'subject');
+        $subject              = ($type == 'push_notification') ? gv($params, 'title') : gv($params, 'subject');
         $audience             = gv($params, 'audience');
-        $body                 = $type == 'email' ? gv($params, 'body') : gv($params, 'sms');
+        $body                 = ($type == 'email' || $type == 'push_notification') ? gv($params, 'body') : gv($params, 'sms');
         $course_id            = gv($params, 'course_id', []);
         $batch_id             = gv($params, 'batch_id', []);
         $employee_category_id = gv($params, 'employee_category_id', []);
@@ -270,7 +349,7 @@ class CommunicationRepository
         $formatted = [
             'type'     => $type,
             'subject'  => $subject,
-            'body'     => clean($body),
+            'body'     => $type == 'email' ? cleanBody($body) : $body,
             'audience' => $audience,
             'options'  => []
         ];
@@ -292,6 +371,16 @@ class CommunicationRepository
      */
     private function syncRelations(Communication $communication, $params = array())
     {
+        $individual_students = array_unique(gv($params, 'individual_students', []));
+        if ($individual_students) {
+            $communication->studentRecords()->sync(gv($params, 'individual_students', []));
+        }
+
+        $individual_employees = array_unique(gv($params, 'individual_employees', []));
+        if ($individual_employees) {
+            $communication->employees()->sync(gv($params, 'individual_employees', []));
+        }
+
         if (gv($params, 'audience') == 'everyone') {
             $communication->courses()->sync([]);
             $communication->batches()->sync([]);
@@ -336,13 +425,13 @@ class CommunicationRepository
     /**
      * Is communication accessible
      * @param  Communication $communication
-     * @return boolean                     
+     * @return boolean
      */
     private function isAccessible(Communication $communication)
     {
-        if (
-            ($communication->type == 'email' && ! \Auth::user()->can('send-email')) ||
-            ($communication->type == 'sms' && ! \Auth::user()->can('send-sms'))
+        if (($communication->type == 'email' && ! \Auth::user()->can('send-email')) ||
+            ($communication->type == 'sms' && ! \Auth::user()->can('send-sms')) ||
+            ($communication->type == 'push-notification' && ! \Auth::user()->can('send-push-notification'))
         ) {
             throw ValidationException::withMessages(['message' => trans('user.permission_denied')]);
         }

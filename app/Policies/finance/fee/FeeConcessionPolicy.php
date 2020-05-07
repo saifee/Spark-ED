@@ -28,7 +28,7 @@ class FeeConcessionPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-fee-concession') || $user->can('edit-fee-concession');
+        return $user->can('create-fee-concession') || $user->can('edit-fee-concession');
     }
 
     /**
@@ -40,7 +40,7 @@ class FeeConcessionPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-fee-concession');
+        return $user->can('list-fee-concession');
     }
 
     /**
@@ -51,7 +51,7 @@ class FeeConcessionPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-fee-concession');
+        return $user->can('create-fee-concession');
     }
 
     /**
@@ -63,7 +63,7 @@ class FeeConcessionPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-fee-concession');
+        return $user->can('list-fee-concession');
     }
 
     /**
@@ -75,7 +75,7 @@ class FeeConcessionPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-fee-concession');
+        return $user->can('edit-fee-concession');
     }
 
     /**
@@ -87,6 +87,6 @@ class FeeConcessionPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-fee-concession');
+        return $user->can('delete-fee-concession');
     }
 }

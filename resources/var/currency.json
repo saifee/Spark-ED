@@ -429,7 +429,9 @@
         "name": "MYR",
         "symbol": "RM",
         "position": "prefix",
-        "decimal_place": 2
+        "decimal_place": 2,
+        "number_value": "Ringgit",
+        "decimal_value": "Cent"
     },
     {
         "description": "Mauritius Rupee",
@@ -761,10 +763,45 @@
         "decimal_place": 2
     },
     {
-        "description": "Kenya Shilling",
-        "name": "Shilling",
+        "description": "Kenyan Shilling",
+        "name": "KES",
         "symbol": "KES",
         "position": "suffix",
         "decimal_place": 2
+    },
+    {
+        "description": "Ugandan Shilling",
+        "name": "UGX",
+        "symbol": "UGX",
+        "position": "suffix",
+        "decimal_place": 2
+    },
+    {
+        "description": "Tanzanian Shilling",
+        "name": "TZS",
+        "symbol": "TZS",
+        "position": "suffix",
+        "decimal_place": 2
+    },
+    {
+        "description": "Rwandan Franc",
+        "name": "RWF",
+        "symbol": "RWF",
+        "position": "suffix",
+        "decimal_place": 2
+    },
+    {
+        "description": "Burundian Franc",
+        "name": "BIF",
+        "symbol": "BIF",
+        "position": "suffix",
+        "decimal_place": 0
+    },
+    {
+        "description": "Zambian Kwacha",
+        "name": "ZMW",
+        "symbol": "ZK",
+        "position": "suffix",
+        "decimal_place": 0
     }
 ]

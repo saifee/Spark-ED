@@ -60,6 +60,7 @@
         "allow_to_mark_student_advance_attendance": 0,
         "days_allowed_to_mark_student_advance_attendance": 0,
         "max_sms_per_chunk": 100,
+        "max_push_notification_per_chunk": 500,
 	    "admission_number_digit": 3,
 	    "leave_holiday_calculation_mode": "ignore",
 	    "per_day_salary_calculation_basis": "calendar_period"

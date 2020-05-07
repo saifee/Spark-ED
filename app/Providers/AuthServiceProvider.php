@@ -78,6 +78,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\Inventory\Vendor'                       => 'App\Policies\Inventory\VendorPolicy',
         'App\Models\Inventory\StockPurchase'                => 'App\Policies\Inventory\StockPurchasePolicy',
         'App\Models\Inventory\StockTransfer'                => 'App\Policies\Inventory\StockTransferPolicy',
+        'App\Models\Communication\Meeting'                  => 'App\Policies\Communication\MeetingPolicy',
     ];
 
     /**

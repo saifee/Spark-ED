@@ -28,7 +28,7 @@ class ClassTeacherPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-class-teacher');
+        return $user->can('list-class-teacher');
     }
 
     /**
@@ -39,7 +39,7 @@ class ClassTeacherPolicy
      */
     public function store(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('store-class-teacher');
+        return $user->can('store-class-teacher');
     }
 
     /**
@@ -51,6 +51,6 @@ class ClassTeacherPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-class-teacher');
+        return $user->can('delete-class-teacher');
     }
 }

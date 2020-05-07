@@ -3,6 +3,7 @@ namespace App\Repositories\Auth;
 
 use Carbon\Carbon;
 use App\Jobs\SendSMS;
+use App\UserPushToken;
 use App\Events\UserLogin;
 use Illuminate\Support\Str;
 use App\Models\Student\Student;
@@ -28,6 +29,7 @@ class AuthRepository
     protected $academic_session;
     protected $student;
     protected $employee;
+    protected $user_push_token;
 
     /**
      * Instantiate a new instance.
@@ -42,7 +44,8 @@ class AuthRepository
         IpFilterRepository $ip_filter,
         AcademicSessionRepository $academic_session,
         Student $student,
-        Employee $employee
+        Employee $employee,
+        UserPushToken $user_push_token
     ) {
         $this->user       = $user;
         $this->throttle   = $throttle;
@@ -52,6 +55,7 @@ class AuthRepository
         $this->academic_session = $academic_session;
         $this->student = $student;
         $this->employee = $employee;
+        $this->user_push_token = $user_push_token;
     }
 
     /**
@@ -84,6 +88,8 @@ class AuthRepository
 
         $auth_user = $auth_user->fresh();
         $payload = auth()->payload();
+
+        $this->updatePushToken($auth_user);
 
         return $this->prepareLoginData([
             'token' => $token,
@@ -372,6 +378,38 @@ class AuthRepository
             'academic_sessions' => $academic_sessions,
             'default_academic_session' => $default_academic_session
         ];
+    }
+
+    /**
+     * Update user push token
+     * @return void
+     */
+    private function updatePushToken($auth_user)
+    {
+        if (! request('device_name') && ! request('push_token')) {
+            return;
+        }
+
+        if (! $auth_user->relationLoaded('pushTokens')) {
+            $auth_user->load('pushTokens');
+        }
+
+        $user_push_token = $auth_user->pushTokens->firstWhere('device_name', request('device_name'));
+
+        if ($user_push_token && $user_push_token->token === request('push_token')) {}
+        else {
+            if ($user_push_token) {
+                $user_push_token->token = request('push_token');
+                $user_push_token->save();
+            } else {
+                $user_push_token = $this->user_push_token->create([
+                    'device_name' => request('device_name'),
+                    'token' => request('push_token'),
+                ]);
+                $user_push_token->user_id = $auth_user->id;
+                $user_push_token->save();
+            }
+        }
     }
 
     /**

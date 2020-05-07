@@ -25,19 +25,19 @@ class ReportRepository
      *
      * @return void
      */
-	public function __construct(
+    public function __construct(
         Vehicle $vehicle,
         VehicleFuel $vehicle_fuel,
         VehicleLog $vehicle_log,
         VehicleServiceRecord $vehicle_service_record,
         VehiclePerformanceCriteria $vehicle_performance_criteria
-	) {
+    ) {
         $this->vehicle = $vehicle;
         $this->vehicle_fuel = $vehicle_fuel;
         $this->vehicle_log = $vehicle_log;
         $this->vehicle_service_record = $vehicle_service_record;
         $this->vehicle_performance_criteria = $vehicle_performance_criteria;
-	}
+    }
 
     /**
      * Get filters.
@@ -52,24 +52,28 @@ class ReportRepository
 
     public function getMileageRating($percent)
     {
-        if ($percent > 0)
+        if ($percent > 0) {
             return 5;
-        else if ($percent > -30)
+        } else if ($percent > -30) {
             return formatNumber(5 - (abs($percent) / 15));
-        else if ($percent > -100)
+        } else if ($percent > -100) {
             return formatNumber(5 - (abs($percent) / 23.33));
-        else 0;
+        } else {
+            0;
+        }
     }
 
     public function getServiceChargeRating($percent)
     {
-        if ($percent < 0)
+        if ($percent < 0) {
             return 5;
-        else if ($percent < 30)
+        } else if ($percent < 30) {
             return formatNumber(5 - ($percent / 15));
-        else if ($percent < 100)
+        } else if ($percent < 100) {
             return formatNumber(5 - ($percent / 23.33));
-        else 0;
+        } else {
+            0;
+        }
     }
 
     /**
@@ -113,25 +117,26 @@ class ReportRepository
         $vehicles = $query->get();
         $vehicle_ids = $vehicles->pluck('id')->all();
 
-        $vehicle_fuels = $this->vehicle_fuel->whereIn('vehicle_id',$vehicle_ids)->dateOfFuelingBetween([
+        $vehicle_fuels = $this->vehicle_fuel->whereIn('vehicle_id', $vehicle_ids)->dateOfFuelingBetween([
             'start_date' => $start_date,
             'end_date' => $end_date
         ])->get();
 
-        $service_records = $this->vehicle_service_record->whereIn('vehicle_id',$vehicle_ids)->dateOfServiceBetween([
+        $service_records = $this->vehicle_service_record->whereIn('vehicle_id', $vehicle_ids)->dateOfServiceBetween([
             'start_date' => $start_date,
             'end_date' => $end_date
         ])->get();
 
-        $vehicle_logs = $this->vehicle_log->whereIn('vehicle_id',$vehicle_ids)->get();
+        $vehicle_logs = $this->vehicle_log->whereIn('vehicle_id', $vehicle_ids)->get();
 
-        $performance_criterias = $this->vehicle_performance_criteria->where('date_effective','<=',$end_date)->get();
+        $performance_criterias = $this->vehicle_performance_criteria->where('date_effective', '<=', $end_date)->get();
 
         $summary = array();
         $grand_total_fuel = 0;
         $grand_total_fuel_cost = 0;
         $grand_total_service_charge = 0;
         $grand_total_run = 0;
+        $list = array();
         foreach ($vehicles as $vehicle) {
             $total_fuel = 0;
             $total_fuel_cost = 0;
@@ -146,16 +151,16 @@ class ReportRepository
             $total_service_charge = currency($service_records->where('vehicle_id', $vehicle->id)->sum('amount'));
             $total_logs = 0;
 
-            $start_log = optional($vehicle_logs->where('vehicle_id', $vehicle->id)->where('date_of_log','<=',$start_date)->sortByDesc('date_of_log')->first())->log;
+            $start_log = optional($vehicle_logs->where('vehicle_id', $vehicle->id)->where('date_of_log', '<=', $start_date)->sortByDesc('date_of_log')->first())->log;
 
             if (! $start_log) {
-                $start_log = optional($vehicle_logs->where('vehicle_id', $vehicle->id)->where('date_of_log','>=',$start_date)->sortBy('date_of_log')->first())->log;
+                $start_log = optional($vehicle_logs->where('vehicle_id', $vehicle->id)->where('date_of_log', '>=', $start_date)->sortBy('date_of_log')->first())->log;
             }
 
-            $end_log = optional($vehicle_logs->where('vehicle_id', $vehicle->id)->where('date_of_log','>=',$end_date)->sortBy('date_of_log')->first())->log;
+            $end_log = optional($vehicle_logs->where('vehicle_id', $vehicle->id)->where('date_of_log', '>=', $end_date)->sortBy('date_of_log')->first())->log;
 
             if (! $end_log) {
-                $end_log = optional($vehicle_logs->where('vehicle_id', $vehicle->id)->where('date_of_log','<=',$end_date)->sortByDesc('date_of_log')->first())->log;
+                $end_log = optional($vehicle_logs->where('vehicle_id', $vehicle->id)->where('date_of_log', '<=', $end_date)->sortByDesc('date_of_log')->first())->log;
             }
 
             $performance_criteria = $performance_criterias->where('vehicle_id', $vehicle->id)->sortByDesc('date_effective')->first();
@@ -171,7 +176,7 @@ class ReportRepository
             $service_charge_rating = 0;
             $rating = 0;
 
-            if ($performance_criteria) { 
+            if ($performance_criteria) {
                 $proposed_mileage_range = formatNumber($performance_criteria->min_mileage).' '.trans('general.to').' '.formatNumber($performance_criteria->max_mileage);
                 $proposed_service_charge_range = formatNumber($performance_criteria->min_service_charge).' '.trans('general.to').' '.formatNumber($performance_criteria->max_service_charge);
                 if ($base_metric == 'max') {
@@ -233,24 +238,24 @@ class ReportRepository
         );
 
         if ($min_rating) {
-            $list = array_filter($list, function($element) use($min_rating) {
+            $list = array_filter($list, function ($element) use ($min_rating) {
                 return $element['rating'] >= $min_rating;
             });
         }
 
         if ($max_rating) {
-            $list = array_filter($list, function($element) use($max_rating) {
+            $list = array_filter($list, function ($element) use ($max_rating) {
                 return $element['rating'] <= $max_rating;
             });
         }
 
-        array_multisort(array_map(function($element) use($sort_by) {
+        array_multisort(array_map(function ($element) use ($sort_by) {
               return $element[$sort_by];
         }, $list), $order == 'asc' ? SORT_ASC : SORT_DESC, $list);
 
         $footer = array();
 
-        return compact('list','footer');
+        return compact('list', 'footer');
     }
 
     /**
@@ -271,7 +276,7 @@ class ReportRepository
 
         $list = $this->collectionPaginate($list, $page_length, $page);
 
-        return compact('list','footer');
+        return compact('list', 'footer');
     }
 
     /**
@@ -287,6 +292,6 @@ class ReportRepository
         $list = $data['list'];
         $footer = $data['footer'];
 
-        return compact('list','footer');
+        return compact('list', 'footer');
     }
 }

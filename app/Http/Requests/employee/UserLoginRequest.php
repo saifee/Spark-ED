@@ -25,7 +25,7 @@ class UserLoginRequest extends FormRequest
     {
         $rules = [
             'employee_email'    => 'email',
-            'employee_username' => 'max:20',
+            'employee_username' => 'alpha_num|max:20',
             'role'              => 'required_if:enable_employee_login,1'
         ];
 

@@ -25,9 +25,9 @@ class UserLoginRequest extends FormRequest
     {
         $rules = [
             'student_email'    => 'email',
-            'student_username' => 'alpha|max:20',
+            'student_username' => 'alpha_num|max:20',
             'parent_email'     => 'email',
-            'parent_username'  => 'alpha|max:20'
+            'parent_username'  => 'alpha_num|max:20'
         ];
 
         if (request('enable_student_login') && request('change_student_password')) {

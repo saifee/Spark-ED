@@ -126,7 +126,9 @@ class AssignmentController extends Controller
 
         $attachments = $this->upload->getAttachment($this->module, $assignment->id);
 
-        return $this->success(compact('assignment', 'attachments'));
+        $mobile_description = mobileDescription($assignment->description);
+
+        return $this->success(compact('assignment', 'attachments', 'mobile_description'));
     }
 
     /**

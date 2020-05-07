@@ -29,7 +29,7 @@ class OnlineExamPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-online-exam') || $user->can('edit-online-exam');
+        return $user->can('create-online-exam') || $user->can('edit-online-exam');
     }
 
     /**
@@ -41,7 +41,7 @@ class OnlineExamPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-online-exam');
+        return $user->can('list-online-exam');
     }
 
     /**
@@ -70,7 +70,7 @@ class OnlineExamPolicy
     public function getExam(User $user, OnlineExam $online_exam)
     {
         return ! $user->hasAnyRole([
-                    config('system.default_role.student'),
+                    config('system.default_role.student'), 
                     config('system.default_role.parent')
                 ]) && in_array($online_exam->status, ['expired']);
     }
@@ -83,7 +83,7 @@ class OnlineExamPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-online-exam');
+        return $user->can('create-online-exam');
     }
 
     /**
@@ -95,7 +95,7 @@ class OnlineExamPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-online-exam');
+        return $user->can('list-online-exam');
     }
 
     /**
@@ -107,7 +107,7 @@ class OnlineExamPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-online-exam');
+        return $user->can('edit-online-exam');
     }
 
     /**
@@ -119,6 +119,6 @@ class OnlineExamPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-online-exam');
+        return $user->can('delete-online-exam');
     }
 }

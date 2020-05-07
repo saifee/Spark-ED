@@ -28,7 +28,7 @@ class ArticlePolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-article') || $user->can('edit-article');
+        return $user->can('create-article') || $user->can('edit-article');
     }
 
     /**
@@ -40,7 +40,7 @@ class ArticlePolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-article');
+        return $user->can('list-article');
     }
 
     /**
@@ -51,7 +51,7 @@ class ArticlePolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-article');
+        return $user->can('create-article');
     }
 
     /**
@@ -63,7 +63,7 @@ class ArticlePolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-article');
+        return $user->can('list-article');
     }
 
     /**
@@ -75,7 +75,7 @@ class ArticlePolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-article');
+        return $user->can('edit-article');
     }
 
     /**
@@ -87,6 +87,6 @@ class ArticlePolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-article');
+        return $user->can('delete-article');
     }
 }

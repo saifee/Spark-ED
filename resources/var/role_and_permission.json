@@ -18,7 +18,12 @@
 		"communication": {
 			"send-sms": ["manager","accountant","principal"],
 			"send-email": ["manager","accountant","principal"],
-			"delete-communication-history": ["manager"]
+			"send-push-notification": ["manager","accountant","principal"],
+			"delete-communication-history": ["manager"],
+			"create-meeting": ["manager", "principal"],
+			"list-meeting": ["manager","principal","staff","librarian","accountant","student","parent"],
+			"edit-meeting": ["manager", "principal"],
+			"delete-meeting": ["manager", "principal"]
 		},
 		"general": {
 			"create-institute-document": ["manager"],

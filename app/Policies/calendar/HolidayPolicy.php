@@ -28,7 +28,7 @@ class HolidayPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-holiday');
+        return $user->can('list-holiday');
     }
 
     /**
@@ -39,7 +39,7 @@ class HolidayPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-holiday');
+        return $user->can('create-holiday');
     }
 
     /**
@@ -51,7 +51,7 @@ class HolidayPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-holiday');
+        return $user->can('list-holiday');
     }
 
     /**
@@ -63,7 +63,7 @@ class HolidayPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-holiday');
+        return $user->can('edit-holiday');
     }
 
     /**
@@ -75,6 +75,6 @@ class HolidayPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-holiday');
+        return $user->can('delete-holiday');
     }
 }

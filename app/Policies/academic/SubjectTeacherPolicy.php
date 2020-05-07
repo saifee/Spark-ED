@@ -28,7 +28,7 @@ class SubjectTeacherPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-subject-teacher');
+        return $user->can('list-subject-teacher');
     }
 
     /**
@@ -39,7 +39,7 @@ class SubjectTeacherPolicy
      */
     public function store(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('store-subject-teacher');
+        return $user->can('store-subject-teacher');
     }
 
     /**
@@ -51,6 +51,6 @@ class SubjectTeacherPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-subject-teacher');
+        return $user->can('delete-subject-teacher');
     }
 }

@@ -28,7 +28,7 @@ class LeaveRequestPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('request-leave');
+        return $user->can('request-leave');
     }
 
     /**
@@ -40,7 +40,7 @@ class LeaveRequestPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('request-leave');
+        return $user->can('request-leave');
     }
 
     /**
@@ -52,7 +52,7 @@ class LeaveRequestPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('request-leave');
+        return $user->can('request-leave');
     }
 
     /**
@@ -64,7 +64,7 @@ class LeaveRequestPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('request-leave');
+        return $user->can('request-leave');
     }
 
     /**
@@ -76,6 +76,6 @@ class LeaveRequestPolicy
      */
     public function updateStatus(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('take-action-on-leave-request');
+        return $user->can('take-action-on-leave-request');
     }
 }

@@ -101,7 +101,7 @@ class CertificateTemplateRepository
         $student_custom_fields = $this->studentCustomFields();
         $employee_custom_fields = $this->employeeCustomFields();
 
-        return compact('student_custom_fields','employee_custom_fields');
+        return compact('student_custom_fields', 'employee_custom_fields');
     }
 
     public function studentCustomFields()
@@ -226,7 +226,7 @@ class CertificateTemplateRepository
     {
         $custom_fields = gv($params, 'custom_fields', []);
         $type = gv($params, 'type');
-        $predefined_custom_fields = ($type == 'student') ? $this->studentCustomFields() : $this->employeeCustomFields(); 
+        $predefined_custom_fields = ($type == 'student') ? $this->studentCustomFields() : $this->employeeCustomFields();
 
         $custom_field_values = array();
         foreach ($custom_fields as $index => $custom_field) {
@@ -248,9 +248,9 @@ class CertificateTemplateRepository
         }
 
         $formatted = [
-			'name' => gv($params, 'name'),
-			'type' => gv($params, 'type'),
-            'body' => clean(gv($params, 'body'))
+            'name' => gv($params, 'name'),
+            'type' => gv($params, 'type'),
+            'body' => cleanBody(gv($params, 'body'))
         ];
         
         $formatted['options'] = ['custom_fields' => $custom_field_values];

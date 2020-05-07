@@ -28,7 +28,7 @@ class InstituteDocumentPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-institute-document') || $user->can('edit-institute-document');
+        return $user->can('create-institute-document') || $user->can('edit-institute-document');
     }
 
     /**
@@ -40,7 +40,7 @@ class InstituteDocumentPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-institute-document');
+        return $user->can('list-institute-document');
     }
 
     /**
@@ -51,7 +51,7 @@ class InstituteDocumentPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-institute-document');
+        return $user->can('create-institute-document');
     }
 
     /**
@@ -63,7 +63,7 @@ class InstituteDocumentPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-institute-document');
+        return $user->can('list-institute-document');
     }
 
     /**
@@ -75,7 +75,7 @@ class InstituteDocumentPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-institute-document');
+        return $user->can('edit-institute-document');
     }
 
     /**
@@ -87,6 +87,6 @@ class InstituteDocumentPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-institute-document');
+        return $user->can('delete-institute-document');
     }
 }

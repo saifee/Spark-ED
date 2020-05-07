@@ -24,6 +24,7 @@ class AcademicSession extends Model
     protected static $logFillable = true;
     protected static $logOnlyDirty = true;
     protected static $ignoreChangedAttributes = ['updated_at'];
+    protected $appends = ['exam_report_analysis'];
 
     public function courses()
     {
@@ -68,6 +69,11 @@ class AcademicSession extends Model
     public function getOption(string $option)
     {
         return array_get($this->options, $option);
+    }
+
+    public function getExamReportAnalysisAttribute()
+    {
+        return $this->getOption('exam_report_analysis') ? true : false;
     }
 
     public function scopeFilterById($q, $id)

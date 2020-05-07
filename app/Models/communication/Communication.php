@@ -29,6 +29,7 @@ class Communication extends Model
     protected static $logFillable = true;
     protected static $logOnlyDirty = true;
     protected static $ignoreChangedAttributes = ['updated_at'];
+    protected $appends = ['type_detail'];
 
     public function user()
     {
@@ -45,6 +46,11 @@ class Communication extends Model
         return $this->belongsToMany('App\Models\Academic\Batch', 'communication_batch', 'communication_id', 'batch_id');
     }
 
+    public function studentRecords()
+    {
+        return $this->belongsToMany('App\Models\Student\StudentRecord', 'communication_student_record', 'communication_id', 'student_record_id');
+    }
+
     public function employeeCategories()
     {
         return $this->belongsToMany('App\Models\Configuration\Employee\EmployeeCategory', 'communication_employee_category', 'communication_id', 'employee_category_id');
@@ -55,9 +61,27 @@ class Communication extends Model
         return $this->belongsToMany('App\Models\Configuration\Employee\Department', 'communication_department', 'communication_id', 'department_id');
     }
 
+    public function employees()
+    {
+        return $this->belongsToMany('App\Models\Employee\Employee', 'communication_employee', 'communication_id', 'employee_id');
+    }
+
     public function getOption(string $option)
     {
         return array_get($this->options, $option);
+    }
+
+    public function getTypeDetailAttribute()
+    {
+        if ($this->type === 'email') {
+            return trans('communication.email');
+        } else if ($this->type === 'sms') {
+            return trans('communication.sms');
+        } else if ($this->type === 'push_notification') {
+            return trans('communication.push_notification');
+        } else {
+            return toWord($this->type);
+        }
     }
 
     public function scopeInfo($q)

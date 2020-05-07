@@ -28,7 +28,7 @@ class StockCategoryPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-stock-category') || $user->can('edit-stock-category');
+        return $user->can('create-stock-category') || $user->can('edit-stock-category');
     }
 
     /**
@@ -40,7 +40,7 @@ class StockCategoryPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-stock-category');
+        return $user->can('list-stock-category');
     }
 
     /**
@@ -51,7 +51,7 @@ class StockCategoryPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-stock-category');
+        return $user->can('create-stock-category');
     }
 
     /**
@@ -63,7 +63,7 @@ class StockCategoryPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-stock-category');
+        return $user->can('list-stock-category');
     }
 
     /**
@@ -75,7 +75,7 @@ class StockCategoryPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-stock-category');
+        return $user->can('edit-stock-category');
     }
 
     /**
@@ -87,6 +87,6 @@ class StockCategoryPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-stock-category');
+        return $user->can('delete-stock-category');
     }
 }

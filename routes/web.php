@@ -11,7 +11,7 @@
  */
 
 Route::get('/test', 'HomeController@test');
-Route::get('/custom', function() {
+Route::get('/custom', function () {
     return;
 });
 Route::get('/cache', 'Configuration\ConfigurationController@clearCache');
@@ -73,6 +73,8 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/employee/payroll/{uuid}/print', 'Employee\PayrollController@printPayrollSlip');
     Route::get('/download/report/{uuid}', 'HomeController@download');
 });
+
+Route::get('/communication/meeting/{uuid}/attachment/{attachment_uuid}/download', 'Communication\MeetingController@download');
 
 Route::get('/calendar/event/{uuid}/attachment/{attachment_uuid}/download', 'Calendar\EventController@download');
 Route::get('/post/article/{uuid}/attachment/{attachment_uuid}/download', 'Post\ArticleController@download');

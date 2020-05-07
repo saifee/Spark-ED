@@ -28,7 +28,7 @@ class AccountPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-account');
+        return $user->can('list-account');
     }
 
     /**
@@ -39,7 +39,7 @@ class AccountPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-account');
+        return $user->can('create-account');
     }
 
     /**
@@ -51,7 +51,7 @@ class AccountPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-account');
+        return $user->can('list-account');
     }
 
     /**
@@ -63,7 +63,7 @@ class AccountPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-account');
+        return $user->can('edit-account');
     }
 
     /**
@@ -75,6 +75,6 @@ class AccountPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-account');
+        return $user->can('delete-account');
     }
 }

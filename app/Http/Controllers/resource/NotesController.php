@@ -124,7 +124,9 @@ class NotesController extends Controller
 
         $attachments = $this->upload->getAttachment($this->module, $notes->id);
 
-        return $this->success(compact('notes', 'attachments'));
+        $mobile_description = mobileDescription($notes->description);
+
+        return $this->success(compact('notes', 'attachments', 'mobile_description'));
     }
 
     /**

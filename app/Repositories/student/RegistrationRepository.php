@@ -454,7 +454,7 @@ class RegistrationRepository
         $params['registration_fee'] = ($course_options && $enable_registration_fee) ? (gv($course_options, 'registration_fee')) : 0;
 
         beginTransaction();
-
+        
         $student_parent = $this->student_parent->getExistingParent($params);
 
         $student = $this->student->getExistingStudent($params);
@@ -624,11 +624,11 @@ class RegistrationRepository
         if (! request('admission_number')) {
             throw ValidationException::withMessages(['admission_number' => trans('validation.required', ['attribute' => trans('student.admission_number')])]);
         }
-
+        
         if (! is_numeric(request('admission_number'))) {
             throw ValidationException::withMessages(['admission_number' => trans('validation.numeric', ['attribute' => trans('student.admission_number')])]);
         }
-
+        
         if (request('admission_number') < 0) {
             throw ValidationException::withMessages(['admission_number' => trans('validation.min.numeric', ['attribute' => trans('student.admission_number'), 'min' => 0])]);
         }

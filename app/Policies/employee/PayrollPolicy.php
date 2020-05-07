@@ -28,7 +28,7 @@ class PayrollPolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('generate-payroll') || $user->can('edit-payroll');
+        return $user->can('generate-payroll') || $user->can('edit-payroll');
     }
 
     /**
@@ -40,7 +40,7 @@ class PayrollPolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-payroll');
+        return $user->can('list-payroll');
     }
 
     /**
@@ -51,7 +51,7 @@ class PayrollPolicy
      */
     public function generate(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('generate-payroll');
+        return $user->can('generate-payroll');
     }
 
     /**
@@ -63,7 +63,7 @@ class PayrollPolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-payroll');
+        return $user->can('list-payroll');
     }
 
     /**
@@ -75,7 +75,7 @@ class PayrollPolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-payroll');
+        return $user->can('edit-payroll');
     }
 
     /**
@@ -87,6 +87,6 @@ class PayrollPolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-payroll');
+        return $user->can('delete-payroll');
     }
 }

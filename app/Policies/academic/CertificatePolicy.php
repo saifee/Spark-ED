@@ -28,7 +28,7 @@ class CertificatePolicy
      */
     public function preRequisite(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-certificate') || $user->can('edit-certificate');
+        return $user->can('create-certificate') || $user->can('edit-certificate');
     }
 
     /**
@@ -40,7 +40,7 @@ class CertificatePolicy
      */
     public function list(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-certificate');
+        return $user->can('list-certificate');
     }
 
     /**
@@ -51,7 +51,7 @@ class CertificatePolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('create-certificate');
+        return $user->can('create-certificate');
     }
 
     /**
@@ -63,7 +63,7 @@ class CertificatePolicy
      */
     public function show(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('list-certificate');
+        return $user->can('list-certificate');
     }
 
     /**
@@ -75,7 +75,7 @@ class CertificatePolicy
      */
     public function update(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('edit-certificate');
+        return $user->can('edit-certificate');
     }
 
     /**
@@ -87,6 +87,6 @@ class CertificatePolicy
      */
     public function delete(User $user)
     {
-        return $user->hasRole('super-admin') || $user->can('delete-certificate');
+        return $user->can('delete-certificate');
     }
 }

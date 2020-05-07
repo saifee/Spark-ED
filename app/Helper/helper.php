@@ -281,16 +281,17 @@ function randomString($length, $type = 'token')
  * @param  integer $n
  * @return integer
  */
-function generateOTP($n = 6) { 
-    $generator = "1357902468"; 
+function generateOTP($n = 6)
+{
+    $generator = "1357902468";
   
-    $result = ""; 
+    $result = "";
   
-    for ($i = 1; $i <= $n; $i++) { 
-        $result .= substr($generator, (rand()%(strlen($generator))), 1); 
-    } 
+    for ($i = 1; $i <= $n; $i++) {
+        $result .= substr($generator, (rand()%(strlen($generator))), 1);
+    }
   
-    return $result; 
+    return $result;
 }
 
 /*
@@ -342,11 +343,13 @@ function scriptStripper($string)
     return preg_replace('#<script(.*?)>(.*?)</script>#is', '', $string);
 }
 
-function isInteger($input){
+function isInteger($input)
+{
     return(ctype_digit(strval($input)));
 }
 
-function digitCount($number) {
+function digitCount($number)
+{
     return strlen((string)$number);
 }
 
@@ -451,28 +454,17 @@ function formatNumber($number, $decimal_place = 2)
 
 function formatSizeUnits($bytes)
 {
-    if ($bytes >= 1073741824)
-    {
+    if ($bytes >= 1073741824) {
         $bytes = number_format($bytes / 1073741824, 2) . ' GB';
-    }
-    elseif ($bytes >= 1048576)
-    {
+    } elseif ($bytes >= 1048576) {
         $bytes = number_format($bytes / 1048576, 2) . ' MB';
-    }
-    elseif ($bytes >= 1024)
-    {
+    } elseif ($bytes >= 1024) {
         $bytes = number_format($bytes / 1024, 2) . ' KB';
-    }
-    elseif ($bytes > 1)
-    {
+    } elseif ($bytes > 1) {
         $bytes = $bytes . ' bytes';
-    }
-    elseif ($bytes == 1)
-    {
+    } elseif ($bytes == 1) {
         $bytes = $bytes . ' byte';
-    }
-    else
-    {
+    } else {
         $bytes = '0 bytes';
     }
 
@@ -750,7 +742,7 @@ function currency($amount, $symbol = 0)
     $amount = round($amount, $decimal_value);
 
     // money format
-    $decimal = (floor( $amount ) != $amount) ? gv($currency, 'decimal_place') : 0;
+    $decimal = (floor($amount) != $amount) ? gv($currency, 'decimal_place') : 0;
     if (gv($currency, 'format') == 'indian') {
         $integer_part = moneyFormatIndia(floor($amount));
         $decimal_part = ($decimal) ? ('.'.explode('.', $amount)[1]) : '';
@@ -773,7 +765,7 @@ function gv($params, $key, $default = null)
 
 function gkv($data, $key)
 {
-    return array_map(function($item) use($key) {
+    return array_map(function ($item) use ($key) {
         return data_get($item, $key);
     }, $data);
 }
@@ -788,18 +780,19 @@ function gnv($params, $key, $default = null)
     return isset($params[$key]) ? $params[$key] : $default;
 }
 
-function mergeByKey($array1,$array2) {
+function mergeByKey($array1, $array2)
+{
     $array1 = ! is_array($array1) ? [] : $array1;
     $array2 = ! is_array($array2) ? [] : $array2;
 
     $data = array();
-    $arrayAB = array_merge($array1,$array2);
+    $arrayAB = array_merge($array1, $array2);
     foreach ($arrayAB as $value) {
-      $id = $value['id'];
-      if (!isset($data[$id])) {
-        $data[$id] = array();
-      }
-      $data[$id] = array_merge($data[$id],$value);
+        $id = $value['id'];
+        if (!isset($data[$id])) {
+            $data[$id] = array();
+        }
+        $data[$id] = array_merge($data[$id], $value);
     }
     return array_values($data);
 }
@@ -893,7 +886,7 @@ function getDaysInOrder()
     $list = getVar('list');
     $days = $list['day'];
 
-    for ($i=0; $i < getDayInInteger(config('config.first_day_of_week')) ; $i++) {
+    for ($i=0; $i < getDayInInteger(config('config.first_day_of_week')); $i++) {
         array_push($days, array_shift($days));
     }
 
@@ -971,6 +964,17 @@ function getAuthUserBatchId()
     }
 }
 
+function getAuthUserStudentRecordId()
+{
+    if (\Auth::user()->hasRole(config('system.default_role.student'))) {
+        return getAuthStudentRecordIds();
+    } else if (\Auth::user()->hasRole(config('system.default_role.parent'))) {
+        return getAuthParentStudentRecordIds();
+    } else {
+        return [];
+    }
+}
+
 function getAuthStudentBatch()
 {
 
@@ -981,6 +985,18 @@ function getAuthStudentBatch()
     }
 
     return $student->studentRecords->where('academic_session_id', config('config.default_academic_session.id'))->pluck('batch_id')->all();
+}
+
+function getAuthStudentRecordIds()
+{
+
+    $student = \App\Models\Student\Student::with('studentRecords')->filterById(\Auth::user()->Student->id)->first();
+
+    if (! $student) {
+        return [];
+    }
+
+    return $student->studentRecords->where('academic_session_id', config('config.default_academic_session.id'))->pluck('id')->all();
 }
 
 function getAuthParentStudentsBatch()
@@ -998,7 +1014,7 @@ function getAuthParentStudentsBatch()
 
     $batch_id = array();
     foreach ($students as $student) {
-        $student_records = $student->studentRecords->where('academic_session_id', config('config.default_academic_session.id'))->where('date_of_exit',null)->all();
+        $student_records = $student->studentRecords->where('academic_session_id', config('config.default_academic_session.id'))->where('date_of_exit', null)->all();
         foreach ($student_records as $student_record) {
             $batch_id[] = $student_record->batch_id;
         }
@@ -1007,13 +1023,38 @@ function getAuthParentStudentsBatch()
     return $batch_id;
 }
 
-function getRollNumber($student_record){
+function getAuthParentStudentRecordIds()
+{
+    if (! \Auth::user()->hasRole(config('system.default_role.parent'))) {
+        return [];
+    }
+
+    $student_ids = \Auth::user()->Parent->Students->pluck('id')->all();
+    $students = \App\Models\Student\Student::with('studentRecords')->whereIn('id', $student_ids)->get();
+
+    if (! $students) {
+        return [];
+    }
+
+    $ids = array();
+    foreach ($students as $student) {
+        $student_records = $student->studentRecords->where('academic_session_id', config('config.default_academic_session.id'))->where('date_of_exit', null)->all();
+        foreach ($student_records as $student_record) {
+            $ids[] = $student_record->id;
+        }
+    }
+
+    return $ids;
+}
+
+function getRollNumber($student_record)
+{
     if ($student_record && ! $student_record->roll_number) {
         return;
     }
 
     if ($student_record->batch->getOption('roll_number_digit')) {
-        $roll_number = str_pad($student_record->roll_number, $student_record->batch->getOption('roll_number_digit'), '0', STR_PAD_LEFT);    
+        $roll_number = str_pad($student_record->roll_number, $student_record->batch->getOption('roll_number_digit'), '0', STR_PAD_LEFT);
     } else {
         $roll_number = $student_record->roll_number;
     }
@@ -1050,10 +1091,11 @@ function getStudentBatchOnDate($student, $date = null)
 {
     $date = ($date) ? : date('Y-m-d');
 
-    if (! $student->studentRecords()->count())
+    if (! $student->studentRecords()->count()) {
         return null;
+    }
 
-    $student_record = $student->StudentRecords->where('date_of_entry','<=',$date)->where('is_promoted',0)->first();
+    $student_record = $student->StudentRecords->where('date_of_entry', '<=', $date)->where('is_promoted', 0)->first();
 
     return ($student_record) ? $student_record->Batch->batch_with_course : null;
 }
@@ -1106,13 +1148,13 @@ function amIClassTeacherOnDate($class_teachers, $date = null)
     $date = ($date) ? : date('Y-m-d');
     $employee_id = optional(\Auth::user()->Employee)->id;
 
-    $class_teacher = $class_teachers->where('date_effective','<=',$date)->where('employee_id', $employee_id)->first();
+    $class_teacher = $class_teachers->where('date_effective', '<=', $date)->where('employee_id', $employee_id)->first();
 
     if (! $class_teacher) {
         return false;
     }
 
-    $next_class_teacher = $class_teachers->where('employee_id', '!=', $employee_id)->where('date_effective','>',$class_teacher->date_effective)->where('date_effective','<=',$date)->first();
+    $next_class_teacher = $class_teachers->where('employee_id', '!=', $employee_id)->where('date_effective', '>', $class_teacher->date_effective)->where('date_effective', '<=', $date)->first();
 
     if (! $next_class_teacher) {
         return true;
@@ -1126,13 +1168,13 @@ function amISubjectTeacherOnDate($subject_teachers, $date = null)
     $date = ($date) ? : date('Y-m-d');
     $employee_id = optional(\Auth::user()->Employee)->id;
 
-    $subject_teacher = $subject_teachers->where('date_effective','<=',$date)->where('employee_id', $employee_id)->first();
+    $subject_teacher = $subject_teachers->where('date_effective', '<=', $date)->where('employee_id', $employee_id)->first();
 
     if (! $subject_teacher) {
         return false;
     }
 
-    $next_subject_teacher = $subject_teachers->where('employee_id', '!=', $employee_id)->where('date_effective','>',$subject_teacher->date_effective)->where('date_effective','<=',$date)->first();
+    $next_subject_teacher = $subject_teachers->where('employee_id', '!=', $employee_id)->where('date_effective', '>', $subject_teacher->date_effective)->where('date_effective', '<=', $date)->first();
 
     if (! $next_subject_teacher) {
         return true;
@@ -1323,56 +1365,64 @@ function isColumnVisible($column, $filter)
     return false;
 }
 
-function createExcerpt( $content, $length = 20, $more = '...' ) {
-    $excerpt = strip_tags( trim( $content ) );
-    $words = str_word_count( $excerpt, 2 );
-    if ( count( $words ) > $length ) {
-        $words = array_slice( $words, 0, $length, true );
-        end( $words );
+function createExcerpt($content, $length = 20, $more = '...')
+{
+    $excerpt = strip_tags(trim($content));
+    $words = str_word_count($excerpt, 2);
+    if (count($words) > $length) {
+        $words = array_slice($words, 0, $length, true);
+        end($words);
         // $position = key( $words ) + strlen( current( $words ) );
-        $position = key( $words );
-        $excerpt = substr( $excerpt, 0, $position ) . $more;
+        $position = key($words);
+        $excerpt = substr($excerpt, 0, $position) . $more;
     }
     return $excerpt;
 }
 
-function stripInlineStyle($content) {
+function stripInlineStyle($content)
+{
     return preg_replace('/(<[^>]+) style=".*?"/i', '$1', $content);
 }
 
-function getPaymentGatewayHandlingFee($gateway, $amount) {
-    if (! config('config.'.$gateway.'_charge_handling_fee'))
+function getPaymentGatewayHandlingFee($gateway, $amount)
+{
+    if (! config('config.'.$gateway.'_charge_handling_fee')) {
         return 0;
+    }
 
-    if (config('config.'.$gateway.'_fixed_handling_fee'))
+    if (config('config.'.$gateway.'_fixed_handling_fee')) {
         return config('config.'.$gateway.'_handling_fee');
-    else 
+    } else {
         return currency($amount * (config('config.'.$gateway.'_handling_fee') / 100));
+    }
 }
 
 function generateAdmitCardNumber($exam_schedule, $student)
 {
-    return strtoupper($exam_schedule->id.$student->id.substr($student->first_name, 0,2).substr($student->last_name, 0,2));
+    return strtoupper($exam_schedule->id.$student->id.substr($student->first_name, 0, 2).substr($student->last_name, 0, 2));
 }
 
-function beginTransaction() {
+function beginTransaction()
+{
     \DB::beginTransaction();
 }
 
-function rollBackTransaction() {
+function rollBackTransaction()
+{
     \DB::rollBack();
 }
 
-function commitTransaction() {
+function commitTransaction()
+{
     \DB::commit();
 }
 
-function calc( $mathString )
+function calc($mathString)
 {
     $mathString = trim($mathString);
     $mathString = preg_replace('[^0-9\+-\*\/\(\) ]', '', $mathString);
 
-    $compute = create_function("", "return (" . $mathString . ");" );
+    $compute = create_function("", "return (" . $mathString . ");");
     return 0 + $compute();
 }
 
@@ -1380,7 +1430,7 @@ function searchByKey($data, $key, $value)
 {
     $index = array_search($value, array_column($data, $key));
 
-    return ($index === FALSE) ? [] : $data[$index];
+    return ($index === false) ? [] : $data[$index];
 }
 
 function moreThanErrorMsg($data, $count = 2)
@@ -1388,7 +1438,7 @@ function moreThanErrorMsg($data, $count = 2)
     $data = array_unique($data);
     $error = implode(',', $data);
     if (count($data) > $count) {
-        $error = implode(', ', array_slice($data,0,$count)).' '.trans('general.and_count_other', ['count' => count($data) - 2]);
+        $error = implode(', ', array_slice($data, 0, $count)).' '.trans('general.and_count_other', ['count' => count($data) - 2]);
     }
 
     return $error;
@@ -1441,8 +1491,8 @@ function dateToWord($date)
 
 function numberToWord($num = false)
 {
-    $num = str_replace(array(',', ' '), '' , trim($num));
-    if(! $num) {
+    $num = str_replace(array(',', ' '), '', trim($num));
+    if (! $num) {
         return false;
     }
     $num = (int) $num;
@@ -1466,7 +1516,7 @@ function numberToWord($num = false)
         $hundreds = ($hundreds ? ' ' . $list1[$hundreds] . ' hundred' . ' ' : '');
         $tens = (int) ($num_levels[$i] % 100);
         $singles = '';
-        if ( $tens < 20 ) {
+        if ($tens < 20) {
             $tens = ($tens ? ' ' . $list1[$tens] . ' ' : '' );
         } else {
             $tens = (int)($tens / 10);
@@ -1504,7 +1554,7 @@ function currencyInWord(float $number)
         40 => 'forty', 50 => 'fifty', 60 => 'sixty',
         70 => 'seventy', 80 => 'eighty', 90 => 'ninety');
     $digits = array('', 'hundred','thousand','lakh', 'crore');
-    while( $i < $digits_length ) {
+    while ($i < $digits_length) {
         $divider = ($i == 2) ? 10 : 100;
         $number = floor($no % $divider);
         $no = floor($no / $divider);
@@ -1513,7 +1563,9 @@ function currencyInWord(float $number)
             $plural = (($counter = count($str)) && $number > 9) ? 's' : null;
             $hundred = ($counter == 1 && $str[0]) ? ' and ' : null;
             $str [] = ($number < 21) ? $words[$number].' '. $digits[$counter]. $plural.' '.$hundred:$words[floor($number / 10) * 10].' '.$words[$number % 10]. ' '.$digits[$counter].$plural.' '.$hundred;
-        } else $str[] = null;
+        } else {
+            $str[] = null;
+        }
     }
     $Rupees = implode('', array_reverse($str));
 
@@ -1522,7 +1574,7 @@ function currencyInWord(float $number)
 
     $i = 0;
     $str = array();
-    while( $i < $digits_length ) {
+    while ($i < $digits_length) {
         $divider = ($i == 2) ? 10 : 100;
         $number = floor($dec % $divider);
         $dec = floor($dec / $divider);
@@ -1531,7 +1583,9 @@ function currencyInWord(float $number)
             $plural = (($counter = count($str)) && $number > 9) ? 's' : null;
             $hundred = ($counter == 1 && $str[0]) ? ' and ' : null;
             $str [] = ($number < 21) ? $words[$number].' '. $digits[$counter]. $plural.' '.$hundred:$words[floor($number / 10) * 10].' '.$words[$number % 10]. ' '.$digits[$counter].$plural.' '.$hundred;
-        } else $str[] = null;
+        } else {
+            $str[] = null;
+        }
     }
     $paise = ($decimal) ? implode('', array_reverse($str)) . $decimal_value : '';
 
@@ -1539,18 +1593,19 @@ function currencyInWord(float $number)
     return ucwords(($Rupees ? $Rupees . $number_value." " : '') . $paise);
 }
 
-function moneyFormatIndia($num){
+function moneyFormatIndia($num)
+{
     $explrestunits = "" ;
-    if(strlen($num)>3){
+    if (strlen($num)>3) {
         $lastthree = substr($num, strlen($num)-3, strlen($num));
         $restunits = substr($num, 0, strlen($num)-3); // extracts the last three digits
         $restunits = (strlen($restunits)%2 == 1)?"0".$restunits:$restunits; // explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping.
         $expunit = str_split($restunits, 2);
-        for($i=0; $i<sizeof($expunit); $i++){
+        for ($i=0; $i<sizeof($expunit); $i++) {
             // creates each of the 2's group and adds a comma to the end
-            if($i==0){
+            if ($i==0) {
                 $explrestunits .= (int)$expunit[$i].","; // if is first value , convert into integer
-            }else{
+            } else {
                 $explrestunits .= $expunit[$i].",";
             }
         }
@@ -1625,4 +1680,16 @@ function getStudentAttendanceMoreThanOnceTypes()
     );
 
     return $data;
+}
+
+function cleanBody($body)
+{
+    return clean($body, 'youtube');
+}
+
+function mobileDescription($description)
+{
+    preg_replace('/<iframe.*src=\"(.*)\".*><\/iframe>/isU', '', $description);
+
+    return $description;
 }

@@ -23,7 +23,7 @@ class CommunicationController extends Controller
     ) {
         $this->request = $request;
         $this->repo = $repo;
-        $this->middleware('permission:send-sms|send-email');
+        $this->middleware('permission:send-sms|send-email|send-push-notification')->except(['getNotification']);
         $this->middleware('permission:delete-communication-history')->only(['destroy']);
     }
 
@@ -49,6 +49,16 @@ class CommunicationController extends Controller
         $filters = $this->repo->getFilters();
 
         return $this->success(compact('communications', 'filters'));
+    }
+
+    /**
+     * Used to get all notification
+     * @get ("/api/notification")
+     * @return Response
+     */
+    public function getNotification()
+    {
+        return $this->ok($this->repo->getNotification($this->request->all()));
     }
 
     /**
