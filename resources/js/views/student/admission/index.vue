@@ -139,7 +139,7 @@
                                     </v-select>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-2">
+                            <div class="col-12 col-sm-2" v-if="getConfig('made') === 'saudi'">
                                 <div class="form-group">
                                     <label for="">{{trans('misc.caste')}}</label>
                                     <v-select label="name" track-by="id" v-model="selected_castes" name="caste_id" id="caste_id" :options="castes" :placeholder="trans('misc.select_caste')" @select="onCasteSelect" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" @remove="onCasteRemove" :selected="selected_castes">
@@ -147,6 +147,12 @@
                                             {{trans('general.no_option_found')}}
                                         </div>
                                     </v-select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-2" v-if="getConfig('made') !== 'saudi'">
+                                <div class="form-group">
+                                    <label for="">{{trans('student.nationality')}}</label>
+                                    <input class="form-control" name="nationality" v-model="filter.nationality">
                                 </div>
                             </div>
                             <div class="col-12 col-sm-2">
@@ -363,6 +369,7 @@
                     blood_group_id: [],
                     religion_id: [],
                     caste_id: [],
+                    nationality: '',
                     gender: [],
                     category_id: [],
                     student_group_id: [],
@@ -460,6 +467,10 @@
                     {
                         text: i18n.misc.caste,
                         value: 'caste'
+                    },
+                    {
+                        text: i18n.misc.nationality,
+                        value: 'nationality'
                     },
                     {
                         text: i18n.misc.category,

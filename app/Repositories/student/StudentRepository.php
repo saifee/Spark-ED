@@ -236,6 +236,7 @@ class StudentRepository
         $blood_group_id       = gv($params, 'blood_group_id');
         $religion_id          = gv($params, 'religion_id');
         $caste_id             = gv($params, 'caste_id');
+        $nationality          = gv($params, 'nationality');
         $category_id          = gv($params, 'category_id');
         $first_name           = gv($params, 'first_name');
         $last_name            = gv($params, 'last_name');
@@ -296,6 +297,7 @@ class StudentRepository
                 $blood_group_id,
                 $religion_id,
                 $caste_id,
+                $nationality,
                 $category_id,
                 $gender,
                 $first_guardian_name,
@@ -315,6 +317,8 @@ class StudentRepository
                     return $query->whereIn('religion_id', $religion_id);
                 })->when($caste_id, function ($query, $caste_id) {
                     return $query->whereIn('caste_id', $caste_id);
+                })->when($nationality, function ($query, $nationality) {
+                    return $query->where('nationality', 'LIKE', "%{$nationality}%");
                 })->when($category_id, function ($query, $category_id) {
                     return $query->whereIn('category_id', $category_id);
                 })->when($gender, function ($query, $gender) {
