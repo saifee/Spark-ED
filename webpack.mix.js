@@ -68,6 +68,7 @@ mix.js('resources/js/app.js', 'public/js/app.js')
     .sass('resources/sass/colors/red.scss', 'public/css/colors')
     .browserSync({
         files: [ 'public/js/**/*.js', 'public/css/**/*.css' ],
+        proxy: 'instikit.test'
     })
     .webpackConfig({
         devtool: "cheap-module-source-map",     // "eval-source-map" or "inline-source-map" or "cheap-module-source-map" or "eval"
