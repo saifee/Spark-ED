@@ -8,14 +8,28 @@
                         <h3 class="box-title m-t-20 m-b-10">{{trans('auth.login')}}</h3>
                         <social-login v-if="getConfig('made') === 'saudi'" />
                         <div v-if="! login_with_otp">
-                            <div>
-                                <v-text-field color="primary" type="text" name="email_or_username" :label="trans('auth.email_or_username')" v-model="loginForm.email_or_username" @keyup.enter="process" />
-                                <show-error :form-name="loginForm" prop-name="email_or_username"></show-error>
-                            </div>
-                            <div>
-                                <v-text-field color="primary" type="password" name="password" :label="trans('auth.password')" v-model="loginForm.password" @keyup.enter="process" />
-                                <show-error :form-name="loginForm" prop-name="password"></show-error>
-                            </div>
+                                <v-text-field
+                                    v-model="loginForm.email_or_username"
+                                    color="primary"
+                                    type="text"
+                                    name="email_or_username"
+                                    :label="trans('auth.email_or_username')"
+                                    :persistent-hint="loginForm.errors.has('email_or_username')"
+                                    :error="loginForm.errors.has('email_or_username')"
+                                    :hint="loginForm.errors.get('email_or_username')"
+                                    @keyup.enter="process"
+                                />
+                                <v-text-field
+                                    v-model="loginForm.password"
+                                    color="primary"
+                                    type="password"
+                                    name="password"
+                                    :label="trans('auth.password')"
+                                    :persistent-hint="loginForm.errors.has('password')"
+                                    :error="loginForm.errors.has('password')"
+                                    :hint="loginForm.errors.get('password')"
+                                    @keyup.enter="process"
+                                />
                         </div>
                         <div v-else>
                             <div class="form-group">
@@ -29,9 +43,16 @@
                             </div>
                         </div>
                         <div class="g-recaptcha" v-if="getConfig('recaptcha') && getConfig('login_recaptcha')" :data-sitekey="getConfig('recaptcha_key')"></div>
-                        <div class="form-group text-center m-t-20">
-                            <v-btn block x-large dark color="primary">{{trans('auth.sign_in')}}</v-btn>
-                        </div>
+                        <v-btn
+                            block
+                            x-large
+                            dark
+                            color="primary"
+                            class="m-t-20"
+                            type="submit"
+                        >
+                            {{trans('auth.sign_in')}}
+                        </v-btn>
                         <div class="form-group m-b-0">
                             <div class="col-sm-12 text-center">
                                 <p v-if="getConfig('reset_password')">{{trans('auth.forgot_your_password?')}} <router-link to="/password" class="text-info m-l-5"><b>{{trans('auth.reset_here!')}}</b></router-link></p>
