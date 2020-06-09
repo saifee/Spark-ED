@@ -26,7 +26,7 @@ class TerminationRequest extends FormRequest
         return [
             'date_of_termination' => 'required|date',
             'termination_remarks' => 'required|min:20',
-            'termination_reason' => 'required'
+            // 'termination_reason' => 'required'
         ];
     }
 
