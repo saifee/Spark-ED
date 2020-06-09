@@ -617,9 +617,9 @@ class RegistrationRepository
             throw ValidationException::withMessages(['message' => trans('general.invalid_action')]);
         }
 
-        if (! request('admission_remarks')) {
-            throw ValidationException::withMessages(['admission_remarks' => trans('validation.required', ['attribute' => trans('student.admission_remarks')])]);
-        }
+        // if (! request('admission_remarks')) {
+        //     throw ValidationException::withMessages(['admission_remarks' => trans('validation.required', ['attribute' => trans('student.admission_remarks')])]);
+        // }
 
         if (! request('admission_number')) {
             throw ValidationException::withMessages(['admission_number' => trans('validation.required', ['attribute' => trans('student.admission_number')])]);
