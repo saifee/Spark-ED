@@ -116,12 +116,12 @@ class TerminationRepository
     {
         $termination_reason = gv($params, 'termination_reason');
 
-        $data = getVar('data');
-        $student_termination_reasons = gv($data, 'student_termination_reasons', []);
+        // $data = getVar('data');
+        // $student_termination_reasons = gv($data, 'student_termination_reasons', []);
 
-        if (! in_array($termination_reason, $student_termination_reasons)) {
-            throw ValidationException::withMessages(['termination_reason' => trans('general.invalid_input')]);
-        }
+        // if (! in_array($termination_reason, $student_termination_reasons)) {
+        //     throw ValidationException::withMessages(['termination_reason' => trans('general.invalid_input')]);
+        // }
 
         if ($student_record->date_of_exit) {
             throw ValidationException::withMessages(['message' => trans('general.invalid_action')]);
