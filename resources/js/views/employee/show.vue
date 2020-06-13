@@ -9,7 +9,8 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
-                        <router-link to="/employee/list" class="btn btn-info btn-sm"><i class="fas fa-list"></i> <span class="d-none d-sm-inline">{{trans('employee.employee')}}</span></router-link>
+                        <router-link to="/employee/card-view" class="btn btn-info btn-sm"><i class="fas fa-list"></i> <span class="d-none d-sm-inline">{{trans('employee.employee')}}</span></router-link>
+                        <router-link v-if="hasPermission('edit-employee')" :to="`/employee/${employee.uuid}/edit`" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i> <span class="d-none d-sm-inline">{{trans('employee.edit_employee')}}</span></router-link>
                     </div>
                 </div>
             </div>
@@ -18,67 +19,67 @@
             <div class="row">
                 <div class="col-12 col-sm-8 p-0">
                     <div id="accordion" class="accordion" v-if="employee.id">
-                        <div class="card">
+                        <div class="card" style="overflow: visible;">
                             <div class="card-header collapsed" id="basic" @click="tab = 'basic'" data-toggle="collapse" data-target="#collapseBasic" aria-expanded="false" aria-controls="collapseBasic">
                                 <h5><i class="fas fa-lg fa-graduation-cap fa-fix-w-32"></i> {{trans('employee.basic_information')}}</h5>
                             </div>
 
                             <div id="collapseBasic" class="collapse" aria-labelledby="basic" data-parent="#accordion">
                                 <div class="card-body">
-                                    <basic-form :employee="employee" @complete="getEmployee" v-if="tab == 'basic'"></basic-form>
+                                    <basic-detail :employee="employee" @complete="getEmployee" v-if="tab == 'basic'"></basic-detail>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card">
+                        <div class="card" style="overflow: visible;">
                             <div class="card-header collapsed" id="contact" @click="tab = 'contact'" data-toggle="collapse" data-target="#collapseContact" aria-expanded="false" aria-controls="collapseContact">
                                 <h5><i class="fas fa-lg fa-address-book fa-fix-w-32"></i> {{trans('employee.contact_information')}}</h5>
                             </div>
 
                             <div id="collapseContact" class="collapse" aria-labelledby="contact" data-parent="#accordion">
                                 <div class="card-body">
-                                    <contact-form :employee="employee" @complete="getEmployee" v-if="tab == 'contact'"></contact-form>
+                                    <contact-detail :employee="employee" @complete="getEmployee" v-if="tab == 'contact'"></contact-detail>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card">
+                        <div class="card" style="overflow: visible;">
                             <div class="card-header collapsed" id="document" @click="tab = 'document'" data-toggle="collapse" data-target="#collapseDocument" aria-expanded="false" aria-controls="collapseDocument">
                                 <h5><i class="fas fa-lg fa-folder fa-fix-w-32"></i> {{trans('employee.document_information')}}</h5>
                             </div>
 
                             <div id="collapseDocument" class="collapse" aria-labelledby="document" data-parent="#accordion">
                                 <div class="card-body">
-                                    <document-detail :employee="employee" v-if="tab == 'document'"></document-detail>
+                                    <document-detail :read-mode="true" :employee="employee" v-if="tab == 'document'"></document-detail>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card">
+                        <div class="card" style="overflow: visible;">
                             <div class="card-header collapsed" id="qualification" @click="tab = 'qualification'" data-toggle="collapse" data-target="#collapseQualification" aria-expanded="false" aria-controls="collapseQualification">
                                 <h5><i class="fas fa-lg fa-book fa-fix-w-32"></i> {{trans('employee.qualification_information')}}</h5>
                             </div>
 
                             <div id="collapseQualification" class="collapse" aria-labelledby="qualification" data-parent="#accordion">
                                 <div class="card-body">
-                                    <qualification-detail :employee="employee" v-if="tab == 'qualification'"></qualification-detail>
+                                    <qualification-detail :read-mode="true" :employee="employee" v-if="tab == 'qualification'"></qualification-detail>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card">
+                        <div class="card" style="overflow: visible;">
                             <div class="card-header collapsed" id="account" @click="tab = 'account'" data-toggle="collapse" data-target="#collapseAccount" aria-expanded="false" aria-controls="collapseAccount">
                                 <h5><i class="fas fa-lg fa-university fa-fix-w-32"></i> {{trans('employee.account_information')}}</h5>
                             </div>
 
                             <div id="collapseAccount" class="collapse" aria-labelledby="account" data-parent="#accordion">
                                 <div class="card-body">
-                                    <account-detail :employee="employee" v-if="tab == 'account'"></account-detail>
+                                    <account-detail :read-mode="true" :employee="employee" v-if="tab == 'account'"></account-detail>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card">
+                        <div class="card" style="overflow: visible;">
                             <div class="card-header collapsed" id="login" @click="tab = 'login'" data-toggle="collapse" data-target="#collapseUserLogin" aria-expanded="false" aria-controls="collapseUserLogin">
                                 <h5><i class="fas fa-lg fa-sign-in-alt fa-fix-w-32"></i> {{trans('auth.user_login')}}</h5>
                             </div>
@@ -90,26 +91,26 @@
                             </div>
                         </div>
 
-                        <div class="card">
+                        <div class="card" style="overflow: visible;">
                             <div class="card-header collapsed" id="designation" @click="tab = 'designation'" data-toggle="collapse" data-target="#collapseDesignation" aria-expanded="false" aria-controls="collapseDesignation">
                                 <h5><i class="fas fa-lg fa-user-plus fa-fix-w-32"></i> {{trans('employee.designation_history')}}</h5>
                             </div>
 
                             <div id="collapseDesignation" class="collapse" aria-labelledby="designation" data-parent="#accordion">
                                 <div class="card-body">
-                                    <designation-detail :employee="employee" @completed="getEmployee" v-if="tab == 'designation'"></designation-detail>
+                                    <designation-detail :read-mode="true" :employee="employee" @completed="getEmployee" v-if="tab == 'designation'"></designation-detail>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="card">
+                        <div class="card" style="overflow: visible;">
                             <div class="card-header collapsed" id="term" @click="tab = 'term'" data-toggle="collapse" data-target="#collapseTerm" aria-expanded="false" aria-controls="collapseTerm">
                                 <h5><i class="fas fa-lg fa-user-times fa-fix-w-32"></i> {{trans('employee.term_history')}}</h5>
                             </div>
 
                             <div id="collapseTerm" class="collapse" aria-labelledby="term" data-parent="#accordion">
                                 <div class="card-body">
-                                    <term-detail :employee="employee" @completed="getEmployee" v-if="tab == 'term'"></term-detail>
+                                    <term-detail :read-mode="true" :employee="employee" @completed="getEmployee" v-if="tab == 'term'"></term-detail>
                                 </div>
                             </div>
                         </div>
@@ -118,8 +119,16 @@
                 <div class="col-12 col-sm-4 hidden-sm-down p-0 border-left">
                     <div class="card">
                         <div class="card-body p-r-20">
-                            <div class="m-2">
-                                <upload-image id="photo" :upload-path="`/employee/${employee.uuid}/photo`" :remove-path="`/employee/${employee.uuid}/photo/remove`" :image-source="photo" @uploaded="updatePhoto" @removed="updatePhoto"></upload-image>
+                            <div class="m-2 text-center">
+                                <span>
+                                    <template v-if="!employee.photo">
+                                        <img v-if="employee.gender == 'female'" src="/images/avatar_female.png" class="img-circle">
+                                        <img v-else src="/images/avatar_male.png" class="img-circle">
+                                    </template>
+                                    <template v-else>
+                                        <img :src="`/${employee.photo}`" class="img-circle">
+                                    </template>
+                                </span>
                             </div>
                             <div class="table-responsive" v-if="employee.id">
                                 <table class="table table-sm custom-show-table">
@@ -162,7 +171,7 @@
                                         </tr>
                                         <tr>
                                             <td>{{trans('employee.gender')}}</td>
-                                            <td>{{employee.gender}}</td>
+                                            <td>{{trans('list.'+employee.gender)}}</td>
                                         </tr>
                                         <tr>
                                             <td>{{trans('employee.date_of_birth')}}</td>
@@ -192,17 +201,17 @@
 </template>
 
 <script>
-    import basicForm from './basic/form'
-    import contactForm from './contact/form'
+    import basicDetail from './basic/detail'
+    import contactDetail from './contact/detail'
     import documentDetail from './document/index'
     import accountDetail from './account/index'
     import designationDetail from './designation/index'
     import termDetail from './term/index'
     import qualificationDetail from './qualification/index'
-    import loginDetail from './login/index'
+    import loginDetail from './login/detail'
 
 	export default {
-        components : { basicForm,contactForm,documentDetail,accountDetail,qualificationDetail,designationDetail,termDetail,loginDetail },
+        components : { basicDetail,contactDetail,documentDetail,accountDetail,qualificationDetail,designationDetail,termDetail,loginDetail },
         data() {
             return {
                 uuid:this.$route.params.uuid,
@@ -221,6 +230,9 @@
             helper.showDemoNotification(['employee']);
         },
         methods: {
+            hasPermission(permission) {
+                return helper.hasPermission(permission)
+            },
         	getEmployee(){
                 let loader = this.$loading.show();
         		axios.get('/api/employee/'+this.uuid)
@@ -242,7 +254,7 @@
             },
             getStatus(employee){
                 let term = employee.employee_terms;
-                if (term.length && term[0].date_of_joining <= moment().format('YYYY-MM-DD') && (!term[0].date_of_leaving || term[0].date_of_leaving >= moment().format('YYYY-MM-DD')))
+                if (term.length && term[0].date_of_joining <= helper.today() && (!term[0].date_of_leaving || term[0].date_of_leaving >= helper.today()))
                     return '<span class="label label-success">'+i18n.employee.status_active+'</span>';
                 else
                     return '<span class="label label-danger">'+i18n.employee.status_inactive+'</span>';
@@ -264,3 +276,10 @@
         }
 	}
 </script>
+
+<style>
+    .img-circle {
+        max-height: 150px;
+        max-width: 150px;
+    }
+</style>
