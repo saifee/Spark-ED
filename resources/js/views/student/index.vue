@@ -17,9 +17,9 @@
                 <div class="col-12 col-sm-3">
                     <div class="card card-box">
                         <div class="card-body">
-                            <h4 class="card-title">{{trans('student.admission')}}</h4>
+                            <h4 class="card-title">{{trans('student.list_student')}}</h4>
                             <p class="card-text font-80pc">{{trans('student.admission_module_description')}}</p>
-                            <router-link to="/student/admission" class="btn btn-info btn-sm">{{trans('general.go_to_link', {link: trans('student.admission')})}}</router-link>
+                            <router-link to="/student/card-view" class="btn btn-info btn-sm">{{trans('general.go_to_link', {link: trans('student.list_student')})}}</router-link>
                         </div>
                     </div>
                 </div>
