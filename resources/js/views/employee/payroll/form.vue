@@ -76,7 +76,7 @@
                                     <td>{{pay_head.name}}</td>
                                     <td class="text-right">
                                         <template v-if="editPayrollAmount">
-                                            <input class="borderless-input" type="number" v-model="pay_head.amount" :placeholder="trans('employee.salary_structure_amount')">
+                                            <input class="borderless-input" type="text" v-model="pay_head.amount" :placeholder="trans('employee.salary_structure_amount')">
                                         </template>
                                         <template v-else>
                                             {{pay_head.amount}}
@@ -91,7 +91,7 @@
                                     <td>{{pay_head.name}}</td>
                                     <td class="text-right">
                                         <template v-if="editPayrollAmount">
-                                            <input class="borderless-input" type="number" v-model="pay_head.amount" :placeholder="trans('employee.salary_structure_amount')">
+                                            <input class="borderless-input" type="text" v-model="pay_head.amount" :placeholder="trans('employee.salary_structure_amount')">
                                         </template>
                                         <template v-else>
                                             {{pay_head.amount}}
@@ -202,8 +202,6 @@
             },
             fetch(){
                 let loader = this.$loading.show();
-                this.payrollForm.start_date = helper.toDate(this.payrollForm.start_date);
-                this.payrollForm.end_date = helper.toDate(this.payrollForm.end_date);
                 this.payrollForm.post('/api/employee/payroll/fetch')
                     .then(response => {
                         this.employee_salary = response.salary;
@@ -299,14 +297,14 @@
             getTotalEarningSalary(){
                 let total = 0;
                 this.payrollForm.pay_heads.forEach(pay_head => {
-                    total += parseInt(pay_head.type == 'earning' ? (pay_head.amount || 0) : 0);
+                    total += pay_head.type == 'earning' ? (pay_head.amount || 0) : 0;
                 });
                 return total;
             },
             getTotalDeductionSalary(){
                 let total = 0;
                 this.payrollForm.pay_heads.forEach(pay_head => {
-                    total += parseInt(pay_head.type == 'deduction' ? (pay_head.amount || 0) : 0);
+                    total += pay_head.type == 'deduction' ? (pay_head.amount || 0) : 0;
                 });
                 return total;
             },
