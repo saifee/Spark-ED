@@ -86,6 +86,7 @@
                                     <label for="">{{trans('student_wallet.student_wallet_limit')}}</label>
                                         <currency-input :position="default_currency.position" :symbol="default_currency.symbol" name="student_wallet_limit" :placeholder="trans('finance.student_wallet_limit')" v-model="configForm.student_wallet_limit"></currency-input>
                                     <show-error :form-name="configForm" prop-name="student_wallet_limit"></show-error>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
