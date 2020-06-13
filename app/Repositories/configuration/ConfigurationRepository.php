@@ -521,7 +521,6 @@ class ConfigurationRepository
 
     /**
      * Check symlink
-     * @return string
      */
     public function checkSymlink()
     {
