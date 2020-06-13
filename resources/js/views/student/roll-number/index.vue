@@ -48,7 +48,7 @@
 						        				<th>{{trans('student.name')}}</th>
 						        				<th>{{trans('student.date_of_birth')}}</th>
 						        				<th>{{trans('student.contact_number')}}</th>
-						        				<th>{{trans('student.first_guardian_name')}}</th>
+						        				<th>{{trans('student.father_name')}}</th>
 						        				<th>{{trans('student.roll_number')}}</th>
 						        			</tr>
 						        		</thead>
@@ -58,7 +58,7 @@
 						        				<td v-text="student.name"></td>
 						        				<td>{{student.date_of_birth | moment}}</td>
 						        				<td v-text="student.contact_number"></td>
-						        				<td v-text="student.first_guardian_name"></td>
+						        				<td v-text="student.father_name"></td>
 						        				<td>
 									                <div class="form-group">
 									                	<div class="input-group">
@@ -140,7 +140,7 @@
 								date_of_birth: student_record.student.date_of_birth,
 								contact_number: student_record.student.contact_number,
 								admission_number: helper.getAdmissionNumber(student_record.admission),
-								father_name: student_record.student.parent.first_guardian_name,
+								father_name: student_record.student.parent.father_name,
 								roll_number: student_record.roll_number
 							})
 						});
