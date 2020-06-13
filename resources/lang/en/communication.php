@@ -87,5 +87,13 @@
   'join_meeting' => 'Join Meeting',
   'leave_meeting' => 'Leave Meeting',
   'duplicate_tab' => 'You have already opened this tab, duplicate tabs are not supported.',
-  'demo_mode_meeting_description' => 'For demo, Create a meetingof 1 hour for Course - Grade XI & Schedule it in next 5 minutes. Once the meeting is live, Login as student account in another browser & join the meeting live.'
+  'demo_mode_meeting_description' => 'For demo, Create a meetingof 1 hour for Course - Grade XI & Schedule it in next 5 minutes. Once the meeting is live, Login as student account in another browser & join the meeting live.',
+  'add_audience' => 'Add Audience',
+  'individual_audiences' => 'Individual Audiences',
+  'back_to_meeting' => 'Back to Meeting',
+  'meeting_scheduled' => 'Meeting is scheduled on :date at :time',
+  'meeting_ended' => 'Meeting ended on :date at :time',
+  'share_screen' => 'Share Screen',
+  'stop_share_screen' => 'Stop Share Screen',
+  'join_meeting_instruction' => 'Click on the Join Meeting button & Accept permission to access Camera & Microphone'
 );
