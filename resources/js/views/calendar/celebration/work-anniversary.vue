@@ -105,7 +105,7 @@
             helper.showDemoNotification(['calendar']);
         },
         created(){
-            this.filter.start_date = moment().format('YYYY-MM-DD');
+            this.filter.start_date = helper.today();
             this.filter.end_date = moment().add(1, 'weeks').format('YYYY-MM-DD');
         },
         methods: {
@@ -125,13 +125,15 @@
                 return moment().diff(date, 'years');
             },
             getEmployeeDesignationOnDate(employee){
-                return helper.getEmployeeDesignationOnDate(employee, moment().format('YYYY-MM-DD'));
+                return helper.getEmployeeDesignationOnDate(employee, helper.today());
             },
             getWorkAnniversaries(page){
                 let loader = this.$loading.show();
                 if (typeof page !== 'number') {
                     page = 1;
                 }
+                this.filter.start_date = helper.toDate(this.filter.start_date);
+                this.filter.end_date = helper.toDate(this.filter.end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/work/anniversary?page=' + page + url)
                     .then(response => {
