@@ -97,7 +97,6 @@
         },
         methods: {
             submit(){
-                this.returnForm.date = helper.toDate(this.returnForm.date);
                 let loader = this.$loading.show();
                 this.returnForm.post('/api/stock/transfer/'+this.stockTransfer.id+'/return')
                     .then(response => {
