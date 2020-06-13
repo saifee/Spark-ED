@@ -10,7 +10,7 @@
             </div>
             <div class="col-12">
                 <div class="form-group">
-                    <span class="label label-info  m-b-10 p-10" v-for="date in holidayForm.dates">
+                    <span class="label label-info m-r-10 m-b-10 p-10" v-for="date in holidayForm.dates">
                         {{date | momentWithDay}} <i class="fas fa-times-circle cursor" v-tooltip="trans('general.remove')" @click="remove(date)"></i>
                     </span>
                 </div>
@@ -69,7 +69,7 @@
         	},
         	onSelected(val){
         		this.date = '';
-        		val = moment(val).format('YYYY-MM-DD');
+        		val = helper.toDate(val);
         		
         		if (this.holidayForm.dates.indexOf(val) < 0)
         			this.holidayForm.dates.push(val);
@@ -92,7 +92,7 @@
             return helper.formatDate(date);
           },
           momentWithDay(date) {
-            return moment(date).format('YYYY-MM-DD ddd');
+            return helper.formatDateWithDay(date);
           },
           momentDateTime(date) {
             return helper.formatDateTime(date);
