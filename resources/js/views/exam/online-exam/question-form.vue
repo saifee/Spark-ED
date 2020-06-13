@@ -26,7 +26,7 @@
                 </div> -->
                 <div class="col-12 col-sm-4">
                     <div class="form-group">
-                        <label for="">{{trans('exam.online_exam_question_type')}}</label>
+                        <label for="">{{trans('exam.online_exam_mark')}}</label>
                         <input class="form-control" type="number" v-model="onlineExamQuestionForm.mark" name="mark" :placeholder="trans('exam.online_exam_mark')">
                         <show-error :form-name="onlineExamQuestionForm" prop-name="mark"></show-error>
                     </div>
