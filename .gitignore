@@ -1,6 +1,7 @@
 /node_modules
-/storage/*.key
-/vendor
+!/vendor/
+/vendor/*
+!/vendor/mint/
 /.idea
 /.vscode
 /.vagrant
