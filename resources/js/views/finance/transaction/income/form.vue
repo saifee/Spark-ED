@@ -207,7 +207,6 @@
                     this.store();
             },
             store(){
-                this.incomeForm.date_of_income = helper.toDate(this.incomeForm.date_of_income);
                 let loader = this.$loading.show();
                 this.incomeForm.post('/api/income')
                     .then(response => {
@@ -255,7 +254,6 @@
                     });
             },
             update(){
-                this.incomeForm.date_of_income = helper.toDate(this.incomeForm.date_of_income);
                 let loader = this.$loading.show();
                 this.incomeForm.patch('/api/income/'+this.uuid)
                     .then(response => {
