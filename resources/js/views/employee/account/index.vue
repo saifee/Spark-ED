@@ -1,6 +1,6 @@
 <template>
     <div class="p-b-20">
-        <button class="btn btn-sm btn-info pull-right m-b-10" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('employee.add_new_account')}}</button>
+        <button v-if="!readMode" class="btn btn-sm btn-info pull-right m-b-10" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('employee.add_new_account')}}</button>
         <div class="table-responsive" v-if="employee_accounts.total">
             <table class="table table-sm">
                 <thead>
@@ -24,24 +24,30 @@
                         <td class="table-option">
                             <div class="btn-group">
                                 <button class="btn btn-success btn-sm" v-tooltip="trans('employee.view_account')" @click.prevent="showAction(employee_account)"><i class="fas fa-arrow-circle-right"></i></button>
-                                <button class="btn btn-info btn-sm" v-tooltip="trans('employee.edit_account')" @click.prevent="editAction(employee_account)"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-danger btn-sm" :key="employee_account.id" v-confirm="{ok: confirmDelete(employee_account)}" v-tooltip="trans('employee.delete_account')"><i class="fas fa-trash"></i></button>
+                                <button v-if="!readMode" class="btn btn-info btn-sm" v-tooltip="trans('employee.edit_account')" @click.prevent="editAction(employee_account)"><i class="fas fa-edit"></i></button>
+                                <button v-if="!readMode" class="btn btn-danger btn-sm" :key="employee_account.id" v-confirm="{ok: confirmDelete(employee_account)}" v-tooltip="trans('employee.delete_account')"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <module-info v-if="!employee_accounts.total" module="employee" title="account_module_title" description="account_module_description" icon="list">
-            <div slot="btn">
-                <button class="btn btn-info btn-md" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('general.add_new')}}</button>
-            </div>
-        </module-info>
+        <template v-if="!readMode">
+            <module-info v-if="!employee_accounts.total" module="employee" title="account_module_title" description="account_module_description" icon="list">
+                <div slot="btn">
+                    <button class="btn btn-info btn-md" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('general.add_new')}}</button>
+                </div>
+            </module-info>
+        </template>
+        <template v-else>
+            <div v-if="!employee_accounts.total" class="font-80pc">{{trans('general.no_result_found')}}</div>
+        </template>
+
         <pagination-record :page-length.sync="filter.page_length" :records="employee_accounts" @updateRecords="getEmployeeAccounts" @change.native="getEmployeeAccounts"></pagination-record>
 
-        <create-account v-if="addModal" @close="addModal = false" @completed="getEmployeeAccounts" :employee="employee"></create-account>
+        <create-account v-if="addModal && !readMode" @close="addModal = false" @completed="getEmployeeAccounts" :employee="employee"></create-account>
 
-        <edit-account v-if="editModal" @close="editModal = false" @completed="getEmployeeAccounts" :employee="employee" :aid="editId"></edit-account>
+        <edit-account v-if="editModal && !readMode" @close="editModal = false" @completed="getEmployeeAccounts" :employee="employee" :aid="editId"></edit-account>
 
         <show-account v-if="showModal" @close="showModal = false" :employee="employee" :aid="showId"></show-account>
     </div>
@@ -53,7 +59,18 @@
     import showAccount from './show'
 
     export default {
-        props: ['employee'],
+        props: {
+            employee: {
+                type: Object,
+                default() {
+                    return {}
+                }
+            },
+            readMode: {
+                type: Boolean,
+                default: false
+            }
+        },
         components : { createAccount,editAccount,showAccount },
         data() {
             return {
@@ -73,7 +90,7 @@
             };
         },
         mounted(){
-            if(!helper.hasPermission('edit-employee')){
+            if(!helper.hasPermission('list-employee')){
                 helper.notAccessibleMsg();
                 this.$router.push('/dashboard');
             }
