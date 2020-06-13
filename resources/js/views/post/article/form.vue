@@ -133,7 +133,6 @@
                     this.store();
             },
             store(){
-                this.articleForm.date_of_article = helper.toDate(this.articleForm.date_of_article);
                 let loader = this.$loading.show();
                 this.articleForm.post('/api/article')
                     .then(response => {
@@ -177,7 +176,6 @@
                     });
             },
             update(){
-                this.articleForm.date_of_article = helper.toDate(this.articleForm.date_of_article);
                 let loader = this.$loading.show();
                 this.articleForm.patch('/api/article/'+this.uuid)
                     .then(response => {
