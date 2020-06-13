@@ -97,7 +97,7 @@
                 this.$router.push('/dashboard');
             }
 
-            this.attendanceForm.date_of_attendance = moment().format('YYYY-MM-DD');
+            this.attendanceForm.date_of_attendance = helper.today();
             this.getPreRequisite();
         },
         methods: {
@@ -128,7 +128,7 @@
                 let loader = this.$loading.show();
                 axios.post('/api/employee/attendance/production/fetch', {
                         employee_id: this.attendanceForm.employee_id,
-                        date: helper.toDate(this.attendanceForm.date_of_attendance)
+                        date: this.attendanceForm.date_of_attendance
                     })
                     .then(response => {
                         this.attendance = response.attendance;
@@ -156,7 +156,6 @@
             },
             submit(){
                 let loader = this.$loading.show();
-                this.attendanceForm.date_of_attendance = helper.toDate(this.attendanceForm.date_of_attendance);
                 this.attendanceForm.post('/api/employee/attendance/production')
                     .then(response => {
                         loader.hide();
