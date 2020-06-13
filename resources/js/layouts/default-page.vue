@@ -5,7 +5,7 @@
         <app-sidebar></app-sidebar>
         <key-search />
 
-        <v-content>
+        <v-main>
             <v-container fluid>
                 <v-row no-gutters>
                     <v-col cols="12">
@@ -14,7 +14,7 @@
                     </v-col>
                 </v-row>
             </v-container>
-        </v-content>
+        </v-main>
         	<app-footer></app-footer>
     </v-app>
 </template>
