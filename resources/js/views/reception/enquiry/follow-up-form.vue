@@ -82,8 +82,6 @@
         },
         methods: {
             submit(){
-                this.followUpForm.date_of_follow_up = helper.toDate(this.followUpForm.date_of_follow_up);
-                this.followUpForm.date_of_next_follow_up = helper.toDate(this.followUpForm.date_of_next_follow_up);
                 let loader = this.$loading.show();
                 this.followUpForm.post('/api/enquiry/'+this.enquiry.uuid+'/follow/up')
                     .then(response => {
