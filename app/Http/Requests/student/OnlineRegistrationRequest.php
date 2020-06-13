@@ -25,7 +25,7 @@ class OnlineRegistrationRequest extends FormRequest {
 
 		return [
 			'first_name'                      => 'required|min:2',
-			'last_name'                       => 'required|min:2',
+			// 'last_name'                       => 'required|min:2',
 			'date_of_birth'                   => 'required|date',
 			'contact_number'                  => 'required',
 			'gender'                          => 'required',
