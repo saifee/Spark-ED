@@ -100,7 +100,6 @@
 			},
 			storeDesignation(){
 				let loader = this.$loading.show();
-				this.designationForm.date_effective = helper.toDate(this.designationForm.date_effective);
 				this.designationForm.post('/api/employee/'+this.uuid+'/designation')
 					.then(response => {
 						toastr.success(response.message);
@@ -137,7 +136,6 @@
             },
             updateDesignation(){
                 let loader = this.$loading.show();
-				this.designationForm.date_effective = helper.toDate(this.designationForm.date_effective);
                 this.designationForm.patch('/api/employee/'+this.uuid+'/designation/'+this.did)
                     .then(response => {
                         toastr.success(response.message);
