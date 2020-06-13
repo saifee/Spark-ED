@@ -210,7 +210,6 @@
             },
             submit(){
                 let loader = this.$loading.show();
-                this.configForm.institute_foundation_date = helper.toDate(this.configForm.institute_foundation_date);
                 this.configForm.config_type = 'basic';
                 return this.configForm.post('/api/configuration')
                     .then(response => {
