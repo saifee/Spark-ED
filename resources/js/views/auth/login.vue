@@ -167,6 +167,7 @@
                         this.$store.dispatch('setAuthUserDetail',{
                             id: response.user.id,
                             email: response.user.email,
+                            name: response.user.name,
                             username: response.user.username,
                             roles: response.user.user_roles,
                             permissions: response.user.user_permissions,
@@ -202,7 +203,9 @@
                         this.$store.dispatch('setConfig',response.config);
                         this.$store.dispatch('setAuthUserDetail',{
                             id: response.user.id,
+                            uuid: response.user.uuid,
                             email: response.user.email,
+                            name: response.user.name,
                             username: response.user.username,
                             roles: response.user.user_roles,
                             permissions: response.user.user_permissions,
