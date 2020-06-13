@@ -188,6 +188,8 @@
                 if (typeof page !== 'number') {
                     page = 1;
                 }
+                this.filter.date_start_date = helper.toDate(this.filter.date_start_date);
+                this.filter.date_end_date = helper.toDate(this.filter.date_end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/postal/record?page=' + page + url)
                     .then(response => {
