@@ -136,7 +136,7 @@ class TerminationRepository
 
         $multi_course = $this->student_record->filterBySession($student_record->academic_session_id)->whereStudentId($student_record->student_id)->whereNull('date_of_exit')->where('id','!=',$student_record->id)->count();
 
-        if (! $multi_course && $student_record->Student->StudentRecords->where('date_of_entry', '>', toDate($student_record->date_of_entry))->where('id', '!=', $student_record->id)->count()) {
+        if (! $multi_course && $student_record->Student->StudentRecords->where('date_of_entry', '>', toDate($student_record->date_of_entry))->whereNull('date_of_exit')->where('id', '!=', $student_record->id)->count()) {
             throw ValidationException::withMessages(['message' => trans('student.no_termination_allowed_in_intermediate_records')]);
         }
 
