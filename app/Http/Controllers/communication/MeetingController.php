@@ -125,12 +125,18 @@ class MeetingController extends Controller
 
         $mobile_description = mobileDescription($meeting->description);
 
-        return $this->success(compact('meeting', 'attachments', 'selected_audience', 'start_time', 'end_time','is_editable', 'mobile_description'));
+        $individual_audiences = array();
+
+        if (request()->query('individual_audiences')) {
+            $individual_audiences = $this->repo->getSelectedIndividualAudience($meeting);
+        }
+
+        return $this->success(compact('meeting', 'attachments', 'selected_audience', 'start_time', 'end_time','is_editable', 'mobile_description', 'individual_audiences'));
     }
 
     /**
      * Used to join meeting
-     * @patch ("/api/meeting/{uuid}")
+     * @post ("/api/meeting/{uuid}/join")
      * @param ({
      *      @Parameter("uuid", type="string", required="true", description="Unique Id of Meeting"),
      * })
@@ -146,8 +152,27 @@ class MeetingController extends Controller
     }
 
     /**
+     * Used to share screen during meeting
+     * @post ("/api/meeting/{uuid}/share-screen")
+     * @param ({
+     *      @Parameter("uuid", type="string", required="true", description="Unique Id of Meeting"),
+     * })
+     * @return Response
+     */
+    public function shareScreen($uuid)
+    {
+        $this->authorize('list', Meeting::class);
+
+        $meeting = $this->repo->findByUuidOrFail($uuid);
+
+        $can_share_screen = $meeting->user_id === \Auth::user()->id ? true : false;
+
+        return $this->ok(compact('can_share_screen'));
+    }
+
+    /**
      * Used to leave meeting
-     * @patch ("/api/meeting/{uuid}")
+     * @post ("/api/meeting/{uuid}/leave")
      * @param ({
      *      @Parameter("uuid", type="string", required="true", description="Unique Id of Meeting"),
      * })
@@ -162,6 +187,46 @@ class MeetingController extends Controller
         $this->repo->leave($meeting);
 
         return $this->ok([]);
+    }
+
+    /**
+     * Used to add meeting audience
+     * @post ("/api/meeting/{uuid}/audience")
+     * @param ({
+     *      @Parameter("uuid", type="string", required="true", description="Unique Id of Meeting"),
+     * })
+     * @return Response
+     */
+    public function addAudience($uuid)
+    {
+        $this->authorize('update', Meeting::class);
+
+        $meeting = $this->repo->findByUuidOrFail($uuid);
+
+        $this->repo->addAudience($meeting, $this->request->all());
+
+        return $this->success(['message' => trans('communication.meeting_updated')]);
+    }
+
+    /**
+     * Used to delete meeting audience
+     * @delete ("/api/meeting/{uuid}/audience")
+     * @param ({
+     *      @Parameter("uuid", type="string", required="true", description="Unique Id of Meeting"),
+     *      @Parameter("type", type="string", required="true", description="Type of audience"),
+     *      @Parameter("id", type="string", required="true", description="Id of audience"),
+     * })
+     * @return Response
+     */
+    public function deleteAudience($uuid, $type, $id)
+    {
+        $this->authorize('update', Meeting::class);
+
+        $meeting = $this->repo->findByUuidOrFail($uuid);
+
+        $this->repo->deleteAudience($meeting, $type, $id);
+
+        return $this->success(['message' => trans('communication.meeting_updated')]);
     }
 
     /**
