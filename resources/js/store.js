@@ -5,13 +5,11 @@ import createPersistedState from 'vuex-persistedstate'
 
 const store = new Vuex.Store({
     state: {
-        navigationDrawer: true,
         auth: {
             status: false,
             id: '',
-            first_name: '',
-            middle_name: '',
-            last_name: '',
+            uuid: '',
+            name: '',
             email: '',
             username: '',
             avatar: '',
@@ -29,9 +27,6 @@ const store = new Vuex.Store({
         default_academic_session: {}
     },
     mutations: {
-        toggleNavigationDrawer (state) {
-            state.navigationDrawer = !state.navigationDrawer
-        },
         setAuthUserDetail (state, auth) {
             for (let key of Object.keys(auth)) {
                 state.auth[key] = auth[key] !== null ? auth[key] : '';
@@ -119,23 +114,23 @@ const store = new Vuex.Store({
         getAuthUser: (state) => (name) => {
             return state.auth[name];
         },
-        getAuthUserFullName: (state) => {
-            return state.auth['first_name']+' '+state.auth['last_name'];
-        },
         getAuthStatus: (state) => {
             return state.auth.status;
+        },
+        getAuthUserRoles: (state) => {
+            return state.auth.roles.toString();
         },
         hasRole: (state) => (name) => {
             return (state.auth.roles.indexOf(name) >= 0) ? true : false
         },
         hasAnyRole: (state) => (roles) => {
             return (state.auth.roles.some(role => {
-                return roles.indexOf(role) > -1;
+                return roles.indexOf(role) > -1; 
             })) ? true : false;
         },
         hasNotAnyRole: (state) => (roles) => {
             return (state.auth.roles.every(role => {
-                return roles.indexOf(role) < 0;
+                return roles.indexOf(role) < 0; 
             })) ? true : false;
         },
         getConfig: (state) => (name) => {
@@ -146,7 +141,7 @@ const store = new Vuex.Store({
         },
         hasAnyPermission: (state) => (permissions) => {
             return (state.auth.permissions.some(permission => {
-                return permissions.indexOf(permission) > -1;
+                return permissions.indexOf(permission) > -1; 
             })) ? true : false;
         },
         getLastActivity: (state) => {
