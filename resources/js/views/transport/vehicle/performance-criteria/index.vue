@@ -170,6 +170,7 @@
                 if (typeof page !== 'number') {
                     page = 1;
                 }
+                this.filter.date_effective = helper.toDate(this.filter.date_effective);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/vehicle/performance/criteria?page=' + page + url)
                     .then(response => {
