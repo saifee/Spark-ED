@@ -1,6 +1,6 @@
 <template>
 	<div>
-        <button class="btn btn-sm btn-info pull-right" @click="addModal = true" v-if="canAddTerm"><i class="fas fa-plus"></i> {{trans('employee.add_new_term')}}</button>
+        <button class="btn btn-sm btn-info pull-right" @click="addModal = true" v-if="canAddTerm && !readMode"><i class="fas fa-plus"></i> {{trans('employee.add_new_term')}}</button>
         <div class="table-responsive" v-if="employee.employee_terms">
             <table class="table table-sm">
                 <thead>
@@ -20,8 +20,10 @@
                         <td class="table-option">
                             <div class="btn-group">
                                 <!-- <template v-if="$first(employee_term, employee.employee_terms)"> -->
-                                    <button class="btn btn-danger btn-sm" :key="employee_term.id" v-confirm="{ok: confirmDelete(employee_term)}" v-tooltip="trans('employee.delete_term')"><i class="fas fa-trash"></i></button>
-                                    <button class="btn btn-info btn-sm" v-tooltip="trans('employee.edit_term')" @click.prevent="editAction(employee_term)"><i class="fas fa-edit"></i></button>
+                                    <template v-if="!readMode">
+                                        <button class="btn btn-danger btn-sm" :key="employee_term.id" v-confirm="{ok: confirmDelete(employee_term)}" v-tooltip="trans('employee.delete_term')"><i class="fas fa-trash"></i></button>
+                                        <button class="btn btn-info btn-sm" v-tooltip="trans('employee.edit_term')" @click.prevent="editAction(employee_term)"><i class="fas fa-edit"></i></button>
+                                    </template>
                                 <!-- </template> -->
                                 <button class="btn btn-success btn-sm" v-tooltip="trans('employee.view_term')" @click.prevent="showAction(employee_term)"><i class="fas fa-arrow-circle-right"></i></button>
                             </div>
@@ -30,10 +32,13 @@
                 </tbody>
             </table>
         </div>
+        <div v-else class="font-80pc">
+            {{trans('general.no_result_found')}}
+        </div>
 
-        <create-term v-if="addModal && canAddTerm" @close="addModal = false" @completed="$emit('completed')" :employee="employee"></create-term>
+        <create-term v-if="addModal && canAddTerm && !readMode" @close="addModal = false" @completed="$emit('completed')" :employee="employee"></create-term>
 
-        <edit-term v-if="editModal" @close="editModal = false" @completed="$emit('completed')" :employee="employee" :tid="editId"></edit-term>
+        <edit-term v-if="editModal && !readMode" @close="editModal = false" @completed="$emit('completed')" :employee="employee" :tid="editId"></edit-term>
 
         <show-term v-if="showModal" @close="showModal = false" :employee="employee" :tid="showId"></show-term>
     </div>
@@ -46,7 +51,18 @@
 
     export default {
         components: {createTerm,editTerm,showTerm},
-        props: ['employee'],
+        props: {
+            employee: {
+                type: Object,
+                default() {
+                    return {}
+                }
+            },
+            readMode: {
+                type: Boolean,
+                default: false
+            }
+        },
         data(){
             return {
                 addModal: false,
