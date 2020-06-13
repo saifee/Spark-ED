@@ -271,7 +271,10 @@ class PayrollRepository
         while($date <= $end_date) {
             $emplyoee_attendance = '';
 
-            $marked_attendance = $attendances->where('date_of_attendance', $date)->first();
+            // $marked_attendance = $attendances->where('date_of_attendance', $date)->first();
+            $marked_attendance = $attendances->filter(function($attendance) use ($date) {
+                return toDate($attendance->date_of_attendance) === $date;
+            })->first();
 
             if ($marked_attendance) {
                 $marked = $marked_attendance->attendanceType;
@@ -339,7 +342,7 @@ class PayrollRepository
                 $amount = ($salary_detail) ? $salary_detail->amount : 0;
                 $per_day_salary = $amount / $per_day_calculation_basis;
                 $total_attendance = ($attendance + $leave + ($half_day / 2));
-                $amount = round($total_attendance * $per_day_salary);
+                $amount = round($total_attendance * $per_day_salary, getDefaultCurrency('decimal_place'));
 
             } else if ($payroll_template_detail->category == 'flat_rate') {
 
@@ -355,7 +358,7 @@ class PayrollRepository
                 $attendance_type = $attendance_types->firstWhere('id', $payroll_template_detail->employee_attendance_type_id);
                 $value = ($attendance_type) ? $attendance_type->value : 0;
                 $salary_detail = $salary->salaryDetails->firstWhere('payroll_template_detail_id', $payroll_template_detail->id);
-                $amount = ($salary_detail) ? round($value * $salary_detail->amount) : 0;
+                $amount = ($salary_detail) ? round($value * $salary_detail->amount, getDefaultCurrency('decimal_place')) : 0;
 
             } else if ($payroll_template_detail->category == 'computation') {
 
@@ -370,7 +373,7 @@ class PayrollRepository
                     throw ValidationException::withMessages(['message' => trans('employee.salatry_structure_contains_invalid_computation')]);
                 }
 
-                $amount = round($amount);
+                $amount = round($amount, getDefaultCurrency('decimal_place'));
             }
 
             $total_earning += (($payroll_template_detail->payHead->type == 'earning') ? $amount : 0);
