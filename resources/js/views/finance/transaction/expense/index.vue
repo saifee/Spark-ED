@@ -212,6 +212,8 @@
                 if (typeof page !== 'number') {
                     page = 1;
                 }
+                this.filter.date_of_expense_start_date = helper.toDate(this.filter.date_of_expense_start_date);
+                this.filter.date_of_expense_end_date = helper.toDate(this.filter.date_of_expense_end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/expense?page=' + page + url)
                     .then(response => {
