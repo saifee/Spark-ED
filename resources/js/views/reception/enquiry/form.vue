@@ -33,27 +33,6 @@
                 </div>
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
-                        <label for="">{{trans('student.first_guardian_name')}}</label>
-                        <input class="form-control" type="text" v-model="enquiryForm.father_name" name="father_name" :placeholder="trans('student.first_guardian_name')">
-                        <show-error :form-name="enquiryForm" prop-name="father_name"></show-error>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                    <div class="form-group">
-                        <label for="">{{trans('student.second_guardian_name')}}</label>
-                        <input class="form-control" type="text" v-model="enquiryForm.mother_name" name="mother_name" :placeholder="trans('student.second_guardian_name')">
-                        <show-error :form-name="enquiryForm" prop-name="mother_name"></show-error>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                    <div class="form-group">
-                        <label for="">{{trans('student.guardian_name')}}</label>
-                        <input class="form-control" type="text" v-model="enquiryForm.guardian_name" name="guardian_name" :placeholder="trans('student.guardian_name')">
-                        <show-error :form-name="enquiryForm" prop-name="guardian_name"></show-error>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                    <div class="form-group">
                         <label for="">{{trans('student.email')}}</label>
                         <input class="form-control" type="text" v-model="enquiryForm.email" name="email" :placeholder="trans('student.email')">
                         <show-error :form-name="enquiryForm" prop-name="email"></show-error>
@@ -73,6 +52,72 @@
                         <show-error :form-name="enquiryForm" prop-name="alternate_contact_number"></show-error>
                     </div>
                 </div>
+            </div>
+            <h4 class="card-title">{{trans('student.guardian')}}</h4>
+            <div class="row">
+                <div class="col-12 col-sm-3">
+                    <div class="form-group">
+                        <label for="">{{trans('student.first_guardian_name')}}</label>
+                        <input class="form-control" type="text" v-model="enquiryForm.first_guardian_name" name="first_guardian_name" :placeholder="trans('student.first_guardian_name')">
+                        <show-error :form-name="enquiryForm" prop-name="first_guardian_name"></show-error>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <div class="form-group">
+                        <label for="">{{trans('general.relation')}}</label>
+                        <select v-model="enquiryForm.first_guardian_relation" class="custom-select col-12" name="first_guardian_relation" @change="enquiryForm.errors.clear('first_guardian_relation')">
+                          <option value="">{{trans('general.select_one')}}</option>
+                          <option v-for="relation in guardian_relations" v-bind:value="relation.id">
+                            {{ relation.name }}
+                          </option>
+                        </select>
+                        <show-error :form-name="enquiryForm" prop-name="first_guardian_relation"></show-error>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-3">
+                    <div class="form-group">
+                        <label for="">{{trans('student.second_guardian_name')}}</label>
+                        <input class="form-control" type="text" v-model="enquiryForm.second_guardian_name" name="second_guardian_name" :placeholder="trans('student.second_guardian_name')">
+                        <show-error :form-name="enquiryForm" prop-name="second_guardian_name"></show-error>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <div class="form-group">
+                        <label for="">{{trans('general.relation')}}</label>
+                        <select v-model="enquiryForm.second_guardian_relation" class="custom-select col-12" name="second_guardian_relation" @change="enquiryForm.errors.clear('second_guardian_relation')">
+                          <option value="">{{trans('general.select_one')}}</option>
+                          <option v-for="relation in guardian_relations" v-bind:value="relation.id">
+                            {{ relation.name }}
+                          </option>
+                        </select>
+                        <show-error :form-name="enquiryForm" prop-name="second_guardian_relation"></show-error>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-3">
+                    <div class="form-group">
+                        <label for="">{{trans('student.third_guardian_name')}}</label>
+                        <input class="form-control" type="text" v-model="enquiryForm.third_guardian_name" name="third_guardian_name" :placeholder="trans('student.third_guardian_name')">
+                        <show-error :form-name="enquiryForm" prop-name="third_guardian_name"></show-error>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <div class="form-group">
+                        <label for="">{{trans('general.relation')}}</label>
+                        <select v-model="enquiryForm.third_guardian_relation" class="custom-select col-12" name="third_guardian_relation" @change="enquiryForm.errors.clear('third_guardian_relation')">
+                          <option value="">{{trans('general.select_one')}}</option>
+                          <option v-for="relation in guardian_relations" v-bind:value="relation.id">
+                            {{ relation.name }}
+                          </option>
+                        </select>
+                        <show-error :form-name="enquiryForm" prop-name="third_guardian_relation"></show-error>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-12 col-sm-9">
                     <div class="form-group">
                         <label for="">{{trans('reception.enquiry_remarks')}}</label>
@@ -169,9 +214,12 @@
         data(){
             return {
                 enquiryForm: new Form({
-                    father_name: '',
-                    mother_name: '',
-                    guardian_name: '',
+                    first_guardian_name: '',
+                    first_guardian_relation: '',
+                    second_guardian_name: '',
+                    second_guardian_relation: '',
+                    third_guardian_name: '',
+                    third_guardian_relation: '',
                     date_of_enquiry: '',
                     enquiry_type_id: '',
                     enquiry_source_id: '',
@@ -181,6 +229,7 @@
                     remarks: '',
                     students: []
                 }),
+                guardian_relations: [],
                 enquiry_types: [],
                 enquiry_sources: [],
                 courses: [],
@@ -215,6 +264,7 @@
                         this.courses = response.courses;
                         this.institutes = response.institutes;
                         this.genders = response.genders;
+                        this.guardian_relations = response.guardian_relations;
                         loader.hide();
                     })
                     .catch(error => {
@@ -261,9 +311,12 @@
                 axios.get('/api/enquiry/'+this.uuid)
                     .then(response => {
                         this.enquiryForm.date_of_enquiry = response.enquiry.date_of_enquiry;
-                        this.enquiryForm.father_name = response.enquiry.father_name;
-                        this.enquiryForm.mother_name = response.enquiry.mother_name;
-                        this.enquiryForm.guardian_name = response.enquiry.guardian_name;
+                        this.enquiryForm.first_guardian_name = response.enquiry.first_guardian_name;
+                        this.enquiryForm.second_guardian_name = response.enquiry.second_guardian_name;
+                        this.enquiryForm.third_guardian_name = response.enquiry.third_guardian_name;
+                        this.enquiryForm.first_guardian_relation = response.enquiry.first_guardian_relation;
+                        this.enquiryForm.second_guardian_relation = response.enquiry.second_guardian_relation;
+                        this.enquiryForm.third_guardian_relation = response.enquiry.third_guardian_relation;
                         this.enquiryForm.contact_number = response.enquiry.contact_number;
                         this.enquiryForm.alternate_contact_number = response.enquiry.alternate_contact_number;
                         this.enquiryForm.email = response.enquiry.email;
@@ -294,7 +347,6 @@
             },
             store(){
                 let loader = this.$loading.show();
-                this.enquiryForm.date_of_enquiry = helper.toDate(this.enquiryForm.date_of_enquiry);
                 this.enquiryForm.post('/api/enquiry')
                     .then(response => {
                         toastr.success(response.message);
@@ -312,7 +364,6 @@
             },
             update(){
                 let loader = this.$loading.show();
-                this.enquiryForm.date_of_enquiry = helper.toDate(this.enquiryForm.date_of_enquiry);
                 this.enquiryForm.patch('/api/enquiry/'+this.uuid)
                     .then(response => {
                         toastr.success(response.message);
