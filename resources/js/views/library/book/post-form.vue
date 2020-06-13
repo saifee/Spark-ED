@@ -119,7 +119,6 @@
 			},
 			submit(){
 				let loader = this.$loading.show();
-				this.bookPostForm.date_of_addition = helper.toDate(this.bookPostForm.date_of_addition);
 				this.bookPostForm.post('/api/book/'+this.book.uuid+'/post')
 					.then(response => {
 						toastr.success(response.message);
