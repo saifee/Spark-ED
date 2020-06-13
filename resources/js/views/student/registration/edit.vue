@@ -91,7 +91,7 @@
             this.registrationForm.date_of_registration = this.registration.date_of_registration;
             this.registrationForm.registration_remarks = this.registration.registration_remarks;
             this.registrationForm.registration_fee = this.registration.registration_fee;
-            this.custom_values = this.registration.options.hasOwnProperty('custom_values') ? this.registration.options.custom_values : [];
+            this.custom_values = this.registration.options && this.registration.options.hasOwnProperty('custom_values') ? this.registration.options.custom_values : [];
             // this.setRegistration(this.registration.course_id);
 		},
 		methods: {
@@ -115,8 +115,6 @@
             },
 			submit(){
                 let loader = this.$loading.show();
-                this.registrationForm.date_of_registration = moment(this.registrationForm.date_of_registration).format('YYYY-MM-DD');
-                
 				this.registrationForm.patch('/api/registration/'+this.registration.id)
 					.then(response => {
 						toastr.success(response.message);
