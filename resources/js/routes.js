@@ -8,6 +8,7 @@ import frontendRoutes from '@routers/frontend';
 import guestRoutes from '@routers/guest';
 import authRoutes from '@routers/auth';
 import authWithAcademicSessionRoutes from '@routers/authWithAcademicSession';
+import authMeeting from '@routers/authMeeting';
 import authSecurityRoutes from '@routers/authSecurity';
 import errorRoutes from '@routers/error';
 
@@ -46,6 +47,14 @@ let routes = [
         meta: { validate: ['is_auth','two_factor_security','is_screen_locked','has_academic_session'] },
         children: [
             ...authWithAcademicSessionRoutes,
+        ]
+    },
+    {
+        path: '/',                                       // all the routes which needs authentication + two factor authentication + lock screen
+        component: () => import(/* webpackChunkName: "js/meetingPage" */ '@layouts/meeting-page'),
+        meta: { validate: ['is_auth','two_factor_security','is_screen_locked','has_academic_session'] },
+        children: [
+            ...authMeeting,
         ]
     },
     {
