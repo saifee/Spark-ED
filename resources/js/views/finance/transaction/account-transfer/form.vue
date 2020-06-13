@@ -183,7 +183,6 @@
                     this.store();
             },
             store(){
-                this.accountTransferForm.date_of_account_transfer = helper.toDate(this.accountTransferForm.date_of_account_transfer);
                 let loader = this.$loading.show();
                 this.accountTransferForm.post('/api/account/transfer')
                     .then(response => {
@@ -231,7 +230,6 @@
                     });
             },
             update(){
-                this.accountTransferForm.date_of_account_transfer = helper.toDate(this.accountTransferForm.date_of_account_transfer);
                 let loader = this.$loading.show();
                 this.accountTransferForm.patch('/api/account/transfer/'+this.uuid)
                     .then(response => {
