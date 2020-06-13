@@ -75,7 +75,7 @@
                                 <tr v-for="batch in batches.data">
                                     <td>
                                         {{batch.course.name}} <br />
-                                        <div class="dropdown">
+                                        <div class="dropdown" v-if="hasPermission('edit-subject')">
                                             <button type="button" class="btn btn-info btn-sm" href="#" role="button" id="moreSubOption" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-tooltip="trans('general.option')">
                                                 <i class="fas fa-ellipsis-h"></i>
                                             </button>
@@ -102,7 +102,10 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr v-for="subject in batch.subjects">
-                                                        <td v-text="subject.name"></td>
+                                                        <td>
+                                                            {{subject.name}}
+                                                            <span v-if="subject.options && subject.options.group">({{subject.options.group}})</span>
+                                                        </td>
                                                         <td>
                                                             {{subject.code}} <span v-if="subject.shortcode">({{subject.shortcode}})</span>
                                                         </td>
