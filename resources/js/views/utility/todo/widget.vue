@@ -52,7 +52,7 @@
 			},
 			submit(){
 				let loader = this.$loading.show();
-				this.todoForm.date = moment().format('YYYY-MM-DD');
+				this.todoForm.date = helper.today();
 				this.todoForm.post('/api/todo')
 					.then(response => {
 						toastr.success(response.message);
