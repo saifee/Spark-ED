@@ -160,7 +160,6 @@
 			},
 			submit(){
                 let loader = this.$loading.show();
-                this.feeInstallmentForm.due_date = moment(this.feeInstallmentForm.due_date).format('YYYY-MM-DD');
 				this.feeInstallmentForm.patch('/api/fee/installment/'+this.iuuid)
 					.then(response => {
 						toastr.success(response.message);
