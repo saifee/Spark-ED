@@ -211,14 +211,14 @@
             getTotalEarningSalary(){
                 let total = 0;
                 this.payroll.payroll_details.forEach(payroll_detail => {
-                    total += parseInt(payroll_detail.pay_head.type == 'earning' ? (payroll_detail.amount || 0) : 0);
+                    total += payroll_detail.pay_head.type == 'earning' ? (payroll_detail.amount || 0) : 0;
                 });
                 return total;
             },
             getTotalDeductionSalary(){
                 let total = 0;
                 this.payroll.payroll_details.forEach(payroll_detail => {
-                    total += parseInt(payroll_detail.pay_head.type == 'deduction' ? (payroll_detail.amount || 0) : 0);
+                    total += payroll_detail.pay_head.type == 'deduction' ? (payroll_detail.amount || 0) : 0;
                 });
                 return total;
             },
