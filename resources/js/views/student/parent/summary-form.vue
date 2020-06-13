@@ -4,22 +4,46 @@
             <div class="col-12 col-sm-4">
                 <div class="form-group">
                     <label for="">{{trans('student.first_guardian_name')}}</label>
-                    <input class="form-control" type="text" v-model="parentForm.father_name" name="father_name" :placeholder="trans('finance.father_name')">
-                    <show-error :form-name="parentForm" prop-name="father_name"></show-error>
+                    <input class="form-control" type="text" v-model="parentForm.first_guardian_name" name="first_guardian_name" :placeholder="trans('finance.first_guardian_name')">
+                    <show-error :form-name="parentForm" prop-name="first_guardian_name"></show-error>
                 </div>
             </div>
             <div class="col-12 col-sm-4">
                 <div class="form-group">
-                    <label for="">{{trans('student.father_contact_number')}}</label>
-                    <input class="form-control" type="text" v-model="parentForm.father_contact_number_1" name="father_contact_number_1" :placeholder="trans('finance.father_contact_number')">
-                    <show-error :form-name="parentForm" prop-name="father_contact_number_1"></show-error>
+                    <label for="">{{trans('general.relation')}}</label>
+                    <select v-model="parentForm.first_guardian_relation" class="custom-select col-12" name="first_guardian_relation" @change="parentForm.errors.clear('first_guardian_relation')">
+                      <option value="">{{trans('general.select_one')}}</option>
+                      <option v-for="relation in guardian_relations" v-bind:value="relation.id">
+                        {{ relation.name }}
+                      </option>
+                    </select>
+                    <show-error :form-name="parentForm" prop-name="first_guardian_relation"></show-error>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="form-group">
+                    <label for="">{{trans('student.first_guardian_contact_number')}}</label>
+                    <input class="form-control" type="text" v-model="parentForm.first_guardian_contact_number_1" name="first_guardian_contact_number_1" :placeholder="trans('finance.first_guardian_contact_number')">
+                    <show-error :form-name="parentForm" prop-name="first_guardian_contact_number_1"></show-error>
                 </div>
             </div>
             <div class="col-12 col-sm-4">
                 <div class="form-group">
                     <label for="">{{trans('student.second_guardian_name')}}</label>
-                    <input class="form-control" type="text" v-model="parentForm.mother_name" name="mother_name" :placeholder="trans('finance.mother_name')">
-                    <show-error :form-name="parentForm" prop-name="mother_name"></show-error>
+                    <input class="form-control" type="text" v-model="parentForm.second_guardian_name" name="second_guardian_name" :placeholder="trans('finance.second_guardian_name')">
+                    <show-error :form-name="parentForm" prop-name="second_guardian_name"></show-error>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4">
+                <div class="form-group">
+                    <label for="">{{trans('student.second_guardian_relation')}}</label>
+                    <select v-model="parentForm.second_guardian_relation" class="custom-select col-12" name="second_guardian_relation" @change="parentForm.errors.clear('second_guardian_relation')">
+                      <option value="">{{trans('general.select_one')}}</option>
+                      <option v-for="relation in guardian_relations" v-bind:value="relation.id">
+                        {{ relation.name }}
+                      </option>
+                    </select>
+                    <show-error :form-name="parentForm" prop-name="second_guardian_relation"></show-error>
                 </div>
             </div>
         </div>
@@ -41,10 +65,13 @@
         data() {
             return {
                 parentForm: new Form({
-                    father_name : '',
-                    mother_name : '',
-                    father_contact_number_1 : ''
-                })
+                    first_guardian_name : '',
+                    first_guardian_relation : '',
+                    second_guardian_name : '',
+                    second_guardian_relation : '',
+                    first_guardian_contact_number_1 : ''
+                }),
+                guardian_relations: []
             };
         },
         props: ['id'],
@@ -54,10 +81,24 @@
                 this.$router.push('/dashboard');
             }
 
-            if(this.id)
-                this.get();
+            this.getPreRequisite();
         },
         methods: {
+            getPreRequisite(){
+                let loader = this.$loading.show();
+                axios.get('/api/student/pre-requisite?form_type=student_parent')
+                    .then(response => {
+                        this.guardian_relations = response.guardian_relations;
+                        if(this.id)
+                            this.get();
+
+                        loader.hide();
+                    })
+                    .catch(error => {
+                        loader.hide();
+                        helper.showErrorMsg(error);
+                    })
+            },
             proceed(){
                 if(this.id)
                     this.update();
@@ -81,9 +122,11 @@
                 let loader = this.$loading.show();
                 axios.get('/api/student/parent/'+this.id)
                     .then(response => {
-                        this.parentForm.father_name = response.father_name;
-                        this.parentForm.mother_name = response.mother_name;
-                        this.parentForm.father_contact_number_1 = response.father_contact_number_1;
+                        this.parentForm.first_guardian_name = response.first_guardian_name;
+                        this.parentForm.first_guardian_relation = response.first_guardian_relation;
+                        this.parentForm.second_guardian_name = response.second_guardian_name;
+                        this.parentForm.second_guardian_relation = response.second_guardian_relation;
+                        this.parentForm.first_guardian_contact_number_1 = response.first_guardian_contact_number_1;
                         loader.hide();
                     })
                     .catch(error => {
