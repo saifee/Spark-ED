@@ -121,7 +121,7 @@
                     .then(response => {
                         this.students = response.students;
                         this.employees = response.employees;
-                        this.gatePassForm.date = moment().format('YYYY-MM-DD');
+                        this.gatePassForm.date = helper.today();
                         if(!this.uuid)
                             this.loaded = true;
                         loader.hide();
@@ -133,7 +133,6 @@
             },  
             store(){
             	this.gatePassForm.time = (this.time.hour && this.time.minute) ? helper.formatWithPadding(this.time.hour,2)+':'+helper.formatWithPadding(this.time.minute,2)+' '+this.time.meridiem : '';
-                this.gatePassForm.date = helper.toDate(this.gatePassForm.date);
                 let loader = this.$loading.show();
                 this.gatePassForm.post('/api/gate/pass')
                     .then(response => {
@@ -177,7 +176,6 @@
             },
             update(){
             	this.gatePassForm.time = (this.time.hour && this.time.minute) ? helper.formatWithPadding(this.time.hour,2)+':'+helper.formatWithPadding(this.time.minute,2)+' '+this.time.meridiem : '';
-                this.gatePassForm.date = helper.toDate(this.gatePassForm.date);
                 let loader = this.$loading.show();
                 this.gatePassForm.patch('/api/gate/pass/'+this.uuid)
                     .then(response => {
