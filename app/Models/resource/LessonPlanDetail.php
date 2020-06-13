@@ -56,7 +56,7 @@ class LessonPlanDetail extends Model
         return $q->where('lesson_plan_id', '=', $lesson_plan_id);
     }
 
-    public function scopeFilterByTitle($q, $topic, $s = 0)
+    public function scopeFilterByTitle($q, $title, $s = 0)
     {
         if (! $title) {
             return $q;
