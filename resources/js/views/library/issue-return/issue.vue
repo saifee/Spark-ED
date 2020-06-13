@@ -53,7 +53,7 @@
 						            		<div class="row">
 						            			<div class="col-6">{{trans('student.name')+': '+getStudentName(selected_student)}}</div>
 						            			<div class="col-6">{{trans('student.first_guardian_name')+': '+getStudentFatherName(selected_student)}} <br /></div>
-						            			<div class="col-6">{{trans('academic.batch')+': '+getStudentBatch(selected_student)}}</div>
+						            			<div class="col-6">{{trans('academic.batch')+': '+selected_student_record.batch.course.name+' '+selected_student_record.batch.name}}</div>
 						            			<div class="col-6">{{trans('student.contact_number')+': '+selected_student.contact_number}}</div>
 						            		</div>
 						            	</div>
@@ -137,15 +137,17 @@
 						            				</tr>
 						            			</thead>
 						            			<tbody>
-						            				<tr v-for="student in students.data">
-						            					<td>{{getStudentName(student)}}</td>
-						            					<td>{{getStudentBatch(student)}}</td>
-						            					<td>{{getStudentFatherName(student)}}</td>
-						            					<td>{{student.contact_number}}</td>
-						            					<td>
-						            						<button type="button" class="btn btn-sm btn-info" @click="selectStudent(student)">{{trans('student.select_student')}}</button>
-						            					</td>
-						            				</tr>
+						            				<template v-for="student in students.data">
+							            				<tr v-for="student_record in student.student_records">
+							            					<td>{{getStudentName(student)}}</td>
+							            					<td>{{student_record.batch.course.name+' '+student_record.batch.name}}</td>
+							            					<td>{{getStudentFatherName(student)}}</td>
+							            					<td>{{student.contact_number}}</td>
+							            					<td>
+							            						<button type="button" class="btn btn-sm btn-info" @click="selectStudentRecord(student, student_record)">{{trans('student.select_student')}}</button>
+							            					</td>
+							            				</tr>
+							            			</template>
 						            			</tbody>
 						            		</table>
 						            	</div>
@@ -243,6 +245,7 @@
 				book_details: [],
 				book_number: '',
 				selected_student: null,
+				selected_student_record: null,
 				selected_employee: null,
 				studentFilter: {
 					name: '',
@@ -275,10 +278,6 @@
             getStudentFatherName(student){
             	return student.parent.first_guardian_name;
             },
-            getStudentBatch(student){
-            	let student_record = student.student_records[0];
-            	return student_record.batch.course.name+' '+student_record.batch.name;
-            },
             getEmployeeName(employee){
                 return helper.getEmployeeName(employee);
             },
@@ -287,7 +286,7 @@
             },
 			searchBook(){
 				let loader = this.$loading.show();
-				let date = helper.toDate(this.issueForm.date_of_issue);
+				let date = this.issueForm.date_of_issue;
 
 				if (! date) {
 					loader.hide();
@@ -332,12 +331,12 @@
 						helper.showErrorMsg(error);
 					})
 			},
-			selectStudent(student){
+			selectStudentRecord(student, student_record){
 				this.issueForm.student_id = student.id;
 				this.selected_student = student;
+				this.selected_student_record = student_record;
 				this.students = [];
 				this.studentFilter.name = '';
-            	let student_record = student.student_records[0];
             	this.getUnreturnedBooks(this.issueForm.type, student_record.id);
 			},
 			searchEmployee(page){
@@ -392,12 +391,12 @@
             },
             submit(){
             	let loader = this.$loading.show();
-            	this.issueForm.date_of_issue = helper.toDate(this.issueForm.date_of_issue);
             	this.issueForm.post('/api/book/log')
             		.then(response => {
             			toastr.success(response.message);
             			this.selected_employee = null;
             			this.selected_student = null;
+            			this.selected_student_record = null;
             			this.studentFilter.name = '';
             			this.employeeFilter.name = '';
             			this.students.data = [];
