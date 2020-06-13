@@ -207,7 +207,6 @@
                     this.store();
             },
             store(){
-                this.expenseForm.date_of_expense = helper.toDate(this.expenseForm.date_of_expense);
                 let loader = this.$loading.show();
                 this.expenseForm.post('/api/expense')
                     .then(response => {
@@ -255,7 +254,6 @@
                     });
             },
             update(){
-                this.expenseForm.date_of_expense = helper.toDate(this.expenseForm.date_of_expense);
                 let loader = this.$loading.show();
                 this.expenseForm.patch('/api/expense/'+this.uuid)
                     .then(response => {
