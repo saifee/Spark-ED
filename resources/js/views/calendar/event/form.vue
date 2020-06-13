@@ -223,11 +223,6 @@
                 this.$router.push('/dashboard');
             }
 
-            if(this.uuid)
-                this.get();
-            else
-                this.eventForm.upload_token = this.$uuid.v4();
-
             this.getPreRequisite();
         },
         methods: {
@@ -245,6 +240,12 @@
                         this.batches = response.batches;
                         this.departments = response.departments;
                         this.employee_categories = response.employee_categories;
+                        
+                        if(this.uuid)
+                            this.get();
+                        else
+                            this.eventForm.upload_token = this.$uuid.v4();
+
                         loader.hide();
                     })
                     .catch(error => {
@@ -259,8 +260,6 @@
                     this.store();
             },
             store(){
-                this.eventForm.start_date = helper.toDate(this.eventForm.start_date);
-                this.eventForm.end_date   = helper.toDate(this.eventForm.end_date);
                 this.eventForm.start_time = helper.toTime(this.start_time);
                 this.eventForm.end_time   = helper.toTime(this.end_time);
                 let loader = this.$loading.show();
@@ -323,8 +322,6 @@
                     });
             },
             update(){
-                this.eventForm.start_date = helper.toDate(this.eventForm.start_date);
-                this.eventForm.end_date   = helper.toDate(this.eventForm.end_date);
                 this.eventForm.start_time = helper.toTime(this.start_time);
                 this.eventForm.end_time   = helper.toTime(this.end_time);
                 let loader = this.$loading.show();
