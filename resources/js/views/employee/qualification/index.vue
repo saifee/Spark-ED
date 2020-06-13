@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button class="btn btn-sm btn-info pull-right" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('employee.add_new_qualification')}}</button>
+        <button v-if="!readMode" class="btn btn-sm btn-info pull-right" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('employee.add_new_qualification')}}</button>
         <div class="table-responsive" v-if="employee_qualifications.total">
             <table class="table table-sm">
                 <thead>
@@ -21,24 +21,31 @@
                         <td class="table-option">
                             <div class="btn-group">
                                 <button class="btn btn-success btn-sm" v-tooltip="trans('employee.view_qualification')" @click.prevent="showAction(employee_qualification)" ><i class="fas fa-arrow-circle-right"></i></button>
-                                <button class="btn btn-info btn-sm" v-tooltip="trans('employee.edit_qualification')" @click.prevent="editAction(employee_qualification)" ><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-danger btn-sm" :key="employee_qualification.id" v-confirm="{ok: confirmDelete(employee_qualification)}" v-tooltip="trans('employee.delete_qualification')"><i class="fas fa-trash"></i></button>
+                                <button v-if="!readMode" class="btn btn-info btn-sm" v-tooltip="trans('employee.edit_qualification')" @click.prevent="editAction(employee_qualification)" ><i class="fas fa-edit"></i></button>
+                                <button v-if="!readMode" class="btn btn-danger btn-sm" :key="employee_qualification.id" v-confirm="{ok: confirmDelete(employee_qualification)}" v-tooltip="trans('employee.delete_qualification')"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <module-info v-if="!employee_qualifications.total" module="employee" title="qualification_module_title" description="qualification_module_description" icon="list">
-            <div slot="btn">
-                <button class="btn btn-info btn-md" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('general.add_new')}}</button>
-            </div>
-        </module-info>
+        <template v-if="!readMode">
+            <module-info v-if="!employee_qualifications.total" module="employee" title="qualification_module_title" description="qualification_module_description" icon="list">
+                <div slot="btn">
+                    <button class="btn btn-info btn-md" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('general.add_new')}}</button>
+                </div>
+            </module-info>
+        </template>
+        <template v-else>
+            <div v-if="!employee_qualifications.total" class="font-80pc">{{trans('general.no_result_found')}}</div>
+            <div>&nbsp;</div>
+        </template>
+
         <pagination-record :page-length.sync="filter.page_length" :records="employee_qualifications" @updateRecords="getEmployeeQualifications" @change.native="getEmployeeQualifications"></pagination-record>
 
-        <create-qualification v-if="addModal" @close="addModal = false" @completed="getEmployeeQualifications" :employee="employee"></create-qualification>
+        <create-qualification v-if="addModal && !readMode" @close="addModal = false" @completed="getEmployeeQualifications" :employee="employee"></create-qualification>
 
-        <edit-qualification v-if="editModal" @close="editModal = false" @completed="getEmployeeQualifications" :employee="employee" :qid="editId"></edit-qualification>
+        <edit-qualification v-if="editModal && !readMode" @close="editModal = false" @completed="getEmployeeQualifications" :employee="employee" :qid="editId"></edit-qualification>
 
         <show-qualification v-if="showModal" @close="showModal = false" :employee="employee" :qid="showId"></show-qualification>
     </div>
@@ -50,7 +57,18 @@
     import showQualification from './show'
 
     export default {
-        props: ['employee'],
+        props: {
+            employee: {
+                type: Object,
+                default() {
+                    return {}
+                }
+            },
+            readMode: {
+                type: Boolean,
+                default: false
+            }
+        },
         components : { createQualification,editQualification,showQualification },
         data() {
             return {
@@ -69,7 +87,7 @@
             };
         },
         mounted(){
-            if(!helper.hasPermission('edit-employee')){
+            if(!helper.hasPermission('list-employee')){
                 helper.notAccessibleMsg();
                 this.$router.push('/dashboard');
             }
