@@ -320,7 +320,7 @@
             isInstallmentOverdue(fee_installment){
                 let installment = this.student_record.student_fee_records.find(o => o.fee_installment_id == fee_installment.id);
 
-                if (moment().format('YYYY-MM-DD') > fee_installment.due_date && installment.status != 'paid')
+                if (helper.today() > fee_installment.due_date && installment.status != 'paid')
                     return true;
 
                 return false;
