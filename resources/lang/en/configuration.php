@@ -228,4 +228,5 @@
   'view' => 'View',
   'website' => 'Website',
   'zipcode' => 'Zipcode',
+  'currency_not_supported' => 'Your currency is not supported.'
 );
