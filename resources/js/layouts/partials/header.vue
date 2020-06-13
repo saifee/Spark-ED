@@ -20,6 +20,9 @@
                     <li class="nav-item d-none d-sm-inline" v-if="!getConfig('mode')"><span class="mt-4 badge badge-danger m-b-10">{{trans('configuration.test_mode')}}</span></li>
 
                     <li class="nav-item" style="color: #fff; font-size: 20px; font-weight: 100; padding: 18px 10px; letter-spacing: 2px; text-transform: uppercase;">{{getConfig('institute_name')}}</li>
+                    <li class="nav-item hidden-sm-down d-none d-sm-inline">
+                        <a class="nav-link" href="#">{{trans('general.any_search_title')}}</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav flex-filler"></ul>
                 <ul class="navbar-nav my-lg-0">
