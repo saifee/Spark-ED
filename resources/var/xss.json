@@ -12,6 +12,8 @@
 	"api/academic/certificate/template"  : ["body"],
 	"api/certificate/*"                  : ["body"],
 	"api/certificate"                    : ["body"],
+	"api/meeting"                        : ["description"],
+	"api/meeting/*"                      : ["description"],
 	"api/assignment"                     : ["description"],
 	"api/assignment/*"                   : ["description"],
 	"api/notes"                          : ["description"],
