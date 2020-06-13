@@ -80,6 +80,17 @@
                                         <show-error :form-name="sendEmailForm" prop-name="employee_category_id"></show-error>
                                     </div>
                                 </template>
+                                <user-search @searched="addToSearchResult"></user-search>
+    
+                                <div class="form-group">
+                                    <ul class="font-80pc">
+                                        <li v-for="result in searchResults" :key="result.key">
+                                            {{result.name+' '+result.description_1}} <span class="text-right text-danger" @click="deleteResult(result)"><i class="fas fa-times-circle"></i></span>
+                                            <span class="d-block">{{result.description_2}} {{result.contact_number}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
                                 <div class="form-group">
                                     <label class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" value="1" v-model="sendEmailForm.include_alternate_email" name="include_alternate_email">
@@ -118,8 +129,10 @@
 </template>
 
 <script>
+    import userSearch from "@components/user-search"
+    
     export default {
-        components : {  },
+        components : { userSearch },
         data() {
             return {
                 sendEmailForm: new Form({
@@ -133,7 +146,9 @@
                     employee_category_id: [],
                     department_id: [],
                     includes: '',
-                    excludes: ''
+                    excludes: '',
+                    individual_students: [],
+                    individual_employees: []
                 }),
                 audiences: [],
                 courses: [],
@@ -143,7 +158,8 @@
                 selected_courses: null,
                 selected_batches: null,
                 selected_departments: null,
-                selected_employee_categories: null
+                selected_employee_categories: null,
+                searchResults: []
             };
         },
         mounted(){
@@ -179,6 +195,13 @@
             },
             submit(){
                 let loader = this.$loading.show();
+                this.searchResults.forEach(result => {
+                    if (result.type === 'student') {
+                        this.sendEmailForm.individual_students.push(result.id)
+                    } else {
+                        this.sendEmailForm.individual_employees.push(result.id)
+                    }
+                })
                 this.sendEmailForm.post('/api/email')
                     .then(response => {
                         toastr.success(response.message);
@@ -188,6 +211,9 @@
                         this.sendEmailForm.batch_id = [];
                         this.sendEmailForm.department_id = [];
                         this.sendEmailForm.employee_category_id = [];
+                        this.sendEmailForm.individual_students = [];
+                        this.sendEmailForm.individual_employees = [];
+                        this.searchResults = [];
                         this.selected_courses = null;
                         this.selected_batches = null;
                         this.selected_departments = null;
@@ -226,6 +252,17 @@
             },
             onEmployeeCategoryRemove(removedOption){
                 this.sendEmailForm.employee_category_id.splice(this.sendEmailForm.employee_category_id.indexOf(removedOption.id), 1);
+            },
+            addToSearchResult(result) {
+                let existing_result = this.searchResults.findIndex(o => o.type === result.type && o.id === result.id)
+
+                if (existing_result < 0) {
+                    this.searchResults.push(result)
+                }
+            },
+            deleteResult(result) {
+                let idx = this.searchResults.findIndex(o => o.type === result.type && o.id === result.id)
+                this.searchResults.splice(idx, 1);
             }
         },
         filters: {
