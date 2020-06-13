@@ -217,7 +217,6 @@
             },
             store(){
                 let loader = this.$loading.show();
-                this.onlineExamForm.date = helper.toDate(this.onlineExamForm.date);
                 this.onlineExamForm.start_time = helper.toTime(this.start_time);
                 this.onlineExamForm.end_time   = helper.toTime(this.end_time);
                 this.onlineExamForm.post('/api/online-exam')
@@ -266,7 +265,6 @@
             },
             update(){
                 let loader = this.$loading.show();
-                this.onlineExamForm.date = helper.toDate(this.onlineExamForm.date);
                 this.onlineExamForm.start_time = helper.toTime(this.start_time);
                 this.onlineExamForm.end_time   = helper.toTime(this.end_time);
                 this.onlineExamForm.patch('/api/online-exam/'+this.uuid)
