@@ -121,59 +121,69 @@
                 <template v-if="registrationForm.parent_type == 'new'">
                     <div class="col-12 col-sm-6">
                         <div class="row">
-                    <div class="col-12 col-sm-6">
-                        <div class="form-group">
-                            <label for="">{{trans('student.first_guardian_name')}}</label>
-                            <input class="form-control" type="text" v-model="registrationForm.first_guardian_name" name="first_guardian_name" :placeholder="trans('student.first_guardian_name')">
-                            <show-error :form-name="registrationForm" prop-name="first_guardian_name"></show-error>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label for="">{{trans('student.first_guardian_name')}}</label>
+                                    <input class="form-control" type="text" v-model="registrationForm.first_guardian_name" name="first_guardian_name" :placeholder="trans('student.first_guardian_name')">
+                                    <show-error :form-name="registrationForm" prop-name="first_guardian_name"></show-error>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label for="">{{trans('general.relation')}}</label>
+                                    <select v-model="registrationForm.first_guardian_relation" class="custom-select col-12" name="first_guardian_relation" @change="registrationForm.errors.clear('first_guardian_relation')">
+                                      <option value="">{{trans('general.select_one')}}</option>
+                                      <option v-for="relation in guardian_relations" v-bind:value="relation.id">
+                                        {{ relation.name }}
+                                      </option>
+                                    </select>
+                                    <show-error :form-name="registrationForm" prop-name="first_guardian_relation"></show-error>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                        <div class="form-group">
-                            <label for="">{{trans('general.relation')}}</label>
-                            <select class="form-control" v-model="registrationForm.first_guardian_relation" name="first_guardian_relation" :placeholder="trans('student.first_guardian_relation')">
-                                <option value="">{{ trans('general.select_one') }}</option>
-                                <template v-for="relation in guardian_relations">
-                                    <option :value="relation.id">{{ relation.name }}</option>
-                                </template>
-                            </select>
-                            <show-error :form-name="registrationForm" prop-name="first_guardian_relation"></show-error>
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label for="">{{trans('student.second_guardian_name')}}</label>
+                                    <input class="form-control" type="text" v-model="registrationForm.second_guardian_name" name="second_guardian_name" :placeholder="trans('student.second_guardian_name')">
+                                    <show-error :form-name="registrationForm" prop-name="second_guardian_name"></show-error>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label for="">{{trans('student.second_guardian_relation')}}</label>
+                                    <select v-model="registrationForm.second_guardian_relation" class="custom-select col-12" name="second_guardian_relation" @change="registrationForm.errors.clear('second_guardian_relation')">
+                                      <option value="">{{trans('general.select_one')}}</option>
+                                      <option v-for="relation in guardian_relations" v-bind:value="relation.id">
+                                        {{ relation.name }}
+                                      </option>
+                                    </select>
+                                    <show-error :form-name="registrationForm" prop-name="second_guardian_relation"></show-error>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                        <div class="form-group">
-                            <label for="">{{trans('student.second_guardian_name')}}</label>
-                            <input class="form-control" type="text" v-model="registrationForm.second_guardian_name" name="second_guardian_name" :placeholder="trans('student.second_guardian_name')">
-                            <show-error :form-name="registrationForm" prop-name="second_guardian_name"></show-error>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                        <div class="form-group">
-                            <label for="">{{trans('general.relation')}}</label>
-                            <select v-model="registrationForm.second_guardian_relation" name="second_guardian_relation" class="custom-select col-12">
-                                <option value="">{{ trans('general.select_one') }}</option>
-                                <template v-for="relation in guardian_relations">
-                                    <option :value="relation.id">{{ relation.name }}</option>
-                                </template>
-                            </select>
-                            <show-error :form-name="registrationForm" prop-name="second_guardian_relation"></show-error>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                        <div class="form-group">
-                            <label for="">{{trans('student.first_guardian_contact_number')}}</label>
-                            <input class="form-control" type="text" v-model="registrationForm.first_guardian_contact_number_1" name="first_guardian_contact_number_1" :placeholder="trans('student.first_guardian_contact_number')">
-                            <show-error :form-name="registrationForm" prop-name="first_guardian_contact_number_1"></show-error>
-                        </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label for="">{{trans('student.first_guardian_contact_number')}}</label>
+                                    <input class="form-control" type="text" v-model="registrationForm.first_guardian_contact_number_1" name="first_guardian_contact_number_1" :placeholder="trans('student.first_guardian_contact_number')">
+                                    <show-error :form-name="registrationForm" prop-name="first_guardian_contact_number_1"></show-error>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </template>
                 <template v-else>
                     <div class="col-12 col-sm-3" v-if="registrationForm.student_parent_id">
                         <div class="form-group">
-                            <div v-if="registrationForm.student_parent_id">{{trans('student.first_guardian_name')+': '+selected_parent.first_guardian_name}}</div>
-                            <div v-if="registrationForm.student_parent_id">{{trans('student.second_guardian_relation')+': '+selected_parent.second_guardian_relation}}</div>
+                            <div v-if="registrationForm.student_parent_id">
+                                {{trans('student.first_guardian_name')+': '+selected_parent.first_guardian_name}}
+                                <span v-if="selected_parent.first_guardian_relation">({{trans('list.'+selected_parent.first_guardian_relation)}})</span>
+                            </div>
+                            <div v-if="registrationForm.student_parent_id">
+                                {{trans('student.second_guardian_name')+': '+selected_parent.second_guardian_name}}
+                                <span v-if="selected_parent.second_guardian_relation">({{trans('list.'+selected_parent.second_guardian_relation)}})</span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-sm-1">
@@ -250,10 +260,10 @@
                     previous_institute_id: '',
                     custom_values: [],
                 }),
+                guardian_relations: [],
                 courses: [],
                 course_details: [],
                 previous_institutes: [],
-                guardian_relations: [],
                 selected_previous_institute: null,
                 selected_course: null,
                 genders: [],
@@ -301,8 +311,6 @@
             },
             submit(){
                 let loader = this.$loading.show();
-                this.registrationForm.date_of_birth = helper.toDate(this.registrationForm.date_of_birth);
-                this.registrationForm.date_of_registration = helper.toDate(this.registrationForm.date_of_registration);
                 this.registrationForm.post('/api/registration')
                     .then(response => {
                         toastr.success(response.message);
