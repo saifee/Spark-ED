@@ -56,7 +56,7 @@
                                 <li>
                                     <div class="dw-user-box">
                                         <div class="u-text">
-                                            <h6>{{trans('general.greeting')+', '+getAuthUser('email')}}</h6>
+                                            <h6>{{trans('general.greeting')+', '+getAuthUser('name')+' ('+getAuthUserRoles+')'}}</h6>
                                         </div>
                                     </div>
                                 </li>
