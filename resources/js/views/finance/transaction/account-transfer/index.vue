@@ -212,6 +212,8 @@
                 if (typeof page !== 'number') {
                     page = 1;
                 }
+                this.filter.date_of_account_transfer_start_date = helper.toDate(this.filter.date_of_account_transfer_start_date);
+                this.filter.date_of_account_transfer_end_date = helper.toDate(this.filter.date_of_account_transfer_end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/account/transfer?page=' + page + url)
                     .then(response => {
