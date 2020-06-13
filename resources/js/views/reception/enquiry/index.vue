@@ -114,9 +114,9 @@
                                 <tr v-for="enquiry in enquiries.data">
                                     <td v-text="enquiry.id"></td>
                                     <td>
-                                        <span v-if="enquiry.father_name">{{trans('student.first_guardian_name')+': '+enquiry.father_name}} <br /></span>
-                                        <span v-if="enquiry.mother_name">{{trans('student.second_guardian_name')+': '+enquiry.mother_name}} <br /></span>
-                                        <span v-if="enquiry.guardian_name">{{trans('student.guardian_name')+': '+enquiry.guardian_name}} <br /></span>
+                                        <span v-if="enquiry.first_guardian_name && enquiry.first_guardian_relation">{{trans('list.'+enquiry.first_guardian_relation)+': '+enquiry.first_guardian_name}} <br /></span>
+                                        <span v-if="enquiry.second_guardian_name && enquiry.second_guardian_relation">{{trans('list.'+enquiry.second_guardian_relation)+': '+enquiry.second_guardian_name}} <br /></span>
+                                        <span v-if="enquiry.third_guardian_name && enquiry.third_guardian_relation">{{trans('list.'+enquiry.third_guardian_relation)+': '+enquiry.third_guardian_name}} <br /></span>
                                     </td>
                                     <td v-text="enquiry.enquiry_type.name"></td>
                                     <td v-text="enquiry.enquiry_source.name"></td>
@@ -221,6 +221,8 @@
                 if (typeof page !== 'number') {
                     page = 1;
                 }
+                this.filter.date_of_enquiry_start_date = helper.toDate(this.filter.date_of_enquiry_start_date);
+                this.filter.date_of_enquiry_end_date = helper.toDate(this.filter.date_of_enquiry_end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/enquiry?page=' + page + url)
                     .then(response => {
