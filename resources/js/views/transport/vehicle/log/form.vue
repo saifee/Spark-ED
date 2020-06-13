@@ -89,7 +89,6 @@
             },
             storeVehicleLog(){
                 let loader = this.$loading.show();
-                this.vehicleLogForm.date_of_log = moment(this.vehicleLogForm.date_of_log).format('YYYY-MM-DD');
                 this.vehicleLogForm.post('/api/vehicle/log')
                     .then(response => {
                         toastr.success(response.message);
@@ -120,7 +119,6 @@
             },
             updateVehicleLog(){
                 let loader = this.$loading.show();
-                this.vehicleLogForm.date_of_log = moment(this.vehicleLogForm.date_of_log).format('YYYY-MM-DD');
                 this.vehicleLogForm.patch('/api/vehicle/log/'+this.id)
                     .then(response => {
                         toastr.success(response.message);
