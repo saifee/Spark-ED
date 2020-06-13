@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
-                        <router-link to="/student/admission" class="btn btn-info btn-sm"><i class="fas fa-list"></i> <span class="d-none d-sm-inline">{{trans('student.student')}}</span></router-link>
+                        <router-link to="/student/list" class="btn btn-info btn-sm"><i class="fas fa-list"></i> <span class="d-none d-sm-inline">{{trans('student.student')}}</span></router-link>
                         <div class="btn-group">
                             <button type="button" class="btn btn-info btn-sm dropdown-toggle no-caret " role="menu" id="moreOption" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-tooltip="trans('general.more_option')">
                                 <i class="fas fa-ellipsis-h"></i> <span class="d-none d-sm-inline"></span>
