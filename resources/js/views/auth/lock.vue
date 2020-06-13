@@ -5,7 +5,7 @@
             <div class="card-body p-4">
                 <img :src="getLogo" style="max-width:250px;" class="mx-auto d-block" />
                 <center class="m-t-30">
-                    <h4 class="card-title m-t-10">{{getAuthUser('full_name')}}</h4>
+                    <h4 class="card-title m-t-10">{{getAuthUser('name')}}</h4>
                 </center>
                 <form class="form-horizontal form-material" id="lockScreenForm" @submit.prevent="submit" @keydown="lockScreenForm.errors.clear($event.target.name)">
                     <h3 class="box-title m-b-20 text-center">{{trans('auth.password')}}</h3>
