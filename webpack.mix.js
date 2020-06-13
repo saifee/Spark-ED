@@ -56,6 +56,7 @@ mix.js('resources/js/app.js', 'public/js/app.js')
     plugin + 'waves/waves.js',
     plugin + 'sticky-kit/sticky-kit.min.js',
     plugin + 'autosize/autosize.min.js',
+    plugin + 'duplicate.js',
     'resources/js/custom.js',
   ],'public/js/plugin.js')
     .sass('resources/sass/style.scss', 'public/css')
