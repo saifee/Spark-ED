@@ -39,7 +39,7 @@ $(function () {
             $('[data-toggle="popover"]').popover()
         })
         // ==============================================================
-        // Sidebarmenu
+        // Sidebarmenu MvuD7b5U9rxszC1O
         // ==============================================================
     $(function () {
         $('#sidebarnav').metisMenu();
