@@ -92,6 +92,26 @@
                 </div>
             </div>
         </template>
+
+        <template v-if="id">
+            <h4 class="card-title">{{trans('calendar.holiday_configuration')}}</h4>
+            <p class="alert alert-info">{{trans('academic.batch_holiday_except_date_tip')}}</p>
+            <div class="row">
+                <div class="col-12 col-sm-4">
+                    <div class="form-group">
+                        <datepicker v-model="holiday" :bootstrapStyling="true" @selected="onSelected"></datepicker>
+                        <show-error :form-name="batchForm" prop-name="dates"></show-error>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-9">
+                    <div class="form-group">
+                        <span class="label label-info m-r-10 m-b-10 p-10" v-for="date in batchForm.holidays_except">
+                            {{date | momentWithDay}} <i class="fas fa-times-circle cursor" v-tooltip="trans('general.remove')" @click="remove(date)"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </template>
         
         <div class="card-footer text-right">
             <router-link to="/academic/batch" class="btn btn-danger waves-effect waves-light " v-show="id">{{trans('general.cancel')}}</router-link>
@@ -119,8 +139,10 @@
                     roll_number_prefix: '',
                     roll_number_digit: 0,
                     default_attendance_method: '',
+                    holidays_except: [],
                     description: ''
                 }),
+                holiday: '',
                 attendance_methods: [],
                 courses: [],
                 selected_course: null,
@@ -197,6 +219,7 @@
                         this.batchForm.roll_number_prefix = response.batch.options ? response.batch.options.roll_number_prefix : helper.getConfig('default_roll_number_prefix');
                         this.batchForm.roll_number_digit = response.batch.options && response.batch.options.hasOwnProperty('roll_number_digit') ? response.batch.options.roll_number_digit : 0,
                         this.selected_course = response.selected_course;
+                        this.batchForm.holidays_except = response.batch.options.holidays_except || [];
                         loader.hide();
                     })
                     .catch(error => {
@@ -211,6 +234,7 @@
                     .then(response => {
                         toastr.success(response.message);
                         loader.hide();
+                        this.batchForm.holidays_except = [];
                         this.$router.push('/academic/batch');
                     })
                     .catch(error => {
@@ -226,7 +250,31 @@
             },
             onExamObservationSelect(selectedOption){
                 return this.batchForm.exam_observation_id = selectedOption.id;
+            },
+            onSelected(val){
+                this.holiday = '';
+                val = helper.toDate(val);
+                
+                if (this.batchForm.holidays_except.indexOf(val) < 0)
+                    this.batchForm.holidays_except.push(val);
+
+                this.batchForm.errors.clear('holidays_except');
+                this.holiday = '';
+            },
+            remove(date){
+                let idx = this.batchForm.holidays_except.indexOf(date);
+                
+                if (idx < 0)
+                    return;
+
+                this.batchForm.holidays_except.splice(idx, 1);
+                this.holiday = '';
             }
+        },
+        filters: {
+          momentWithDay(date) {
+            return helper.formatDateWithDay(date);
+          },
         }
     }
 </script>
