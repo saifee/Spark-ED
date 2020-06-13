@@ -113,7 +113,6 @@
             },
             submit(){
                 let loader = this.$loading.show();
-                this.recordForm.date_of_entry = moment(this.recordForm.date_of_entry).format('YYYY-MM-DD');
                 this.recordForm.patch('/api/student/'+this.student.uuid+'/record/'+this.record.id)
                     .then(response => {
                         toastr.success(response.message);
