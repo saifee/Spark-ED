@@ -182,8 +182,6 @@
             },
             storeDocument(){
                 let loader = this.$loading.show();
-                this.vehicleDocumentForm.date_of_expiry = helper.toDate(this.vehicleDocumentForm.date_of_expiry);
-
                 this.vehicleDocumentForm.post('/api/vehicle/document')
                     .then(response => {
                         toastr.success(response.message);
