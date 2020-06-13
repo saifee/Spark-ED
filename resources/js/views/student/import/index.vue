@@ -138,7 +138,7 @@
             		.then(response => {
                         loader.hide();
             			toastr.success(response.message);
-                        this.$router.push('/student/admission')
+                        this.$router.push('/student/list')
             		})
             		.catch(error => {
                         loader.hide();  
