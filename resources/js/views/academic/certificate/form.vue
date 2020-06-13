@@ -34,15 +34,17 @@
 			            				</tr>
 			            			</thead>
 			            			<tbody>
-			            				<tr v-for="student in students.data">
-			            					<td>{{getStudentName(student)}}</td>
-			            					<td>{{getStudentBatch(student)}}</td>
-			            					<td>{{getStudentFatherName(student)}}</td>
-			            					<td>{{student.contact_number}}</td>
-			            					<td class="table-option">
-			            						<button type="button" class="btn btn-sm btn-info" @click="selectStudent(student)">{{trans('student.select_student')}}</button>
-			            					</td>
-			            				</tr>
+			            				<template v-for="student in students.data">
+				            				<tr v-for="student_record in student.student_records">
+				            					<td>{{getStudentName(student)}}</td>
+				            					<td>{{student_record.batch.course.name+' '+student_record.batch.name}}</td>
+				            					<td>{{student.parent.first_guardian_name}}</td>
+				            					<td>{{student.contact_number}}</td>
+				            					<td class="table-option">
+				            						<button type="button" class="btn btn-sm btn-info" @click="selectStudentRecord(student, student_record)">{{trans('student.select_student')}}</button>
+				            					</td>
+				            				</tr>
+				            			</template>
 			            			</tbody>
 			            		</table>
 			            	</div>
@@ -89,11 +91,11 @@
 			            </template>
 		            </div>
 
-	            	<div class="m-b-20" v-if="type == 'student' && selected_student">
+	            	<div class="m-b-20" v-if="type == 'student' && selected_student && selected_student_record">
 	            		<div class="row">
 	            			<div class="col-6">{{trans('student.name')+': '+getStudentName(selected_student)}}</div>
-	            			<div class="col-6">{{trans('student.first_guardian_name')+': '+getStudentFatherName(selected_student)}} <br /></div>
-	            			<div class="col-6">{{trans('academic.batch')+': '+getStudentBatch(selected_student)}}</div>
+	            			<div class="col-6">{{trans('student.father_name')+': '+getStudentFatherName(selected_student)}} <br /></div>
+	            			<div class="col-6">{{trans('academic.batch')+': '+selected_student_record.batch.course.name+' '+selected_student_record.batch.name}}</div>
 	            			<div class="col-6">{{trans('student.contact_number')+': '+selected_student.contact_number}}</div>
 	            		</div>
 	            	</div>
@@ -140,6 +142,7 @@
 				certificate_template_details: [],
 				selected_certificate_template: null,
 				selected_student: null,
+				selected_student_record: null,
 				selected_employee: null,
 				studentFilter: {
 					name: '',
@@ -167,11 +170,7 @@
                 return helper.getStudentName(student);
             },
             getStudentFatherName(student){
-            	return student.parent.first_guardian_name;
-            },
-            getStudentBatch(student){
-            	let student_record = student.student_records[0];
-            	return student_record.batch.course.name+' '+student_record.batch.name;
+            	return student.parent.father_name;
             },
             getEmployeeName(employee){
                 return helper.getEmployeeName(employee);
@@ -242,9 +241,10 @@
 						helper.showErrorMsg(error);
 					})
 			},
-			selectStudent(student){
-				this.certificateForm.student_record_id = student.student_records[0].id;
+			selectStudentRecord(student, student_record){
+				this.certificateForm.student_record_id = student_record.id;
 				this.selected_student = student;
+				this.selected_student_record = student_record;
 				this.students = [];
 				this.studentFilter.name = '';
                 this.updateTemplate();
@@ -296,7 +296,7 @@
 			},
 			updateStudentRecord(body) {
 				let student = this.selected_student;
-            	let student_record = student.student_records[0];
+            	let student_record = this.selected_student_record;
             	let parent = student.parent;
 
             	if (! student_record || ! parent)
@@ -338,8 +338,8 @@
             		.replace("#CURRENT_DATE#", helper.defaultDate())
             		.replace("#CURRENT_TIME#", helper.defaultTime())
             		.replace("#CURRENT_DATE_TIME#", helper.defaultDateTime())
-            		.replace("#PRESENT_ADDRESS#", student.present_address)
-            		.replace("#PERMANENT_ADDRESS#", student.permanent_address);
+            		.replace("#PRESENT_ADDRESS#", employee.present_address)
+            		.replace("#PERMANENT_ADDRESS#", employee.permanent_address);
 			},
 			updateCustomFields(body) {
 				this.certificateForm.custom_fields.forEach(custom_field => {
@@ -364,6 +364,7 @@
                         this.selected_certificate_template = null;
                         this.certificateForm.custom_fields = [];
                         this.selected_student = null;
+                        this.selected_student_record = null;
                         this.selected_employee = null;
                         this.$emit('completed');
                         loader.hide();
