@@ -47,7 +47,7 @@
                                     <strong>{{trans('calendar.event_posted_by')}}:</strong> {{getEmployeeName(event.user.employee)}} {{getEmployeeDesignationOnDate(event.user.employee, event.start_date)}}
                                 </p>
                             </h6>
-                            <div class="m-t-20" v-html="event.description"></div>
+                            <div class="m-t-20 html-view" v-html="event.description"></div>
                             <div v-if="attachments.length">
                                 <ul class="m-t-10 upload-file-list">
                                     <li class="upload-file-list-item" v-for="attachment in attachments">
