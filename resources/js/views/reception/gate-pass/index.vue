@@ -105,7 +105,7 @@
                                         <template v-if="gate_pass.type == 'student'">
                                             {{trans('student.name')+': '+getStudentName(gate_pass.student)}} <br />
                                             {{trans('student.first_guardian_name')+': '+gate_pass.student.parent.first_guardian_name}} <br />
-                                            {{trans('student.second_guardian_name')+': '+gate_pass.student.parent.second_guardian_name}} <br />
+                                            {{trans('student.mother_name')+': '+gate_pass.student.parent.mother_name}} <br />
                                             {{trans('student.contact_number')+': '+gate_pass.student.contact_number}} <br />
                                         </template>
                                         <template v-if="gate_pass.type == 'employee'">
@@ -221,6 +221,8 @@
                 if (typeof page !== 'number') {
                     page = 1;
                 }
+                this.filter.date_start_date = helper.toDate(this.filter.date_start_date);
+                this.filter.date_end_date = helper.toDate(this.filter.date_end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/gate/pass?page=' + page + url)
                     .then(response => {
