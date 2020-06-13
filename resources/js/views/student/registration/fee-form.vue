@@ -146,7 +146,6 @@
 			},
 			submit(){
 				let loader = this.$loading.show();
-                this.registrationFeeForm.date = moment(this.registrationFeeForm.date).format('YYYY-MM-DD');
 				this.registrationFeeForm.post('/api/registration/'+this.registration.id+'/fee/payment')
 					.then(response => {
 						toastr.success(response.message);
