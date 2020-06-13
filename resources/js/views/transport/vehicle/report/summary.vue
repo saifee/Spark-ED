@@ -218,9 +218,9 @@
                 this.$router.push('/dashboard');
             }
 
-            this.filter.date_effective = moment().format('YYYY-MM-DD');
+            this.filter.date_effective = helper.today();
             this.filter.start_date = moment().subtract(1, 'months').format('YYYY-MM-DD');
-            this.filter.end_date = moment().format('YYYY-MM-DD');
+            this.filter.end_date = helper.today();
 
             this.getSummary();
         },
@@ -233,6 +233,8 @@
                 if (typeof page !== 'number') {
                     page = 1;
                 }
+                this.filter.start_date = helper.toDate(this.filter.start_date);
+                this.filter.end_date = helper.toDate(this.filter.end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/vehicle/report/summary?page=' + page + url)
                     .then(response => {
