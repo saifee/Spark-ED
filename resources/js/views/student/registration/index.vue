@@ -10,6 +10,7 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
+                        <button class="btn btn-info btn-sm" @click="$router.push('/student/registration/card-view')" v-tooltip="trans('general.card_view')"><i class="fas fa-th"></i> <span class="d-none d-sm-inline">{{trans('general.card_view')}}</span></button>
                         <button class="btn btn-info btn-sm" v-if="registrations.total && !showCreatePanel && hasPermission('new-registration')" @click="showCreatePanel = !showCreatePanel" v-tooltip="trans('general.add_new')"><i class="fas fa-plus"></i> <span class="d-none d-sm-inline">{{trans('student.add_new_registration')}}</span></button>
                         <button class="btn btn-info btn-sm" v-if="!showFilterPanel" @click="showFilterPanel = !showFilterPanel"><i class="fas fa-filter"></i> <span class="d-none d-sm-inline">{{trans('general.filter')}}</span></button>
                         <sort-by :order-by-options="orderByOptions" :sort-by="filter.sort_by" :order="filter.order" @updateSortBy="value => {filter.sort_by = value}"  @updateOrder="value => {filter.order = value}"></sort-by>
@@ -233,12 +234,12 @@
             },
             getRegistrations(page){
                 let loader = this.$loading.show();
-                this.filter.date_of_registration_start_date = helper.toDate(this.filter.date_of_registration_start_date);
-                this.filter.date_of_registration_end_date = helper.toDate(this.filter.date_of_registration_end_date);
 
                 if (typeof page !== 'number') {
                     page = 1;
                 }
+                this.filter.date_of_registration_start_date = helper.toDate(this.filter.date_of_registration_start_date);
+                this.filter.date_of_registration_end_date = helper.toDate(this.filter.date_of_registration_end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/registration?page=' + page + url)
                     .then(response => {
