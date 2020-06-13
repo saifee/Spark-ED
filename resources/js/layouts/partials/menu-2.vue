@@ -995,6 +995,15 @@
           <v-list-item-title>{{ trans('student.parent') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item
+        v-if="hasPermission('edit-student') && showMenu('student_login')"
+        to="/student/login"
+        exact
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('student.login') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list-group>
     <v-list-group
       v-show="moduleMenu && showMenu('employee') && hasAnyPermission(['list-employee', 'generate-employee-id-card'])"
