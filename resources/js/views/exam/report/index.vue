@@ -49,6 +49,30 @@
                                     <show-error :form-name="reportForm" prop-name="type"></show-error>
                                 </div>
                             </div>
+                            <div class="col-12 col-sm-3" v-if="types.length > 1 && reportForm.type == 'term_wise'">
+                                <div class="form-group">
+                                    <label for="">{{trans('exam.term')}}</label>
+                                    <select v-model="reportForm.exam_term_id" class="custom-select col-12" name="exam_term_id" @change="reportForm.errors.clear('exam_term_id')">
+                                      <option value="">{{trans('general.select_one')}}</option>
+                                      <option v-for="option in exam_terms" v-bind:value="option.id">
+                                        {{ option.name }}
+                                      </option>
+                                    </select>
+                                    <show-error :form-name="reportForm" prop-name="exam_term_id"></show-error>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-3" v-if="types.length > 1 && reportForm.type == 'exam_wise'">
+                                <div class="form-group">
+                                    <label for="">{{trans('exam.term')}}</label>
+                                    <select v-model="reportForm.exam_id" class="custom-select col-12" name="exam_id" @change="reportForm.errors.clear('exam_id')">
+                                      <option value="">{{trans('general.select_one')}}</option>
+                                      <option v-for="option in exams" v-bind:value="option.id">
+                                        {{ option.name }}
+                                      </option>
+                                    </select>
+                                    <show-error :form-name="reportForm" prop-name="exam_id"></show-error>
+                                </div>
+                            </div>
 			            </div>
 			            <div class="card-footer text-right">
 			                <button type="button" @click="getReport" class="btn btn-info waves-effect waves-light">{{trans('general.print')}}</button>
@@ -69,9 +93,13 @@
                 reportForm: new Form({
                     batch_id: '',
                     student_id: '',
+                    exam_term_id: '',
+                    exam_id: '',
                     type: ''
                 },false),
+                exams: [],
                 types: [],
+                exam_terms: [],
                 batches: [],
                 selected_batch: null,
                 students: [],
@@ -97,6 +125,8 @@
                     .then(response => {
                         this.batches = response.batches;
                         this.types = response.types;
+                        this.exam_terms = response.exam_terms;
+                        this.exams = response.exams;
                         this.reportForm.type = this.types[0].value;
                         loader.hide();
                     })
@@ -129,7 +159,9 @@
                 axios.post('/api/exam/report', {
                 	batch_id: this.reportForm.batch_id,
                     student_record_id: this.reportForm.student_id,
-                    type: this.reportForm.type
+                    type: this.reportForm.type,
+                    exam_term_id: this.reportForm.type == 'term_wise' ? this.reportForm.exam_term_id : '',
+                    exam_id: this.reportForm.type == 'exam_wise' ? this.reportForm.exam_id : ''
                 })
                 .then(response => {
                     let print = window.open("/print");
@@ -146,7 +178,9 @@
                 axios.post('/api/exam/report/pdf',{
                         batch_id: this.reportForm.batch_id,
                         student_record_id: this.reportForm.student_id,
-                        type: this.reportForm.type
+                        type: this.reportForm.type,
+                        exam_term_id: this.reportForm.type == 'term_wise' ? this.reportForm.exam_term_id : '',
+                        exam_id: this.reportForm.type == 'exam_wise' ? this.reportForm.exam_id : ''
                     }
                     )
                     .then(response => {
