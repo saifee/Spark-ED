@@ -208,7 +208,7 @@
 	          	this.selected_category = student.category_id ? {id: student.category_id, name: student.category.name} : null;
 	          	this.selected_religion = student.religion_id ? {id: student.religion_id, name: student.religion.name} : null;
 	          	this.selected_blood_group = student.blood_group_id ? {id: student.blood_group_id, name: student.blood_group.name} : null;
-	          	this.custom_values = student.options.hasOwnProperty('custom_values') ? student.options.custom_values : [];
+	          	this.custom_values = student.options && student.options.hasOwnProperty('custom_values') ? student.options.custom_values : [];
 	        },
 			submit(){
 				let loader = this.$loading.show();
