@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-12">
                     <form @submit.prevent="submit" @keydown="registrationForm.errors.clear($event.target.name)">
-                        <h2>Course Information</h2>
+                        <h2>{{trans('student.registration_field_info', {name: trans('academic.course')})}}</h2>
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
@@ -30,7 +30,7 @@
                             </div>
                         </div>
 
-                        <h2>Candidate Information</h2>
+                        <h2>{{trans('student.registration_field_info', {name: trans('student.student')})}}</h2>
                         <div class="row">
                             <div class="col-12 col-sm-4">
                                 <div class="form-group">
@@ -81,41 +81,65 @@
                             </div>
                         </div>
     
-                        <h2>Parent Information</h2>
+                        <h2>{{trans('student.registration_field_info', {name: trans('student.guardian')})}}</h2>
                         <div class="row">
-                            <div class="col-12 col-sm-4">
+                            <div class="col-12 col-sm-3">
                                 <div class="form-group">
                                     <label for="">{{trans('student.first_guardian_name')}}</label>
-                                    <input class="form-control" type="text" v-model="registrationForm.father_name" name="father_name" :placeholder="trans('student.contact_name')">
-                                    <show-error :form-name="registrationForm" prop-name="father_name"></show-error>
+                                    <input class="form-control" type="text" v-model="registrationForm.first_guardian_name" name="first_guardian_name" :placeholder="trans('student.contact_name')">
+                                    <show-error :form-name="registrationForm" prop-name="first_guardian_name"></show-error>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-4">
+                            <div class="col-12 col-sm-3">
                                 <div class="form-group">
-                                    <label for="">{{trans('student.second_guardian_name')}}</label>
-                                    <input class="form-control" type="text" v-model="registrationForm.mother_name" name="mother_name" :placeholder="trans('student.contact_name')">
-                                    <show-error :form-name="registrationForm" prop-name="mother_name"></show-error>
+                                    <label for="">{{trans('general.relation')}}</label>
+                                    <select v-model="registrationForm.first_guardian_relation" class="custom-select col-12" name="first_guardian_relation" @change="registrationForm.errors.clear('first_guardian_relation')">
+                                      <option value="">{{trans('general.select_one')}}</option>
+                                      <option v-for="relation in guardian_relations" v-bind:value="relation.id">
+                                        {{ relation.name }}
+                                      </option>
+                                    </select>
+                                    <show-error :form-name="registrationForm" prop-name="first_guardian_relation"></show-error>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-3">
+                                <div class="form-group">
+                                    <label for="">{{trans('student.first_guardian_email')}}</label>
+                                    <input class="form-control" type="text" v-model="registrationForm.first_guardian_email" name="first_guardian_email" :placeholder="trans('student.contact_name')">
+                                    <show-error :form-name="registrationForm" prop-name="first_guardian_email"></show-error>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-3">
+                                <div class="form-group">
+                                    <label for="">{{trans('student.first_guardian_contact_number')}}</label>
+                                    <input class="form-control" type="text" v-model="registrationForm.first_guardian_contact_number_1" name="first_guardian_contact_number_1" :placeholder="trans('student.contact_name')">
+                                    <show-error :form-name="registrationForm" prop-name="first_guardian_contact_number_1"></show-error>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-sm-4">
+                            <div class="col-12 col-sm-3">
                                 <div class="form-group">
-                                    <label for="">{{trans('student.father_email')}}</label>
-                                    <input class="form-control" type="text" v-model="registrationForm.father_email" name="father_email" :placeholder="trans('student.contact_name')">
-                                    <show-error :form-name="registrationForm" prop-name="father_email"></show-error>
+                                    <label for="">{{trans('student.second_guardian_name')}}</label>
+                                    <input class="form-control" type="text" v-model="registrationForm.second_guardian_name" name="second_guardian_name" :placeholder="trans('student.contact_name')">
+                                    <show-error :form-name="registrationForm" prop-name="second_guardian_name"></show-error>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-4">
+                            <div class="col-12 col-sm-3">
                                 <div class="form-group">
-                                    <label for="">{{trans('student.father_contact_number')}}</label>
-                                    <input class="form-control" type="text" v-model="registrationForm.father_contact_number_1" name="father_contact_number_1" :placeholder="trans('student.contact_name')">
-                                    <show-error :form-name="registrationForm" prop-name="father_contact_number_1"></show-error>
+                                    <label for="">{{trans('student.second_guardian_relation')}}</label>
+                                    <select v-model="registrationForm.second_guardian_relation" class="custom-select col-12" name="second_guardian_relation" @change="registrationForm.errors.clear('second_guardian_relation')">
+                                      <option value="">{{trans('general.select_one')}}</option>
+                                      <option v-for="relation in guardian_relations" v-bind:value="relation.id">
+                                        {{ relation.name }}
+                                      </option>
+                                    </select>
+                                    <show-error :form-name="registrationForm" prop-name="second_guardian_relation"></show-error>
                                 </div>
                             </div>
                         </div>
 
-                        <h2>Contact Information</h2>
+                        <h2>{{trans('student.registration_field_info', {name: trans('student.contact')})}}</h2>
                         <div class="row">
                             <div class="col-12 col-sm-4">
                                 <div class="form-group">
@@ -188,11 +212,13 @@
                     last_name: '',
                     email: '',
                     date_of_birth: '',
-                    father_name: '',
-                    mother_name: '',
+                    first_guardian_name: '',
+                    first_guardian_relation: '',
+                    second_guardian_name: '',
+                    second_guardian_relation: '',
                     contact_number: '',
-                    father_contact_number_1: '',
-                    father_email: '',
+                    first_guardian_contact_number_1: '',
+                    first_guardian_email: '',
                     gender: '',
                     address_line_1: '',
                     address_line_2: '',
@@ -203,6 +229,7 @@
                     custom_values: [],
                 }),
                 selected_course: null,
+                guardian_relations: [],
                 custom_fields: [],
                 custom_values: [],
                 clearCustomField: false,
@@ -221,6 +248,7 @@
                     this.courses = response.courses.courses;
                     this.course_details = response.courses.course_details;
                     this.custom_fields = response.custom_fields;
+                    this.guardian_relations = response.guardian_relations;
                     loader.hide();
                 })
                 .catch(error => {
@@ -237,10 +265,10 @@
             },
             submit(){
                 let loader = this.$loading.show();
-                this.registrationForm.date_of_birth = helper.toDate(this.registrationForm.date_of_birth);
                 this.registrationForm.post('/api/frontend/online-registration')
                     .then(response => {
                         toastr.success(response.message);
+                        this.selected_course = null;
                         this.clearCustomField = true;
                         loader.hide();
                     })
