@@ -221,7 +221,7 @@
 	          	this.contactForm.permanent_country = student.permanent_country;
 	          	this.contactForm.emergency_contact_name = student.emergency_contact_name;
 	          	this.contactForm.emergency_contact_number = student.emergency_contact_number;
-	          	this.custom_values = student.options.hasOwnProperty('custom_values') ? student.options.custom_values : [];
+	          	this.custom_values = student.options && student.options.hasOwnProperty('custom_values') ? student.options.custom_values : [];
 			},
 			submit(){
 				let loader = this.$loading.show();
