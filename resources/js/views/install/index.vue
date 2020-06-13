@@ -56,6 +56,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <p style="font-size: 80%; cursor: pointer;" @click="showDBAdvanceOption = ! showDBAdvanceOption">
+                                <i class="fa fa-chevron-down" v-if="! showDBAdvanceOption"></i> 
+                                <i class="fa fa-chevron-up" v-if="showDBAdvanceOption"></i> 
+                            Advanced</p>
+                            <div class="form-group" v-show="showDBAdvanceOption">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" v-model="installForm.db_imported" value="1" name="db_imported">
+                                    <span class="custom-control-label" style="font-size: 80%;">{{trans('install.db_import_instruction')}}</span>
+                                </label>
+                            </div>
                         </form>
                     </tab-content>
                     <tab-content :title="trans('install.admin_setup')" :before-change="validateAdmin">
@@ -195,9 +205,12 @@
                     contact_number: '',
                     access_code: '',
                     envato_email: '',
+                    db_imported: 0,
                     seed: 0
                 },false),
+                verifier: '',
                 quotes: [],
+                showDBAdvanceOption: false,
                 is_processing: false,
                 help_topic: ''
             }
