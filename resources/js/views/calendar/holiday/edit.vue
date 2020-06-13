@@ -88,7 +88,6 @@
             },
             update(){
                 let loader = this.$loading.show();
-                this.holidayForm.date = helper.toDate(this.holidayForm.date);
                 this.holidayForm.patch('/api/holiday/'+this.id)
                     .then(response => {
                         toastr.success(response.message);
