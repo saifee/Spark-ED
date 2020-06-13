@@ -52,7 +52,7 @@
                                 <div class="form-group">
                                     <label for="">{{trans('student.days_allowed_to_modify_student_attendance')}}</label>
                                     <div class="input-group">
-                                       <input class="form-control" type="text" v-model="configForm.days_allowed_to_modify_student_attendance" name="days_allowed_to_modify_student_attendance" :placeholder="trans('student.days_allowed_to_modify_student_attendance')">
+                                       <input class="form-control" type="number" v-model="configForm.days_allowed_to_modify_student_attendance" name="days_allowed_to_modify_student_attendance" :placeholder="trans('student.days_allowed_to_modify_student_attendance')">
                                        <div class="input-group-append">
                                             <span class="input-group-text">{{trans('general.days')}}</span>
                                         </div>
@@ -73,7 +73,7 @@
                                 <div class="form-group">
                                     <label for="">{{trans('student.days_allowed_to_mark_student_advance_attendance')}}</label>
                                     <div class="input-group">
-                                       <input class="form-control" type="text" v-model="configForm.days_allowed_to_mark_student_advance_attendance" name="days_allowed_to_mark_student_advance_attendance" :placeholder="trans('student.days_allowed_to_mark_student_advance_attendance')">
+                                       <input class="form-control" type="number" v-model="configForm.days_allowed_to_mark_student_advance_attendance" name="days_allowed_to_mark_student_advance_attendance" :placeholder="trans('student.days_allowed_to_mark_student_advance_attendance')">
                                        <div class="input-group-append">
                                             <span class="input-group-text">{{trans('general.days')}}</span>
                                         </div>
@@ -86,6 +86,19 @@
                                     <label for="">{{trans('student_wallet.student_wallet_limit')}}</label>
                                         <currency-input :position="default_currency.position" :symbol="default_currency.symbol" name="student_wallet_limit" :placeholder="trans('finance.student_wallet_limit')" v-model="configForm.student_wallet_limit"></currency-input>
                                     <show-error :form-name="configForm" prop-name="student_wallet_limit"></show-error>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-sm-3">
+                                <div class="form-group">
+                                    <label for="">{{trans('student.late_attendance_time')}}</label>
+                                    <div class="input-group">
+                                       <input class="form-control" type="number" v-model="configForm.student_late_attendance_time" name="late_attendance_time" :placeholder="trans('student.late_attendance_time')">
+                                       <div class="input-group-append">
+                                            <span class="input-group-text">{{trans('general.minutes')}}</span>
+                                        </div>
+                                    </div>
+                                    <show-error :form-name="configForm" prop-name="student_late_attendance_time"></show-error>
                                 </div>
                             </div>
                         </div>
@@ -116,6 +129,7 @@
                     days_allowed_to_modify_student_attendance: '',
                     allow_to_mark_student_advance_attendance: '',
                     days_allowed_to_mark_student_advance_attendance: '',
+                    student_late_attendance_time: '',
                     config_type: ''
                 },false)
             }
