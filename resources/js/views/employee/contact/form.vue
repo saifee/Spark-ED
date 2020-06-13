@@ -235,7 +235,7 @@
 	          	this.contactForm.permanent_country = employee.permanent_country;
 	          	this.contactForm.emergency_contact_name = employee.emergency_contact_name;
 	          	this.contactForm.emergency_contact_number = employee.emergency_contact_number;
-	          	this.custom_values = employee.options.hasOwnProperty('custom_values') ? employee.options.custom_values : [];
+	          	this.custom_values = employee.options && employee.options.hasOwnProperty('custom_values') ? employee.options.custom_values : [];
 			},
 			submit(){
 				let loader = this.$loading.show();
