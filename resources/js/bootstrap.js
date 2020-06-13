@@ -36,17 +36,23 @@ import htmlEditor from './components/html-editor'
 import rightPanel from './components/right-panel'
 import helpButton from './components/help-button'
 import customField from './components/custom-field'
+import viewCustomField from './components/view-custom-field'
+import viewLabel from './components/view-label'
 import tourNotification from './components/tour-notification'
 import { Bar } from 'vue-chartjs'
 import switches from 'vue-switches'
 import vSelect from 'vue-multiselect'
 import datepicker from 'vuejs-datepicker'
 import draggable from 'vuedraggable'
+import vuescroll from 'vuescroll'
 import UUID from 'vue-uuid';
 import VueFormWizard from 'vue-form-wizard'
 import vueHeadful from 'vue-headful'
 import VueCountdown from '@chenfengyuan/vue-countdown';
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+
+import * as io from 'socket.io-client'
+window.io = io
 
 window.toastr = require('toastr')
 window.moment = require('moment')
@@ -75,6 +81,12 @@ Vue.prototype.$last = function (item, list) {
 Vue.prototype.$first = function (item, list) {
   return item == list[0]
 };
+Number.prototype.format = function(n, x, s, c) {
+    var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+        num = this.toFixed(Math.max(0, ~~n));
+
+    return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+};
 
 Vue.use(VueFormWizard)
 Vue.use(VTooltip);
@@ -83,6 +95,7 @@ Vue.use(Loading);
 Vue.use(Vuebar);
 Vue.use(Notifications);
 Vue.use(VueCookie);
+Vue.use(vuescroll);
 Vue.use(UUID);
 Vue.component(VueCountdown.name, VueCountdown);
 Vue.component('show-tip',showTip);
@@ -103,6 +116,8 @@ Vue.component('upload-image',uploadImage);
 Vue.component('file-upload-input',fileUploadInput);
 Vue.component('html-editor',htmlEditor);
 Vue.component('custom-field',customField);
+Vue.component('view-custom-field',viewCustomField);
+Vue.component('view-label',viewLabel);
 Vue.component('right-panel',rightPanel);
 Vue.component('help-button',helpButton);
 Vue.component('tour-notification',tourNotification);
