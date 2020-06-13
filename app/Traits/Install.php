@@ -31,7 +31,10 @@ trait Install
         $server[] = $this->check(extension_loaded('mbstring'), 'Mbstring PHP extension enabled.', 'Install and enable Mbstring extension.', true);
         $server[] = $this->check(extension_loaded('zip'), 'Zip archive PHP extension enabled.', 'Install and enable Zip archive extension.', true);
         $server[] = $this->check(class_exists('PDO'), 'PDO is installed.', 'Install PDO (mandatory for Eloquent).', true);
-        $server[] = $this->check(extension_loaded('curl'), 'CURL is installed.', 'Install and enable CURL.', true);
+        $server[] = $this->check(extension_loaded('curl'), 'CURL '.gv(curl_version(), 'version').' is installed.', 'Install and enable CURL.', true);
+        if (extension_loaded('curl')) {
+            $server[] = $this->check(my_version_compare(gv(curl_version(), 'version'), '7.67.0', '>='), 'CURL version is up-to-date', 'Upgrade CURL version to atleast 7.67.0', true);
+        }
         $server[] = $this->check(ini_get('allow_url_fopen'), 'allow_url_fopen is on.', 'Turn on allow_url_fopen.', true);
 
         $folder[] = $this->check(is_writable("../storage/framework"), 'Folder /storage/framework is writable', 'Folder /storage/framework is not writable', true);
