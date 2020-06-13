@@ -49,6 +49,13 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <switches class="m-l-20" v-model="academicSessionForm.exam_report_analysis" theme="bootstrap" color="success"></switches> {{trans('exam.exam_report_analysis')}}
+                    </div>
+                </div>
+            </div>
 
             <div class="card-footer text-right">
                 <router-link to="/academic/session" class="btn btn-danger waves-effect waves-light " v-show="id">{{trans('general.cancel')}}</router-link>
@@ -80,7 +87,8 @@
                     start_date: '',
                     end_date: '',
                     transfer_certificate_format: '',
-                    is_default: 0
+                    is_default: 0,
+                    exam_report_analysis: false
                 }),
                 transfer_certificate_formats: [],
                 selected_transfer_certificate_format: null,
@@ -122,8 +130,6 @@
             },  
             store(){
                 let loader = this.$loading.show();
-                this.academicSessionForm.start_date = helper.toDate(this.academicSessionForm.start_date);
-                this.academicSessionForm.end_date = helper.toDate(this.academicSessionForm.end_date);
                 this.academicSessionForm.post('/api/academic/session')
                     .then(response => {
                         this.$store.dispatch('setAcademicSession',response.academic_sessions);
@@ -155,6 +161,8 @@
                         this.academicSessionForm.transfer_certificate_format = transfer_certificate_format_id;
                         this.selected_transfer_certificate_format = transfer_certificate_format || null; 
 
+                        this.academicSessionForm.exam_report_analysis = response.exam_report_analysis
+
                         loader.hide();
                     })
                     .catch(error => {
@@ -165,8 +173,6 @@
             },
             update(){
                 let loader = this.$loading.show();
-                this.academicSessionForm.start_date = helper.toDate(this.academicSessionForm.start_date);
-                this.academicSessionForm.end_date = helper.toDate(this.academicSessionForm.end_date);
                 this.academicSessionForm.patch('/api/academic/session/'+this.id)
                     .then(response => {
                         this.$store.dispatch('setConfig',{loaded: false});
