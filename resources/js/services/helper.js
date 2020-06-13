@@ -25,7 +25,7 @@ export default {
                     })
                 .catch(error => {
                     reject(error)
-                })
+                })  
             }
         })
     },
@@ -114,10 +114,30 @@ export default {
         return store.getters.getDefaultAcademicSession;
     },
 
+    getDayInInteger(day){
+        if (day == 'sunday') {
+            return 0;
+        } else if (day == 'monday') {
+            return 1;
+        } else if (day == 'tuesday') {
+            return 2;
+        } else if (day == 'wednesday') {
+            return 3;
+        } else if (day == 'thursday') {
+            return 4;
+        } else if (day == 'friday') {
+            return 5;
+        } else if (day == 'saturday') {
+            return 6;
+        } else {
+            return 0;
+        }
+    },
+
     // to get Auth user detail
     getAuthUser(name){
-        if(name === 'full_name')
-            return store.getters.getAuthUser('first_name')+' '+store.getters.getAuthUser('last_name');
+        if(name === 'name')
+            return store.getters.getAuthUser('name');
         else if(name === 'avatar'){
             if(store.getters.getAuthUser('avatar'))
                 return '/'+store.getters.getAuthUser('avatar');
@@ -291,12 +311,10 @@ export default {
 
     // returns vehicle document status
     getVehicleDocumentStatus(document){
-        if (moment(document.date_of_expiry,'YYYY-MM-DD').startOf('day') < moment().startOf('day'))
+        if (helper.toDate(document.date_of_expiry) < helper.today())
             return {status: 'vehicle_document_status_expired', color:'danger', day: 0};
         else {
-            let today = moment().startOf('day');
-            let expiry_date = moment(document.date_of_expiry,'YYYY-MM-DD').startOf('day');
-            let day = expiry_date.diff(today, 'days');
+            let day = this.getDateDiff(helper.toDate(document.date_of_expiry)) + 1;
 
             let color = '';
             if (day < 15) {
@@ -311,12 +329,10 @@ export default {
 
     // returns vehicle document status
     getInstituteDocumentStatus(document){
-        if (moment(document.date_of_expiry,'YYYY-MM-DD').startOf('day') < moment().startOf('day'))
+        if (helper.toDate(document.date_of_expiry) < helper.today())
             return {status: 'document_status_expired', color:'danger', day: 0};
         else {
-            let today = moment().startOf('day');
-            let expiry_date = moment(document.date_of_expiry,'YYYY-MM-DD').startOf('day');
-            let day = expiry_date.diff(today, 'days');
+            let day = this.getDateDiff(helper.toDate(document.date_of_expiry)) + 1;
 
             let color = '';
             if (day < 15) {
@@ -330,7 +346,7 @@ export default {
     },
 
     getDateDiff(date1, date2){
-        if (date2 == 'undefined')
+        if (date2 == 'undefined') 
             date2 = moment().startOf('day');
 
         date1 = moment(date1,'YYYY-MM-DD').startOf('day');
@@ -408,9 +424,24 @@ export default {
         return moment(date).format(date_format+' '+time_format);
     },
 
+    formatDateWithDay(date) {
+        if(!date)
+            return;
+
+        return moment(date).format('YYYY-MM-DD ddd');
+    },
+
     // to get time in desired format
     defaultDateTime(){
         return moment(new Date).format(this.getConfig('date_format')+' '+this.getConfig('time_format'));
+    },
+
+    today() {
+        return this.getConfig('current_date') || moment().format('YYYY-MM-DD');
+    },
+
+    isToday(date) {
+        return moment(date).format('MM-DD') == moment(helper.today()).format('MM-DD') ? true : false
     },
 
     // to get time in desired format
@@ -556,10 +587,34 @@ export default {
     formatCurrency(price){
         var currency = helper.getConfig('default_currency');
         let decimal_place = currency.decimal_place || 2;
+        let amount = (currency.format == 'indian') ? this.indianCurrencyString(this.roundNumber(price,decimal_place)) : price.format(decimal_place, 3, ',', '.');
         if(currency.position === 'prefix')
-            return currency.symbol+''+this.roundNumber(price,decimal_place);
+            return currency.symbol+''+ amount;
         else
-            return this.roundNumber(price,decimal_place)+' '+currency.symbol;
+            return amount+' '+currency.symbol;
+    },
+
+    indianCurrencyString(x) {
+        if (Number.isInteger(x)) {
+            x=x.toString();
+            var lastThree = x.substring(x.length-3);
+            var otherNumbers = x.substring(0,x.length-3);
+            if(otherNumbers != '')
+                lastThree = ',' + lastThree;
+            return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+        } else {
+            x=x.toString();
+            var afterPoint = '';
+            if(x.indexOf('.') > 0)
+            afterPoint = x.substring(x.indexOf('.'),x.length);
+            x = Math.floor(x);
+            x=x.toString();
+            var lastThree = x.substring(x.length-3);
+            var otherNumbers = x.substring(0,x.length-3);
+            if(otherNumbers != '')
+                lastThree = ',' + lastThree;
+            return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
+        }
     },
 
     getLateFeeFrequencyName(frequency){
@@ -615,7 +670,7 @@ export default {
     },
 
     getEmployeeDesignationOnDate(employee, date){
-        date = (typeof date == 'undefined') ? moment().format('YYYY-MM-DD') : moment(date).format('YYYY-MM-DD');
+        date = (typeof date == 'undefined') ? this.today() : this.toDate(date);
 
         if(!employee.hasOwnProperty('employee_designations'))
             return '-';
@@ -665,7 +720,7 @@ export default {
     },
 
     amIClassTeacherOnDate(class_teachers, date){
-        date = (typeof date == 'undefined') ? moment().format('YYYY-MM-DD') : moment(date).format('YYYY-MM-DD');
+        date = (typeof date == 'undefined') ? this.today() : this.toDate(date);
 
         let class_teacher = class_teachers.find(o => o.date_effective <= date && o.is_me);
 
@@ -687,21 +742,21 @@ export default {
     getRollNumber(student_record){
         if (! student_record.roll_number)
             return;
-
+        
         let roll_number = '';
         if (student_record.batch.options.hasOwnProperty('roll_number_digit')) {
-            roll_number = this.formatWithPadding(student_record.roll_number,student_record.batch.options.roll_number_digit);
+            roll_number = this.formatWithPadding(student_record.roll_number,student_record.batch.options.roll_number_digit);    
         } else {
             roll_number = student_record.roll_number;
         }
 
         let prefix = student_record.batch.options.roll_number_prefix;
-
+        
         return prefix ? prefix+''+roll_number : roll_number;
     },
 
     getStudentBatchOnDate(student, date){
-        date = moment(date).format('YYYY-MM-DD');
+        date = this.toDate(date);
 
         if(!student.hasOwnProperty('student_records'))
             return '-';
