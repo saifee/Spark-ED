@@ -183,8 +183,6 @@
                     this.store();
             },
             store(){
-                this.lessonPlanForm.start_date = helper.toDate(this.lessonPlanForm.start_date);
-                this.lessonPlanForm.end_date = helper.toDate(this.lessonPlanForm.end_date);
                 let loader = this.$loading.show();
                 this.lessonPlanForm.post('/api/lesson/plan')
                     .then(response => {
@@ -209,6 +207,7 @@
                     .then(response => {
                         let lesson_plan = response.lesson_plan;
                         this.lessonPlanForm.title = lesson_plan.title;
+                        this.lessonPlanForm.topic = lesson_plan.topic;
                         this.lessonPlanForm.start_date = lesson_plan.start_date;
                         this.lessonPlanForm.end_date = lesson_plan.end_date;
                         this.lessonPlanForm.batch_id = lesson_plan.subject.batch_id;
@@ -234,8 +233,6 @@
                     });
             },
             update(){
-                this.lessonPlanForm.start_date = helper.toDate(this.lessonPlanForm.start_date);
-                this.lessonPlanForm.end_date = helper.toDate(this.lessonPlanForm.end_date);
                 let loader = this.$loading.show();
                 this.lessonPlanForm.patch('/api/lesson/plan/'+this.uuid)
                     .then(response => {

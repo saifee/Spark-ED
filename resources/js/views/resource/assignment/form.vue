@@ -138,8 +138,6 @@
                     this.store();
             },
             store(){
-                this.assignmentForm.date_of_assignment = helper.toDate(this.assignmentForm.date_of_assignment);
-                this.assignmentForm.due_date = helper.toDate(this.assignmentForm.due_date);
                 let loader = this.$loading.show();
                 this.assignmentForm.post('/api/assignment')
                     .then(response => {
@@ -180,8 +178,6 @@
                     });
             },
             update(){
-                this.assignmentForm.date_of_assignment = helper.toDate(this.assignmentForm.date_of_assignment);
-                this.assignmentForm.due_date = helper.toDate(this.assignmentForm.due_date);
                 let loader = this.$loading.show();
                 this.assignmentForm.patch('/api/assignment/'+this.uuid)
                     .then(response => {

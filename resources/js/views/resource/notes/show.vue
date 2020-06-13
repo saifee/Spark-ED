@@ -19,7 +19,7 @@
                                     <strong>{{trans('resource.notes_posted_by')}}:</strong> {{getEmployeeName(notes.employee)}} {{getEmployeeDesignation(notes.employee, notes.date_of_notes)}}
                                 </p>
                             </h6>
-                            <div class="m-t-20" v-html="notes.description"></div>
+                            <div class="m-t-20 html-view" v-html="notes.description"></div>
                             <div v-if="attachments.length">
                                 <ul class="m-t-10 upload-file-list">
                                     <li class="upload-file-list-item" v-for="attachment in attachments">
