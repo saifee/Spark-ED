@@ -38,7 +38,7 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item dropdown" v-if="getAcademicSessions.length && !hasPermission('change-academic-session')"">
+                    <li class="nav-item dropdown" v-if="getAcademicSessions.length && !hasPermission('change-academic-session')">
                         <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="#">{{getDefaultAcademicSession ? getDefaultAcademicSession.name : ''}}</a>
                     </li>
                     <li class="nav-item d-none d-sm-inline" v-tooltip.bottom="trans('todo.todo')" v-if="getConfig('todo') && hasPermission('access-todo') && getConfig('made') === 'saudi'"">
