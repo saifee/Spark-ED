@@ -12,7 +12,7 @@ export default [
         component: () => import(/* webpackChunkName: "js/auth/password" */ '@views/auth/password')
     },
     {
-        path: '/password/reset/:token',
+        path: '/password/reset',
         component: () => import(/* webpackChunkName: "js/auth/reset" */ '@views/auth/reset')
     },
     {
