@@ -126,8 +126,6 @@
             },
             store(){
                 let loader = this.$loading.show();
-                this.leaveAllocationForm.start_date = helper.toDate(this.leaveAllocationForm.start_date);
-                this.leaveAllocationForm.end_date = helper.toDate(this.leaveAllocationForm.end_date);
                 this.leaveAllocationForm.post('/api/employee/leave/allocation')
                     .then(response => {
                         toastr.success(response.message);
@@ -166,8 +164,6 @@
             },
             update(){
                 let loader = this.$loading.show();
-                this.leaveAllocationForm.start_date = helper.toDate(this.leaveAllocationForm.start_date);
-                this.leaveAllocationForm.end_date = helper.toDate(this.leaveAllocationForm.end_date);
                 this.leaveAllocationForm.patch('/api/employee/leave/allocation/'+this.uuid)
                     .then(response => {
                         toastr.success(response.message);
