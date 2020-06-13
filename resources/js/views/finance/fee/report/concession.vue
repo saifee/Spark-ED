@@ -83,7 +83,7 @@
                                     <td v-text="item.admission_number"></td>
                                     <td v-text="item.name"></td>
                                     <td v-text="item.batch"></td>
-                                    <td v-text="item.father_name"></td>
+                                    <td v-text="item.first_guardian_name"></td>
                                     <td v-text="item.contact_number"></td>
                                     <td v-text="item.fee_installment"></td>
                                     <td>
@@ -151,7 +151,7 @@
                         translation: i18n.student.name
                     },
                     {
-                        value: 'father_name',
+                        value: 'first_guardian_name',
                         translation: i18n.student.first_guardian_name
                     }
                 ],
