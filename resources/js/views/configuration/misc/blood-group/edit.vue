@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
-                        <button class="btn btn-info btn-sm" @click="$router.push('/configuration/misc/blood-group')"><i class="fas fa-list"></i> <span class="d-none d-sm-inline">{{trans('misc.blood_group')}}</span></button>
+                        <button class="btn btn-info btn-sm" @click="$router.push('/configuration/misc/blood/group')"><i class="fas fa-list"></i> <span class="d-none d-sm-inline">{{trans('misc.blood_group')}}</span></button>
                     </div>
                 </div>
             </div>
