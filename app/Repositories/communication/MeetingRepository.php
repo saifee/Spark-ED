@@ -3,6 +3,8 @@ namespace App\Repositories\Communication;
 
 use Illuminate\Support\Str;
 use App\Models\Communication\Meeting;
+use App\Models\Employee\Employee;
+use App\Models\Student\StudentRecord;
 use App\Repositories\Upload\UploadRepository;
 use Illuminate\Validation\ValidationException;
 use App\Repositories\Academic\BatchRepository;
@@ -12,6 +14,7 @@ use App\Repositories\Configuration\Academic\CourseGroupRepository;
 use App\Repositories\Configuration\Employee\EmployeeCategoryRepository;
 use App\Repositories\Employee\EmployeeRepository;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 
 class MeetingRepository
 {
@@ -23,6 +26,8 @@ class MeetingRepository
     protected $course_group;
     protected $employee_category;
     protected $employee;
+    protected $student_record;
+    protected $employee_model;
     protected $module = 'meeting';
 
     /**
@@ -38,7 +43,9 @@ class MeetingRepository
         DepartmentRepository $department,
         CourseGroupRepository $course_group,
         EmployeeRepository $employee,
-        EmployeeCategoryRepository $employee_category
+        EmployeeCategoryRepository $employee_category,
+        StudentRecord $student_record,
+        Employee $employee_model
     ) {
         $this->meeting = $meeting;
         $this->upload = $upload;
@@ -48,6 +55,8 @@ class MeetingRepository
         $this->course_group = $course_group;
         $this->employee = $employee;
         $this->employee_category = $employee_category;
+        $this->student_record = $student_record;
+        $this->employee_model = $employee_model;
     }
 
     /**
@@ -369,7 +378,7 @@ class MeetingRepository
         $department_id        = gv($params, 'department_id', []);
 
         if (! dateBetweenSession($date)) {
-            throw ValidationException::withMessages(['start_date' => trans('academic.invalid_session_date_range')]);
+            throw ValidationException::withMessages(['date' => trans('academic.invalid_session_date_range')]);
         }
 
         if ($audience == 'selected_department' && (! $department_id || count(array_diff($department_id, $this->department->listId())))) {
@@ -411,7 +420,7 @@ class MeetingRepository
         $individual_students = array_unique(gv($params, 'individual_students', []));
         $individual_employees = array_unique(gv($params, 'individual_employees', []));
 
-        if (! $audience && ! $individual_employees && ! $individual_students) {
+        if (! $meeting_id && ! $audience && ! $individual_employees && ! $individual_students) {
             throw ValidationException::withMessages(['message' => trans('communication.could_not_find_any_audience')]);
         }
 
@@ -432,9 +441,8 @@ class MeetingRepository
             $formatted['code'] = Str::random(20);
             $options['individual_students'] = array_unique(gv($params, 'individual_students', []));
             $options['individual_employees'] = array_unique(gv($params, 'individual_employees', []));
+            $formatted['options'] = $options;
         }
-
-        $formatted['options'] = $options;
 
         return $formatted;
     }
@@ -673,5 +681,134 @@ class MeetingRepository
         }
 
         return $selected;
+    }
+
+    /**
+     * Get selected individual audience.
+     *
+     * @param Meeting $meeting
+     * @return Array
+     */
+    public function getSelectedIndividualAudience(Meeting $meeting)
+    {
+        $student_record_ids = $meeting->studentRecords()->pluck('student_record_id')->all();
+        $employee_ids = $meeting->employees()->pluck('employee_id')->all();
+        $individual_audiences = array();
+
+        if ($student_record_ids) {
+            $student_records = $this->student_record->select('id', 'student_id', 'batch_id', 'admission_id', 'roll_number')
+                ->with([
+                    'student:id,uuid,student_parent_id,first_name,middle_name,last_name,contact_number,date_of_birth,gender,student_photo',
+                    'student.parent:id,first_guardian_name',
+                    'batch:id,course_id,name,options',
+                    'batch.course:id,name',
+                    'admission:id,number,prefix'
+                ])->whereIn('id', $student_record_ids)->get();
+
+            foreach ($student_records as $item) {
+                $individual_audiences[] = array(
+                    'key' => 'student_'.$item->id,
+                    'type' => 'student',
+                    'id' => $item->id,
+                    'name' => $item->student->name,
+                    'description_1' => $item->batch->course->name.' '.$item->batch->name,
+                    'description_2' => $item->student->parent->first_guardian_name, 
+                    'contact_number' => $item->student->contact_number
+                );
+            }
+        }
+
+        if ($employee_ids) {
+            $employees = $this->employee_model->select('id', 'uuid', 'first_name', 'middle_name', 'last_name', 'code', 'contact_number','date_of_birth','prefix', 'gender', 'photo')
+            ->with('employeeTerms:id,employee_id,date_of_joining,date_of_leaving', 'employeeDesignations:id,employee_id,designation_id,date_effective,date_end', 'employeeDesignations.designation:id,name,employee_category_id', 'employeeDesignations.designation.employeeCategory:id,name')->whereIn('id', $employee_ids)->get();
+
+            foreach ($employees as $item) {
+                $individual_audiences[] = array(
+                    'key' => 'employee_'.$item->id,
+                    'type' => 'employee',
+                    'id' => $item->id,
+                    'name' => $item->name,
+                    'description_1' => getEmployeeDesignationName($item),
+                    'description_2' => $item->employee_code, 
+                    'contact_number' => $item->contact_number
+                );
+            }
+        }
+
+        return $individual_audiences;
+    }
+
+    /**
+     * Add meeting audience
+     *
+     * @param Meeting $meeting
+     * @param array $params
+     * @return void
+     */
+    public function addAudience(Meeting $meeting, $params = array())
+    {
+        $this->isEditableOrFail($meeting);
+
+        $individual_students = array_unique(gv($params, 'individual_students', []));
+        $individual_employees = array_unique(gv($params, 'individual_employees', []));
+
+        if (! $individual_students && ! $individual_employees) {
+            throw ValidationException::withMessages(['message' => trans('communication.could_not_find_any_audience')]);
+        }
+
+        $options = $meeting->options;
+        $options['individual_students'] = array_values(array_unique(array_merge(($meeting->getOption('individual_students') ? : []), $individual_students)));
+        $options['individual_employees'] = array_values(array_unique(array_merge(($meeting->getOption('individual_employees') ? : []), $individual_employees)));
+        
+        $meeting->options = $options;
+        $meeting->save();
+
+        foreach ($individual_students as $individual_student) {
+            $meeting->studentRecords()->attach($individual_student);
+        }
+
+        foreach ($individual_employees as $individual_employee) {
+            $meeting->employees()->attach($individual_employee);
+        }
+    }
+
+    /**
+     * Delete meeting audience
+     *
+     * @param Meeting $meeting
+     * @param array $params
+     * @param string $type
+     * @param int $id
+     * @return void
+     */
+    public function deleteAudience(Meeting $meeting, $type, $id)
+    {
+        $this->isEditableOrFail($meeting);
+
+        $options = $meeting->options;
+        if ($type === 'student') {
+            $individual_students = $meeting->getOption('individual_students') ? : [];
+            $individual_students = Arr::where($individual_students, function($item) use($id) {
+                return $item != $id;
+            });
+            $options['individual_students'] = array_values($individual_students);
+        } else if($type === 'employee') {
+            $individual_employees = $meeting->getOption('individual_employees') ? : [];
+            $individual_employees = Arr::where($individual_employees, function($item) use($id) {
+                return $item != $id;
+            });
+            $options['individual_employees'] = array_values($individual_employees);
+        }
+
+        $meeting->options = $options;
+        $meeting->save();
+
+        if ($type === 'student') {
+            $meeting->studentRecords()->detach($id);
+        }
+
+        if ($type === 'employee') {
+            $meeting->employees()->detach($id);
+        }
     }
 }
