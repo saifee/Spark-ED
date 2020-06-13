@@ -23,6 +23,7 @@
     import AppHeader from './partials/header-2.vue'
     import AppSidebar from './partials/sidebar-2.vue'
     import AppFooter from './partials/footer.vue'
+    import KeySearch from '@components/key-search.vue'
 
     export default {
         data(){
@@ -32,7 +33,7 @@
             }
         },
         components: {
-            AppHeader, AppSidebar, AppFooter
+            AppHeader, AppSidebar, AppFooter, KeySearch
         },
         mounted() {
             helper.notification();
