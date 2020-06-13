@@ -33,16 +33,16 @@
                     <div class="card-body">
                         <h4 class="card-title">{{trans('general.filter')}}</h4>
                         <div class="row">
-                            <div class="col-12 col-sm-2">
+                            <div class="col-12 col-sm-4">
                                 <div class="form-group">
                                     <label for="">{{trans('student.first_guardian_name')}}</label>
-                                    <input class="form-control" name="father_name" v-model="filter.father_name">
+                                    <input class="form-control" name="first_guardian_name" v-model="filter.first_guardian_name">
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-2">
+                            <div class="col-12 col-sm-4">
                                 <div class="form-group">
                                     <label for="">{{trans('student.second_guardian_name')}}</label>
-                                    <input class="form-control" name="mother_name" v-model="filter.mother_name">
+                                    <input class="form-control" name="second_guardian_name" v-model="filter.second_guardian_name">
                                 </div>
                             </div>
                         </div>
@@ -67,9 +67,9 @@
                         <table class="table table-sm">
                             <thead>
                                 <tr>
-                                    <th>{{trans('student.first_guardian_name')}}</th>
-                                    <th>{{trans('student.second_guardian_name')}}</th>
-                                    <th>{{trans('student.father_contact_number')}}</th>
+                                    <th>{{trans('student.father_name')}}</th>
+                                    <th>{{trans('student.mother_name')}}</th>
+                                    <th>{{trans('student.first_guardian_contact_number')}}</th>
                                     <th class="table-option">{{trans('general.action')}}</th>
                                 </tr>
                             </thead>
@@ -77,7 +77,7 @@
                                 <tr v-for="student_parent in student_parents.data">
                                     <td v-text="student_parent.father_name"></td>
                                     <td v-text="student_parent.mother_name"></td>
-                                    <td v-text="student_parent.father_contact_number_1"></td>
+                                    <td v-text="student_parent.first_guardian_contact_number_1"></td>
                                     <td class="table-option">
                                         <div class="btn-group">
                                             <button class="btn btn-danger btn-sm" v-if="hasPermission('edit-student')" :key="student_parent.id" v-confirm="{ok: confirmDelete(student_parent)}" v-tooltip="trans('student.delete_parent')"><i class="fas fa-trash"></i></button>
@@ -114,8 +114,8 @@
                 filter: {
                     sort_by : 'created_at',
                     order: 'desc',
-                    father_name: '',
-                    mother_name: '',
+                    first_guardian_name: '',
+                    second_guardian_name: '',
                     page_length: helper.getConfig('page_length')
                 },
                 orderByOptions: [
@@ -124,11 +124,11 @@
                         translation: i18n.general.created_at
                     },
                     {
-                        value: 'father_name',
+                        value: 'first_guardian_name',
                         translation: i18n.student.first_guardian_name
                     },
                     {
-                        value: 'mother_name',
+                        value: 'second_guardian_name',
                         translation: i18n.student.second_guardian_name
                     }
                 ],
