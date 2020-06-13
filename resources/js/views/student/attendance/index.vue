@@ -64,7 +64,7 @@
 			                        <show-error :form-name="attendanceForm" prop-name="subject_id"></show-error>
 			                    </div>
 			                </div>
-				            <div class="col-12 col-sm-3">
+				            <div class="col-12 col-sm-3" v-if="attendanceForm.batch_id">
 				                <div class="form-group">
 				                    <label for="">{{trans('student.date_of_attendance')}}</label>
 				                    <datepicker :disabled="disable_filter" v-model="attendanceForm.date_of_attendance" :bootstrapStyling="true" @selected="dateSelected" :disabledDates="disabled" :placeholder="trans('student.date_of_attendance')" typeable></datepicker>
