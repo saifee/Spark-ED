@@ -1113,7 +1113,7 @@
         </v-list-item>
         <v-list-item
           v-if="(hasPermission('list-student') || hasPermission('list-class-teacher-wise-student')) && showMenu('student_list')"
-          to="/student/admission"
+          to="/student/list"
           exact
         >
           <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
