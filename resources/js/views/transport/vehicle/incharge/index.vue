@@ -225,7 +225,7 @@
                 return vehicle_incharge.length ? helper.getEmployeeDesignationOnDate(vehicle_incharge[0].employee, vehicle_incharge.date_effective) : '';
             },
             getCurrentVehicleIncharge(vehicle_incharges){
-                let vehicle_incharge = vehicle_incharges.find(o => o.date_effective <= moment().format('YYYY-MM-DD'));
+                let vehicle_incharge = vehicle_incharges.find(o => o.date_effective <= helper.today());
 
                 if (typeof vehicle_incharge == 'undefined')
                     vehicle_incharge = vehicle_incharges[0];
