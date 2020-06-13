@@ -121,7 +121,7 @@
                                             <template v-if="visitor_log.relation_with_student">{{trans('reception.relation_with_student')+': '+visitor_log.relation_with_student}} <br /></template>
                                             {{trans('student.name')+': '+getStudentName(visitor_log.student)}} <br />
                                             {{trans('student.first_guardian_name')+': '+visitor_log.student.parent.first_guardian_name}} <br />
-                                            {{trans('student.second_guardian_name')+': '+visitor_log.student.parent.second_guardian_name}} <br />
+                                            {{trans('student.mother_name')+': '+visitor_log.student.parent.mother_name}} <br />
                                             {{trans('student.contact_number')+': '+visitor_log.student.contact_number}} <br />
                                         </template>
                                         <template v-else>
@@ -254,6 +254,8 @@
                 if (typeof page !== 'number') {
                     page = 1;
                 }
+                this.filter.date_of_visit_start_date = helper.toDate(this.filter.date_of_visit_start_date);
+                this.filter.date_of_visit_end_date = helper.toDate(this.filter.date_of_visit_end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/visitor/log?page=' + page + url)
                     .then(response => {
