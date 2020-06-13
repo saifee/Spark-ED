@@ -20,7 +20,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div id="accordion">
-                                <div class="card">
+                                <div class="card" v-if="hasPermission('edit-book')">
                                     <div class="card-header collapsed" id="post" @click="tab = 'post'"  data-toggle="collapse" data-target="#collapsePost" aria-expanded="false" aria-controls="collapsePost">
                                        <h5><i class="fas fa-lg fa-book fa-fix-w-32"></i> {{trans('library.add_more_book')}}</h5>
                                     </div>
@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="card">
+                                <div class="card" v-if="hasPermission('edit-book')">
                                     <div class="card-header collapsed" id="post-list" @click="tab = 'post-list'"  data-toggle="collapse" data-target="#collapseListPost" aria-expanded="false" aria-controls="collapseListPost">
                                        <h5><i class="fas fa-lg fa-book-open fa-fix-w-32"></i> {{trans('library.list_book_addition')}}</h5>
                                     </div>
