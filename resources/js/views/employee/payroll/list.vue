@@ -73,7 +73,7 @@
                                         {{getEmployeeNameWithCode(payroll.employee)}} <br />
                                         <span class="font-90pc">{{getEmployeeDesignationOnDate(payroll.employee, payroll.start_date)}}</span>
                                     </td>
-                                    <td>{{payroll.start_date | moment}} {{trans('general.to')}} {{payroll.end_date}}</td>
+                                    <td>{{payroll.start_date | moment}} {{trans('general.to')}} {{payroll.end_date | moment}}</td>
                                     <td>{{formatCurrency(payroll.total)}}</td>
                                     <td>
                                         <span v-for="status in getPayrollStatus(payroll)" :class="['label','label-'+status.color,'m-r-5']">{{status.label}}</span>
