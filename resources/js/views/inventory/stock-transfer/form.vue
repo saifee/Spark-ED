@@ -234,8 +234,6 @@
             },
             store(){
                 let loader = this.$loading.show();
-                this.stockTransferForm.date = helper.toDate(this.stockTransferForm.date);
-                this.stockTransferForm.return_due_date = helper.toDate(this.stockTransferForm.return_due_date);
                 this.stockTransferForm.post('/api/stock/transfer')
                     .then(response => {
                         toastr.success(response.message);
@@ -256,8 +254,6 @@
             },
             update(){
                 let loader = this.$loading.show();
-                this.stockTransferForm.date = helper.toDate(this.stockTransferForm.date);
-                this.stockTransferForm.return_due_date = helper.toDate(this.stockTransferForm.return_due_date);
                 this.stockTransferForm.patch('/api/stock/transfer/'+this.id)
                     .then(response => {
                         toastr.success(response.message);
