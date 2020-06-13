@@ -224,14 +224,13 @@
             getBookLogs(page){
                 let loader = this.$loading.show();
 
+                if (typeof page !== 'number') {
+                    page = 1;
+                }
                 this.filter.date_of_issue_start_date = helper.toDate(this.filter.date_of_issue_start_date);
                 this.filter.date_of_issue_end_date = helper.toDate(this.filter.date_of_issue_end_date);
                 this.filter.due_date_start = helper.toDate(this.filter.due_date_start);
                 this.filter.due_date_end = helper.toDate(this.filter.due_date_end);
-
-                if (typeof page !== 'number') {
-                    page = 1;
-                }
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/book/log?page=' + page + url)
                     .then(response => {
@@ -272,13 +271,13 @@
                     });
             },
             isOverDue(book_log){
-                if(book_log.book_issue_count > book_log.book_return_count && moment(book_log.due_date).format('YYYY-MM-DD') < moment().format('YYYY-MM-DD'))
+                if(book_log.book_issue_count > book_log.book_return_count && helper.toDate(book_log.due_date) < helper.today())
                     return true;
 
                 return false;
             },
             overdueDay(book_log){
-                let date = moment().format('YYYY-MM-DD');
+                let date = helper.today();
 
                 if(this.isOverDue(book_log))
                     return helper.getDateDiff(book_log.due_date, date);
