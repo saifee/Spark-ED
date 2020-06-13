@@ -71,7 +71,7 @@
                                     <td>{{getAge(birthday.date_of_birth)+' '+trans('general.years')}}</td>
                                     <td v-if="filter.type == 'student'">{{getStudentName(birthday)}}</td>
                                     <td v-if="filter.type == 'student'">{{getStudentBatchOnDate(birthday)}}</td>
-                                    <td v-if="filter.type == 'student'">{{birthday.parent.father_name}}</td>
+                                    <td v-if="filter.type == 'student'">{{birthday.parent.first_guardian_name}}</td>
                                     <td v-if="filter.type == 'student'">{{birthday.contact_number}}</td>
                                     <td v-if="filter.type == 'employee'">{{getEmployeeName(birthday)}}</td>
                                     <td v-if="filter.type == 'employee'">{{getEmployeeCode(birthday)}}</td>
@@ -118,7 +118,7 @@
             helper.showDemoNotification(['calendar']);
         },
         created(){
-            this.filter.start_date = moment().format('YYYY-MM-DD');
+            this.filter.start_date = helper.today();
             this.filter.end_date = moment().add(1, 'weeks').format('YYYY-MM-DD');
         },
         methods: {
@@ -141,16 +141,18 @@
                 return moment().diff(date, 'years');
             },
             getStudentBatchOnDate(student){
-                return helper.getStudentBatchOnDate(student, moment().format('YYYY-MM-DD'));
+                return helper.getStudentBatchOnDate(student, helper.today());
             },
             getEmployeeDesignationOnDate(employee){
-                return helper.getEmployeeDesignationOnDate(employee, moment().format('YYYY-MM-DD'));
+                return helper.getEmployeeDesignationOnDate(employee, helper.today());
             },
             getBirthdays(page){
                 let loader = this.$loading.show();
                 if (typeof page !== 'number') {
                     page = 1;
                 }
+                this.filter.start_date = helper.toDate(this.filter.start_date);
+                this.filter.end_date = helper.toDate(this.filter.end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/birthday?page=' + page + url)
                     .then(response => {
