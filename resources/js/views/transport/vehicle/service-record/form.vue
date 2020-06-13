@@ -131,9 +131,6 @@
             },
             storeServiceRecord(){
                 let loader = this.$loading.show();
-                this.vehicleServiceRecordForm.date_of_service = helper.toDate(this.vehicleServiceRecordForm.date_of_service);
-                this.vehicleServiceRecordForm.next_due_date = helper.toDate(this.vehicleServiceRecordForm.next_due_date);
-
                 this.vehicleServiceRecordForm.post('/api/vehicle/service/record')
                     .then(response => {
                         toastr.success(response.message);
