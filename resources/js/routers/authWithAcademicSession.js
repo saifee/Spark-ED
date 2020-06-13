@@ -84,8 +84,16 @@ export default [
         component: () => import(/* webpackChunkName: "js/student/registration/index" */ '@views/student/registration/index')
     },
     {
+        path: '/student/registration/card-view',
+        component: () => import(/* webpackChunkName: "js/student/registration/card-view" */ '@views/student/registration/card-view')
+    },
+    {
         path: '/student/registration/:id',
         component: () => import(/* webpackChunkName: "js/student/registration/show" */ '@views/student/registration/show')
+    },
+    {
+        path: '/student/login',
+        component: () => import(/* webpackChunkName: "js/student/login/list" */ '@views/student/login/list')
     },
     {
         path: '/student/parent',
@@ -96,8 +104,12 @@ export default [
         component: () => import(/* webpackChunkName: "js/student/parent/edit" */ '@views/student/parent/edit')
     },
     {
-        path: '/student/admission',
+        path: '/student/list',
         component: () => import(/* webpackChunkName: "js/student/admission/index" */ '@views/student/admission/index')
+    },
+    {
+        path: '/student/card-view',
+        component: () => import(/* webpackChunkName: "js/student/admission/card-view" */ '@views/student/admission/card-view')
     },
     {
         path: '/student/behaviour',
@@ -154,6 +166,10 @@ export default [
     {
         path: '/student/:uuid',
         component: () => import(/* webpackChunkName: "js/student" */ '@views/student/show')
+    },
+    {
+        path: '/student/:uuid/edit',
+        component: () => import(/* webpackChunkName: "js/student/edit" */ '@views/student/edit')
     },
     {
         path: '/student/:uuid/wallet/:record_id',
@@ -226,6 +242,14 @@ export default [
     {
         path: '/exam/report/topper',
         component: () => import(/* webpackChunkName: "js/exam/report/topper" */ '@views/exam/report/topper')
+    },
+    {
+        path: '/exam/report/analysis',
+        component: () => import(/* webpackChunkName: "js/exam/report/analysis/index" */ '@views/exam/report/analysis/index')
+    },
+    {
+        path: '/exam/report/analysis/export',
+        component: () => import(/* webpackChunkName: "js/exam/report/analysis/export" */ '@views/exam/report/analysis/export')
     },
     {
         path: '/exam',
@@ -458,5 +482,21 @@ export default [
     {
         path: '/resource/syllabus/:uuid',
         component: () => import(/* webpackChunkName: "js/resource/syllabus/show" */ '@views/resource/syllabus/show')
+    },
+    {
+        path: '/communication/meeting',
+        component: () => import(/* webpackChunkName: "js/communication/meeting/index" */ '@views/communication/meeting/index')
+    },
+    {
+        path: '/communication/my-meeting',
+        component: () => import(/* webpackChunkName: "js/communication/meeting/my-meeting" */ '@views/communication/meeting/my-meeting')
+    },
+    {
+        path: '/communication/meeting/:uuid/edit',
+        component: () => import(/* webpackChunkName: "js/communication/meeting/edit" */ '@views/communication/meeting/edit')
+    },
+    {
+        path: '/communication/meeting/:uuid',
+        component: () => import(/* webpackChunkName: "js/communication/meeting/show" */ '@views/communication/meeting/show')
     }
 ]
