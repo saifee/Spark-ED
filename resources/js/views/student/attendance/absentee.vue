@@ -10,6 +10,7 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
+                        <button class="btn btn-info btn-sm" @click="$router.push('/student/attendance')"><i class="fas fa-list"></i> <span class="d-none d-sm-inline">{{trans('student.attendance')}}</span></button>
                         <button class="btn btn-info btn-sm" v-if="!showFilterPanel" @click="showFilterPanel = !showFilterPanel"><i class="fas fa-filter"></i> <span class="d-none d-sm-inline">{{trans('general.filter')}}</span></button>
                         <sort-by :order-by-options="orderByOptions" :sort-by="filter.sort_by" :order="filter.order" @updateSortBy="value => {filter.sort_by = value}"  @updateOrder="value => {filter.order = value}"></sort-by>
                         <div class="btn-group">
@@ -48,13 +49,13 @@
                             </div>
                             <div class="col-12 col-sm-2">
                                 <div class="form-group">
-                                    <label for="">{{trans('student.first_guardian_name')}}</label>
+                                    <label for="">{{trans('student.father_name')}}</label>
                                     <input class="form-control" name="father_name" v-model="filter.father_name">
                                 </div>
                             </div>
                             <div class="col-12 col-sm-2">
                                 <div class="form-group">
-                                    <label for="">{{trans('student.second_guardian_name')}}</label>
+                                    <label for="">{{trans('student.mother_name')}}</label>
                                     <input class="form-control" name="mother_name" v-model="filter.mother_name">
                                 </div>
                             </div>
@@ -129,8 +130,8 @@
                                     </th>
                                     <th>{{trans('student.admission_number_short')}}</th>
                                     <th>{{trans('student.name')}}</th>
-                                    <th>{{trans('student.first_guardian_name')}}</th>
-                                    <th>{{trans('student.second_guardian_name')}}</th>
+                                    <th>{{trans('student.father_name')}}</th>
+                                    <th>{{trans('student.mother_name')}}</th>
                                     <th>{{trans('student.date_of_admission')}}</th>
                                     <th>{{trans('academic.batch')}}</th>
                                 </tr>
@@ -145,8 +146,8 @@
                                     </td>
                                     <td v-text="getAdmissionNumber(student_record.admission)"></td>
                                     <td v-text="getStudentName(student_record.student)"></td>
-                                    <td v-text="student_record.student.parent.first_guardian_name"></td>
-                                    <td v-text="student_record.student.parent.second_guardian_name"></td>
+                                    <td v-text="student_record.student.parent.father_name"></td>
+                                    <td v-text="student_record.student.parent.mother_name"></td>
                                     <td>{{student_record.admission.date_of_admission | moment}}</td>
                                     <td v-text="student_record.batch.course.name+' '+student_record.batch.name"></td>
                                 </tr>
@@ -206,7 +207,7 @@
                 filter: {
                     sort_by : 'created_at',
                     order: 'asc',
-                    date: moment().format('YYYY-MM-DD'),
+                    date: helper.today(),
                     batch_id: '',
                     subject_id: '',
                     attendance_method: '',
@@ -249,12 +250,12 @@
                 return helper.getConfig(config);
             },
             getStudentRecords(page){
-                this.filter.date = helper.toDate(this.filter.date);
                 let loader = this.$loading.show();
                 if (typeof page !== 'number') {
                     page = 1;
                 }
                 this.selectAll = false;
+                this.filter.date = helper.toDate(this.filter.date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/student/attendance/absentee?page=' + page + url)
                     .then(response => {
@@ -394,7 +395,7 @@
 
                 return sms.replace("#NAME#", this.getStudentName(item.student))
                     .replace("#BATCH#", item.batch.course.name+' '+item.batch.name)
-                    .replace("#FATHER_NAME#", item.student.parent.first_guardian_name)
+                    .replace("#FATHER_NAME#", item.student.parent.father_name)
                     .replace("#DATE#", helper.formatDate(this.filter.date));
             },
             characterCount(){
