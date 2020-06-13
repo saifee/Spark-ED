@@ -5,7 +5,7 @@
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
                         <label for="">{{trans('exam.exam')}} </label> <button type="button" class="btn btn-xs btn-info pull-right" v-if="hasPermission('create-exam')" @click="showExamModal = true">{{trans('general.add_new')}}</button>
-                        <v-select label="name" v-model="selected_exam" name="exam_id" id="exam_id" :options="exams" :placeholder="trans('exam.select_exam')" @select="onExamSelect" @close="scheduleForm.errors.clear('exam_id')" @remove="scheduleForm.exam_id = ''">
+                        <v-select label="name" v-model="selected_exam" name="exam_id" id="exam_id" :options="exams" :placeholder="trans('exam.select_exam')" @select="onExamSelect" @close="scheduleForm.errors.clear('exam_id')" @remove="scheduleForm.exam_id = ''" :disabled="id ? true : false">
                             <div class="multiselect__option" slot="afterList" v-if="!exams.length">
                                 {{trans('general.no_option_found')}}
                             </div>
@@ -16,7 +16,7 @@
                 <div class="col-12 col-sm-3">
                     <div class="form-group">
                         <label for="">{{trans('academic.batch')}} </label>
-                        <v-select label="name" v-model="selected_batch" group-values="batches" group-label="course_group" :group-select="false" name="batch_id" id="batch_id" :options="batches" :placeholder="trans('academic.select_batch')" @select="onBatchSelect" @close="scheduleForm.errors.clear('batch_id')" @remove="scheduleForm.batch_id = ''">
+                        <v-select label="name" v-model="selected_batch" group-values="batches" group-label="course_group" :group-select="false" name="batch_id" id="batch_id" :options="batches" :placeholder="trans('academic.select_batch')" @select="onBatchSelect" @close="scheduleForm.errors.clear('batch_id')" @remove="scheduleForm.batch_id = ''" :disabled="id ? true : false">
                             <div class="multiselect__option" slot="afterList" v-if="!batches.length">
                                 {{trans('general.no_option_found')}}
                             </div>
@@ -44,6 +44,18 @@
                             </div>
                         </v-select>
                         <show-error :form-name="scheduleForm" prop-name="exam_assessment_id"></show-error>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <div class="form-group">
+                        <label for="">{{trans('exam.overall_pass_percentage')}}</label>
+                        <input class="form-control" type="text" v-model="scheduleForm.overall_pass_percentage" name="overall_pass_percentage" :placeholder="trans('exam.overall_pass_percentage')">
+                        <show-error :form-name="scheduleForm" prop-name="overall_pass_percentage"></show-error>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <div class="form-group">
+                        <switches class="m-l-20" v-model="scheduleForm.show_result" theme="bootstrap" color="success"></switches> {{trans('exam.show_result')}}
                     </div>
                 </div>
             </div>
@@ -74,7 +86,7 @@
                 <template v-if="! record.has_no_exam">
                     <div class="col-12 col-sm-3">
                         <div class="form-group">
-                            <datepicker v-model="record.date" :bootstrapStyling="true" @selected="scheduleForm.errors.clear(getScheduleDateName(index))" :placeholder="trans('exam.schedule_date')" typeable></datepicker>
+                            <datepicker v-model="record.date" :bootstrapStyling="true" @selected="scheduleForm.errors.clear(getScheduleDateName(index))" :placeholder="trans('exam.schedule_date')"></datepicker>
                             <show-error :form-name="scheduleForm" :prop-name="getScheduleDateName(index)"></show-error>
                         </div>
                     </div>
@@ -144,6 +156,8 @@
                     exam_grade_id: '',
                     exam_assessment_id: '',
                     description: '',
+                    overall_pass_percentage: '',
+                    show_result: 0,
                     records: []
                 }),
                 all_batches: [],
@@ -235,9 +249,6 @@
                     this.store();
             },
             store(){
-                this.scheduleForm.records.forEach(record => {
-                    record.date = helper.toDate(record.date);
-                });
                 let loader = this.$loading.show();
                 this.scheduleForm.post('/api/exam/schedule')
                     .then(response => {
@@ -261,6 +272,9 @@
                     .then(response => {
                         this.selected_exam = response.selected_exam;
                         response = response.exam_schedule;
+
+                        this.scheduleForm.overall_pass_percentage = response.options.overall_pass_percentage;
+                        this.scheduleForm.show_result = response.options.show_result;
 
                         if (this.selected_exam && this.selected_exam.course_group_id)
                             this.batches = this.all_batches.filter(o => o.course_group === this.selected_exam.course_group_name);
