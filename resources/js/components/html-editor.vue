@@ -26,7 +26,16 @@
                 height: this.height,
                 fontNames: ['sans-serif'],
                 fontNamesIgnoreCheck: ['sans-serif'],
-                disableResizeEditor: true
+                disableResizeEditor: true,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview']]
+                ]
             };
             let vm = this;
             config.callbacks = {
