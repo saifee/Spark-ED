@@ -154,7 +154,7 @@
                                             <td>{{book_log_detail.book_post_detail.book_post.book.title}}</td>
                                             <td>{{book_log_detail.book_post_detail.book_post.book.book_author.name}}</td>
                                             <td>{{formatCurrency(book_log_detail.book_post_detail.book_post.book.price)}}</td>
-                                            <td v-if="book_log_detail.book_post_detail.book_condition">{{book_log_detail.book_post_detail.book_condition.name}}</td>
+                                            <td>{{book_log_detail.book_post_detail.book_condition.name}}</td>
                                             <td>
                                                 <span v-if="book_log_detail.date_of_return">{{book_log_detail.date_of_return | moment}}</span>
                                                 <span v-else-if="book_log_detail.is_non_returnable" class="label label-danger">{{trans('library.non_returnable')}}</span>
@@ -386,7 +386,6 @@
             },
             returnAction(){
                 let loader = this.$loading.show();
-                this.returnForm.date_of_return = helper.toDate(this.returnForm.date_of_return);
 
                 if(!this.returnForm.is_non_returnable) {
                     this.returnForm.non_returnable_charge_applicable = 0;
@@ -435,15 +434,15 @@
                 return this.book_log.book_log_details.filter(o => o.date_of_return != null || o.is_non_returnable).length;
             },
             isOverDue(){
-                let date = this.returnForm.date_of_return ? helper.toDate(this.returnForm.date_of_return) : moment().format('YYYY-MM-DD');
+                let date = this.returnForm.date_of_return ? helper.toDate(this.returnForm.date_of_return) : helper.today();
 
-                if(this.book_log.book_log_details.length > this.getBookReturnCount && moment(this.book_log.due_date).format('YYYY-MM-DD') < date)
+                if(this.book_log.book_log_details.length > this.getBookReturnCount && helper.toDate(this.book_log.due_date) < date)
                     return true;
 
                 return false;
             },
             overdueDay(){
-                let date = this.returnForm.date_of_return ? helper.toDate(this.returnForm.date_of_return) : moment().format('YYYY-MM-DD');
+                let date = this.returnForm.date_of_return ? helper.toDate(this.returnForm.date_of_return) : helper.today();
 
                 if(this.isOverDue)
                     return helper.getDateDiff(this.book_log.due_date, date);
