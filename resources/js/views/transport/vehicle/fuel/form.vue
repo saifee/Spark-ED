@@ -120,8 +120,6 @@
             },
             storeFuel(){
                 let loader = this.$loading.show();
-                this.vehicleFuelForm.date_of_fueling = helper.toDate(this.vehicleFuelForm.date_of_fueling);
-
                 this.vehicleFuelForm.post('/api/vehicle/fuel')
                     .then(response => {
                         toastr.success(response.message);
