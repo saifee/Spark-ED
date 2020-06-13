@@ -129,7 +129,7 @@
                 this.$router.push('/dashboard');
             }
 
-            this.filter.date = moment().format('YYYY-MM-DD');
+            this.filter.date = helper.today();
             this.getReport();
         },
         methods: {
