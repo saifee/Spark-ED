@@ -120,7 +120,7 @@
             if(this.uuid)
                 this.get();
             else {
-                this.postalRecordForm.date = moment().format('YYYY-MM-DD');
+                this.postalRecordForm.date = helper.today();
                 this.postalRecordForm.upload_token = this.$uuid.v4();
             }
 
@@ -146,7 +146,6 @@
             },  
             store(){
                 let loader = this.$loading.show();
-                this.postalRecordForm.date = helper.toDate(this.postalRecordForm.date);
                 this.postalRecordForm.post('/api/postal/record')
                     .then(response => {
                         toastr.success(response.message);
@@ -187,7 +186,6 @@
             },
             update(){
                 let loader = this.$loading.show();
-                this.postalRecordForm.date = helper.toDate(this.postalRecordForm.date);
                 this.postalRecordForm.patch('/api/postal/record/'+this.uuid)
                     .then(response => {
                         toastr.success(response.message);
