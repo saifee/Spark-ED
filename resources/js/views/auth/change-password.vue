@@ -3,7 +3,7 @@
         <div class="page-titles">
             <div class="row">
                 <div class="col-12 col-sm-6">
-                    <h3 class="text-themecolor">{{trans('auth.change_password')}} <span class="card-subtitle">{{getAuthUser('full_name')}} ({{getAuthUser('email')}})</span></h3>
+                    <h3 class="text-themecolor">{{trans('auth.change_password')}} <span class="card-subtitle">{{getAuthUser('name')}} ({{getAuthUser('email')}})</span></h3>
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
