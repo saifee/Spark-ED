@@ -59,22 +59,34 @@
                 student_search_results: [],
                 employee_search_results: [],
                 displayResult: false,
-                resultLoading: false
+                resultLoading: false,
+                timeout: null
             }
         },
         methods: {
             searchResult(){
             	this.resultLoading = true;
-                axios.get('/api/search?q='+this.search)
-                    .then(response => {
-                        this.student_search_results = response.student_records;
-                        this.employee_search_results = response.employees;
-                        this.resultLoading = false;
-                    })
-                    .catch(error => {
-                    	this.resultLoading = false;
-                        helper.showErrorMsg(error);
-                    })
+
+                clearTimeout(this.timeout);
+                
+                var self = this;
+                this.timeout = setTimeout(function () {
+                    if (self.search.length < 3) {
+                        return
+                    }
+
+                    axios.get('/api/search?q='+self.search)
+                        .then(response => {
+                            self.student_search_results = response.student_records;
+                            self.employee_search_results = response.employees;
+                            self.resultLoading = false;
+                        })
+                        .catch(error => {
+                            self.resultLoading = false;
+                            helper.showErrorMsg(error);
+                        })
+                }, 1000);
+
             },
             getStudentName(student){
                 return helper.getStudentName(student);
