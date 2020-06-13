@@ -146,7 +146,7 @@
                 this.$router.push('/dashboard');
             }
 
-            this.attendanceForm.date_of_attendance = moment().format('YYYY-MM-DD');
+            this.attendanceForm.date_of_attendance = helper.today();
             this.getPreRequisite();
         },
         methods: {
@@ -182,7 +182,7 @@
                     department_id: this.attendanceForm.department_id,
                     employee_category_id: this.attendanceForm.employee_category_id,
                     designation_id: this.attendanceForm.designation_id,
-                    date: helper.toDate(this.attendanceForm.date_of_attendance)
+                    date: this.attendanceForm.date_of_attendance
                 })
                 .
                 then(response => {
@@ -244,7 +244,6 @@
             },
             submit(){
                 let loader = this.$loading.show();
-                this.attendanceForm.date_of_attendance = helper.toDate(this.attendanceForm.date_of_attendance);
                 this.attendanceForm.post('/api/employee/attendance/regular')
                     .then(response => {
                         loader.hide();
