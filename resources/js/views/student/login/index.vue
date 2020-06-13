@@ -79,7 +79,7 @@
 		            </template>
 	            </div>
 	        </div>
-            <div class="card-footer text-right">
+            <div class="text-right" :class="footer ? 'card-footer' : ''">
 	        	<button type="submit" class="btn btn-info">{{trans('general.save')}}</button>
             </div>
 	    </form>
@@ -88,7 +88,7 @@
 
 <script>
 	export default {
-		props: ['student'],
+		props: ['student','footer'],
 		data(){
 			return {
 				userForm: new Form({
