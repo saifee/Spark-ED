@@ -21,6 +21,13 @@
             </div>
             <div class="col-12 col-sm-3">
                 <div class="form-group">
+                    <label for="">{{trans('academic.subject_group')}}</label>
+                    <input class="form-control" type="text" v-model="subjectForm.group" name="group" :placeholder="trans('academic.subject_group')">
+                    <show-error :form-name="subjectForm" prop-name="group"></show-error>
+                </div>
+            </div>
+            <div class="col-12 col-sm-3">
+                <div class="form-group">
                     <label for="">{{trans('academic.subject_code')}}</label>
                     <input class="form-control" type="text" v-model="subjectForm.code" name="code" :placeholder="trans('academic.subject_code')">
                     <show-error :form-name="subjectForm" prop-name="code"></show-error>
@@ -82,6 +89,7 @@
             return {
                 subjectForm: new Form({
                     name: '',
+                    group: '',
                     batch_id: '',
                     code: '',
                     shortcode: '',
@@ -151,6 +159,7 @@
                         this.subjectForm.max_class_per_week = response.subject.max_class_per_week;
                         this.subjectForm.is_elective = response.subject.is_elective;
                         this.subjectForm.has_no_exam = response.subject.has_no_exam;
+                        this.subjectForm.group = response.subject.options.group;
                         this.selected_batch = response.selected_batch;
                         loader.hide();
                     })
