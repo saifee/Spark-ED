@@ -134,7 +134,7 @@
             if(this.uuid)
                 this.get();
             else {
-                this.complaintForm.date_of_complaint = moment().format('YYYY-MM-DD');
+                this.complaintForm.date_of_complaint = helper.today();
                 this.complaintForm.upload_token = this.$uuid.v4();
             }
 
@@ -162,8 +162,6 @@
             },  
             store(){
                 let loader = this.$loading.show();
-                this.complaintForm.date_of_complaint = helper.toDate(this.complaintForm.date_of_complaint);
-                this.complaintForm.date_of_resolution = helper.toDate(this.complaintForm.date_of_resolution);
                 this.complaintForm.post('/api/complaint')
                     .then(response => {
                         toastr.success(response.message);
@@ -205,8 +203,6 @@
             },
             update(){
                 let loader = this.$loading.show();
-                this.complaintForm.date_of_complaint = helper.toDate(this.complaintForm.date_of_complaint);
-                this.complaintForm.date_of_resolution = helper.toDate(this.complaintForm.date_of_resolution);
                 this.complaintForm.patch('/api/complaint/'+this.uuid)
                     .then(response => {
                         toastr.success(response.message);
