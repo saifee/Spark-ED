@@ -11,7 +11,7 @@
         </div>
 
         <div class="fix-width fix-width-mobile p-t-80">
-            <div class="page-body article-content" v-html="article.description"></div>
+            <div class="page-body article-content html-view" v-html="article.description"></div>
 
             <div v-if="attachments.length">
                 <ul class="m-t-10 upload-file-list">
