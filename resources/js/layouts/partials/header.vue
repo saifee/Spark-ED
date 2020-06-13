@@ -78,11 +78,11 @@
 </template>
 
 <script>
-    import globalSearch from './global-search'
+    // import globalSearch from './global-search'
     import mainMenu from './menu'
 
     export default {
-        components: {globalSearch, mainMenu},
+        components: {mainMenu},
         mounted() {
         },
         methods : {
@@ -123,6 +123,9 @@
             },
             getDefaultAcademicSession(){
                 return helper.getDefaultAcademicSession();
+            },
+            getAuthUserRoles() {
+                return helper.ucword(this.$store.getters.getAuthUserRoles);
             }
         }
     }
