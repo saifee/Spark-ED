@@ -389,9 +389,14 @@ class ConfigurationRepository
             
             $default_academic_session = ($user_preference) ? $this->academic_session->find($user_preference->academic_session_id) : $this->academic_session->whereIsDefault(1)->first();
             if ($default_academic_session) {
-                $default_academic_session->start_date = toDate($default_academic_session->start_date);
-                $default_academic_session->end_date = toDate($default_academic_session->end_date);
-                config(['config.default_academic_session' => $default_academic_session]);
+                config([
+                    'config.default_academic_session.id' => $default_academic_session->id,
+                    'config.default_academic_session.start_date' => toDate($default_academic_session->start_date),
+                    'config.default_academic_session.end_date' => toDate($default_academic_session->end_date),
+                    'config.default_academic_session.name' => $default_academic_session->name,
+                    'config.default_academic_session.is_default' => $default_academic_session->is_default,
+                    'config.default_academic_session.options' => $default_academic_session->options,
+                ]);
             } else {
                 config(['config.default_academic_session' => null]);
             }
@@ -520,9 +525,8 @@ class ConfigurationRepository
      */
     public function checkSymlink()
     {
-        // if (\File::deleteDirectory(public_path('storage')))
-        //     \File::delete(public_path('storage'));
-
-        // \Artisan::call('storage:link');
+        if (!\File::exists(public_path('storage'))) {
+            \Artisan::call('storage:link');
+        }
     }
 }
