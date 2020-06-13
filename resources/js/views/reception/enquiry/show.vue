@@ -38,17 +38,17 @@
                                         	<td>{{trans('reception.enquiry_source')}}</td>
                                         	<td>{{enquiry.enquiry_source.name}}</td>
                                         </tr>
-                                        <tr>
-                                        	<td>{{trans('student.first_guardian_name')}}</td>
-                                        	<td>{{enquiry.father_name}}</td>
+                                        <tr v-if="enquiry.first_guardian_name">
+                                        	<td>{{trans('list.'+enquiry.first_guardian_relation)}}</td>
+                                        	<td>{{enquiry.first_guardian_name}}</td>
                                         </tr>
-                                        <tr>
-                                        	<td>{{trans('student.second_guardian_name')}}</td>
-                                        	<td>{{enquiry.mother_name}}</td>
+                                        <tr v-if="enquiry.second_guardian_name">
+                                            <td>{{trans('list.'+enquiry.second_guardian_relation)}}</td>
+                                            <td>{{enquiry.second_guardian_name}}</td>
                                         </tr>
-                                        <tr>
-                                        	<td>{{trans('student.guardian_name')}}</td>
-                                        	<td>{{enquiry.guardian_name}}</td>
+                                        <tr v-if="enquiry.third_guardian_name">
+                                            <td>{{trans('list.'+enquiry.third_guardian_relation)}}</td>
+                                            <td>{{enquiry.third_guardian_name}}</td>
                                         </tr>
                                         <tr>
                                         	<td>{{trans('student.email')}}</td>
