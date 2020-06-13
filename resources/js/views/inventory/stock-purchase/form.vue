@@ -200,7 +200,6 @@
             },
             store(){
                 let loader = this.$loading.show();
-                this.stockPurchaseForm.date = helper.toDate(this.stockPurchaseForm.date);
                 this.stockPurchaseForm.post('/api/stock/purchase')
                     .then(response => {
                         toastr.success(response.message);
@@ -219,7 +218,6 @@
             },
             update(){
                 let loader = this.$loading.show();
-                this.stockPurchaseForm.date = helper.toDate(this.stockPurchaseForm.date);
                 this.stockPurchaseForm.patch('/api/stock/purchase/'+this.id)
                     .then(response => {
                         toastr.success(response.message);
