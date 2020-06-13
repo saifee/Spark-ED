@@ -1,6 +1,6 @@
 <template>
 	<div>
-        <button class="btn btn-sm btn-info pull-right" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('student.add_new_qualification')}}</button>
+        <button v-if="!readMode" class="btn btn-sm btn-info pull-right" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('student.add_new_qualification')}}</button>
         <div class="table-responsive" v-if="student_qualifications.total">
             <table class="table table-sm">
                 <thead>
@@ -21,24 +21,30 @@
                         <td class="table-option">
                             <div class="btn-group">
                                 <button class="btn btn-success btn-sm" v-tooltip="trans('student.view_qualification')" @click.prevent="showAction(student_qualification)" ><i class="fas fa-arrow-circle-right"></i></button>
-                                <button class="btn btn-info btn-sm" v-tooltip="trans('student.edit_qualification')" @click.prevent="editAction(student_qualification)" ><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-danger btn-sm" :key="student_qualification.id" v-confirm="{ok: confirmDelete(student_qualification)}" v-tooltip="trans('student.delete_qualification')"><i class="fas fa-trash"></i></button>
+                                <button v-if="!readMode" class="btn btn-info btn-sm" v-tooltip="trans('student.edit_qualification')" @click.prevent="editAction(student_qualification)" ><i class="fas fa-edit"></i></button>
+                                <button v-if="!readMode" class="btn btn-danger btn-sm" :key="student_qualification.id" v-confirm="{ok: confirmDelete(student_qualification)}" v-tooltip="trans('student.delete_qualification')"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <module-info v-if="!student_qualifications.total" module="student" title="qualification_module_title" description="qualification_module_description" icon="list">
-            <div slot="btn">
-                <button class="btn btn-info btn-md" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('general.add_new')}}</button>
-            </div>
-        </module-info>
+        <template v-if="!readMode">
+            <module-info v-if="!student_qualifications.total" module="student" title="qualification_module_title" description="qualification_module_description" icon="list">
+                <div slot="btn">
+                    <button class="btn btn-info btn-md" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('general.add_new')}}</button>
+                </div>
+            </module-info>
+        </template>
+        <template v-else>
+            <div v-if="!student_qualifications.total" class="font-80pc">{{trans('general.no_result_found')}}</div>
+        </template>
+
         <pagination-record :page-length.sync="filter.page_length" :records="student_qualifications" @updateRecords="getStudentQualifications" @change.native="getStudentQualifications"></pagination-record>
 
-        <create-qualification v-if="addModal" @close="addModal = false" @completed="getStudentQualifications" :student="student"></create-qualification>
+        <create-qualification v-if="addModal && !readMode" @close="addModal = false" @completed="getStudentQualifications" :student="student"></create-qualification>
 
-        <edit-qualification v-if="editModal" @close="editModal = false" @completed="getStudentQualifications" :student="student" :qid="editId"></edit-qualification>
+        <edit-qualification v-if="editModal && !readMode" @close="editModal = false" @completed="getStudentQualifications" :student="student" :qid="editId"></edit-qualification>
 
         <show-qualification v-if="showModal" @close="showModal = false" :student="student" :qid="showId"></show-qualification>
     </div>
@@ -50,7 +56,18 @@
     import showQualification from './show'
 
 	export default {
-        props: ['student'],
+        props: {
+            student: {
+                type: Object,
+                default() {
+                    return {}
+                }
+            },
+            readMode: {
+                type: Boolean,
+                default: false
+            }
+        },
         components : { createQualification,editQualification,showQualification },
         data() {
             return {
@@ -69,7 +86,7 @@
             };
         },
         mounted(){
-            if(!helper.hasPermission('edit-student')){
+            if((this.readMode && !helper.hasPermission('list-student') && !helper.hasPermission('list-class-teacher-wise-student')) || (!this.readMode && !helper.hasPermission('edit-student'))){
                 helper.notAccessibleMsg();
                 this.$router.push('/dashboard');
             }
