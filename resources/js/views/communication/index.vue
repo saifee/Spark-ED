@@ -35,9 +35,9 @@
                         <div class="row">
                             <div class="col-12 col-sm-2">
                                 <div class="form-group">
-                                    <label for="">{{trans('communication.types')}}</label>
+                                    <label for="">{{trans('communication.type')}}</label>
                                     <select v-model="filter.type" class="custom-select col-12">
-                                      <option value=null selected>{{trans('general.select_one')}}</option>
+                                      <option value="" selected>{{trans('general.select_one')}}</option>
                                       <option v-for="type in types" v-bind:value="type.value">
                                         {{ type.text }}
                                       </option>
@@ -147,6 +147,16 @@
                                                 <li v-for="employee_category in communication.employee_categorys">{{employee_category.name}}</li>
                                             </ul>
                                         </template>
+                                        <template v-if="communication.options.individual_students && communication.options.individual_students.length">
+                                            <ul style="list-style:none;padding:0;margin:0;">
+                                                <li>{{trans('communication.count_individual_students', {attribute: communication.options.individual_students.length})}}</li>
+                                            </ul>
+                                        </template>
+                                        <template v-if="communication.options.individual_employees && communication.options.individual_employees.length">
+                                            <ul style="list-style:none;padding:0;margin:0;">
+                                                <li>{{trans('communication.count_individual_employees', {attribute: communication.options.individual_employees.length})}}</li>
+                                            </ul>
+                                        </template>
                                     </td>
                                     <td>{{communication.recipient_count}}</td>
                                     <td>{{getEmployeeName(communication.user.employee)}} <br > {{getEmployeeDesignationOnDate(communication.user.employee, communication.start_date)}}</td>
@@ -188,9 +198,9 @@
                                 <hr />
                                 <p>
                                     <i class="far fa-clock"></i> <small>{{trans('general.created_at')}} {{communication.created_at | momentDateTime}}</small>
-                                    <span class="pull-right">
+                                    <!-- <span class="pull-right">
                                         <i class="far fa-clock"></i> <small>{{trans('general.updated_at')}} {{communication.updated_at | momentDateTime}}</small>
-                                    </span>
+                                    </span> -->
                                 </p>
                                 <div class="clearfix"></div>
                             </slot>
@@ -284,6 +294,8 @@
                 if (typeof page !== 'number') {
                     page = 1;
                 }
+                this.filter.start_date = helper.toDate(this.filter.start_date);
+                this.filter.end_date = helper.toDate(this.filter.end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/communication?page=' + page + url)
                     .then(response => {
