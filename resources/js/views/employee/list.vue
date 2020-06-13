@@ -355,7 +355,7 @@
             },
             getStatus(employee){
                 let term = employee.employee_terms;
-                if (term.length && term[0].date_of_joining <= moment().format('YYYY-MM-DD') && (!term[0].date_of_leaving || term[0].date_of_leaving >= moment().format('YYYY-MM-DD')))
+                if (term.length && term[0].date_of_joining <= helper.today() && (!term[0].date_of_leaving || term[0].date_of_leaving >= helper.today()))
                     return '<span class="label label-success">'+i18n.employee.status_active+'</span>';
                 else
                     return '<span class="label label-danger">'+i18n.employee.status_inactive+'</span>';
