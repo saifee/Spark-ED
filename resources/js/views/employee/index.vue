@@ -10,7 +10,7 @@
                         <div class="card-body">
                             <h4 class="card-title">{{trans('employee.employee_list')}}</h4>
                             <p class="card-text font-80pc">{{trans('employee.employee_module_description')}}</p>
-                            <router-link to="/employee/list" class="btn btn-info btn-sm">{{trans('general.go_to_link', {link: trans('employee.employee_list')})}}</router-link>
+                            <router-link to="/employee/card-view" class="btn btn-info btn-sm">{{trans('general.go_to_link', {link: trans('employee.employee_list')})}}</router-link>
                         </div>
                     </div>
                 </div>
