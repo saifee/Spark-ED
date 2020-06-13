@@ -3,6 +3,7 @@
         <tour-notification class="d-none d-sm-inline" />
         <app-header></app-header>
         <app-sidebar></app-sidebar>
+        <key-search />
 
         <v-content>
             <v-container fluid>
