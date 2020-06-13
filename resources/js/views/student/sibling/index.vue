@@ -18,14 +18,31 @@
                 </tbody>
             </table>
         </div>
-        <module-info v-if="!students.length" module="student" title="sibling_module_title" description="sibling_module_description" icon="list">
-        </module-info>
+        <template v-if="!readMode">
+            <module-info v-if="!students.length" module="student" title="account_module_title" description="account_module_description" icon="list">
+            </module-info>
+        </template>
+        <template v-else>
+            <div v-if="!students.length" class="font-80pc">{{trans('general.no_result_found')}}</div>
+        </template>
+        <div>&nbsp;</div>
     </div>
 </template>
 
 <script>
     export default {
-        props: ['student'],
+        props: {
+            student: {
+                type: Object,
+                default() {
+                    return {}
+                }
+            },
+            readMode: {
+                type: Boolean,
+                default: false
+            }
+        },
         components : {},
         data() {
             return {
@@ -33,7 +50,7 @@
             };
         },
         mounted(){
-            if(!helper.hasPermission('list-student')){
+            if(!helper.hasPermission('list-student') && !helper.hasPermission('list-class-teacher-wise-student')){
                 helper.notAccessibleMsg();
                 this.$router.push('/dashboard');
             }
