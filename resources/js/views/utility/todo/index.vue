@@ -168,6 +168,8 @@
                 if (typeof page !== 'number') {
                     page = 1;
                 }
+                this.filter.start_date = helper.toDate(this.filter.start_date);
+                this.filter.end_date = helper.toDate(this.filter.end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/todo?page=' + page + url)
                     .then(response => {
