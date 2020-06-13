@@ -68,8 +68,9 @@
     "vuedraggable": "^2.23.2",
     "vuejs-datepicker": "^1.6.2",
     "vuejs-dialog": "^1.4.1",
+    "vuescroll": "^4.15.0",
     "vuetify": "^2.3.0",
     "vuex": "^3.4.0",
-    "vuex-persistedstate": "^2.7.1"
+    "vuex-persistedstate": "^3.0.1"
   }
 }
