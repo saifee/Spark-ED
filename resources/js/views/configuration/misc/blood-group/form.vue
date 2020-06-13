@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="card-footer text-right">
-            <router-link to="/configuration/misc/blood-group" class="btn btn-danger waves-effect waves-light " v-show="id">{{trans('general.cancel')}}</router-link>
+            <router-link to="/configuration/misc/blood/group" class="btn btn-danger waves-effect waves-light " v-show="id">{{trans('general.cancel')}}</router-link>
             <button v-if="!id" type="button" class="btn btn-danger waves-effect waves-light " @click="$emit('cancel')">{{trans('general.cancel')}}</button>
             <button type="submit" class="btn btn-info waves-effect waves-light">
                 <span v-if="id">{{trans('general.update')}}</span>
@@ -74,7 +74,7 @@
                     .catch(error => {
                         loader.hide();
                         helper.showErrorMsg(error);
-                        this.$router.push('/configuration/misc/blood-group');
+                        this.$router.push('/configuration/misc/blood/group');
                     });
             },
             update(){
@@ -83,7 +83,7 @@
                     .then(response => {
                         toastr.success(response.message);
                         loader.hide();
-                        this.$router.push('/configuration/misc/blood-group');
+                        this.$router.push('/configuration/misc/blood/group');
                     })
                     .catch(error => {
                         loader.hide();
