@@ -171,6 +171,57 @@
                                     </template>
                                 </template>
                             </div>
+                            <div class="col-12 col-md-4">
+                                <div class="form-group">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" value="1" v-model="configForm.paystack" name="paystack">
+                                        <span class="custom-control-label">Paystack</span>
+                                    </label>
+                                </div>
+                                <template v-if="configForm.paystack">
+                                    <div class="form-group">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" value="1" v-model="configForm.paystack_mode" name="paystack_mode">
+                                            <span class="custom-control-label">Paystack Live Mode</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Paystack Publishable Key</label>
+                                        <input class="form-control" type="text" value="" v-model="configForm.paystack_public_key" name="paystack_public_key" placeholder="Paystack Public Key">
+                                        <show-error :form-name="configForm" prop-name="paystack_public_key"></show-error>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Paystack Secret Key</label>
+                                        <input class="form-control" type="text" value="" v-model="configForm.paystack_secret_key" name="paystack_secret_key" placeholder="Paystack Secret Key">
+                                        <show-error :form-name="configForm" prop-name="paystack_secret_key"></show-error>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" value="1" v-model="configForm.paystack_charge_handling_fee" name="paystack_charge_handling_fee">
+                                            <span class="custom-control-label">{{trans('finance.charge_gateway_handling_fee')}}</span>
+                                        </label>
+                                    </div>
+                                    <template v-if="configForm.paystack_charge_handling_fee">
+                                        <div class="form-group">
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" value="1" v-model="configForm.paystack_fixed_handling_fee" name="paystack_fixed_handling_fee">
+                                                <span class="custom-control-label">{{trans('finance.fixed_gateway_handling_fee')}}</span>
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">{{trans('finance.gateway_handling_fee', {gateway : 'Paystack'})}}</label>
+                                            <div class="input-group">
+                                                <input class="form-control" type="text" value="" v-model="configForm.paystack_handling_fee" name="paystack_handling_fee" :placeholder="trans('finance.gateway_handling_fee', {gateway : 'Paystack'})">
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text" v-if="configForm.paystack_fixed_handling_fee">{{default_currency.symbol}}</span>
+                                                    <span class="input-group-text" v-else>%</span>
+                                                </div>
+                                            </div>
+                                            <show-error :form-name="configForm" prop-name="paystack_handling_fee"></show-error>
+                                        </div>
+                                    </template>
+                                </template>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-info waves-effect waves-light pull-right m-t-10">{{trans('general.save')}}</button>
                     </form>
@@ -207,7 +258,14 @@
                     razorpay_secret: '',
                     razorpay_charge_handling_fee: 0,
                     razorpay_fixed_handling_fee: 0,
-                    razorpay_handling_fee: ''
+                    razorpay_handling_fee: '',
+                    paystack: 0,
+                    paystack_mode: 0,
+                    paystack_public_key: '',
+                    paystack_secret_key: '',
+                    paystack_charge_handling_fee: 0,
+                    paystack_fixed_handling_fee: 0,
+                    paystack_handling_fee: ''
                 },false),
                 default_currency: helper.getConfig('default_currency'),
                 help_topic: ''
