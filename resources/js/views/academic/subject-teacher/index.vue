@@ -232,7 +232,7 @@
                 return (typeof subject_teacher != 'undefined') ? this.getEmployeeName(subject_teacher.employee) : '-';
             },
             getCurrentSubjectTeacher(subject_teachers){
-                let subject_teacher = subject_teachers.find(o => o.date_effective <= moment().format('YYYY-MM-DD'));
+                let subject_teacher = subject_teachers.find(o => o.date_effective <= helper.today());
 
                 if (typeof subject_teacher == 'undefined')
                     subject_teacher = subject_teachers[0];
