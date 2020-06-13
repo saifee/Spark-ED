@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
-                        <router-link to="/student/admission" class="btn btn-info btn-sm"><i class="fas fa-list"></i> <span class="d-none d-sm-inline">{{trans('student.student')}}</span></router-link>
+                        <router-link to="/student/list" class="btn btn-info btn-sm"><i class="fas fa-list"></i> <span class="d-none d-sm-inline">{{trans('student.student')}}</span></router-link>
                         <div class="btn-group">
                             <button type="button" class="btn btn-info btn-sm dropdown-toggle no-caret " role="menu" id="moreOption" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-tooltip="trans('general.more_option')">
                                 <i class="fas fa-ellipsis-h"></i> <span class="d-none d-sm-inline"></span>
@@ -56,6 +56,7 @@
                                                 </th>
                                                 <th>{{trans('finance.late_fee')}}</th>
                                                 <th>{{trans('finance.installment_total')}}</th>
+                                                <th>{{trans('finance.other')}}</th>
                                                 <th>{{trans('finance.paid')}}</th>
                                                 <th>{{trans('finance.balance')}}</th>
                                                 <th v-if="hasPermission('make-fee-payment')">{{trans('finance.pay_fee')}}</th>
@@ -83,6 +84,7 @@
                                                 </td>
                                                 <td>{{getLateFeeAmount(fee_installment)}}</td>
                                                 <td>{{getInstallmentTotalAmount(fee_installment)}}</td>
+                                                <td>{{getInstallmentOtherAmount(fee_installment)}}</td>
                                                 <td>{{getInstallmentPaidAmount(fee_installment)}}</td>
                                                 <td>{{getInstallmentBalanceAmount(fee_installment)}}</td>
                                                 <td v-if="hasPermission('make-fee-payment')">
@@ -135,6 +137,7 @@
                                                 </th>
                                                 <th>{{getLateFeeTotal(fee_allocation_group)}}</th>
                                                 <th>{{getInstallmentGrandTotal(fee_allocation_group)}}</th>
+                                                <th>{{getInstallmentGrandOther(fee_allocation_group)}}</th>
                                                 <th>{{getInstallmentPaidGrandTotal(fee_allocation_group)}}</th>
                                                 <th>{{getInstallmentBalanceGrandTotal(fee_allocation_group)}}</th>
                                                 <th v-if="hasPermission('make-fee-payment')"></th>
@@ -144,6 +147,28 @@
                                     </table>
                                 </div>
                             </template>
+
+
+                            <div class="table-responsive p-3">
+                                <table class="table table">
+                                    <thead>
+                                        <tr>
+                                            <th>{{trans('finance.installment_total')}}</th>
+                                            <th>{{trans('finance.other')}}</th>
+                                            <th>{{trans('finance.paid')}}</th>
+                                            <th>{{trans('finance.balance')}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{finalTotal}}</td>
+                                            <td>{{finalOther}}</td>
+                                            <td>{{finalPaid}}</td>
+                                            <td>{{finalBalance}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
                             <div class="row justify-content-md-center" v-if="resetFeeOption && hasPermission('set-fee')">
                                 <div class="col-4">
@@ -205,7 +230,7 @@
                     fee_group_name: '',
                     fee_payment_installment_id: '',
                     student_fee_record_id: '',
-                    date: moment().format('YYYY-MM-DD'),
+                    date: helper.today(),
                     installments: [],
                     amount: 0
                 },
@@ -248,12 +273,21 @@
                 axios.get('/api/student/'+this.uuid+'/fee/'+this.record_id)
                     .then(response => {
                         this.student_record = response.student_record;
+
+                        if (! this.student_record.student_fee_records.length) {
+                            this.$router.push('/student/'+this.uuid); 
+                        }
+
                         loader.hide();
                     })
                     .catch(error => {
                         loader.hide();
                         helper.showErrorMsg(error);
-                        this.$router.push('/student/'+this.uuid+'/fee/'+this.record_id+'/create');
+                        if (this.hasAnyRole(['student','parent'])) {
+                            this.$router.push('/student/list')
+                        } else {
+                           this.$router.push('/student/'+this.uuid+'/fee/'+this.record_id+'/create'); 
+                        }
                     });
             },
             calculate(){
@@ -281,6 +315,7 @@
 
                     heads.push(i18n.finance.late_fee);
                     heads.push(i18n.finance.installment_total);
+                    heads.push(i18n.finance.other);
                     heads.push(i18n.finance.paid);
                     heads.push(i18n.finance.balance);
                     heads.push(i18n.finance.fee_status);
@@ -322,6 +357,10 @@
                         })
 
                         installment_data.push({
+                            text: this.getInstallmentOtherAmount(fee_installment)
+                        })
+
+                        installment_data.push({
                             text: this.getInstallmentPaidAmount(fee_installment)
                         })
 
@@ -349,6 +388,7 @@
                     
                     foots.push(this.getLateFeeTotal(fee_allocation_group));
                     foots.push(this.getInstallmentGrandTotal(fee_allocation_group));
+                    foots.push(this.getInstallmentGrandOther(fee_allocation_group));
                     foots.push(this.getInstallmentPaidGrandTotal(fee_allocation_group));
                     foots.push(this.getInstallmentBalanceGrandTotal(fee_allocation_group));
                     foots.push('');
@@ -368,7 +408,7 @@
             isInstallmentOverdue(fee_installment){
                 let installment = this.student_record.student_fee_records.find(o => o.fee_installment_id == fee_installment.id);
 
-                if (moment().format('YYYY-MM-DD') > (installment.due_date || fee_installment.due_date) && installment.status != 'paid') {
+                if (helper.today() > (installment.due_date || fee_installment.due_date) && installment.status != 'paid') {
                     return helper.getDateDiff(installment.due_date || fee_installment.due_date);
                 }
 
@@ -476,6 +516,27 @@
                 let amount = this.getInstallmentTotal(fee_installment);
                 return helper.formatCurrency(amount);
             },
+            getInstallmentOther(fee_installment){
+                let student_fee_record = this.student_record.student_fee_records.find(o => o.fee_installment_id == fee_installment.id);
+
+                let other = 0;
+                student_fee_record.transactions.forEach(transaction => {
+                    if (! transaction.is_cancelled) {
+                        if (transaction.options.additional_fee_charge && transaction.options.additional_fee_charge.amount) {
+                            other += transaction.options.additional_fee_charge.amount;
+                        }
+                        if (transaction.options.additional_fee_discount && transaction.options.additional_fee_discount.amount) {
+                            other -= transaction.options.additional_fee_discount.amount;
+                        }
+                    }
+                });
+
+                return other;
+            },
+            getInstallmentOtherAmount(fee_installment){
+                let amount = this.getInstallmentOther(fee_installment);
+                return helper.formatCurrency(amount);
+            },
             getInstallmentPaid(fee_installment){
                 let student_fee_record = this.student_record.student_fee_records.find(o => o.fee_installment_id == fee_installment.id);
 
@@ -493,8 +554,9 @@
             },
             getInstallmentBalance(fee_installment){
                 let total = this.getInstallmentTotal(fee_installment);
+                let other = this.getInstallmentOther(fee_installment);
                 let paid = this.getInstallmentPaid(fee_installment);
-                return total - paid;
+                return total + other - paid;
             },
             getInstallmentBalanceAmount(fee_installment){
                 let amount = this.getInstallmentBalance(fee_installment);
@@ -527,7 +589,7 @@
                 if (! installment_total)
                     return '-';
 
-                let date = moment(this.feePayment.date).format('YYYY-MM-DD');
+                let date = helper.toDate(this.feePayment.date);
 
                 let installment = this.student_record.student_fee_records.find(o => o.fee_installment_id == fee_installment.id);
 
@@ -557,8 +619,10 @@
                     if (student_installment.status == 'unpaid' || student_installment.status == 'partially_paid') {
 
                         let installment_fee = this.getInstallmentTotalWithoutLateFee(installment);
+                        let other = this.getInstallmentOther(installment);
                         let late_fee = this.getLateFee(installment);
                         let paid = this.getInstallmentPaid(installment);
+                        installment_fee += other;
 
                         let installment_balance = (installment_fee > paid) ? (installment_fee - paid) : 0
                         if (installment_fee) {
@@ -615,25 +679,48 @@
                 return total ? this.formatCurrency(total) : '-';
             },
             getInstallmentGrandTotal(fee_allocation_group){
+                let amount = this.getInstallmentGrandTotalAmount(fee_allocation_group);
+                return (Number.isInteger(amount)) ? helper.formatCurrency(amount) : '-';
+            },
+            getInstallmentGrandTotalAmount(fee_allocation_group){
                 let total = 0;
                 fee_allocation_group.fee_installments.forEach(fee_installment => {
                     total += this.getInstallmentTotal(fee_installment);
                 });
-                return total ? this.formatCurrency(total) : '-';
+                return total;
+            },
+            getInstallmentGrandOther(fee_allocation_group){
+                let amount = this.getInstallmentGrandOtherAmount(fee_allocation_group);
+                return (Number.isInteger(amount)) ? helper.formatCurrency(amount) : '-';
+            },
+            getInstallmentGrandOtherAmount(fee_allocation_group){
+                let other = 0;
+                fee_allocation_group.fee_installments.forEach(fee_installment => {
+                    other += this.getInstallmentOther(fee_installment);
+                });
+                return other;
             },
             getInstallmentPaidGrandTotal(fee_allocation_group){
+                let amount = this.getInstallmentPaidGrandTotalAmount(fee_allocation_group);
+                return (Number.isInteger(amount)) ? helper.formatCurrency(amount) : '-';
+            },
+            getInstallmentPaidGrandTotalAmount(fee_allocation_group){
                 let total = 0;
                 fee_allocation_group.fee_installments.forEach(fee_installment => {
                     total += this.getInstallmentPaid(fee_installment);
                 });
-                return total ? this.formatCurrency(total) : '-';
+                return total;
             },
             getInstallmentBalanceGrandTotal(fee_allocation_group){
+                let amount = this.getInstallmentBalanceGrandTotalAmount(fee_allocation_group);
+                return (Number.isInteger(amount)) ? helper.formatCurrency(amount) : '-';
+            },
+            getInstallmentBalanceGrandTotalAmount(fee_allocation_group){
                 let total = 0;
                 fee_allocation_group.fee_installments.forEach(fee_installment => {
                     total += this.getInstallmentBalance(fee_installment);
                 });
-                return total ? this.formatCurrency(total) : '-';
+                return total;
             },
             paymentMade(){
                 this.getRecord();
@@ -736,6 +823,41 @@
                 return this.student_record.student_fee_records.every(student_fee_record => {
                     return student_fee_record.status == 'unpaid';
                 });
+            },
+            finalTotal() {
+                let total = 0;
+                this.student_record.fee_allocation.fee_allocation_groups.forEach(fee_allocation_group => {
+                    total += this.getInstallmentGrandTotalAmount(fee_allocation_group);
+                });
+                return helper.formatCurrency(total);
+            },
+            finalOther() {
+                let total = 0;
+                this.student_record.fee_allocation.fee_allocation_groups.forEach(fee_allocation_group => {
+                    total += this.getInstallmentGrandOtherAmount(fee_allocation_group);
+                });
+                return helper.formatCurrency(total);
+            },
+            finalPaid() {
+                let total = 0;
+                this.student_record.fee_allocation.fee_allocation_groups.forEach(fee_allocation_group => {
+                    total += this.getInstallmentPaidGrandTotalAmount(fee_allocation_group);
+                });
+                return helper.formatCurrency(total);
+            },
+            finalBalance() {
+                let total = 0;
+                this.student_record.fee_allocation.fee_allocation_groups.forEach(fee_allocation_group => {
+                    total += this.getInstallmentBalanceGrandTotalAmount(fee_allocation_group);
+                });
+                return helper.formatCurrency(total);
+            }
+        },
+        watch: {
+            '$route.params.uuid': function (uuid) {
+                this.uuid = uuid;
+                this.record_id = this.$route.params.record_id;
+                this.getRecord()
             }
         }
     }
