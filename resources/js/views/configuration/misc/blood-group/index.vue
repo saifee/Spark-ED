@@ -129,7 +129,7 @@
                     });
             },
             editBloodGroup(blood_group){
-                this.$router.push('/configuration/misc/blood-group/'+blood_group.id+'/edit');
+                this.$router.push('/configuration/misc/blood/group/'+blood_group.id+'/edit');
             },
             confirmDelete(blood_group){
                 return dialog => this.deleteBloodGroup(blood_group);
