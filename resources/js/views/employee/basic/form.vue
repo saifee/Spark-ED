@@ -82,34 +82,6 @@
 	                    <show-error :form-name="basicForm" prop-name="mother_name"></show-error>
                     </div>
     			</div>
-          <div class="col-12 col-sm-4">
-                    <div class="form-group">
-                  <label for="">{{trans('employee.next_of_kin')}}</label>
-                      <input class="form-control" type="text" v-model="basicForm.next_of_kin" name="next_of_kin" :placeholder="trans('employee.next_of_kin')">
-                      <show-error :form-name="basicForm" prop-name="next_of_kin"></show-error>
-                    </div>
-          </div>
-          <div class="col-12 col-sm-4">
-                    <div class="form-group">
-                  <label for="">{{trans('employee.next_of_kin_relation')}}</label>
-                      <input class="form-control" type="text" v-model="basicForm.next_of_kin_relation" name="next_of_kin_relation" :placeholder="trans('employee.next_of_kin_relation')">
-                      <show-error :form-name="basicForm" prop-name="next_of_kin_relation"></show-error>
-                    </div>
-          </div>
-          <div class="col-12 col-sm-4">
-                    <div class="form-group">
-                  <label for="">{{trans('employee.next_of_kin_id')}}</label>
-                      <input class="form-control" type="text" v-model="basicForm.next_of_kin_id" name="next_of_kin_id" :placeholder="trans('employee.next_of_kin_id')">
-                      <show-error :form-name="basicForm" prop-name="next_of_kin_id"></show-error>
-                    </div>
-          </div>
-          <div class="col-12 col-sm-4">
-                    <div class="form-group">
-                  <label for="">{{trans('employee.next_of_kin_phone')}}</label>
-                      <input class="form-control" type="text" v-model="basicForm.next_of_kin_phone" name="next_of_kin_phone" :placeholder="trans('employee.next_of_kin_phone')">
-                      <show-error :form-name="basicForm" prop-name="next_of_kin_phone"></show-error>
-                    </div>
-          </div>
     			<div class="col-12 col-sm-4">
                     <div class="form-group">
             			<label for="">{{trans('employee.nationality')}}</label>
@@ -270,12 +242,10 @@
 	          	this.selected_category = employee.category_id ? {id: employee.category_id, name: employee.category.name} : null;
 	          	this.selected_religion = employee.religion_id ? {id: employee.religion_id, name: employee.religion.name} : null;
 	          	this.selected_blood_group = employee.blood_group_id ? {id: employee.blood_group_id, name: employee.blood_group.name} : null;
-	          	this.custom_values = employee.options.hasOwnProperty('custom_values') ? employee.options.custom_values : [];
+	          	this.custom_values = employee.options && employee.options.hasOwnProperty('custom_values') ? employee.options.custom_values : [];
 	        },
 			submit(){
 				let loader = this.$loading.show();
-                this.basicForm.date_of_birth = helper.toDate(this.basicForm.date_of_birth);
-                this.basicForm.date_of_anniversary = helper.toDate(this.basicForm.date_of_anniversary);
 				this.basicForm.patch('/api/employee/'+this.employee.uuid)
 					.then(response => {
 						this.$emit('complete');
