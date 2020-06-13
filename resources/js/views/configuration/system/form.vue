@@ -95,6 +95,17 @@
                             </div>
                             <div class="col-12 col-sm-4">
                                 <div class="form-group">
+                                    <label for="">{{trans('calendar.first_day_of_week')}}</label>
+                                    <select v-model="configForm.first_day_of_week" class="custom-select col-12" name="first_day_of_week" @change="configForm.errors.clear('first_day_of_week')">
+                                      <option v-for="option in systemConfigVariables.days" v-bind:value="option.value">
+                                        {{ option.text }}
+                                      </option>
+                                    </select>
+                                    <show-error :form-name="configForm" prop-name="first_day_of_week"></show-error>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-4">
+                                <div class="form-group">
                                     <label for="">{{trans('configuration.currency')}}</label>
                                     <select v-model="configForm.currency" class="custom-select col-12" name="currency" @change="configForm.errors.clear('currency')">
                                       <option v-for="option in systemConfigVariables.currencies" v-bind:value="option.value">
@@ -120,6 +131,20 @@
                                     <label for="">{{trans('configuration.footer_credit')}}</label>
                                     <input class="form-control" type="text" v-model="configForm.footer_credit" name="footer_credit" :placeholder="trans('configuration.footer_credit')">
                                     <show-error :form-name="configForm" prop-name="footer_credit"></show-error>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="">{{trans('configuration.biometric_auth_token')}}</label>
+                                    <input class="form-control" type="text" v-model="configForm.biometric_auth_token" name="biometric_auth_token" :placeholder="trans('configuration.biometric_auth_token')">
+                                    <show-error :form-name="configForm" prop-name="biometric_auth_token"></show-error>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="">{{trans('configuration.pusher_auth_token')}}</label>
+                                    <input class="form-control" type="text" v-model="configForm.pusher_auth_token" name="pusher_auth_token" :placeholder="trans('configuration.pusher_auth_token')">
+                                    <show-error :form-name="configForm" prop-name="pusher_auth_token"></show-error>
                                 </div>
                             </div>
                         </div>
@@ -276,10 +301,13 @@
                     time_format: '',
                     notification_position: '',
                     timezone: '',
+                    first_day_of_week: '',
                     page_length: 10,
                     locale: '',
                     currency: '',
                     footer_credit: '',
+                    biometric_auth_token: '',
+                    pusher_auth_token: '',
                     https: 0,
                     error_display: 0,
                     frontend_website: 0,
@@ -308,7 +336,8 @@
                     notification_positions: [],
                     timezones: [],
                     locales: [],
-                    currencies: []
+                    currencies: [],
+                    days: []
                 },
                 direction: '',
                 locale: '',
@@ -336,6 +365,7 @@
                         this.systemConfigVariables.sidebar = response.sidebar;
                         this.systemConfigVariables.date_formats = response.date_formats;
                         this.systemConfigVariables.time_formats = response.time_formats;
+                        this.systemConfigVariables.days = response.days;
                         this.systemConfigVariables.notification_positions = response.notification_positions;
                         this.systemConfigVariables.timezones = response.timezones;
                         this.systemConfigVariables.locales = response.locales;
