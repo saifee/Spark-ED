@@ -162,7 +162,6 @@
             },
             store(){
                 let loader = this.$loading.show();
-                this.timetableForm.date_effective = moment(this.timetableForm.date_effective).format('YYYY-MM-DD');
                 this.timetableForm.post('/api/timetable')
                     .then(response => {
                         this.timetableForm.days = [];
@@ -179,7 +178,6 @@
             },
             update(){
                 let loader = this.$loading.show();
-                this.timetableForm.date_effective = moment(this.timetableForm.date_effective).format('YYYY-MM-DD');
                 this.timetableForm.patch('/api/timetable/'+this.uuid)
                     .then(response => {
                         toastr.success(response.message);
