@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
-                        <router-link to="/student/registration" class="btn btn-info btn-sm"><i class="fas fa-list"></i> <span class="d-none d-sm-inline">{{trans('student.registration')}}</span></router-link>
+                        <router-link to="/student/registration/card-view" class="btn btn-info btn-sm"><i class="fas fa-list"></i> <span class="d-none d-sm-inline">{{trans('student.registration')}}</span></router-link>
                         <router-link :to="`/student/${registration.student.uuid}`" class="btn btn-info btn-sm"><i class="fas fa-user"></i> <span class="d-none d-sm-inline">{{trans('student.student_detail')}}</span></router-link>
                     </div>
                 </div>
@@ -67,12 +67,12 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                        	<td>{{trans('student.first_guardian_name')}}</td>
-                                        	<td>{{registration.student.parent ? registration.student.parent.first_guardian_name : ''}}</td>
+                                        	<td>{{trans('student.father_name')}}</td>
+                                        	<td>{{registration.student.parent ? registration.student.parent.father_name : ''}}</td>
                                         </tr>
                                         <tr>
-                                        	<td>{{trans('student.second_guardian_name')}}</td>
-                                        	<td>{{registration.student.parent ? registration.student.parent.second_guardian_name : ''}}</td>
+                                        	<td>{{trans('student.mother_name')}}</td>
+                                        	<td>{{registration.student.parent ? registration.student.parent.mother_name : ''}}</td>
                                         </tr>
                                         <tr>
                                         	<td>{{trans('student.contact_number')}}</td>
