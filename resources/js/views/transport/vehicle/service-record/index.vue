@@ -247,12 +247,12 @@
             },
             getVehicleServiceRecords(page){
                 let loader = this.$loading.show();
-                this.filter.date_of_service_start_date = helper.toDate(this.filter.date_of_service_start_date);
-                this.filter.date_of_service_end_date = helper.toDate(this.filter.date_of_service_end_date);
 
                 if (typeof page !== 'number') {
                     page = 1;
                 }
+                this.filter.date_of_service_start_date = helper.toDate(this.filter.date_of_service_start_date);
+                this.filter.date_of_service_end_date = helper.toDate(this.filter.date_of_service_end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/vehicle/service/record?page=' + page + url)
                     .then(response => {
