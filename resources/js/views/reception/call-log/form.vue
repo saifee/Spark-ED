@@ -124,9 +124,6 @@
                 this.$router.push('/dashboard');
             }
 
-            if(this.uuid)
-                this.get();
-
             this.getPreRequisite();
         },
         methods: {
@@ -144,9 +141,12 @@
                 axios.get('/api/call/log/pre-requisite')
                     .then(response => {
                         this.calling_purposes = response.calling_purposes;
-                        this.callLogForm.date = moment().format('YYYY-MM-DD');
+                        this.callLogForm.date = helper.today();
                         if(!this.uuid)
                             this.loaded = true;
+
+                        if(this.uuid)
+                            this.get();
                         loader.hide();
                     })
                     .catch(error => {
@@ -157,7 +157,6 @@
             store(){
             	this.callLogForm.start_time = (this.start_time.hour && this.start_time.minute) ? helper.formatWithPadding(this.start_time.hour,2)+':'+helper.formatWithPadding(this.start_time.minute,2)+' '+this.start_time.meridiem : '';
                 this.callLogForm.end_time = (this.end_time.hour && this.end_time.minute) ? helper.formatWithPadding(this.end_time.hour,2)+':'+helper.formatWithPadding(this.end_time.minute,2)+' '+this.end_time.meridiem : '';
-                this.callLogForm.date = helper.toDate(this.callLogForm.date);
                 let loader = this.$loading.show();
                 this.callLogForm.post('/api/call/log')
                     .then(response => {
@@ -210,7 +209,6 @@
             update(){
             	this.callLogForm.start_time = (this.start_time.hour && this.start_time.minute) ? helper.formatWithPadding(this.start_time.hour,2)+':'+helper.formatWithPadding(this.start_time.minute,2)+' '+this.start_time.meridiem : '';
             	this.callLogForm.end_time = (this.end_time.hour && this.end_time.minute) ? helper.formatWithPadding(this.end_time.hour,2)+':'+helper.formatWithPadding(this.end_time.minute,2)+' '+this.end_time.meridiem : '';
-                this.callLogForm.date = helper.toDate(this.callLogForm.date);
                 let loader = this.$loading.show();
                 this.callLogForm.patch('/api/call/log/'+this.uuid)
                     .then(response => {
