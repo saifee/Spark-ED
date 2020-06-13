@@ -86,6 +86,7 @@
                                     <th>{{trans('student.first_guardian_name')}}</th>
                                     <th>{{trans('student.contact_number')}}</th>
                                     <th>{{trans('finance.total_fee')}}</th>
+                                    <th>{{trans('finance.other')}}</th>
                                     <th>{{trans('finance.total_concession')}}</th>
                                     <th>{{trans('finance.paid_fee')}}</th>
                                     <th>{{trans('finance.balance_fee')}}</th>
@@ -104,9 +105,10 @@
                                     <td v-text="item.admission_number"></td>
                                     <td v-text="item.name"></td>
                                     <td v-text="item.batch"></td>
-                                    <td v-text="item.father_name"></td>
+                                    <td v-text="item.first_guardian_name"></td>
                                     <td v-text="item.contact_number"></td>
                                     <td v-text="item.total"></td>
+                                    <td v-text="item.other"></td>
                                     <td v-text="item.concession"></td>
                                     <td v-text="item.paid"></td>
                                     <td v-text="item.balance"></td>
@@ -122,6 +124,7 @@
                                 <tr>
                                     <th colspan="6"></th>
                                     <th>{{footer.grand_total}}</th>
+                                    <th>{{footer.grand_other}}</th>
                                     <th>{{footer.grand_concession}}</th>
                                     <th>{{footer.grand_paid}}</th>
                                     <th>{{footer.grand_balance}}</th>
@@ -145,7 +148,7 @@
                                     <label for="">{{trans('communication.sms')}} {{trans('communication.character_count', {count: characterCount})}} </label>
                                     <textarea class="form-control" v-model="sendSMSForm.sms" rows="2" name="sms" :placeholder="trans('communication.sms')"></textarea>
                                     <p class="help-block font-80pc">{{trans('communication.template_variable_tip')}}</p>
-                                    <p class="help-block font-90pc">{{trans('communication.available_variables')}}: NAME, BATCH, FATHER_NAME, LATE_FEE, TOTAL_FEE, PAID_FEE, BALANCE_FEE</p>
+                                    <p class="help-block font-90pc">{{trans('communication.available_variables')}}: NAME, BATCH, FIRST_GUARDIAN_NAME, LATE_FEE, TOTAL_FEE, PAID_FEE, BALANCE_FEE</p>
                                     <show-error :form-name="sendSMSForm" prop-name="sms"></show-error>
                                 </div>
                             </div>
@@ -201,7 +204,7 @@
                         translation: i18n.student.name
                     },
                     {
-                        value: 'father_name',
+                        value: 'first_guardian_name',
                         translation: i18n.student.first_guardian_name
                     },
                     {
@@ -362,7 +365,7 @@
 
                 return sms.replace("#NAME#", item.name)
                     .replace("#BATCH#", item.batch)
-                    .replace("#FATHER_NAME#", item.father_name)
+                    .replace("#FIRST_GUARDIAN_NAME#", item.first_guardian_name)
                     .replace("#LATE_FEE#", item.late)
                     .replace("#TOTAL_FEE#", item.total)
                     .replace("#PAID_FEE#", item.paid)
