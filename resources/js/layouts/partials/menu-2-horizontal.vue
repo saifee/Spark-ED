@@ -1201,6 +1201,16 @@
             <v-list-item-title>{{ trans('student.parent') }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item
+          v-if="hasPermission('edit-student') && showMenu('student_login')"
+          to="/student/login"
+          exact
+        >
+          <v-list-item-action><i class="fas fa-angle-double-right" /></v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ trans('student.login') }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-menu>
     <v-menu
