@@ -114,7 +114,7 @@
                                     <td v-text="item.admission_number"></td>
                                     <td v-text="item.name"></td>
                                     <td v-text="item.batch"></td>
-                                    <td v-text="item.father_name"></td>
+                                    <td v-text="item.first_guardian_name"></td>
                                     <td v-text="item.contact_number"></td>
                                     <td v-text="item.fee_group"></td>
                                     <td v-text="item.total"></td>
@@ -154,7 +154,7 @@
                                     <label for="">{{trans('communication.sms')}} {{trans('communication.character_count', {count: characterCount})}} </label>
                                     <textarea class="form-control" v-model="sendSMSForm.sms" rows="2" name="sms" :placeholder="trans('communication.sms')"></textarea>
                                     <p class="help-block font-80pc">{{trans('communication.template_variable_tip')}}</p>
-                                    <p class="help-block font-90pc">{{trans('communication.available_variables')}}: NAME, BATCH, FATHER_NAME, FEE_GROUP,  TOTAL_FEE, DUE_DATE, LATE_FEE</p>
+                                    <p class="help-block font-90pc">{{trans('communication.available_variables')}}: NAME, BATCH, FIRST_GUARDIAN_NAME, FEE_GROUP,  TOTAL_FEE, DUE_DATE, LATE_FEE</p>
                                     <show-error :form-name="sendSMSForm" prop-name="sms"></show-error>
                                 </div>
                             </div>
@@ -213,7 +213,7 @@
                         translation: i18n.student.name
                     },
                     {
-                        value: 'father_name',
+                        value: 'first_guardian_name',
                         translation: i18n.student.first_guardian_name
                     },
                     {
@@ -365,10 +365,10 @@
 
                 return sms.replace("#NAME#", item.name)
                     .replace("#BATCH#", item.batch)
-                    .replace("#FATHER_NAME#", item.father_name)
+                    .replace("#FIRST_GUARDIAN_NAME#", item.first_guardian_name)
                     .replace("#FEE_GROUP#", item.fee_group)
                     .replace("#TOTAL_FEE#", item.total)
-                    .replace("#DUE_DATE#", item.due_date)
+                    .replace("#DUE_DATE#", helper.formatDate(item.due_date))
                     .replace("#OVERDUE#", item.overdue)
                     .replace("#LATE_FEE#", item.late_fee);
             },
