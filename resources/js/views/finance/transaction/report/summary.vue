@@ -163,7 +163,7 @@
             }
             this.getPreRequisite();
 
-            this.filter.start_date = moment().format('YYYY-MM-DD');
+            this.filter.start_date = helper.today();
             this.filter.end_date = moment().add(1,'month').format('YYYY-MM-DD');
         },
         methods: {
@@ -189,7 +189,8 @@
                 if (typeof page !== 'number') {
                     page = 1;
                 }
-                this.filter.date = helper.toDate(this.filter.date);
+                this.filter.start_date = helper.toDate(this.filter.start_date);
+                this.filter.end_date = helper.toDate(this.filter.end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/transaction/report/summary?page=' + page + url)
                     .then(response => {
