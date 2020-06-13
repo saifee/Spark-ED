@@ -1,6 +1,6 @@
 <template>
 	<div>
-        <button class="btn btn-sm btn-info pull-right" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('student.add_new_document')}}</button>
+        <button v-if="!readMode" class="btn btn-sm btn-info pull-right" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('student.add_new_document')}}</button>
         <div class="table-responsive" v-if="student_documents.total">
             <table class="table table-sm">
                 <thead>
@@ -19,24 +19,29 @@
                         <td class="table-option">
                             <div class="btn-group">
                                 <button class="btn btn-success btn-sm" v-tooltip="trans('student.view_document')" @click.prevent="showAction(student_document)"><i class="fas fa-arrow-circle-right"></i></button>
-                                <button class="btn btn-info btn-sm" v-tooltip="trans('student.edit_document')" @click.prevent="editAction(student_document)"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-danger btn-sm" :key="student_document.id" v-confirm="{ok: confirmDelete(student_document)}" v-tooltip="trans('student.delete_document')"><i class="fas fa-trash"></i></button>
+                                <button v-if="!readMode" class="btn btn-info btn-sm" v-tooltip="trans('student.edit_document')" @click.prevent="editAction(student_document)"><i class="fas fa-edit"></i></button>
+                                <button v-if="!readMode" class="btn btn-danger btn-sm" :key="student_document.id" v-confirm="{ok: confirmDelete(student_document)}" v-tooltip="trans('student.delete_document')"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <module-info v-if="!student_documents.total" module="student" title="document_module_title" description="document_module_description" icon="list">
-            <div slot="btn">
-                <button class="btn btn-info btn-md" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('general.add_new')}}</button>
-            </div>
-        </module-info>
+        <template v-if="!readMode">
+            <module-info v-if="!student_documents.total" module="student" title="document_module_title" description="document_module_description" icon="list">
+                <div slot="btn">
+                        <button class="btn btn-info btn-md" @click="addModal = true"><i class="fas fa-plus"></i> {{trans('general.add_new')}}</button>
+                </div>
+            </module-info>
+        </template>
+        <template v-else>
+            <div v-if="!student_documents.total" class="font-80pc">{{trans('general.no_result_found')}}</div>
+        </template>
         <pagination-record :page-length.sync="filter.page_length" :records="student_documents" @updateRecords="getStudentDocuments" @change.native="getStudentDocuments"></pagination-record>
 
-        <create-document v-if="addModal" @close="addModal = false" @completed="getStudentDocuments" :student="student"></create-document>
+        <create-document v-if="addModal && !readMode" @close="addModal = false" @completed="getStudentDocuments" :student="student"></create-document>
 
-        <edit-document v-if="editModal" @close="editModal = false" @completed="getStudentDocuments" :student="student" :did="editId"></edit-document>
+        <edit-document v-if="editModal && !readMode" @close="editModal = false" @completed="getStudentDocuments" :student="student" :did="editId"></edit-document>
 
         <show-document v-if="showModal" @close="showModal = false" :student="student" :did="showId"></show-document>
     </div>
@@ -48,7 +53,18 @@
     import showDocument from './show'
 
 	export default {
-        props: ['student'],
+        props: {
+            student: {
+                type: Object,
+                default() {
+                    return {}
+                }
+            },
+            readMode: {
+                type: Boolean,
+                default: false
+            }
+        },
         components : { createDocument,editDocument,showDocument },
         data() {
             return {
@@ -67,7 +83,7 @@
             };
         },
         mounted(){
-            if(!helper.hasPermission('edit-student')){
+            if((this.readMode && !helper.hasPermission('list-student') && !helper.hasPermission('list-class-teacher-wise-student')) || (!this.readMode && !helper.hasPermission('edit-student'))){
                 helper.notAccessibleMsg();
                 this.$router.push('/dashboard');
             }
