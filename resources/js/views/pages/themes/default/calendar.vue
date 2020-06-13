@@ -39,6 +39,7 @@
                 events: [],
                 config: {
                     defaultView: 'month',
+                    firstDay: helper.getDayInInteger(this.getConfig('first_day_of_week') || 'monday'),
                     isRTL: this.getConfig('direction') == 'rtl' ? true : false,
                     eventRender: function(event, element) {
                         $(element).tooltip({title: event.title});     
@@ -80,7 +81,7 @@
                         response.holidays.forEach(holiday => {
                             this.events.push({
                                 title: holiday.description,
-                                start: holiday.date,
+                                start: helper.toDate(holiday.date),
                                 icon: 'coffee',
                                 color: 'teal'
                             })
@@ -88,8 +89,8 @@
                         response.events.forEach(event => {
                             this.events.push({
                                 title: event.title,
-                                start: event.start_date,
-                                end: event.end_date,
+                                start: helper.toDate(event.start_date),
+                                end: helper.toDate(event.end_date),
                                 icon: 'bullhorn',
                                 color: 'purple'
                             })
