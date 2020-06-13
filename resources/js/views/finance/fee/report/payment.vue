@@ -125,7 +125,7 @@
                                     <td v-text="item.receipt_no"></td>
                                     <td v-text="item.name"></td>
                                     <td v-text="item.batch"></td>
-                                    <td v-text="item.father_name"></td>
+                                    <td v-text="item.first_guardian_name"></td>
                                     <td v-text="item.contact_number"></td>
                                     <td v-text="item.fee_installment"></td>
                                     <td v-text="item.amount"></td>
@@ -162,7 +162,7 @@
                                     <label for="">{{trans('communication.sms')}} {{trans('communication.character_count', {count: characterCount})}} </label>
                                     <textarea class="form-control" v-model="sendSMSForm.sms" rows="2" name="sms" :placeholder="trans('communication.sms')"></textarea>
                                     <p class="help-block font-80pc">{{trans('communication.template_variable_tip')}}</p>
-                                    <p class="help-block font-90pc">{{trans('communication.available_variables')}}: NAME, RECEIPT_NO, BATCH, FATHER_NAME, AMOUNT, DATE, PAYMENT_METHOD</p>
+                                    <p class="help-block font-90pc">{{trans('communication.available_variables')}}: NAME, RECEIPT_NO, BATCH, FIRST_GUARDIAN_NAMEE, AMOUNT, DATE, PAYMENT_METHOD</p>
                                     <show-error :form-name="sendSMSForm" prop-name="sms"></show-error>
                                 </div>
                             </div>
@@ -223,7 +223,7 @@
                         translation: i18n.student.name
                     },
                     {
-                        value: 'father_name',
+                        value: 'first_guardian_name',
                         translation: i18n.student.first_guardian_name
                     },
                     {
@@ -253,6 +253,8 @@
                     page = 1;
                 }
                 this.selectAll = false;
+                this.filter.start_date = helper.toDate(this.filter.start_date);
+                this.filter.end_date = helper.toDate(this.filter.end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/fee/report/payment?page=' + page + url)
                     .then(response => {
@@ -382,9 +384,9 @@
                 return sms.replace("#NAME#", item.name)
                     .replace("#RECEIPT_NO#", item.receipt_no)
                     .replace("#BATCH#", item.batch)
-                    .replace("#FATHER_NAME#", item.father_name)
+                    .replace("#FIRST_GUARDIAN_NAMEE#", item.first_guardian_name)
                     .replace("#AMOUNT#", item.amount)
-                    .replace("#DATE#", item.date)
+                    .replace("#DATE#", helper.formatDate(item.date))
                     .replace("#PAYMENT_METHOD#", item.payment_method);
             },
             characterCount(){
