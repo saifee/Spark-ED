@@ -180,8 +180,6 @@
             },
             submit(){
                 let loader = this.$loading.show();
-                this.transferCertificateForm.date_of_application = helper.toDate(this.transferCertificateForm.date_of_application);
-                this.transferCertificateForm.date_of_issue = helper.toDate(this.transferCertificateForm.date_of_issue);
                 this.transferCertificateForm.post('/api/student/'+this.uuid+'/transfer-certificate/'+this.record_id)
                     .then(response => {
                     	toastr.success(response.message);
