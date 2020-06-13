@@ -149,7 +149,6 @@
             },
 			storeTerm(){
 				let loader = this.$loading.show();
-				this.termForm.date_of_joining = helper.toDate(this.termForm.date_of_joining);
 				this.termForm.post('/api/employee/'+this.uuid+'/term')
 					.then(response => {
 						toastr.success(response.message);
@@ -184,7 +183,6 @@
             },
             updateTerm(){
                 let loader = this.$loading.show();
-				this.termForm.date_of_leaving = helper.toDate(this.termForm.date_of_leaving);
                 this.termForm.patch('/api/employee/'+this.uuid+'/term/'+this.tid)
                     .then(response => {
                         toastr.success(response.message);
