@@ -312,7 +312,6 @@
             },
             store(){
                 let loader = this.$loading.show();
-                this.payrollTransactionForm.date_of_transaction = helper.toDate(this.payrollTransactionForm.date_of_transaction);
                 this.payrollTransactionForm.post('/api/employee/payroll/transaction')
                     .then(response => {
                         toastr.success(response.message);
@@ -364,7 +363,6 @@
             },
             update(){
                 let loader = this.$loading.show();
-                this.payrollTransactionForm.date_of_transaction = helper.toDate(this.payrollTransactionForm.date_of_transaction);
                 this.payrollTransactionForm.patch('/api/employee/payroll/transaction/'+this.uuid)
                     .then(response => {
                         toastr.success(response.message);
