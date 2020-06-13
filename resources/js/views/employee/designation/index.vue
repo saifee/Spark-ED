@@ -1,6 +1,6 @@
 <template>
 	<div>
-        <button class="btn btn-sm btn-info pull-right m-b-10" @click="addModal = true" v-if="canAddDesignation"><i class="fas fa-plus"></i> {{trans('employee.add_new_designation')}}</button>
+        <button class="btn btn-sm btn-info pull-right m-b-10" @click="addModal = true" v-if="canAddDesignation && !readMode"><i class="fas fa-plus"></i> {{trans('employee.add_new_designation')}}</button>
         <div class="table-responsive" v-if="employee.employee_designations">
             <table class="table table-sm">
                 <thead>
@@ -27,7 +27,7 @@
                         </td>
                         <td class="table-option">
                             <div class="btn-group">
-                                <template v-if="$first(employee_designation, employee.employee_designations)">
+                                <template v-if="$first(employee_designation, employee.employee_designations) && !readMode">
                                     <button class="btn btn-danger btn-sm" :key="employee_designation.id" v-confirm="{ok: confirmDelete(employee_designation)}" v-tooltip="trans('employee.delete_designation')"><i class="fas fa-trash"></i></button>
                                     <button class="btn btn-info btn-sm" v-tooltip="trans('employee.edit_designation')" @click.prevent="editAction(employee_designation)"><i class="fas fa-edit"></i></button>
                                 </template>
@@ -38,10 +38,13 @@
                 </tbody>
             </table>
         </div>
+        <div v-else class="font-80pc">
+            {{trans('general.no_result_found')}}
+        </div>
 
-        <create-designation v-if="addModal && canAddDesignation" @close="addModal = false" @completed="$emit('completed')" :employee="employee"></create-designation>
+        <create-designation v-if="addModal && canAddDesignation && !readMode" @close="addModal = false" @completed="$emit('completed')" :employee="employee"></create-designation>
 
-        <edit-designation v-if="editModal" @close="editModal = false" @completed="$emit('completed')" :employee="employee" :did="editId"></edit-designation>
+        <edit-designation v-if="editModal && !readMode" @close="editModal = false" @completed="$emit('completed')" :employee="employee" :did="editId"></edit-designation>
 
         <show-designation v-if="showModal" @close="showModal = false" :employee="employee" :did="showId"></show-designation>
     </div>
@@ -54,7 +57,18 @@
 
 	export default {
         components: {createDesignation,editDesignation,showDesignation},
-        props: ['employee'],
+        props: {
+            employee: {
+                type: Object,
+                default() {
+                    return {}
+                }
+            },
+            readMode: {
+                type: Boolean,
+                default: false
+            }
+        },
         data(){
             return {
                 addModal: false,
