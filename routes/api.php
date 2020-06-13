@@ -1442,11 +1442,14 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     Route::get('meeting/pre-requisite', 'Communication\MeetingController@preRequisite');
     Route::get('my-meeting', 'Communication\MeetingController@myMeeting');
-    Route::get('meeting/{uuid}/join', 'Communication\MeetingController@join');
-    Route::get('meeting/{uuid}/leave', 'Communication\MeetingController@leave');
+    Route::post('meeting/{uuid}/audience', 'Communication\MeetingController@addAudience');
+    Route::delete('meeting/{uuid}/audience/{type}/{id}', 'Communication\MeetingController@deleteAudience');
+    Route::post('meeting/{uuid}/join', 'Communication\MeetingController@join');
+    Route::post('meeting/{uuid}/share-screen', 'Communication\MeetingController@shareScreen');
+    Route::post('meeting/{uuid}/leave', 'Communication\MeetingController@leave');
     Route::apiResource('meeting', 'Communication\MeetingController');
     /*
-             * Communication Routes End
+    * Communication Routes End
     */
 
     Route::get('/vendor', 'Inventory\VendorController@index');
