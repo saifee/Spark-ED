@@ -1,7 +1,25 @@
 <template>
     <div>
-        <button type="button" class="btn btn-info btn-block text-uppercase waves-effect waves-light" @click="authenticate('google')" style="background-color:#D44638;border:0;border-radius:0;">Continue with Google</button>
-        <button type="button" class="btn btn-info btn-block text-uppercase waves-effect waves-light mb-4" @click="authenticate('live')" style="background-color:#0065b3;border:0;border-radius:0;">Continue with Microsoft</button>
+        <v-btn 
+            block
+            dark
+            depressed
+            class="mb-1"
+            color="#D44638"
+            @click="authenticate('google')"
+        >
+        Continue with Google
+        </v-btn>
+        <v-btn 
+            block
+            dark
+            depressed
+            class="mb-1"
+            color="#0065b3"
+            @click="authenticate('live')"
+        >
+        Continue with Microsoft
+        </v-btn>
     </div>
 </template>
 
