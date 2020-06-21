@@ -188,11 +188,13 @@ class EmployeeSkillRepository
             throw ValidationException::withMessages(['name' => trans('behaviour.skill_exists')]);
         }
 
+        $default_skill_icon = SkillIcon::firstOrCreate(['name' => 'select_all']);
+
         $formatted = [
             'name'          => gv($params, 'name'),
             'positive'      => gv($params, 'positive'),
             'points'        => gv($params, 'points'),
-            'skill_icon_id' => gv($params, 'skill_icon_id'),
+            'skill_icon_id' => gv($params, 'skill_icon_id', $default_skill_icon->id),
         ];
 
         $formatted['options'] = [];
