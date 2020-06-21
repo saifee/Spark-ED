@@ -193,7 +193,7 @@ class EmployeeSkillRepository
 
         $formatted = [
             'name'          => gv($params, 'name'),
-            'positive'      => gv($params, 'positive'),
+            'positive'      => gbv($params, 'positive', 0),
             'points'        => gv($params, 'points'),
             'skill_icon_id' => gv($params, 'skill_icon_id', $default_skill_icon->id),
         ];
