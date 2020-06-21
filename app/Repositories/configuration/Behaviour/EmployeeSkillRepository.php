@@ -3,6 +3,7 @@
 namespace App\Repositories\Configuration\Behaviour;
 
 use App\Models\Configuration\Behaviour\EmployeeSkill;
+use App\Models\Configuration\Behaviour\SkillIcon;
 use Illuminate\Validation\ValidationException;
 
 class EmployeeSkillRepository
