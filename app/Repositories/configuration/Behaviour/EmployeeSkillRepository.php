@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Configuration\Behaviour;
 
-use Illuminate\Validation\ValidationException;
 use App\Models\Configuration\Behaviour\EmployeeSkill;
+use Illuminate\Validation\ValidationException;
 
 class EmployeeSkillRepository
 {
