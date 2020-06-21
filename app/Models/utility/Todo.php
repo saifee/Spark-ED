@@ -16,6 +16,8 @@ class Todo extends Model
                             'status',
                             'date',
                             'completed_at',
+                            'extra_start_date',
+                            'extra_end_date',
                             'options'
                         ];
     protected $casts = ['options' => 'array', 'date' => 'date'];
