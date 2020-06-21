@@ -198,6 +198,10 @@ class EmployeeSkillRepository
             'skill_icon_id' => gv($params, 'skill_icon_id', $default_skill_icon->id),
         ];
 
+        if ($formatted['points'] > 0 && !$formatted['positive']) {
+            $formatted['points'] = 0 - $formatted['points'];
+        }
+
         $formatted['options'] = [];
 
         return $formatted;
