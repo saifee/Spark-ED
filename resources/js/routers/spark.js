@@ -1,5 +1,9 @@
 export default [
     {
+        path: '/utility/todo/:id/manage',
+        component: () => import(/* webpackChunkName: "js/utility/todo/manage" */ '@views/utility/todo/manage')
+    },
+    {
         path: '/configuration/employee/asset/category',
         component: () => import(/* webpackChunkName: "js/configuration/employee/asset-category/index" */ '@views/configuration/employee/asset/category/index'),
         meta: { menu: 'module-configuration'}
