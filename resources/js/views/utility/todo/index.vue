@@ -82,7 +82,7 @@
                                             <button class="btn btn-secondary btn-sm" v-tooltip="todo.status ? trans('utility.todo_mark_as_incomplete') : trans('utility.todo_mark_as_complete')" @click.prevent="toggleStatus(todo)">
                                                 <i :class="['fa', (todo.status ?  'fa-times' : 'fa-check')]"></i>
                                             </button>
-                                            <button class="btn btn-info btn-sm" v-tooltip="trans('spark.manage_todo')" @click.prevent="manageTodo(todo)"><i class="fas fa-arrow-circle-right"></i></button>
+                                            <button class="btn btn-info btn-sm" v-tooltip="trans('spark.utility_manage_todo')" @click.prevent="manageTodo(todo)"><i class="fas fa-arrow-circle-right"></i></button>
                                             <button class="btn btn-info btn-sm" v-tooltip="trans('utility.edit_todo')" @click.prevent="editTodo(todo)"><i class="fas fa-edit"></i></button>
                                             <button class="btn btn-danger btn-sm" :key="todo.id" v-confirm="{ok: confirmDelete(todo)}" v-tooltip="trans('utility.delete_todo')"><i class="fas fa-trash"></i></button>
                                         </div>

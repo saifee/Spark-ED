@@ -1,3 +1,3 @@
 <?php return array (
-  'manage_todo' => 'Manage Todo',
+  'utility_manage_todo' => 'Manage Todo',
 );
