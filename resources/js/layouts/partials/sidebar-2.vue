@@ -50,7 +50,7 @@
         mounted() {
         },
         watch: {
-          '$store.state.navigationDrawer': function () {
+          '$store.state["drawer"].navigationDrawer': function () {
             this.drawer = !this.drawer
           },
         },
