@@ -114,6 +114,26 @@ class PayrollRepository
         if (count($employee_id)) {
             $query->whereIn('employee_id', $employee_id);
         }
+        
+        $date = toDate(gv($params, 'date', date('Y-m-d')));
+
+        $department_id = gv($params, 'department_id');
+        $department_id = is_array($department_id) ? $department_id : ($department_id ? explode(',', $department_id) : []);
+
+        $queryx1 = \App\Models\Employee\Employee::select('id');
+        if (count($department_id)) {
+            $queryx1->whereHas('employeeDesignations', function ($q) use ($department_id, $date) {
+                $q->where('date_effective', '<=', $date)->where(function ($q1) use ($date) {
+                    $q1->where('date_end', '=', null)->orWhere(function ($q2) use ($date) {
+                        $q2->where('date_end', '!=', null)->where('date_end', '>=', $date);
+                    });
+                })->whereIn('department_id', $department_id);
+            });
+            $employee_ids = $queryx1->get()->pluck('id');
+            if (count($employee_ids)) {
+                $query->whereIn('employee_id', $employee_ids);
+            }
+        }
 
         return $query->orderBy($sort_by, $order);
     }
@@ -150,8 +170,9 @@ class PayrollRepository
     public function getFilters()
     {
         $employees = $this->employee->getAccessibleEmployeeList();
+        $departments = (new \App\Repositories\Configuration\Employee\DepartmentRepository(new \App\Models\Configuration\Employee\Department))->selectAll();
         
-        return compact('employees');
+        return compact('employees', 'departments');
     }
 
     /**
