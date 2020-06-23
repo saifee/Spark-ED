@@ -83,7 +83,18 @@
                                     <input class="form-control" name="mother_name" v-model="filter.mother_name">
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-4">
+                            <div class="col-12 col-sm-2">
+                                <label for="">{{trans('student.admission_number')}}</label>
+                                <v-text-field
+                                    v-model="filter.admission_number"
+                                    :label="trans('student.admission_number')"
+                                    hide-details
+                                    outlined
+                                    dense
+                                    solo
+                                />
+                            </div>
+                            <div class="col-12 col-sm-2">
                                 <div class="form-group">
                                     <label for="">{{trans('academic.batch')}}</label>
                                     <v-select label="name" track-by="id" group-values="batches" group-label="course_group" :group-select="false" v-model="selected_batches" name="batch_id" id="batch_id" :options="batches" :placeholder="trans('academic.select_batch')" @select="onBatchSelect" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" @remove="onBatchRemove" :selected="selected_batches">
@@ -378,6 +389,7 @@
                     last_name: '',
                     father_name: '',
                     mother_name: '',
+                    admission_number: '',
                     date_of_admission_start_date: '',
                     date_of_birth_end_date: '',
                     date_of_admission_end_date: '',
