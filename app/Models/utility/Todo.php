@@ -33,6 +33,21 @@ class Todo extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function todo_employees()
+    {
+        return $this->hasMany(TodoEmployee::class);
+    }
+
+    public function todo_employee_skills()
+    {
+        return $this->hasMany(TodoEmployeeSkill::class);
+    }
+
+    public function todo_tasks()
+    {
+        return $this->hasMany(TodoTask::class);
+    }
+
     public function getOption(string $option)
     {
         return array_get($this->options, $option);
