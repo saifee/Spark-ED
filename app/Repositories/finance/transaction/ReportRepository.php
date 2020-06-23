@@ -51,7 +51,8 @@ class ReportRepository
     {
         $accounts = $this->account->selectAll();
         $payment_methods = $this->payment_method->selectAll();
-        return compact('accounts','payment_methods');
+        $transaction_categories = (new \App\Repositories\Configuration\Finance\Transaction\TransactionCategoryRepository(new \App\Models\Configuration\Finance\Transaction\TransactionCategory))->selectAll();
+        return compact('accounts','payment_methods','transaction_categories');
     }
 
     /**
