@@ -2,8 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex);
 import createPersistedState from 'vuex-persistedstate'
+import drawer from './store/drawer'
 
 const store = new Vuex.Store({
+    modules: {
+        drawer
+    },
     state: {
         auth: {
             status: false,

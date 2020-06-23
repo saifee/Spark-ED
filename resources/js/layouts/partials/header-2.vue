@@ -9,7 +9,7 @@
     >
       <v-app-bar-nav-icon
         v-if="getConfig('replace_sidebar_menu_with_top_menu') != 1"
-        @click.stop="$store.commit('toggleNavigationDrawer')"
+        @click.stop="$store.commit('drawer/toggleNavigationDrawer')"
       />
       <v-spacer />
       <router-link  to="/">
