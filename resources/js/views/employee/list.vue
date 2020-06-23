@@ -83,6 +83,12 @@
                             </div>
                             <div class="col-12 col-sm-3">
                                 <div class="form-group">
+                                    <label for="">{{trans('employee.date_of_joining')}}</label>
+                                    <datepicker v-model="filter.date_of_joining" :bootstrapStyling="true" :placeholder="trans('employee.date_of_joining')" typeable></datepicker>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-3">
+                                <div class="form-group">
                                     <label for="">{{trans('employee.employee_group')}}</label>
                                     <v-select label="name" track-by="id" v-model="selected_employee_groups" name="employee_group_id" id="employee_group_id" :options="employee_groups" :placeholder="trans('employee.select_employee_group')" @select="onEmployeeGroupSelect" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" @remove="onEmployeeGroupRemove" :selected="selected_employee_groups">
                                         <div class="multiselect__option" slot="afterList" v-if="!employee_groups.length">
@@ -258,6 +264,7 @@
                     department_id: [],
                     designation_id: [],
                     employee_group_id: [],
+                    date_of_joining: '',
                     status: 'active'
                 },
                 orderByOptions: [
@@ -318,6 +325,7 @@
                     page = 1;
                 }
                 this.selectAll = false;
+                this.filter.date_of_joining = helper.toDate(this.filter.date_of_joining);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/employee?page=' + page + url)
                     .then(response => {
