@@ -57,6 +57,26 @@
                                     <date-range-picker :start-date.sync="filter.start_date" :end-date.sync="filter.end_date" :label="trans('general.date_between')"></date-range-picker>
                                 </div>
                             </div>
+                            <div class="col-12 col-sm-3">
+                                <label for="">{{trans('finance.transaction_category')}}</label>
+                                <v-autocomplete
+                                    v-model="filter.transaction_category_id"
+                                    :items="transaction_categories"
+                                    item-text="name"
+                                    item-value="id"
+                                    :label="trans('finance.transaction_category')"
+                                    :placeholder="trans('finance.select_transaction_category')"
+                                    multiple
+                                    chips
+                                    small-chips
+                                    deletable-chips
+                                    hide-details
+                                    outlined
+                                    dense
+                                    solo
+                                    flat
+                                />
+                            </div>
                         </div>
                         <div class="card-footer text-right">
                             <button type="button" @click="showFilterPanel = false" class="btn btn-danger">{{trans('general.cancel')}}</button>
@@ -138,6 +158,7 @@
                     order: 'desc',
                     account_id: '',
                     payment_method_id: '',
+                    transaction_category_id: '',
                     start_date: '',
                     end_date: '',
                     page_length: helper.getConfig('page_length')
@@ -150,6 +171,7 @@
                 ],
                 accounts: [],
                 payment_methods: [],
+                transaction_categories: [],
                 selected_account: null,
                 selected_payment_method: null,
                 showFilterPanel: true,
@@ -176,6 +198,7 @@
                     .then(response => {
                         this.accounts = response.accounts;
                         this.payment_methods = response.payment_methods;
+                        this.transaction_categories = response.transaction_categories;
                         this.getReport();
                         loader.hide();
                     })
