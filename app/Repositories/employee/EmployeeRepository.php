@@ -287,6 +287,15 @@ class EmployeeRepository {
 			});
 		}
 
+		$date_of_joining = gv($params, 'date_of_joining');
+		if ($date_of_joining) {
+			$query->whereHas('employeeTerms', function ($q) use ($date_of_joining) {
+				$q->where(function ($q1) use ($date_of_joining) {
+					$q1->where('date_of_joining', '=', $date_of_joining);
+				});
+			});
+		}
+
 		return $query->orderBy($sort_by, $order);
 	}
 
