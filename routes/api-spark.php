@@ -6,6 +6,10 @@ Route::group(['middleware' => ['auth:api']], function () {
   Route::resource('/behaviour/stories.comments', 'Behaviour\Story\CommentController');
   Route::resource('/behaviour/messages', 'Behaviour\MessageController');
 
+  Route::resource('todo.employees', 'Utility\TodoEmployeeController');
+  Route::resource('todo.tasks', 'Utility\TodoTaskController');
+  Route::resource('todo.skills', 'Utility\TodoEmployeeSkillController');
+
   Route::get('/configuration/employee/asset/category/pre-requisite', 'Configuration\Employee\AssetCategoryController@preRequisite');
   Route::get('/configuration/employee/asset/category', 'Configuration\Employee\AssetCategoryController@index');
   Route::get('/configuration/employee/asset/category/{id}', 'Configuration\Employee\AssetCategoryController@show');
