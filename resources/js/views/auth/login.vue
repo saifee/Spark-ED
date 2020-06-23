@@ -13,7 +13,6 @@
                                     color="primary"
                                     type="text"
                                     name="email_or_username"
-                                    hide-details
                                     :label="trans('auth.email_or_username')"
                                     :persistent-hint="loginForm.errors.has('email_or_username')"
                                     :error="loginForm.errors.has('email_or_username')"
@@ -25,7 +24,6 @@
                                     color="primary"
                                     type="password"
                                     name="password"
-                                    hide-details
                                     :label="trans('auth.password')"
                                     :persistent-hint="loginForm.errors.has('password')"
                                     :error="loginForm.errors.has('password')"
