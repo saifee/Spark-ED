@@ -9,6 +9,7 @@ const store = new Vuex.Store({
         drawer
     },
     state: {
+    navigationDrawer: true,
         auth: {
             status: false,
             id: '',
@@ -31,6 +32,9 @@ const store = new Vuex.Store({
         default_academic_session: {}
     },
     mutations: {
+    toggleNavigationDrawer (state) {
+      state.navigationDrawer = !state.navigationDrawer
+    },
         setAuthUserDetail (state, auth) {
             for (let key of Object.keys(auth)) {
                 state.auth[key] = auth[key] !== null ? auth[key] : '';
