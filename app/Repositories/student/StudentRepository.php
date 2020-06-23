@@ -282,6 +282,8 @@ class StudentRepository
             }
         }
 
+        $admission_number          = gv($params, 'admission_number');
+
         $query = $this->student_record->with('student','admission','batch','batch.classTeachers.employee','batch.course','student.bloodGroup','student.religion','student.caste','student.category','student.parent', 'student_behaviour_point')
             ->whereNull('date_of_exit')
             ->filterbySession()
@@ -290,6 +292,7 @@ class StudentRepository
                 'start_date' => $date_of_admission_start_date,
                 'end_date' => $date_of_admission_end_date
             ])->whereHas('student', function($q) use(
+                $admission_number,
                 $first_name,
                 $last_name,
                 $date_of_birth_start_date,
@@ -330,6 +333,13 @@ class StudentRepository
                 })->when($first_guardian_name, function ($query, $first_guardian_name) {
                     return $query->whereHas('parent', function($q1) use($first_guardian_name) {
                         $q1->filterByFirstGuardianName($first_guardian_name);
+                    });
+                })->when($admission_number, function ($query, $admission_number) {
+                    return $query->whereHas('studentRecords', function($q1) use($admission_number) {
+                        $q1->where('academic_session_id', config('config.default_academic_session.id'));
+                        return $q1->whereHas('admission', function($q2) use($admission_number) {
+                            $q2->where('number', $admission_number);
+                        });
                     });
                 })->when($second_guardian_name, function ($query, $second_guardian_name) {
                     return $query->whereHas('parent', function($q1) use($second_guardian_name) {
