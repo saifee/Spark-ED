@@ -34,14 +34,42 @@
                         <h4 class="card-title">{{trans('general.filter')}}</h4>
                         <div class="row">
                             <div class="col-12 col-sm-3">
-                                <div class="form-group">
-                                    <label for="">{{trans('employee.employee')}}</label>
-                                    <v-select label="name" track-by="id" v-model="selected_employees" name="employee_id" id="employee_id" :options="employees" :placeholder="trans('employee.select_employee')" @select="onEmployeeSelect" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" @remove="onEmployeeRemove" :selected="selected_employees">
-                                        <div class="multiselect__option" slot="afterList" v-if="!employees.length">
-                                            {{trans('general.no_option_found')}}
-                                        </div>
-                                    </v-select>
-                                </div>
+                                <label for="">{{trans('employee.employee')}}</label>
+                                <v-autocomplete
+                                    v-model="filter.employee_id"
+                                    :items="employees"
+                                    item-text="name"
+                                    item-value="id"
+                                    :label="trans('employee.employee')"
+                                    :placeholder="trans('employee.select_employee')"
+                                    multiple
+                                    chips
+                                    small-chips
+                                    deletable-chips
+                                    hide-details
+                                    outlined
+                                    dense
+                                    solo
+                                />
+                            </div>
+                            <div class="col-12 col-sm-3">
+                                <label for="">{{trans('employee.department')}}</label>
+                                <v-autocomplete
+                                    v-model="filter.department_id"
+                                    :items="departments"
+                                    item-text="name"
+                                    item-value="id"
+                                    :label="trans('employee.department')"
+                                    :placeholder="trans('employee.select_department')"
+                                    multiple
+                                    chips
+                                    small-chips
+                                    deletable-chips
+                                    hide-details
+                                    outlined
+                                    dense
+                                    solo
+                                />
                             </div>
                         </div>
                         <div class="card-footer text-right">
@@ -117,6 +145,7 @@
                     sort_by : 'start_date',
                     order: 'desc',
                     employee_id: [],
+                    department_id: [],
                     page_length: helper.getConfig('page_length')
                 },
                 orderByOptions: [
@@ -134,6 +163,7 @@
                     }
                 ],
                 employees: [],
+                departments: [],
                 selected_employees: null,
                 showFilterPanel: false,
                 help_topic: ''
@@ -173,6 +203,7 @@
                     .then(response => {
                         this.payrolls = response.payrolls;
                         this.employees = response.filters.employees;
+                        this.departments = response.filters.departments;
                         loader.hide();
                     })
                     .catch(error => {
