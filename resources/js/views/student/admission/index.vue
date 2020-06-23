@@ -92,6 +92,7 @@
                                     outlined
                                     dense
                                     solo
+                                    flat
                                 />
                             </div>
                             <div class="col-12 col-sm-2">
