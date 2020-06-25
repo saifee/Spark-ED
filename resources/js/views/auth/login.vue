@@ -4,7 +4,7 @@
             <div class="login-box card guest-box">
                 <div class="card-body p-4">
                     <img :src="getLogo" class="org-logo" />
-                    <form id="loginform" @submit.prevent="process" @keydown="loginForm.errors.clear($event.target.name)">
+                    <form id="loginform" @keydown="loginForm.errors.clear($event.target.name)">
                         <h3 class="box-title m-t-20 m-b-10">{{trans('auth.login')}}</h3>
                         <social-login v-if="getConfig('made') === 'saudi'" />
                         <div v-if="! login_with_otp">
@@ -49,7 +49,7 @@
                             dark
                             color="primary"
                             class="m-t-20"
-                            type="submit"
+                            @keyup.enter="process"
                         >
                             {{trans('auth.sign_in')}}
                         </v-btn>
