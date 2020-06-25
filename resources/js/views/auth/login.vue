@@ -1,8 +1,11 @@
 <template>
-    <section id="wrapper">
-        <div class="login-register guest-page">
-            <div class="login-box card guest-box">
-                <div class="card-body p-4">
+    <v-app>
+     <v-main class="grey lighten-4">
+      <v-container fluid>
+       <v-row justify="center" align="center" no-gutters>
+        <v-col cols="12" sm="8" md="4">
+            <v-card class="elevation-12">
+                <v-card-text>
                     <img :src="getLogo" class="org-logo" />
                     <form id="loginform" @keydown="loginForm.errors.clear($event.target.name)">
                         <h3 class="box-title m-t-20 m-b-10">{{trans('auth.login')}}</h3>
@@ -100,11 +103,14 @@
                             </div>
                         </div>
                     </form>
-                </div>
+                </v-card-text>
                 <!-- <guest-footer></guest-footer> -->
-            </div>
-        </div>
-    </section>
+            </v-card>
+        </v-col>
+       </v-row>
+      </v-container>
+     </v-main>
+    </v-app>
 </template>
 
 <script>
