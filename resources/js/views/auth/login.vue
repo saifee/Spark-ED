@@ -20,6 +20,7 @@
                                     :persistent-hint="loginForm.errors.has('email_or_username')"
                                     :error="loginForm.errors.has('email_or_username')"
                                     :hint="loginForm.errors.get('email_or_username')"
+                                    outlined
                                     @keyup.enter="process"
                                 />
                                 <v-text-field
@@ -31,6 +32,7 @@
                                     :persistent-hint="loginForm.errors.has('password')"
                                     :error="loginForm.errors.has('password')"
                                     :hint="loginForm.errors.get('password')"
+                                    outlined
                                     @keyup.enter="process"
                                 />
                         </div>
@@ -51,7 +53,6 @@
                             x-large
                             dark
                             color="primary"
-                            class="m-t-20"
                             @keyup.enter="process"
                         >
                             {{trans('auth.sign_in')}}
