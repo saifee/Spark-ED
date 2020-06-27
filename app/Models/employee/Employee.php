@@ -277,4 +277,13 @@ class Employee extends Model
 
         return $q->where('date_of_birth', '=', $date_of_birth);
     }
+
+    public function scopeDateOfBirthBetween($q, $dates)
+    {
+        if ((! $dates['start_date'] || ! $dates['end_date']) && $dates['start_date'] <= $dates['end_date']) {
+            return $q;
+        }
+
+        return $q->where('date_of_birth', '>=', getStartOfDate($dates['start_date']))->where('date_of_birth', '<=', getEndOfDate($dates['end_date']));
+    }
 }

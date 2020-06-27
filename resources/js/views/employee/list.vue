@@ -108,6 +108,9 @@
                                     </select>
                                 </div>
                             </div>
+                             <div class="col-12 col-sm-6">
+                                <date-range-picker :start-date.sync="filter.date_of_birth_start_date" :end-date.sync="filter.date_of_birth_end_date" :label="trans('student.date_of_birth_between')"></date-range-picker>
+                            </div>
                         </div>
                         <div class="card-footer text-right">
                             <button type="button" @click="showFilterPanel = false" class="btn btn-danger">{{trans('general.cancel')}}</button>
@@ -265,6 +268,8 @@
                     designation_id: [],
                     employee_group_id: [],
                     date_of_joining: '',
+                    date_of_birth_start_date: '',
+                    date_of_birth_end_date: '',
                     status: 'active'
                 },
                 orderByOptions: [
@@ -326,6 +331,8 @@
                 }
                 this.selectAll = false;
                 this.filter.date_of_joining = helper.toDate(this.filter.date_of_joining);
+                this.filter.date_of_birth_start_date = helper.toDate(this.filter.date_of_birth_start_date);
+                this.filter.date_of_birth_end_date = helper.toDate(this.filter.date_of_birth_end_date);
                 let url = helper.getFilterURL(this.filter);
                 axios.get('/api/employee?page=' + page + url)
                     .then(response => {

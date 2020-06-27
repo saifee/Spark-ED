@@ -231,6 +231,13 @@ class EmployeeRepository {
 
 		$query->whereNotIn('id', $system_admins)->whereIn('id', $employee_ids)->filterByFirstName($first_name)->filterByMiddleName($middle_name)->filterByLastName($last_name)->filterByFatherName($father_name);
 
+		$date_of_birth_start_date = gv($params, 'date_of_birth_start_date');
+		$date_of_birth_end_date   = gv($params, 'date_of_birth_end_date');
+    $query->dateOfBirthBetween([
+      'start_date' => $date_of_birth_start_date,
+      'end_date' => $date_of_birth_end_date,
+    ]);
+
 		if (count($designation_id)) {
 			$query->whereHas('employeeDesignations', function ($q) use ($designation_id, $date) {
 				$q->where('date_effective', '<=', $date)->where(function ($q1) use ($date) {
