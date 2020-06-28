@@ -28,7 +28,7 @@
 				                    <show-error :form-name="attendanceForm" prop-name="batch_id"></show-error>
 				                </div>
 				            </div>
-	                        <div class="col-12 col-sm-3" v-if="getConfig('made') === 'saudi'">
+	                        <div class="col-12 col-sm-3">
 	                            <div class="form-group">
 	                                <label for="">{{trans('student.attendance_method')}}</label>
 	                                <select :disabled="disable_filter" v-model="attendanceForm.attendance_method" class="custom-select col-12" name="attendance_method">
