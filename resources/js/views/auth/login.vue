@@ -53,7 +53,7 @@
                             x-large
                             dark
                             color="primary"
-                            @keyup.enter="process"
+                            @click="process"
                         >
                             {{trans('auth.sign_in')}}
                         </v-btn>
