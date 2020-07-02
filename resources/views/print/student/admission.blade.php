@@ -1,6 +1,9 @@
 @include('print.print-layout.header')
     <h2 style="text-align: center;">{{config('config.default_academic_session.name')}}</h2>
     <h2>{{trans('student.student_list').' '.trans('general.total_result_count',['count' => count($student_records)])}}</h2>
+    @if(isset(request('filter')['batch_id']) && filled(request('filter')['batch_id']))
+    <h2>Batch: {{implode(',', \App\Models\Academic\Batch::select('name', 'course_id')->with('course:id,name')->whereIn('id', request('filter')['batch_id'])->get()->map(function($b) {return optional($b->course)->name.' '.$b->name;})->toArray())}}</h2>
+    @endif
     <table class="fancy-detail">
         <thead>
             <tr>
