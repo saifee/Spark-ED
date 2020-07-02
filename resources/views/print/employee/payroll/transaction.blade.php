@@ -1,6 +1,12 @@
 @include('print.print-layout.header')
     <h2 style="text-align: center;">{{config('config.default_academic_session.name')}}</h2>
     <h2>{{trans('employee.payroll_transaction').' '.trans('general.total_result_count',['count' => count($payroll_transactions)])}}</h2>
+    @if(isset(request('filter')['employee_id']) && filled(request('filter')['employee_id']))
+    <h2>Employees: {{implode(',', \App\Models\Employee\Employee::select('first_name','middle_name','last_name')->whereIn('id', request('filter')['employee_id'])->get()->pluck('name')->toArray())}}</h2>
+    @endif
+    @if(isset(request('filter')['department_id']) && filled(request('filter')['department_id']))
+    <h2>Departments: {{implode(',', \App\Models\Configuration\Employee\Department::select('name')->whereIn('id', request('filter')['department_id'])->get()->pluck('name')->toArray())}}</h2>
+    @endif
     <table class="fancy-detail">
         <thead>
             <tr>
