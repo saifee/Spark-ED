@@ -1422,6 +1422,9 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/transaction/report/summary', 'Finance\Transaction\ReportController@summary');
     Route::post('/transaction/report/summary/print', 'Finance\Transaction\ReportController@printSummary');
     Route::post('/transaction/report/summary/pdf', 'Finance\Transaction\ReportController@pdfSummary');
+    Route::get('/transaction/report/detail', 'Finance\Transaction\ReportController@detail');
+    Route::post('/transaction/report/detail/print', 'Finance\Transaction\ReportController@printDetail');
+    Route::post('/transaction/report/detail/pdf', 'Finance\Transaction\ReportController@pdfDetail');
     Route::get('/transaction/report/day-book', 'Finance\Transaction\ReportController@dayBook');
     Route::post('/transaction/report/day-book/print', 'Finance\Transaction\ReportController@printDayBook');
     Route::post('/transaction/report/day-book/pdf', 'Finance\Transaction\ReportController@pdfDayBook');

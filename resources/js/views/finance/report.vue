@@ -59,6 +59,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-sm-3">
+                    <div class="card card-box">
+                        <div class="card-body">
+                            <h4 class="card-title">Detail</h4>
+                            <p class="card-text font-80pc">Get all transaction summary including payments, receipts at one place.</p>
+                            <v-btn :to="{ name: 'financeTransactionDetailReport' }" x-small color="#009efb" dark depressed>Go to Transaction Day Book Detail</v-btn>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

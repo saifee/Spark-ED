@@ -245,6 +245,178 @@ class ReportRepository
     }
 
     /**
+     * Get transaction detail data.
+     *
+     * @param array $params
+     * @return Array
+     */
+    public function getDetailData($params)
+    {
+        $sort_by    = gv($params, 'sort_by', 'date');
+        $order      = gv($params, 'order', 'asc');
+        $start_date = gv($params, 'start_date', config('config.default_academic_session.start_date'));
+        $end_date   = gv($params, 'end_date', config('config.default_academic_session.end_date'));
+
+        $list    = array();
+        $footer  = array();
+
+        if (! dateBetweenSession($start_date) || ! dateBetweenSession($end_date)) {
+            throw ValidationException::withMessages(['message' => trans('academic.invalid_session_date_range')]);
+        }
+
+        $query = $this->transaction->dateBetween([
+            'start_date' => $start_date,
+            'end_date' => $end_date
+        ])->isNotCancelled();
+
+        $transactions = $query->orderBy('prefix', 'asc')->orderBy('number','asc')->get();
+
+        $transactions->load($this->getTransactionRelation());
+
+        $student_records = $this->student_record->with('student','admission')->get();
+        $students = $this->student->get();
+        $employees = $this->employee->with('employeeDesignations','employeeDesignations.designation','employeeDesignations.designation.employeeCategory')->get();
+
+        $total_receipts = 0;
+        $total_payments = 0;
+        $fee_summary = array();
+        $concession_amount = 0;
+        $i = 1;
+        foreach ($transactions as $transaction) {
+            $payment_method_detail = $this->getPaymentMethodDetail($transaction);
+            $head = $this->getHeadDetail($transaction, [
+                'student_records' => $student_records,
+                'students'        => $students,
+                'employees'       => $employees,
+            ]);
+
+            $employee = $this->getEntryByEmployee($transaction, $employees);
+
+            $total_receipts += ($transaction->type) ? $transaction->amount : 0;
+            $total_payments += (! $transaction->type) ? $transaction->amount : 0;
+
+            $installment_concession = 0;
+            if ($transaction->registration_id) {
+                $fee_summary[] = array('head' => trans('student.registration_fee'), 'amount' => $transaction->amount);
+            } else if($transaction->student_fee_record_id) {
+                $fee_concession = $transaction->studentFeeRecord->feeConcession;
+
+                foreach ($transaction->studentFeeRecordDetails as $student_fee_record_detail) {
+                    $optional = $transaction->studentFeeRecord->studentOptionalFeeRecords->firstWhere('fee_head_id', $student_fee_record_detail->fee_head_id);
+                    
+                    $fee_installment_detail = $transaction->studentFeeRecord->feeInstallment->feeInstallmentDetails->firstWhere('fee_head_id', $student_fee_record_detail->fee_head_id);
+                    
+                    $amount = $optional ? 0 : $student_fee_record_detail->amount;
+
+                    $fee_summary[] = array('head' => $student_fee_record_detail->feeHead->name, 'amount' => $amount);
+
+                    if ($fee_concession) {
+                        $fee_concession_detail = $fee_concession->feeConcessionDetails->firstWhere('fee_head_id', $student_fee_record_detail->fee_head_id);
+
+                        if ($fee_concession_detail) {
+                            if ($fee_concession_detail->type == 'percent') {
+                                $installment_concession += ($fee_installment_detail->amount * $fee_concession_detail->amount/100);
+                            } else {
+                                $installment_concession += $fee_concession_detail->amount;
+                            }
+                        }
+                    }
+                }
+
+                if ($transaction->getOption('transport_fee')) {
+                    $fee_summary[] = array('head' => trans('transport.fee'), 'amount' => $transaction->getOption('transport_fee'));
+                }
+
+                if ($transaction->getOption('late_fee')) {
+                    $fee_summary[] = array('head' => trans('finance.late_fee'), 'amount' => $transaction->getOption('late_fee'));
+                }
+
+                $additional_fee_charge = $transaction->getOption('additional_fee_charge');
+                if (gv($additional_fee_charge, 'amount', 0) > 0) {
+                    $fee_summary[] = array('head' => gv($additional_fee_charge, 'label'), 'amount' => gv($additional_fee_charge, 'amount', 0));
+                }
+
+                $additional_fee_discount = $transaction->getOption('additional_fee_discount');
+                if (gv($additional_fee_discount, 'amount', 0) > 0) {
+                    $fee_summary[] = array('head' => gv($additional_fee_discount, 'label'), 'amount' => gv($additional_fee_discount, 'amount', 0));
+                }
+            }
+
+            $concession_amount += $installment_concession;
+
+            $list[] = array(
+                'sno'                   => $i,
+                'type'                  => $transaction->type ? 'receipt' : 'payment',
+                'account'               => $transaction->account->name,
+                'head'                  => $head,
+                'payment_method'        => $transaction->paymentMethod->name,
+                'payment_method_detail' => $payment_method_detail,
+                'amount'                => currency($transaction->amount, 1),
+                'fee_concession'        => $installment_concession ? currency($installment_concession, 1) : '-',
+                'date'                  => $transaction->date,
+                'voucher_number'        => ($transaction->prefix ? $transaction->prefix : '').$transaction->number,
+                'employee'              => $employee
+            );
+
+            $i++;
+        }
+
+        $fee_summary[] = ['head' => trans('finance.fee_concession'), 'amount' => $concession_amount];
+
+        $collection = collect($fee_summary);
+
+        $fee_summary = $collection->groupBy('head')->map(function ($row) {
+            return currency($row->sum('amount'),1);
+        });
+
+        $footer = array(
+            'total_payments' => currency($total_payments, 1),
+            'total_receipts' => currency($total_receipts, 1),
+            'total_concessions' => currency($concession_amount, 1),
+            'fee_summary' => $fee_summary
+        );
+
+        return compact('list','footer');
+    }
+
+    /**
+     * Get detail of all transaction
+     *
+     * @param array $params
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function paginateDetail($params)
+    {
+        $page = gv($params, 'page', 1);
+        $page_length = gv($params, 'page_length', config('config.page_length'));
+
+        $data = $this->getDetailData($params);
+
+        $list = $data['list'];
+        $footer = $data['footer'];
+
+        $list = $this->collectionPaginate($list, $page_length, $page);
+
+        return compact('list','footer');
+    }
+
+    /**
+     * Get all filtered data for printing
+     *
+     * @param array $params
+     * @return Array
+     */
+    public function printDetail($params)
+    {
+        $data = $this->getDetailData($params);
+        
+        $list = $data['list'];
+        $footer = $data['footer'];
+
+        return compact('list','footer');
+    }
+
+    /**
      * Get payment method details
      *
      * @param Transaction $transaction

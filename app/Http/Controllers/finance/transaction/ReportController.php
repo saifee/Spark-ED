@@ -83,6 +83,53 @@ class ReportController extends Controller
     }
 
     /**
+     * Used to get transaction detail
+     * @get ("/api/transaction/report/detail")
+     * @return Response
+     */
+    public function detail()
+    {
+        $data = $this->repo->paginateDetail($this->request->all());
+        $list = $data['list'];
+        $footer = $data['footer'];
+
+        return $this->success(compact('list','footer'));
+    }
+
+    /**
+     * Used to print all transaction detail
+     * @post ("/api/transaction/report/detail/print")
+     * @return Response
+     */
+    public function printDetail()
+    {
+        $data = $this->repo->printDetail(request('filter'));
+
+        $list = $data['list'];
+        $footer = $data['footer'];
+
+        return view('print.finance.transaction.report.detail', compact('list','footer'))->render();
+    }
+
+    /**
+     * Used to generate pdf of transaction detail
+     * @post ("/api/transaction/report/detail/pdf")
+     * @return Response
+     */
+    public function pdfDetail()
+    {
+        $data = $this->repo->printDetail(request('filter'));
+
+        $list = $data['list'];
+        $footer = $data['footer'];
+
+        $uuid = Str::uuid();
+        $pdf = \PDF::loadView('print.finance.transaction.report.detail', compact('list','footer'))->save('../storage/app/downloads/'.$uuid.'.pdf');
+
+        return $uuid;
+    }
+
+    /**
      * Used to get transaction day book
      * @get ("/api/transaction/report/day-book")
      * @return Response

@@ -104,6 +104,11 @@ export default [
         component: () => import(/* webpackChunkName: "js/finance/transaction/report/summary" */ '@views/finance/transaction/report/summary')
     },
     {
+        path: '/finance/transaction/report/detail',
+        name: 'financeTransactionDetailReport',
+        component: () => import(/* webpackChunkName: "js/finance/transaction/report/detail" */ '@views/finance/transaction/report/detail')
+    },
+    {
         path: '/finance/transaction/report/day-book',
         name: 'financeTransactionDayBookReport',
         component: () => import(/* webpackChunkName: "js/finance/transaction/report/dayBook" */ '@views/finance/transaction/report/day-book')
