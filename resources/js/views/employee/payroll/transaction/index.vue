@@ -149,6 +149,13 @@
                                     </td>
                                 </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="5"></th>
+                                    <th>{{formatCurrency(footer.grand_total)}}</th>
+                                    <th colspan="4"></th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                     <module-info v-if="!payroll_transactions.total" module="employee" title="payroll_transaction_module_title" description="payroll_transaction_module_description" icon="list">
@@ -175,6 +182,7 @@
                     total: 0,
                     data: []
                 },
+                footer: [],
                 filter: {
                     sort_by : 'created_at',
                     order: 'desc',
@@ -244,6 +252,7 @@
                         this.payroll_transactions = response.payroll_transactions;
                         this.employees = response.filters.employees;
                         this.departments = response.filters.departments;
+                        this.footer = response.footer;
                         loader.hide();
                     })
                     .catch(error => {

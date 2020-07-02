@@ -146,6 +146,12 @@ class PayrollTransactionRepository
 
         return $this->getData($params)->paginate($page_length);
     }
+    public function getFooter($params)
+    {
+        $footer = [];
+        $footer['grand_total'] = $this->getData($params)->select('amount')->get()->sum('amount');
+        return $footer;
+    }
 
     /**
      * Get all filtered data for printing

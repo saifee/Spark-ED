@@ -57,7 +57,9 @@ class PayrollTransactionController extends Controller
 
         $filters = $this->repo->getFilters();
 
-        return $this->success(compact('payroll_transactions', 'filters'));
+        $footer = $this->repo->getFooter($this->request->all());
+
+        return $this->success(compact('payroll_transactions', 'filters', 'footer'));
     }
 
     /**
