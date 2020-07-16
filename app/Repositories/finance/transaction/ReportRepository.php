@@ -101,6 +101,13 @@ class ReportRepository
         $students = $this->student->get();
         $employees = $this->employee->with('employeeDesignations','employeeDesignations.designation','employeeDesignations.designation.employeeCategory')->get();
 
+        $account = Account::find($account_id);
+        $opening_balance = $account->opening_balance;
+        $expense = $this->transaction->where('date', '<=', getStartOfDate($params['start_date']))->where('type', 0)->sum('amount');
+        $income = $this->transaction->where('date', '<=', getStartOfDate($params['start_date']))->where('type', 1)->sum('amount');
+        $opening_balance -= $expense;
+        $opening_balance += $income;
+
         $total_receipts = 0;
         $total_payments = 0;
         $fee_summary = array();
@@ -168,6 +175,13 @@ class ReportRepository
 
             $concession_amount += $installment_concession;
 
+            if ($transaction->type) {
+                $opening_balance += $transaction->amount;
+            } else {
+                $opening_balance -= $transaction->amount;
+            }
+            // $opening_balance -= $instasllment_concession;
+
             $list[] = array(
                 'sno'                   => $i,
                 'type'                  => $transaction->type ? 'receipt' : 'payment',
@@ -179,6 +193,7 @@ class ReportRepository
                 'fee_concession'        => $installment_concession ? currency($installment_concession, 1) : '-',
                 'date'                  => $transaction->date,
                 'voucher_number'        => ($transaction->prefix ? $transaction->prefix : '').$transaction->number,
+                'balance'               => currency($opening_balance),
                 'employee'              => $employee
             );
 
@@ -204,7 +219,7 @@ class ReportRepository
             'fee_summary' => $fee_summary
         );
 
-        return compact('list','footer');
+        return compact('list','footer', 'opening_balance');
     }
 
     /**
@@ -222,10 +237,11 @@ class ReportRepository
 
         $list = $data['list'];
         $footer = $data['footer'];
+        $opening_balance = $data['opening_balance'];
 
         $list = $this->collectionPaginate($list, $page_length, $page);
 
-        return compact('list','footer');
+        return compact('list','footer','opening_balance');
     }
 
     /**

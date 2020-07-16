@@ -3,7 +3,7 @@
         <div class="page-titles">
             <div class="row">
                 <div class="col-12 col-sm-6">
-                    <h3 class="text-themecolor">{{trans('finance.transaction_summary_report')}} 
+                    <h3 class="text-themecolor">{{trans('finance.transaction_summary_report')}}
                         <span class="card-subtitle d-none d-sm-inline" v-if="list.total">{{trans('general.total_result_found',{count : list.total, from: list.from, to: list.to})}}</span>
                         <span class="card-subtitle d-none d-sm-inline" v-else>{{trans('general.no_result_found')}}</span>
                     </h3>
@@ -206,7 +206,7 @@
                         loader.hide();
                         helper.showErrorMsg(error);
                     })
-            },  
+            },
             getReport(page){
                 let loader = this.$loading.show();
                 if (typeof page !== 'number') {

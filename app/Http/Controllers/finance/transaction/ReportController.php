@@ -45,8 +45,9 @@ class ReportController extends Controller
         $data = $this->repo->paginateSummary($this->request->all());
         $list = $data['list'];
         $footer = $data['footer'];
+        $opening_balance = $data['opening_balance'];
 
-        return $this->success(compact('list','footer'));
+        return $this->success(compact('list','footer','opening_balance'));
     }
 
     /**
