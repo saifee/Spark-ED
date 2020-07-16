@@ -115,6 +115,7 @@ class ReportRepository
         $income = $this->transaction->where('date', '<=', getStartOfDate($params['start_date']))->where('type', 1)->sum('amount');
         $opening_balance -= $expense;
         $opening_balance += $income;
+        $opening_balance_copy = $opening_balance;
 
         $total_receipts = 0;
         $total_payments = 0;
@@ -184,11 +185,11 @@ class ReportRepository
             $concession_amount += $installment_concession;
 
             if ($transaction->type) {
-                $opening_balance += $transaction->amount;
+                $opening_balance_copy += $transaction->amount;
             } else {
-                $opening_balance -= $transaction->amount;
+                $opening_balance_copy -= $transaction->amount;
             }
-            // $opening_balance -= $instasllment_concession;
+            // $opening_balance_copy -= $instasllment_concession;
 
             $list[] = array(
                 'sno'                   => $i,
@@ -201,7 +202,7 @@ class ReportRepository
                 'fee_concession'        => $installment_concession ? currency($installment_concession, 1) : '-',
                 'date'                  => $transaction->date,
                 'voucher_number'        => ($transaction->prefix ? $transaction->prefix : '').$transaction->number,
-                'balance'               => currency($opening_balance),
+                'balance'               => currency($opening_balance_copy),
                 'employee'              => $employee
             );
 
