@@ -6,6 +6,7 @@ use App\Models\Employee\Employee;
 use App\Traits\CollectionPaginator;
 use App\Models\Student\StudentRecord;
 use Illuminate\Validation\ValidationException;
+use App\Models\Finance\Account;
 use App\Models\Finance\Transaction\Transaction;
 use App\Repositories\Finance\AccountRepository;
 use App\Repositories\Configuration\Finance\Transaction\PaymentMethodRepository;
