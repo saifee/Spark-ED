@@ -94,6 +94,11 @@ class ReportRepository
           $query->where('payment_method_id', $payment_method_id);
         }
 
+        $transaction_category_id = gv($params, 'transaction_category_id');
+        $transaction_category_id = is_array($transaction_category_id) ? $transaction_category_id : ($transaction_category_id ? explode(',', $transaction_category_id) : []);
+        if (count($transaction_category_id)) {
+            $query->whereIn('transaction_category_id', $transaction_category_id);
+        }
 
         $query = $query->orderBy('date');
         $transactions = $query->orderBy('prefix', 'asc')->orderBy('number','asc')->get();
