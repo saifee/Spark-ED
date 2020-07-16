@@ -1536,8 +1536,8 @@ function numberToWord($num = false)
 function currencyInWord(float $number)
 {
     $currency = getDefaultCurrency();
-    $number_value = array_key_exists('number_value', $currency) ? $currency['number_value'] : 'Rupee';
-    $decimal_value = array_key_exists('decimal_value', $currency) ? $currency['decimal_value'] : 'Rupee';
+    $number_value = array_key_exists('number_value', $currency) ? $currency['number_value'] : '';
+    $decimal_value = array_key_exists('decimal_value', $currency) ? $currency['decimal_value'] : '';
 
     $decimal = round($number - ($no = floor($number)), 2) * 100;
     $hundred = null;
