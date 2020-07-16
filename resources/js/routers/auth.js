@@ -101,7 +101,7 @@ export default [
     {
         path: '/finance/transaction/report/summary',
         name: 'financeTransactionSummaryReport',
-        component: () => import(/* webpackChunkName: "js/finance/transaction/report/summary" */ '@views/finance/transaction/report/summary')
+        component: () => import(/* webpackChunkName: "js/finance/transaction/report/summary" */ '@views/finance/transaction/report/summary-with-opening-balance')
     },
     {
         path: '/finance/transaction/report/detail',
