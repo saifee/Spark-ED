@@ -94,6 +94,8 @@ class ReportRepository
           $query->where('payment_method_id', $payment_method_id);
         }
 
+
+        $query = $query->orderBy('date');
         $transactions = $query->orderBy('prefix', 'asc')->orderBy('number','asc')->get();
 
         $transactions->load($this->getTransactionRelation());
