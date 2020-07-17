@@ -1509,7 +1509,7 @@
         </v-list-item-content>
       </v-list-item>
       <v-list-item
-        v-if="showMenu('stock_sale') && getConfig('made') === 'saudi'"
+        v-if="showMenu('stock_sale')"
         to="/inventory/stock/sale"
         exact
       >
