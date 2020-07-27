@@ -16,21 +16,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-md-8">
-                    <notice-highlight class="border-right border-bottom p-4" v-if="showTourVideo && !getConfig('mode')">
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <iframe width="100%" height="325" src="https://www.youtube.com/embed/ydTGjP-dMuM?rel=0&amp;showinfo=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                            </div>
-                            <div class="col-12 col-md-6 product-intro">
-                                <h2>Do you want a <span class="special">Tour</span>?</h2>
-                                <h3>Watch Spark's Short Introduction Video</h3>
-                                <p>We will go through all the primary modules and features that Spark currently has in this short video. If you like Spark click on the button below to buy Spark.</p>
-                                <a class="btn btn-danger" href="https://Spark.com/buy/regular"><span class="p-r-10 m-r-10 border-right">Liked it?</span><strong><i class="fas fa-shopping-cart m-r-5"></i> Buy it Now</strong></a>
-                                <button class="btn" @click="hideTourVideo"><i class="fas fa-times"></i> Hide</button>
-                            </div>
-                        </div>
-                    </notice-highlight>
-
                     <div class="card border-right">
                         <div class="card-body p-4">
                         <template v-if="getConfig('made') === 'saudi'">
@@ -164,7 +149,6 @@
 </template>
 
 <script>
-    import NoticeHighlight from '@components/notice-highlight'
     import EventsList from '@js/widgets/events-list'
     import ArticlesList from '@js/widgets/articles-list'
     import barChart from './chart/bar-chart'
@@ -173,7 +157,6 @@
 
     export default {
         components: {
-            NoticeHighlight,
             EventsList,
             ArticlesList,
             barChart,
