@@ -114,7 +114,23 @@ class HomeRepository
             })->count();
         }
 
-        return compact('birthday_count', 'anniversary_count', 'work_anniversary_count', 'articles','events','books','book_log_stats','total_book_count','pending_return_book_count','overdue_return_book_count');
+        //////////// ambassador_data ////////////////////////////////
+        $ambassador_data = [];
+        $academic_sessions = \App\Models\Academic\AcademicSession::all();
+        $ambassador_data['academic_sessions'] = $academic_sessions;
+        $academic_sessions_detail = [];
+        foreach ($academic_sessions as $academic_session) {
+            $academic_sessions_detail[$academic_session->id] = [
+                'total_students' => \App\Models\Student\StudentRecord::filterBySession($academic_session->id)->count(),
+                'fee_summary' => HomeRepository2::getFeeSummaryData($academic_session->id),
+                'total_employee' => HomeRepository2::getEmployeeData($academic_session),
+                'total_salary' => HomeRepository2::getEmployeeSalaryData($academic_session),
+            ];
+        }
+        $ambassador_data['academic_sessions_detail'] = $academic_sessions_detail;
+        //////////// ambassador_data ////////////////////////////////
+
+        return compact('birthday_count', 'anniversary_count', 'work_anniversary_count', 'articles','events','books','book_log_stats','total_book_count','pending_return_book_count','overdue_return_book_count', 'ambassador_data');
     }
 
     /**

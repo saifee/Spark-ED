@@ -18,6 +18,44 @@
                 <div class="col-12 col-md-8">
                     <div class="card border-right">
                         <div class="card-body p-4">
+                            <template v-if="hasPermission('ambassador-view')">
+                                <v-card class="mb-4">
+                                    <v-card-text>
+                                <v-tabs>
+                                    <v-tab v-for="(academic_session, i) in academic_sessions" :key="`academic_session_tab${i}`">{{academic_session.name}}</v-tab>
+                                    <v-tab-item v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">
+                                        <v-simple-table>
+                                            <template v-slot:default>
+                                              <tbody>
+                                                <tr>
+                                                  <td><b>Total Students</b></td>
+                                                  <td>{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_students : '—' }}</td>
+                                                </tr>
+                                                <tr>
+                                                  <td><b>Fee Total</b></td>
+                                                  <td>{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total : '—' }}</td>
+                                                </tr>
+                                                <tr>
+                                                  <td><b>Fee Paid</b></td>
+                                                  <td>{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid : '—' }}</td>
+                                                </tr>
+                                                <tr>
+                                                  <td><b>Total Employee</b></td>
+                                                  <td>{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_employee : '—' }}</td>
+                                                </tr>
+                                                <tr>
+                                                  <td><b>Total Salary</b></td>
+                                                  <td>{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_salary : '—' }}</td>
+                                                </tr>
+                                              </tbody>
+                                            </template>
+                                        </v-simple-table>
+                                    </v-tab-item>
+                                </v-tabs>
+                                    </v-card-text>
+                                </v-card>
+                            </template>
+
                         <template v-if="getConfig('made') === 'saudi'">
                             <template v-if="hasAnyRole(['admin','manager','principal'])">
                                 <h4 class="card-title">{{trans('student.total_strength', {total: total_strength})}}
@@ -165,6 +203,8 @@
         },
         data() {
             return {
+                academic_sessions: [],
+                academic_sessions_detail: [],
                 color_themes: [],
                 directions: [],
                 sidebar: [],
@@ -246,6 +286,8 @@
                 let loader = this.$loading.show();
                 axios.get('/api/dashboard')
                     .then(response => {
+                        this.academic_sessions= response.ambassador_data.academic_sessions;
+                        this.academic_sessions_detail= response.ambassador_data.academic_sessions_detail;
                         this.birthday_count= response.birthday_count;
                         this.anniversary_count= response.anniversary_count;
                         this.work_anniversary_count= response.work_anniversary_count;
