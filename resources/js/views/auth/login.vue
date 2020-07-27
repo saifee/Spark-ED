@@ -6,7 +6,9 @@
         <v-col cols="12" sm="8" md="4">
             <v-card class="elevation-12">
                 <v-card-text>
+                    <div class="text-center">
                     <img :src="getLogo" class="org-logo" />
+                    </div>
                     <form id="loginform" @keydown="loginForm.errors.clear($event.target.name)">
                         <h3 class="box-title m-t-20 m-b-10">{{trans('auth.login')}}</h3>
                         <social-login v-if="getConfig('made') === 'saudi'" />
