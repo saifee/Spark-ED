@@ -35,6 +35,7 @@
         components : { tasksForm,teamForm,skillsForm, },
         data() {
             return {
+                todo:null,
                 id:this.$route.params.id
             }
         },
@@ -48,6 +49,24 @@
                 helper.featureNotAvailableMsg();
                 this.$router.push('/dashboard');
             }
+
+            if(this.id)
+                this.getTodo()
+        },
+        methods: {
+            getTodo(){
+                let loader = this.$loading.show();
+                axios.get(`/api/todo/${this.id}`)
+                    .then(response => {
+                        this.todo = response
+                        loader.hide();
+                    })
+                    .catch(error => {
+                        loader.hide();
+                        helper.showErrorMsg(error);
+                        this.$router.push('/utility/todo');
+                    });
+            },
         }
     }
 </script>
