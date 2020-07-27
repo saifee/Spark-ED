@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid" v-if="getConfig('made') === 'saudi'">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-md-8">
                     <notice-highlight class="border-right border-bottom p-4" v-if="showTourVideo && !getConfig('mode')">
@@ -33,6 +33,7 @@
 
                     <div class="card border-right">
                         <div class="card-body p-4">
+                        <template v-if="getConfig('made') === 'saudi'">
                             <template v-if="hasAnyRole(['admin','manager','principal'])">
                                 <h4 class="card-title">{{trans('student.total_strength', {total: total_strength})}}
                                     <span class="pull-right">
@@ -44,9 +45,11 @@
                             </template>
 
                             <calendar></calendar>
+                        </template>
                         </div>
                     </div>
                 </div>
+                        <template v-if="getConfig('made') === 'saudi'">
                 <div class="col-12 col-md-4 p-0">
                     <div class="card widget" v-if="hasNotAnyRole(['student','parent'])">
                         <div class="card-body">
@@ -95,6 +98,7 @@
 
                     <articles-list v-if="articles.length && hasPermission('list-article')" :articles="articles" class="frontend-widget" body-class="row-like-margin border-bottom px-3 p-b-30" view-more-link="/post/feed"></articles-list>
                 </div>
+                        </template>
             </div>
         </div>
         <div class="right-sidebar" v-if="getConfig('made') === 'saudi'">
