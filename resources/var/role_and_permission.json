@@ -1,5 +1,5 @@
 {
-	"default_role": { 
+	"default_role": {
 		"admin"    : "admin",
 		"manager"  : "manager",
 		"principal": "principal",
@@ -7,12 +7,14 @@
 		"librarian": "librarian",
 		"accountant": "accountant",
 		"student"  : "student",
-		"parent"   : "parent" 
+		"parent"   : "parent"
+		,"ambassador"   : "ambassador"
 	},
 	"default_permission": {
 		"configuration": {
 			"access-configuration": [],
 			"enable-login": ["manager","principal","staff","librarian","accountant","student","parent"],
+			"ambassador-view": ["ambassador"],
 			"import-previous-session-data": []
 		},
 		"communication": {
