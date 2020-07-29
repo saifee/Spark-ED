@@ -90,6 +90,8 @@
                             </div>
                         </div>
                     </div>
+                        </template>
+                        <template v-if="getConfig('made') === 'saudi'">
                     <div class="card widget" v-if="hasRole('librarian')">
                         <div class="card-body">
                             <div class="row border-bottom">
@@ -106,6 +108,7 @@
                             </div>
                         </div>
                     </div>
+                        </template>
                     <div :class="['card widget', hasAnyRole(['student','parent']) ? 'm-t-20' : '']" v-if="hasPermission('access-todo')">
                         <div class="card-body">
                             <div class="row border-bottom">
@@ -117,6 +120,7 @@
                         </div>
                     </div>
                     
+                        <template v-if="getConfig('made') === 'saudi'">
                     <events-list v-if="events.length && hasPermission('list-event')" :events="events" class="frontend-widget" body-class="row-like-margin border-bottom px-3 p-b-30" view-more-link="/calendar/event"></events-list>
 
                     <articles-list v-if="articles.length && hasPermission('list-article')" :articles="articles" class="frontend-widget" body-class="row-like-margin border-bottom px-3 p-b-30" view-more-link="/post/feed"></articles-list>
