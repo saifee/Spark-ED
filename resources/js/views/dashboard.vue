@@ -72,8 +72,8 @@
                         </div>
                     </div>
                 </div>
-                        <template v-if="getConfig('made') === 'saudi'">
                 <div class="col-12 col-md-4 p-0">
+                        <template v-if="getConfig('made') === 'saudi'">
                     <div class="card widget" v-if="hasNotAnyRole(['student','parent'])">
                         <div class="card-body">
                             <div class="row border-bottom">
@@ -120,8 +120,8 @@
                     <events-list v-if="events.length && hasPermission('list-event')" :events="events" class="frontend-widget" body-class="row-like-margin border-bottom px-3 p-b-30" view-more-link="/calendar/event"></events-list>
 
                     <articles-list v-if="articles.length && hasPermission('list-article')" :articles="articles" class="frontend-widget" body-class="row-like-margin border-bottom px-3 p-b-30" view-more-link="/post/feed"></articles-list>
-                </div>
                         </template>
+                </div>
             </div>
         </div>
         <div class="right-sidebar" v-if="getConfig('made') === 'saudi'">
