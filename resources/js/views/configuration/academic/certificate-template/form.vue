@@ -51,7 +51,7 @@
 	            		<span v-if="certificateTemplateForm.type == 'employee'">{{employee_custom_fields.join(', ')}}</span>
 	            	</p>
                     <div class="form-group">
-                        <html-editor name="body" :model.sync="certificateTemplateForm.body" height="300" :isUpdate="id ? true : false" @clearErrors="certificateTemplateForm.errors.clear('body')"></html-editor>
+                        <v-textarea outlined name="body" v-model="certificateTemplateForm.body" height="300" @clearErrors="certificateTemplateForm.errors.clear('body')"></v-textarea>
                         <show-error :form-name="certificateTemplateForm" prop-name="body"></show-error>
                     </div>
 	            </div>	

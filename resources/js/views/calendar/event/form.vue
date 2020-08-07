@@ -126,7 +126,7 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
-                        <html-editor name="description" :model.sync="eventForm.description" height="300" :isUpdate="uuid ? true : false" @clearErrors="eventForm.errors.clear('description')"></html-editor>
+                        <v-textarea outlined name="description" v-model="eventForm.description" height="300" @clearErrors="eventForm.errors.clear('description')"></v-textarea>
                         <show-error :form-name="eventForm" prop-name="description"></show-error>
                     </div>
                 </div>

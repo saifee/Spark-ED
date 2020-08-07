@@ -112,7 +112,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <html-editor name="body" :model.sync="sendEmailForm.body" height="300" :isUpdate="false" @clearErrors="sendEmailForm.errors.clear('body')"></html-editor>
+                                    <v-textarea outlined name="body" v-model="sendEmailForm.body" height="300"  @clearErrors="sendEmailForm.errors.clear('body')"></v-textarea>
                                     <show-error :form-name="sendEmailForm" prop-name="body"></show-error>
                                 </div>
                             </div>

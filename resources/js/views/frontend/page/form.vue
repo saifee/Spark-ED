@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-12">
                     <div class="form-group">
-                        <html-editor name="body" :model.sync="pageForm.body" height="300" :isUpdate="uuid ? true : false" @clearErrors="pageForm.errors.clear('body')"></html-editor>
+                        <v-textarea outlined name="body" v-model="pageForm.body" height="300" @clearErrors="pageForm.errors.clear('body')"></v-textarea>
                         <show-error :form-name="pageForm" prop-name="body"></show-error>
                     </div>
                 </div>

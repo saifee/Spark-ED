@@ -92,7 +92,7 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label for="">{{trans('exam.online_exam_instructions')}}</label>
-                        <html-editor name="instructions" :model.sync="onlineExamForm.instructions" height="200" :isUpdate="uuid ? true : false" @clearErrors="onlineExamForm.errors.clear('instructions')"></html-editor>
+                        <v-textarea outlined name="instructions" v-model="onlineExamForm.instructions" height="200" @clearErrors="onlineExamForm.errors.clear('instructions')"></v-textarea>
                         <show-error :form-name="onlineExamForm" prop-name="instructions"></show-error>
                     </div>
                 </div>

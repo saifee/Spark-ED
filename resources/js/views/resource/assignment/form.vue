@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="form-group">
-                        <html-editor name="description" :model.sync="assignmentForm.description" height="300" :isUpdate="uuid ? true : false" @clearErrors="assignmentForm.errors.clear('description')"></html-editor>
+                        <v-textarea outlined name="description" v-model="assignmentForm.description" height="300" @clearErrors="assignmentForm.errors.clear('description')"></v-textarea>
                         <show-error :form-name="assignmentForm" prop-name="description"></show-error>
                     </div>
                 </div>

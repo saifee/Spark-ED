@@ -22,7 +22,7 @@
                             <show-error :form-name="templateForm" prop-name="subject"></show-error>
                         </div>
                         <div class="form-group">
-                            <html-editor name="body" :model.sync="templateForm.body" isUpdate="true" @clearErrors="templateForm.errors.clear('body')"></html-editor>
+                            <v-textarea outlined name="body" v-model="templateForm.body"  @clearErrors="templateForm.errors.clear('body')"></v-textarea>
                             <show-error :form-name="templateForm" prop-name="body"></show-error>
                         </div>
                         <div class="help-block">{{trans('utility.available_fields')}}: {{fields}}</div>
