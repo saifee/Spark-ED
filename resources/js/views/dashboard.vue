@@ -41,11 +41,11 @@
                                               </td>
                                                 </tr>
                                                 <tr>
-                                                  <td><b>Fee Total</b></td>
+                                                  <td><b>Fee Total/Sum</b></td>
                                                   <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total : '—' }}</td>
                                                 </tr>
                                                 <tr>
-                                                  <td><b>Fee Paid</b></td>
+                                                  <td><b>Fee Paid Sum</b></td>
                                                   <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid : '—' }}</td>
                                                 </tr>
                                                 <tr>
