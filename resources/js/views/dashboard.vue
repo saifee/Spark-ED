@@ -22,6 +22,10 @@
                                 <v-card class="mb-4">
                                     <v-card-text>
                                 <v-tabs>
+                                    <v-tab>Comparison</v-tab>
+                                    <v-tab>Planning</v-tab>
+                                    <v-tab-item>
+                                <v-tabs>
                                     <v-tab v-for="(academic_session, i) in academic_sessions" :key="`academic_session_tab${i}`">{{academic_session.name}}</v-tab>
                                     <v-tab-item v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">
                                         <v-simple-table>
@@ -56,6 +60,10 @@
                                         </v-simple-table>
                                     </v-tab-item>
                                 </v-tabs>
+                                </v-tab-item>
+                                <v-tab-item>
+                                </v-tab-item>
+                            </v-tabs>
                                     </v-card-text>
                                 </v-card>
                             </template>
