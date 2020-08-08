@@ -26,7 +26,7 @@ class NotesRequest extends FormRequest
         return [
             'title'       => 'required',
             'description' => 'required',
-            'subject_id'  => 'required'
+            // 'subject_id'  => 'required'
         ];
     }
 

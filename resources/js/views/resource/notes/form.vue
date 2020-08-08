@@ -3,6 +3,7 @@
         <form @submit.prevent="proceed" @keydown="notesForm.errors.clear($event.target.name)">
             <div class="row">
                 <div class="col-12 col-sm-6">
+                    <template v-if="!ambassador">
                     <div class="form-group">
                         <label for="">{{trans('academic.batch')}} </label>
                         <v-select label="name" v-model="selected_batch" group-values="batches" group-label="course_group" :group-select="false" name="batch_id" id="batch_id" :options="batches" :placeholder="trans('academic.select_batch')" @select="onBatchSelect" @close="notesForm.errors.clear('batch_id')" @remove="notesForm.batch_id = ''">
@@ -21,6 +22,7 @@
                         </v-select>
                         <show-error :form-name="notesForm" prop-name="subject_id"></show-error>
                     </div>
+                    </template>
                     <div class="form-group">
                         <label for="">{{trans('resource.notes_title')}}</label>
                         <input class="form-control" type="text" v-model="notesForm.title" name="title" :placeholder="trans('resource.notes_title')">
@@ -72,7 +74,7 @@
                 clearAttachment: true
             };
         },
-        props: ['uuid'],
+        props: ['uuid', 'ambassador'],
         mounted() {
             if(!helper.hasPermission('create-notes') && !helper.hasPermission('edit-notes')){
                 helper.notAccessibleMsg();

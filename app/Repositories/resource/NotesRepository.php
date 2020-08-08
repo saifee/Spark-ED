@@ -243,6 +243,19 @@ class NotesRepository
         $description = gv($params, 'description');
         $subject_id  = gv($params, 'subject_id');
 
+        if(blank($subject_id)) {
+            $subject_id = \App\Models\Academic\Subject::firstOrCreate([
+                'batch_id'=>\App\Models\Academic\Batch::firstOrCreate([
+                    'course_id'=>\App\Models\Academic\Course::firstOrCreate([
+                        'name'=>'Ambassador',
+                        'academic_session_id'=>config('config.default_academic_session.id'),
+                    ])->id,
+                    'name'=>'Ambassador',
+                ])->id,
+                'name'=>'Ambassador',
+            ])->id;
+        }
+
         $formatted = [
             'subject_id'  => $subject_id,
             'title'       => $title,

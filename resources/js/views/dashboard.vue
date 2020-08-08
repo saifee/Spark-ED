@@ -65,6 +65,7 @@
                                         </v-simple-table>
                                 </v-tab-item>
                                 <v-tab-item>
+                                    <notes :ambassador="true" />
                                 </v-tab-item>
                             </v-tabs>
                                     </v-card-text>
@@ -206,6 +207,7 @@
 </template>
 
 <script>
+    import Notes from '@views/resource/notes/index'
     import EventsList from '@js/widgets/events-list'
     import ArticlesList from '@js/widgets/articles-list'
     import barChart from './chart/bar-chart'
@@ -214,6 +216,7 @@
 
     export default {
         components: {
+            Notes,
             EventsList,
             ArticlesList,
             barChart,

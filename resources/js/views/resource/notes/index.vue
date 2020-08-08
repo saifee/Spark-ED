@@ -11,6 +11,7 @@
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
                         <button class="btn btn-info btn-sm" v-if="notes.total && !showCreatePanel && hasPermission('create-notes')" @click="showCreatePanel = !showCreatePanel" v-tooltip="trans('general.add_new')"><i class="fas fa-plus"></i> <span class="d-none d-sm-inline">{{trans('resource.add_new_notes')}}</span></button>
+                        <template v-if="!ambassador">
                         <button class="btn btn-info btn-sm" v-if="!showFilterPanel" @click="showFilterPanel = !showFilterPanel"><i class="fas fa-filter"></i> <span class="d-none d-sm-inline">{{trans('general.filter')}}</span></button>
                         <sort-by :order-by-options="orderByOptions" :sort-by="filter.sort_by" :order="filter.order" @updateSortBy="value => {filter.sort_by = value}"  @updateOrder="value => {filter.order = value}"></sort-by>
                         <div class="btn-group">
@@ -23,6 +24,7 @@
                             </div>
                         </div>
                         <help-button @clicked="help_topic = 'resource.notes'"></help-button>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -61,7 +63,7 @@
                 <div class="card card-form" v-if="showCreatePanel">
                     <div class="card-body">
                         <h4 class="card-title">{{trans('resource.add_new_notes')}}</h4>
-                        <notes-form @completed="getNotes" @cancel="showCreatePanel = !showCreatePanel"></notes-form>
+                        <notes-form @completed="getNotes" @cancel="showCreatePanel = !showCreatePanel" :ambassador="ambassador"></notes-form>
                     </div>
                 </div>
             </transition>
@@ -71,8 +73,10 @@
                         <table class="table table-sm">
                             <thead>
                                 <tr>
+                                    <template v-if="!ambassador">
                                     <th>{{trans('academic.subject')}}</th>
                                     <th>{{trans('academic.batch')}}</th>
+                                    </template>
                                     <th>{{trans('resource.notes_title')}}</th>
                                     <th>{{trans('resource.notes_posted_by')}}</th>
                                     <th>{{trans('general.created_at')}}</th>
@@ -81,8 +85,10 @@
                             </thead>
                             <tbody>
                                 <tr v-for="list in notes.data">
+                                    <template v-if="!ambassador">
                                     <td v-text="list.subject.name+' ('+list.subject.code+')'"></td>
                                     <td v-text="list.subject.batch.course.name+' '+list.subject.batch.name"></td>
+                                    </template>
                                     <td v-text="list.title"></td>
                                     <td>{{getEmployeeName(list.employee)}} <br > {{getEmployeeDesignationOnDate(list.employee, list.created_at)}}</td>
                                     <td>{{list.created_at | momentDateTime}}</td>
@@ -117,6 +123,11 @@
 
     export default {
         components : { notesForm,notesDetail},
+        props: {
+            ambassador: {
+                default: false,
+            },
+        },
         data() {
             return {
                 notes: {
