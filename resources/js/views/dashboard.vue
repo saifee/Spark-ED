@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" v-if="getConfig('made') === 'saudi'">
             <div class="row">
                 <div class="col-12 col-md-8">
                     <div class="card border-right">
