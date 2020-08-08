@@ -25,41 +25,44 @@
                                     <v-tab>Comparison</v-tab>
                                     <v-tab>Planning</v-tab>
                                     <v-tab-item>
-                                <v-tabs>
-                                    <v-tab v-for="(academic_session, i) in academic_sessions" :key="`academic_session_tab${i}`">{{academic_session.name}}</v-tab>
-                                    <v-tab-item v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">
                                         <v-simple-table>
                                             <template v-slot:default>
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th v-for="(academic_session, i) in academic_sessions" :key="`academic_session_tab${i}`">{{academic_session.name}}</th>
+                                                    </tr>
+                                                </thead>
                                               <tbody>
                                                 <tr>
                                                   <td><b>Total Students</b></td>
-                                                  <td>{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_students : '—' }}</td>
+                                    <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">
+                                                  {{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_students : '—' }}
+                                              </td>
                                                 </tr>
                                                 <tr>
                                                   <td><b>Fee Total</b></td>
-                                                  <td>{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total : '—' }}</td>
+                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total : '—' }}</td>
                                                 </tr>
                                                 <tr>
                                                   <td><b>Fee Paid</b></td>
-                                                  <td>{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid : '—' }}</td>
+                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid : '—' }}</td>
                                                 </tr>
                                                 <tr>
                                                   <td><b>Remaining Fee</b></td>
-                                                  <td>{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total - academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid : '—' }}</td>
+                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total - academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid : '—' }}</td>
                                                 </tr>
                                                 <tr>
                                                   <td><b>Total Employee</b></td>
-                                                  <td>{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_employee : '—' }}</td>
+                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_employee : '—' }}</td>
                                                 </tr>
                                                 <tr>
                                                   <td><b>Total Salary</b></td>
-                                                  <td>{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_salary : '—' }}</td>
+                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_salary : '—' }}</td>
                                                 </tr>
                                               </tbody>
                                             </template>
                                         </v-simple-table>
-                                    </v-tab-item>
-                                </v-tabs>
                                 </v-tab-item>
                                 <v-tab-item>
                                 </v-tab-item>
