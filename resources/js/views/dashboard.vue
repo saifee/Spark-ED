@@ -40,6 +40,10 @@
                                                   <td>{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid : '—' }}</td>
                                                 </tr>
                                                 <tr>
+                                                  <td><b>Remaining Fee</b></td>
+                                                  <td>{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total - academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid : '—' }}</td>
+                                                </tr>
+                                                <tr>
                                                   <td><b>Total Employee</b></td>
                                                   <td>{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_employee : '—' }}</td>
                                                 </tr>
