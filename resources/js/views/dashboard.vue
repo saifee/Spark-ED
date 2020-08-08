@@ -30,7 +30,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th></th>
-                                                        <th v-for="(academic_session, i) in academic_sessions" :key="`academic_session_tab${i}`">{{academic_session.name}}</th>
+                                                        <th v-for="(academic_session, i) in academic_sessions" :key="`academic_session_tab${i}`"><b>{{academic_session.name}}</b></th>
                                                     </tr>
                                                 </thead>
                                               <tbody>
