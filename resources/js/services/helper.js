@@ -585,6 +585,7 @@ export default {
     },
 
     formatCurrency(price){
+        if (!price) return 0
         var currency = helper.getConfig('default_currency');
         let decimal_place = currency.decimal_place || 2;
         let amount = (currency.format == 'indian') ? this.indianCurrencyString(this.roundNumber(price,decimal_place)) : price.format(decimal_place, 3, ',', '.');
