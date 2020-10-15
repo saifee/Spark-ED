@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-toolbar flat>
-      <v-toolbar-title>{{ trans('spark.utility_engage_others') }}</v-toolbar-title>
+      <v-toolbar-title>{{ trans('todo.engage_others') }}</v-toolbar-title>
       <v-spacer />
       <v-dialog
         v-model="dialogAddTodoEmployeeEmployee"
@@ -38,7 +38,7 @@
                     :items="employee_employees"
                     item-text="name"
                     item-value="id"
-                    :label="trans('spark.utility_employee_employee')"
+                    :label="trans('todo.employee_employee')"
                     color="primary"
                     :error="todoForm.errors.has('employee_employee_id')"
                     :persistent-hint="todoForm.errors.has('employee_employee_id')"
@@ -53,7 +53,7 @@
                     v-model="todoForm.percentage"
                     outlined
                     dense
-                    :label="trans('spark.utility_percentage')"
+                    :label="trans('todo.percentage')"
                     color="primary"
                     :error="todoForm.errors.has('percentage')"
                     :persistent-hint="todoForm.errors.has('percentage')"
@@ -138,7 +138,7 @@
         },
         computed: {
           formTitle () {
-            return this.editedIndex === -1 ? i18n.spark.utility_add_todo_employee_employee : i18n.spark.utility_edit_todo_employee_employee
+            return this.editedIndex === -1 ? i18n.todo.add_todo_employee_employee : i18n.todo.edit_todo_employee_employee
           }
         },
         mounted() {

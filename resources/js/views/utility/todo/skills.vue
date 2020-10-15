@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-toolbar flat>
-      <v-toolbar-title>{{ trans('spark.utility_skills_required') }}</v-toolbar-title>
+      <v-toolbar-title>{{ trans('todo.skills_required') }}</v-toolbar-title>
       <v-spacer />
       <v-dialog
         v-model="dialogAddTodoEmployeeSkill"
@@ -38,7 +38,7 @@
                     :items="employee_skills"
                     item-text="name"
                     item-value="id"
-                    :label="trans('spark.utility_employee_skill')"
+                    :label="trans('todo.employee_skill')"
                     color="primary"
                     :error="todoForm.errors.has('employee_skill_id')"
                     :persistent-hint="todoForm.errors.has('employee_skill_id')"
@@ -53,7 +53,7 @@
                     v-model="todoForm.percentage"
                     outlined
                     dense
-                    :label="trans('spark.utility_percentage')"
+                    :label="trans('todo.percentage')"
                     color="primary"
                     :error="todoForm.errors.has('percentage')"
                     :persistent-hint="todoForm.errors.has('percentage')"
@@ -138,7 +138,7 @@
         },
         computed: {
           formTitle () {
-            return this.editedIndex === -1 ? i18n.spark.utility_add_todo_employee_skill : i18n.spark.utility_edit_todo_employee_skill
+            return this.editedIndex === -1 ? i18n.todo.add_todo_employee_skill : i18n.todo.edit_todo_employee_skill
           }
         },
         mounted() {
