@@ -94,7 +94,9 @@ class AttendanceRepository
             });
         }
 
-        $student_records = $query->select('student_records.*', \DB::raw('(SELECT concat_ws(" ", first_name,middle_name,last_name) FROM students WHERE student_records.student_id = students.id ) as name'))->orderBy('name','asc')->get();
+        $student_records = $query->select('student_records.*', \DB::raw('(SELECT concat_ws(" ", first_name,middle_name,last_name) FROM students WHERE student_records.student_id = students.id ) as name'))
+            ->whereNull('date_of_exit')
+            ->orderBy('name','asc')->get();
 
         if (! $batch_id) {
             throw ValidationException::withMessages(['message' => trans('academic.could_not_find_batch')]);
