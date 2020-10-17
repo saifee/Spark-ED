@@ -121,7 +121,9 @@ class HomeRepository
         $academic_sessions_detail = [];
         foreach ($academic_sessions as $academic_session) {
             $academic_sessions_detail[$academic_session->id] = [
-                'total_students' => \App\Models\Student\StudentRecord::filterBySession($academic_session->id)->whereNull('date_of_exit')->count(),
+                'total_students' => \App\Models\Student\StudentRecord::filterBySession($academic_session->id)
+                    ->whereNull('date_of_exit')
+                    ->count(),
                 'fee_summary' => HomeRepository2::getFeeSummaryData($academic_session->id),
                 'total_employee' => HomeRepository2::getEmployeeData($academic_session),
                 'total_salary' => HomeRepository2::getEmployeeSalaryData($academic_session),
