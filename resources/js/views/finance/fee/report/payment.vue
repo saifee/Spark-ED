@@ -237,8 +237,8 @@
         },
         mounted(){
             if(!helper.hasPermission('access-fee-report')){
-                helper.notAccessibleMsg();
-                this.$router.push('/dashboard');
+                // helper.notAccessibleMsg();
+                // this.$router.push('/dashboard');
             }
 
             this.getPayment();

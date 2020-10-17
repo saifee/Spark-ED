@@ -180,8 +180,8 @@
         },
         mounted(){
             if(!helper.hasPermission('access-transaction-report')){
-                helper.notAccessibleMsg();
-                this.$router.push('/dashboard');
+                // helper.notAccessibleMsg();
+                // this.$router.push('/dashboard');
             }
             this.getPreRequisite();
 
