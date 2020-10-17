@@ -7,4 +7,8 @@
   'percentage' => 'Percentage',
   'add_todo_employee_skill' => 'Add Todo Employee Skill',
   'edit_todo_employee_skill' => 'Edit Todo Employee Skill',
+  'add_todo_task' => 'Add Todo Task',
+  'edit_todo_task' => 'Edit Todo Task',
+  'add_todo_employee_employee' => 'Add Todo Employee',
+  'edit_todo_employee_employee' => 'Edit Todo Employee',
 );
