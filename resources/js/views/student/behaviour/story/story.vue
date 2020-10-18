@@ -35,7 +35,7 @@
         </template>
         <template v-if="story.type === 'file'">
           <v-col cols="12">
-            <a :href="story.attachment">{{ story.attachment }}</a>
+            <a target="_blank" :href="`/storage/${story.attachment}`">view file</a>
           </v-col>
         </template>
         <v-col cols="12">
