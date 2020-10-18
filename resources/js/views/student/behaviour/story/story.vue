@@ -31,7 +31,7 @@
         <template v-if="story.type === 'photo'">
           <v-col cols="12">
             <v-img
-              :src="story.attachment"
+              :src="`/storage/{story.attachment}`"
             />
           </v-col>
         </template>
