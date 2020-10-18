@@ -47,8 +47,12 @@ class ActivityLogRepository
         $sort_by     = gv($params, 'sort_by', 'created_at');
         $order       = gv($params, 'order', 'desc');
         $page_length = gv($params, 'page_length', config('config.page_length'));
+        $user_id    = gv($params, 'user_id');
 
-        return $this->activity_log->orderBy($sort_by, $order)->paginate($page_length);
+        return $this->activity_log
+            ->filterByUserId($user_id)
+            ->orderBy($sort_by, $order)
+            ->paginate($page_length);
     }
 
     /**
