@@ -46,13 +46,21 @@ class StoryController extends Controller
      */
     public function store(Request $request)
     {
+        $attachment = null;
+
+        if ($request->hasFile('photo')){
+            $attachment = \Storage::disk('public')->putFile('story-photos', $request->file('photo'));
+        } elseif ($request->hasFile('file')){
+            $attachment = \Storage::disk('public')->putFile('story-files', $request->file('file'));
+        }
+
         Story::create([
             'uuid'                => Str::uuid(),
             'academic_session_id' => config('config.default_academic_session.id'),
             'batch_id'            => $request->input('batch_id'),
             'type'                => $request->input('type'),
             'content'             => $request->input('content'),
-            'attachment'          => $request->has('attachment') ? null : null,
+            'attachment'          => $attachment,
             'user_id'             => auth()->user()->id,
             'options'             => [],
         ]);

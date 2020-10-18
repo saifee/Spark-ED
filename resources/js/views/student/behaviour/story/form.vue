@@ -28,6 +28,7 @@
       </v-card-text>
       <v-card-actions>
         <v-file-input
+          v-model="photo"
           text
           color="primary"
           small
@@ -40,6 +41,7 @@
           hide-details
         />
         <v-file-input
+          v-model="file"
           text
           color="primary"
           small
@@ -72,6 +74,8 @@
               batch_id : '',
               content : '',
           }),
+          photo: null,
+          file: null,
         }),
         mounted(){
           this.storyForm.batch_id = this.$route.params.batch_id
@@ -84,8 +88,23 @@
                 if (this.storyForm.type === '') {
                   this.storyForm.type = 'text'
                 }
+                let data = new FormData()
+                data.append('type', this.storyForm.type)
+                data.append('batch_id', this.storyForm.batch_id)
+                data.append('content', this.storyForm.content)
+                if (this.photo) {
+                  data.type = 'photo'
+                  data.append('photo', this.photo)
+                }
+                if (this.file) {
+                  data.type = 'file'
+                  data.append('file', this.file)
+                }
                 let loader = this.$loading.show();
-                this.storyForm.post('/api/behaviour/stories')
+                let headers = {
+                  'Content-Type': 'multipart/form-data'
+                }
+                this.axios.post('/api/behaviour/stories', data, { headers })
                     .then(response => {
                         toastr.success(response.message);
                         this.$emit('completed');
