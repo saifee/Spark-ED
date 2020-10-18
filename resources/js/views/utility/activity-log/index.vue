@@ -10,12 +10,31 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <div class="action-buttons pull-right">
+                        <button class="btn btn-info btn-sm" v-if="!showFilterPanel" @click="showFilterPanel = !showFilterPanel"><i class="fas fa-filter"></i> <span class="d-none d-sm-inline">{{trans('general.filter')}}</span></button>
                         <sort-by :order-by-options="orderByOptions" :sort-by="filter.sort_by" :order="filter.order" @updateSortBy="value => {filter.sort_by = value}"  @updateOrder="value => {filter.order = value}"></sort-by>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container-fluid">
+            <transition name="fade">
+                <div class="card card-form" v-if="showFilterPanel">
+                    <div class="card-body">
+                        <h4 class="card-title">{{trans('general.filter')}}</h4>
+                        <div class="row">
+                            <div class="col-12 col-sm-2">
+                                <div class="form-group">
+                                    <v-autocomplete :items="users" outlined dense :label="trans('user.user')" item-value="id" item-text="username" v-model="filter.user_id"></v-autocomplete>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-right">
+                            <button type="button" @click="showFilterPanel = false" class="btn btn-danger">{{trans('general.cancel')}}</button>
+                            <button type="button" class="btn btn-info waves-effect waves-light" @click="getActivityLogs">{{trans('general.filter')}}</button>
+                        </div>
+                    </div>
+                </div>
+            </transition>
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive" v-if="activity_logs.total">
@@ -74,6 +93,8 @@
                         translation: i18n.general.created_at
                     }
                 ],
+                showFilterPanel: false,
+                users: [],
                 showDetailModal: false
             };
         },
@@ -89,8 +110,20 @@
             }
 
             this.getActivityLogs();
+            this.getUsers();
         },
         methods: {
+            getUsers(){
+                axios.get('/api/yousers')
+                    .then(response => {
+                        this.users = response;
+                        loader.hide();
+                    })
+                    .catch(error => {
+                        loader.hide();
+                        helper.showErrorMsg(error);
+                    });
+            },
             getActivityLogs(page){
                 let loader = this.$loading.show();
                 if (typeof page !== 'number') {
