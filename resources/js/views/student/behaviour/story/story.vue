@@ -23,11 +23,9 @@
         </v-row>
       </v-list-item>
       <v-row>
-        <template v-if="story.type === 'text'">
           <v-col cols="12">
             {{ story.content }}
           </v-col>
-        </template>
         <template v-if="story.type === 'photo'">
           <v-col cols="12">
             <v-img
