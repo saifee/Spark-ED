@@ -27,7 +27,6 @@
         <v-divider class="my-0" />
       </v-card-text>
       <v-card-actions>
-        <!-- 
         <v-btn
           text
           color="primary"
@@ -54,7 +53,6 @@
           </v-icon>
           {{ trans('general.file') }}
         </v-btn>
-         -->
         <v-spacer />
         <v-btn
           color="primary"
