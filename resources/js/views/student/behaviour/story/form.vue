@@ -27,32 +27,30 @@
         <v-divider class="my-0" />
       </v-card-text>
       <v-card-actions>
-        <v-btn
+        <v-file-input
           text
           color="primary"
           small
-        >
-          <v-icon
-            left
-            small
-          >
-            camera_alt
-          </v-icon>
-          {{ trans('story.photo') }}
-        </v-btn>
-        <v-btn
+          prepend-icon=""
+          prepend-inner-icon="camera_alt"
+          :placeholder="trans('story.photo')"
+          solo
+          dense
+          flat
+          hide-details
+        />
+        <v-file-input
           text
           color="primary"
           small
-        >
-          <v-icon
-            left
-            small
-          >
-            attach_file
-          </v-icon>
-          {{ trans('general.file') }}
-        </v-btn>
+          prepend-icon=""
+          prepend-inner-icon="attach_file"
+          :placeholder="trans('general.file')"
+          solo
+          dense
+          flat
+          hide-details
+        />
         <v-spacer />
         <v-btn
           color="primary"
