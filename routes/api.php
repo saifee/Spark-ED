@@ -1502,6 +1502,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::patch('/stock/transfer/{id}', 'Inventory\StockTransferController@update');
     Route::delete('/stock/transfer/{id}', 'Inventory\StockTransferController@destroy');
 });
+Route::get('/yousers', 'UserController@index');
 
 Route::any('/{var?}', function () {
     return response()->json(['message' => 'API Endpoint Not Found!'], 404);
