@@ -24,6 +24,7 @@
                         <div class="row">
                             <div class="col-12 col-sm-2">
                                 <div class="form-group">
+                                    <label for="">{{trans('user.user')}}</label>
                                     <v-autocomplete :items="users" outlined dense :label="trans('user.user')" item-value="id" item-text="username" v-model="filter.user_id"></v-autocomplete>
                                 </div>
                             </div>
