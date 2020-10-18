@@ -93,11 +93,11 @@
                 data.append('batch_id', this.storyForm.batch_id)
                 data.append('content', this.storyForm.content)
                 if (this.photo) {
-                  data.type = 'photo'
+                  data.append('type', 'photo')
                   data.append('photo', this.photo)
                 }
                 if (this.file) {
-                  data.type = 'file'
+                  data.append('type', 'file')
                   data.append('file', this.file)
                 }
                 let loader = this.$loading.show();
