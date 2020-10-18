@@ -28,6 +28,11 @@
                                     <v-autocomplete :items="users" outlined dense :label="trans('user.user')" item-value="id" item-text="username" v-model="filter.user_id"></v-autocomplete>
                                 </div>
                             </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <date-range-picker :start-date.sync="filter.start_date" :end-date.sync="filter.end_date" :label="trans('general.date_between')"></date-range-picker>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer text-right">
                             <button type="button" @click="showFilterPanel = false" class="btn btn-danger">{{trans('general.cancel')}}</button>

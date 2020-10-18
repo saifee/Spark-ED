@@ -46,4 +46,13 @@ class ActivityLog extends Model
 
         return $q->where('causer_id', '=', $user_id);
     }
+
+    public function scopeDateBetween($q, $dates)
+    {
+        if ((! $dates['start_date'] || ! $dates['end_date']) && $dates['start_date'] <= $dates['end_date']) {
+            return $q;
+        }
+
+        return $q->where('created_at', '>=', getStartOfDate($dates['start_date']))->where('created_at', '<=', getEndOfDate($dates['end_date']));
+    }
 }

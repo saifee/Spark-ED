@@ -48,9 +48,15 @@ class ActivityLogRepository
         $order       = gv($params, 'order', 'desc');
         $page_length = gv($params, 'page_length', config('config.page_length'));
         $user_id    = gv($params, 'user_id');
+        $start_date = gv($params, 'start_date');
+        $end_date   = gv($params, 'end_date');
 
         return $this->activity_log
             ->filterByUserId($user_id)
+            ->dateBetween([
+                'start_date' => $start_date,
+                'end_date' => $end_date
+            ])
             ->orderBy($sort_by, $order)
             ->paginate($page_length);
     }
