@@ -33,6 +33,12 @@
                                     <date-range-picker :start-date.sync="filter.start_date" :end-date.sync="filter.end_date" :label="trans('general.date_between')"></date-range-picker>
                                 </div>
                             </div>
+                            <div class="col-12 col-sm-2">
+                                <div class="form-group">
+                                    <label for="">{{trans('utility.activity_log_description')}}</label>
+                                    <input class="form-control" name="name" v-model="filter.description">
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer text-right">
                             <button type="button" @click="showFilterPanel = false" class="btn btn-danger">{{trans('general.cancel')}}</button>

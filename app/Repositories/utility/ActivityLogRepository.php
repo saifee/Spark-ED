@@ -50,6 +50,7 @@ class ActivityLogRepository
         $user_id    = gv($params, 'user_id');
         $start_date = gv($params, 'start_date');
         $end_date   = gv($params, 'end_date');
+        $description = gv($params, 'description');
 
         return $this->activity_log
             ->filterByUserId($user_id)
@@ -57,6 +58,7 @@ class ActivityLogRepository
                 'start_date' => $start_date,
                 'end_date' => $end_date
             ])
+            ->filterByDescription($description)
             ->orderBy($sort_by, $order)
             ->paginate($page_length);
     }

@@ -55,4 +55,13 @@ class ActivityLog extends Model
 
         return $q->where('created_at', '>=', getStartOfDate($dates['start_date']))->where('created_at', '<=', getEndOfDate($dates['end_date']));
     }
+
+    public function scopeFilterByDescription($q, $description)
+    {
+        if (! $description) {
+            return $q;
+        }
+
+        return $q->where('description', 'like', '%'.$description.'%');
+    }
 }
