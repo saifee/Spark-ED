@@ -143,7 +143,7 @@
                                 timer: 1500
                             })
                             this.$root.getAccounts()
-                            this.$validator.reset()
+                            // this.$validator.reset()
                             this.userInfo={}
                         }).catch(error => {
                             let err

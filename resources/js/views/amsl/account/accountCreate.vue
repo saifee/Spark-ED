@@ -114,7 +114,7 @@
                                 timer: 1500
                             })
                             this.$root.getAccounts()
-                            this.$validator.reset()
+                            // this.$validator.reset()
                             this.account={}
                         }).catch(error => {
                             let err

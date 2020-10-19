@@ -273,7 +273,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            this.$validator.reset()
+                            // this.$validator.reset()
                             this.regular = {}
                             this.$parent.callEditModal(false)
                             this.$router.push({path:'/regular'})

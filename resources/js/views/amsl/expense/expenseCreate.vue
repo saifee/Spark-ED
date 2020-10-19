@@ -439,7 +439,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            this.$validator.reset()
+                            // this.$validator.reset()
                             this.expense={tax_rate:0,expense_date:new Date()}
                             this.btnDisabled=false
                         }).catch(error => {

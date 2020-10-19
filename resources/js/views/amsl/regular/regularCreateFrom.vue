@@ -258,7 +258,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            this.$validator.reset()
+                            // this.$validator.reset()
                             this.regular = {date: new Date()}
                             this.$parent.callModal(false)
                             this.$router.push({path:'/regular'})

@@ -133,7 +133,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            this.$validator.reset()
+                            // this.$validator.reset()
                             this.employee={}
                         }).catch(error => {
                             let err

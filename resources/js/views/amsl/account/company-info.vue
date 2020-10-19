@@ -155,7 +155,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            this.$validator.reset()
+                            // this.$validator.reset()
                             this.$router.push({name:'dashboardAmsl'})
                             window.location.reload();
                         }).catch(error => {

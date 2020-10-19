@@ -221,7 +221,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            this.$validator.reset()
+                            // this.$validator.reset()
                             this.equity={equity_date:new Date()}
                             this.btnDisabled=false
                         }).catch(error => {

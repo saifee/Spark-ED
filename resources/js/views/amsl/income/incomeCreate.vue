@@ -273,7 +273,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            this.$validator.reset()
+                            // this.$validator.reset()
                             this.income={tax_rate:0,income_date:new Date()}
                             this.btnDisabled=false
                         }).catch(error => {

@@ -171,7 +171,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            this.$validator.reset()
+                            // this.$validator.reset()
                             this.userInfo.admin_password=null
                         }).catch(error => {
                             let err
