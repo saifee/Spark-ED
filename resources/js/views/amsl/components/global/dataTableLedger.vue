@@ -152,7 +152,7 @@
         v-else
         class="center-screen"
       />
-      <div class="footer table__footer">
+      <div class="table__footer">
         <div class="bottomAdjust">
           <div>
             <div class="dataTables_length">
