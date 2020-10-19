@@ -36,7 +36,7 @@
                             <div class="col-12 col-sm-2">
                                 <div class="form-group">
                                     <label for="">{{trans('utility.activity_log_description')}}</label>
-                                    <input class="form-control" name="name" v-model="filter.description">
+                                    <v-text-field v-model="filter.description">
                                 </div>
                             </div>
                         </div>
