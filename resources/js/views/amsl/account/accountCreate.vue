@@ -113,7 +113,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            this.$root.getAccounts()
+                            // this.$root.getAccounts()
                             // this.$validator.reset()
                             this.account={}
                         }).catch(error => {

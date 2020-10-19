@@ -113,7 +113,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             })
-                            this.$root.getAccounts()
+                            // this.$root.getAccounts()
                         }).catch(error => {
                             let err
                             let errs = error.response.data.errors
