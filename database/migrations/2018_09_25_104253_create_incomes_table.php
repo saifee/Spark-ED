@@ -16,7 +16,7 @@ class CreateIncomesTable extends Migration
         Schema::create('amsl_incomes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('account_id')->index()->unsigned();
-            $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
+            $table->foreign('account_id')->references('id')->on('amsl_accounts')->onDelete('cascade');
             $table->string('ref')->index();
             $table->decimal('amount',14,2)->index();
             $table->float('tax_rate',10,2)->nullable();

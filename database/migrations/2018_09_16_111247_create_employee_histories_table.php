@@ -16,7 +16,7 @@ class CreateEmployeeHistoriesTable extends Migration
         Schema::create('amsl_employee_histories', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id')->index()->unsigned();
-            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
+            $table->foreign('employee_id')->references('id')->on('amsl_employees')->onDelete('cascade');
             $table->timestamp('start_date')->index();
             $table->timestamp('end_date')->nullable()->index();
             $table->string('description')->nullable();
