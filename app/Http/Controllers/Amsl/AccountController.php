@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Amsl;
 use App\Models\Amsl\Account;
 use App\Models\Amsl\Asset;
 use App\Models\Amsl\Expense;
-use App\Http\Requests\AmslAccountRequest;
+use App\Http\Requests\Amsl\AccountRequest;
 use App\Traits\Amsl\CashAndBankTrait;
 use App\Traits\Amsl\DashboardTrait;
 use App\Models\Amsl\Income;

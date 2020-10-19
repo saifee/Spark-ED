@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Amsl;
 use App\Models\Amsl\Employee;
 use App\Models\Amsl\EmployeeHistory;
 use App\Models\Amsl\Expense;
-use App\Http\Requests\AmslEmployeeRequest;
+use App\Http\Requests\Amsl\EmployeeRequest;
 use App\Models\Amsl\Liability;
 use Illuminate\Http\Request;
 

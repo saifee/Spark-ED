@@ -6,7 +6,7 @@ use App\Models\Amsl\Account;
 use App\Models\Amsl\Category;
 use App\Models\Amsl\Employee;
 use App\Models\Amsl\Expense;
-use App\Http\Requests\AmslExpenseRequest;
+use App\Http\Requests\Amsl\ExpenseRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

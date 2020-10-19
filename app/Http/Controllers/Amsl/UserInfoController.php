@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Amsl;
 
-use App\Http\Requests\AmslUserInfoRequest;
+use App\Http\Requests\Amsl\UserInfoRequest;
 use App\Models\Amsl\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;

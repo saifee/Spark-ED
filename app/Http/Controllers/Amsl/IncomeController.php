@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Amsl;
 
 use App\Models\Amsl\Account;
-use App\Http\Requests\AmslIncomeRequest;
+use App\Http\Requests\Amsl\IncomeRequest;
 use App\Models\Amsl\Income;
 use Illuminate\Http\Request;
 

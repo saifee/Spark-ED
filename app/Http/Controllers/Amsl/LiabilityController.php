@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Amsl;
 
 use App\Models\Amsl\Account;
-use App\Http\Requests\AmslLiabilityRequest;
+use App\Http\Requests\Amsl\LiabilityRequest;
 use App\Models\Amsl\Liability;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

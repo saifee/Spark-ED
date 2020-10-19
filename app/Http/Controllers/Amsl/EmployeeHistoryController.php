@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Amsl;
 
 use App\Models\Amsl\Employee;
 use App\Models\Amsl\EmployeeHistory;
-use App\Http\Requests\AmslEmployeeHistroyRequest;
+use App\Http\Requests\Amsl\EmployeeHistroyRequest;
 use Illuminate\Http\Request;
 
 class EmployeeHistoryController extends Controller

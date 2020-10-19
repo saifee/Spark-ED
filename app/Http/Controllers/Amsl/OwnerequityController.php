@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Amsl;
 
 use App\Models\Amsl\Account;
-use App\Http\Requests\AmslOwnerEquityRequest;
+use App\Http\Requests\Amsl\OwnerEquityRequest;
 use App\Models\Amsl\Ownerequity;
 use Illuminate\Http\Request;
 

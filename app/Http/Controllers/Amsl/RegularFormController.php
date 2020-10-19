@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Amsl;
 
-use App\Http\Requests\AmslRegularFormRequest;
+use App\Http\Requests\Amsl\RegularFormRequest;
 use App\Models\Amsl\RegularForm;
 use Illuminate\Http\Request;
 
