@@ -233,12 +233,7 @@
                         this.btnDisabled=true
                         this.liability['asset_id']=this.liability.asset?this.liability.asset.id:null
                         axios.patch('/amsl-api'+'/liability/'+this.$route.params.id,this.liability).then(response => {
-                            toastr.success(response.message);/* this.$swal */({
-                                // type: response.data.type,
-                                // title: response.data.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            toastr.success(response.message);
                             // this.$validator.reset()
                             this.btnDisabled=false
                         }).catch(error => {

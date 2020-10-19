@@ -122,12 +122,7 @@
                 Promise.resolve(true).then((result) => {
                     if (result) {
                         axios.post('/amsl-api'+'/employee/history',this.history).then(response => {
-                            toastr.success(response.message);/* this.$swal */({
-                                // type: response.data.type,
-                                // title: response.data.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            toastr.success(response.message);
                             // this.$validator.reset()
                             this.history={}
                         }).catch(error => {

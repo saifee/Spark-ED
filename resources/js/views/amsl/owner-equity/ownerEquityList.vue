@@ -77,12 +77,7 @@
                         axios.delete('/amsl-api'+'/owner-equity/' + id).then(response => {
                             var dataTable = this.$refs.dataTable
                             dataTable.getResult();
-                            toastr.success(response.message);/* this.$swal */({
-                                type: response.data.message.type,
-                                title: response.data.message.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            toastr.success(response.message);
                         });
                     }
                 });

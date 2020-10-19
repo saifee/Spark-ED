@@ -267,12 +267,7 @@
                         this.btnDisabled=false
                         this.income['asset_id']=this.income.payable_details?this.income.payable_details.id:null
                         axios.patch('/amsl-api'+'/income/'+this.$route.params.id,this.income).then(response => {
-                            toastr.success(response.message);/* this.$swal */({
-                                // type: response.data.type,
-                                // title: response.data.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            toastr.success(response.message);
                             this.btnDisabled=true
                         }).catch(error => {
                             let err

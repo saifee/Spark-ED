@@ -249,12 +249,7 @@
                         }
 
                         axios.post('/amsl-api'+'/asset', this.asset).then(response => {
-                            toastr.success(response.message);/* this.$swal */({
-                                // type: response.data.type,
-                                // title: response.data.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            toastr.success(response.message);
                             // this.$validator.reset()
                             this.asset = {asset_date: new Date()}
                             this.btnDisabled = false

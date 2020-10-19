@@ -267,12 +267,7 @@
                     if (result) {
                         this.btnDisabled = true
                         axios.patch('/amsl-api'+'/regular-form/'+this.id, this.regular).then(response => {
-                            toastr.success(response.message);/* this.$swal */({
-                                // type: response.data.type,
-                                // title: response.data.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            toastr.success(response.message);
                             // this.$validator.reset()
                             this.regular = {}
                             this.$parent.callEditModal(false)

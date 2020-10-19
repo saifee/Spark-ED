@@ -165,12 +165,7 @@
                 Promise.resolve(true).then((result) => {
                     if (result) {
                         axios.patch('/amsl-api'+'/user-info/'+this.$route.params.id,this.userInfo).then(response => {
-                            toastr.success(response.message);/* this.$swal */({
-                                // type: response.data.type,
-                                // title: response.data.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            toastr.success(response.message);
                             // this.$validator.reset()
                             this.userInfo.admin_password=null
                         }).catch(error => {

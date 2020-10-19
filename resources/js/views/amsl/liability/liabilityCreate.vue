@@ -222,12 +222,7 @@
                         this.btnDisabled=true
                         this.liability['asset_id']=this.liability.asset?this.liability.asset.id:null
                         axios.post('/amsl-api'+'/liability',this.liability).then(response => {
-                            toastr.success(response.message);/* this.$swal */({
-                                // type: response.data.type,
-                                // title: response.data.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            toastr.success(response.message);
                             // this.$validator.reset()
                             this.liability={liability_date:new Date()}
                             this.btnDisabled=false

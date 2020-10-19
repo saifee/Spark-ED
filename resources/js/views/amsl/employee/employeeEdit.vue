@@ -129,12 +129,7 @@
                 Promise.resolve(true).then((result) => {
                     if (result) {
                         axios.patch('/amsl-api'+'/employee/'+this.$route.params.id,this.employee).then(response => {
-                            toastr.success(response.message);/* this.$swal */({
-                                // type: response.data.type,
-                                // title: response.data.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            toastr.success(response.message);
                         }).catch(error => {
                             let err
                             let errs = error.response.data.errors

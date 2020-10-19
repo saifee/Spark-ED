@@ -107,12 +107,7 @@
                 Promise.resolve(true).then((result) => {
                     if (result) {
                         axios.patch('/amsl-api'+'/account/'+this.$route.params.id,this.account).then(response => {
-                            toastr.success(response.message);/* this.$swal */({
-                                // type: response.data.type,
-                                // title: response.data.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            toastr.success(response.message);
                             // this.$root.getAccounts()
                         }).catch(error => {
                             let err

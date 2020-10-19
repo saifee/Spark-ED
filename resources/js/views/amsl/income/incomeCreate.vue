@@ -267,12 +267,7 @@
                         this.btnDisabled=true
                         this.income['asset_id']=this.income.payable_details?this.income.payable_details.id:null
                         axios.post('/amsl-api'+'/income',this.income).then(response => {
-                            toastr.success(response.message);/* this.$swal */({
-                                // type: response.data.type,
-                                // title: response.data.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
+                            toastr.success(response.message);
                             // this.$validator.reset()
                             this.income={tax_rate:0,income_date:new Date()}
                             this.btnDisabled=false
