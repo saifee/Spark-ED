@@ -1,5 +1,6 @@
 import configRoutes from './config';
 import utilityRoutes from './utility';
+import amslRoutes from './amsl';
 import sparkRoutes from './spark';
 
 export default [
@@ -46,6 +47,13 @@ export default [
         component: () => import(/* webpackChunkName: "js/utility" */ '@views/utility/layout/index'),
         children: [
         	...utilityRoutes
+        ]
+    },
+    {
+        path: '/amsl',
+        component: () => import(/* webpackChunkName: "js/amsl/home" */ '@views/amsl/home'),
+        children: [
+            ...amslRoutes
         ]
     },
     {

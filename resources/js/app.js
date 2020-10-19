@@ -7,6 +7,7 @@
 
 require('./bootstrap');
 require('./auth');
+require('./amsl');
 
 import store from './store'
 import router from './routes'
