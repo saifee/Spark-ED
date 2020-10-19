@@ -149,7 +149,7 @@
                             }
                         })
                             .then(response => {
-                            this.$swal({
+                            /* this.$swal */({
                                 type: response.data.type,
                                 title: response.data.message,
                                 showConfirmButton: false,

@@ -67,7 +67,7 @@
                         axios.delete('/amsl-api'+'/account/' + id).then(response => {
                             var dataTable = this.$refs.dataTable
                             dataTable.getResult();
-                            this.$swal({
+                            /* this.$swal */({
                                 type: response.data.message.type,
                                 title: response.data.message.message,
                                 showConfirmButton: false,

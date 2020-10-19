@@ -222,7 +222,7 @@
                         this.btnDisabled=true
                         this.liability['asset_id']=this.liability.asset?this.liability.asset.id:null
                         axios.post('/amsl-api'+'/liability',this.liability).then(response => {
-                            this.$swal({
+                            /* this.$swal */({
                                 type: response.data.type,
                                 title: response.data.message,
                                 showConfirmButton: false,

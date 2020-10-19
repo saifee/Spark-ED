@@ -122,7 +122,7 @@
                 Promise.resolve(true).then((result) => {
                     if (result) {
                         axios.post('/amsl-api'+'/employee/history',this.history).then(response => {
-                            this.$swal({
+                            /* this.$swal */({
                                 type: response.data.type,
                                 title: response.data.message,
                                 showConfirmButton: false,
