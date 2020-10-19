@@ -1,5 +1,64 @@
 <template>
   <div>
+    <v-toolbar class="elevation-0">
+      <v-toolbar-title>{{ tableHeadline }}</v-toolbar-title>
+      <v-spacer />
+      <div
+        v-if="dateSearch"
+        class="search-container mr-2"
+      >
+        <datepicker
+          v-model="from_date"
+          :config="dateOptions"
+        />
+      </div>
+      <div
+        v-if="dateSearch"
+        class="search-container mr-2"
+      >
+        <datepicker
+          v-model="to_date"
+          :config="dateOptions"
+        />
+      </div>
+      <div
+        v-if="dateSearch"
+        class="search-container mr-2"
+      >
+        <v-btn
+          @click.prevent="assainSearchValue()"
+        >
+          Search
+        </v-btn>
+      </div>
+      <v-text-field
+        v-if="search"
+        v-model="searchValue"
+        single-line
+        hide-details
+        append-icon="search"
+        placeholder="Search.."
+        @keyup="getResult(null,'created_at',from_date,to_date)"
+      />
+      <v-spacer />
+      <v-btn
+        :to="{name:addLink}"
+        color="primary"
+        depressed
+      >
+        Add
+      </v-btn>
+      <v-icon
+        @click.prvent="printMe()"
+      >
+        print
+      </v-icon>
+      <v-icon
+        @click.prevent="$root.downloadExcel('table1')"
+      >
+        table_view
+      </v-icon>
+    </v-toolbar>
     <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
       <div
         v-if="dataList.length"
