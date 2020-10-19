@@ -44,18 +44,14 @@
 
         <td class="text-center">
           <div class="adjustAction">
-            <template v-if="$root.$data.user && $root.$data.user.role=='admin'">
-              <router-link :to="{name:'expenseEdit', params:{id:props.data.id}}">
-                <i class="fa fa-edit" />
-              </router-link>
-
-              <a
-                href="#"
-                @click.prevent="deleteMe(props.data.id)"
-              >
-                <i class="fa fa-trash" />
-              </a>
-            </template>
+            <v-btn
+              :to="{name:'expenseEdit', params:{id:props.data.id}}"
+              icon
+            >
+              <v-icon> edit </v-icon>
+            </v-btn> <v-icon @click.prevent="deleteMe(props.data.id)">
+              delete
+            </v-icon>
           </div>
         </td>
       </template>

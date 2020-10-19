@@ -26,17 +26,14 @@
         </td>
         <td class="text-center">
           <div class="adjustAction">
-            <router-link :to="{name:'userEdit', params:{id:props.data.id}}">
-              <i class="fa fa-edit" />
-            </router-link>
-            <template v-if="props.data.role!='admin'">
-              <a
-                href="#"
-                @click.prevent="deleteMe(props.data.id)"
-              >
-                <i class="fa fa-trash" />
-              </a>
-            </template>
+            <v-btn
+              :to="{name:'userEdit', params:{id:props.data.id}}"
+              icon
+            >
+              <v-icon> edit </v-icon>
+            </v-btn> <v-icon @click.prevent="deleteMe(props.data.id)">
+              delete
+            </v-icon>
           </div>
         </td>
       </template>
