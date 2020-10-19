@@ -18,8 +18,8 @@ class LiabilityController extends Controller
 
     public function create()
     {
-        $employee=DB::table('employees')->select('id','name',DB::raw("'Employee' as account_type"),DB::raw("'App\\\Employee' as accountable_type"));
-        $query=DB::table('accounts')
+        $employee=DB::table('amsl_employees')->select('id','name',DB::raw("'Employee' as account_type"),DB::raw("'App\\\Employee' as accountable_type"));
+        $query=DB::table('amsl_accounts')
             ->select('id','name','account_type',DB::raw("'App\\\Account' as accountable_type"))->whereIn('account_type',['Long-term Liabilities','Short-term Liabilities','Liabilities-AP'])
             ->union($employee)
             ->get();
@@ -48,8 +48,8 @@ class LiabilityController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $employee=DB::table('employees')->select('id','name',DB::raw("'Employee' as account_type"),DB::raw("'App\\\Employee' as accountable_type"));
-        $query=DB::table('accounts')
+        $employee=DB::table('amsl_employees')->select('id','name',DB::raw("'Employee' as account_type"),DB::raw("'App\\\Employee' as accountable_type"));
+        $query=DB::table('amsl_accounts')
             ->select('id','name','account_type',DB::raw("'App\\\Account' as accountable_type"))->whereIn('account_type',['Long-term Liabilities','Short-term Liabilities','Liabilities-AP'])
             ->union($employee)
             ->get();

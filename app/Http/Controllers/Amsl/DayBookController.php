@@ -19,7 +19,7 @@ class DayBookController extends Controller
         $initialAmount=$this->getDayBookInitialAmount();
 
 
-        $query=DB::table('incomes')
+        $query=DB::table('amsl_incomes')
             ->select('income_date as date','ref','description','amount',DB::raw("'income' AS type"),DB::raw("'income' AS transaction_type"))->where('payment_type',request()->input('type'))
             ->union($expenses)
             ->union($asset)

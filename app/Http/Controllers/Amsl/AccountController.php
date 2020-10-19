@@ -107,9 +107,9 @@ class AccountController extends Controller
     }
 
     public function getAccountListData(){
-        $expneses=DB::table('accounts')->where('account_type','Expense')->select('id','account_type','name');
-        $prePaidExpense=DB::table('accounts')->where('account_type','Current Asset')->where('name', 'LIKE', "%pre%")->select('id','account_type','name');
-        $query=DB::table('accounts')
+        $expneses=DB::table('amsl_accounts')->where('account_type','Expense')->select('id','account_type','name');
+        $prePaidExpense=DB::table('amsl_accounts')->where('account_type','Current Asset')->where('name', 'LIKE', "%pre%")->select('id','account_type','name');
+        $query=DB::table('amsl_accounts')
             ->where('account_type','Income')
             ->select('id','account_type','name')
             ->union($expneses)
