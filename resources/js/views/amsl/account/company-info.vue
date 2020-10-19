@@ -19,18 +19,18 @@
                   <label class="control-label">Company Name *</label>
                   <input
                     v-model="company.name"
-                    v-validate="'required|min:3'"
-                    :class="{'form-control': true, 'is-danger': errors.has('name') }"
+
+                    :class="{'form-control': true, 'is-danger': false }"
                     type="text"
                     name="name"
-                    data-vv-name="name"
+
                     placeholder="Enter Company name"
                   >
                   <div
-                    v-show="errors.has('name')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('name') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -39,18 +39,18 @@
                   <label class="control-label">Mobile</label>
                   <input
                     v-model="company.mobile"
-                    v-validate="'required|min:3'"
-                    :class="{'form-control': true, 'is-danger': errors.has('mobile') }"
+
+                    :class="{'form-control': true, 'is-danger': false }"
                     type="text"
                     name="mobile"
-                    data-vv-name="mobile"
+
                     placeholder="Enter mobile"
                   >
                   <div
-                    v-show="errors.has('mobile')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('mobile') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -162,7 +162,7 @@
                             let err
                             let errs = error.response.data.errors
                             for (err in errs) {
-                                this.errors.add({
+                                /* this.errors.add */({
                                     'field': err,
                                     'msg': errs[err][0]
                                 })

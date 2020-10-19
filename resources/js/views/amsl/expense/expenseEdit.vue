@@ -19,15 +19,14 @@
                   <label class="control-label">Date*</label>
                   <date-picker
                     v-model="expense.expense_date"
-                    v-validate="'required|min:3'"
+
                     :config="options"
-                    data-vv-name="expense_date"
                   />
                   <div
-                    v-show="errors.has('expense_date')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('expense_date') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -36,19 +35,19 @@
                   <label class="control-label">Expense Type *</label>
                   <v-select
                     v-model="expense.account"
-                    v-validate="'required|min:3'"
+
                     :options="accounts"
                     label="name"
                     name="account"
-                    data-vv-name="account"
-                    :class="{ 'is-danger': errors.has('account') }"
+
+                    :class="{ 'is-danger': false }"
                     @input="employeeReset"
                   />
                   <div
-                    v-show="errors.has('account')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('account') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -57,18 +56,17 @@
                   <label class="control-label">Ref *</label>
                   <input
                     v-model="expense.ref"
-                    v-validate="'required|min:3'"
+
                     class="form-control"
                     type="text"
                     name="ref"
                     placeholder="Enter Ref"
-                    data-vv-name="ref"
                   >
                   <div
-                    v-show="errors.has('ref')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('ref') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -80,19 +78,19 @@
                   <div class="col-md-9">
                     <input
                       v-model="expense.amount"
-                      v-validate="'required'"
+
                       class="form-control"
                       type="number"
                       name="amount"
                       placeholder="Enter Amount"
-                      data-vv-name="amount"
+
                       step="any"
                     >
                     <div
-                      v-show="errors.has('amount')"
+                      v-show="false"
                       class="help is-danger"
                     >
-                      {{ errors.first('amount') }}
+                      {{ 'error' }}
                     </div>
                   </div>
                 </div>
@@ -152,19 +150,19 @@
                   <div class="col-md-9">
                     <v-select
                       v-model="expense.payment_type"
-                      v-validate="'required'"
+
                       :options="['Cash','Bank','Accounts Payable','Prepaid Expense']"
                       label="name"
                       name="payment_type"
-                      data-vv-name="payment_type"
-                      :class="{ 'is-danger': errors.has('payment_type') }"
+
+                      :class="{ 'is-danger': false }"
                       @input="employeeReset()"
                     />
                     <div
-                      v-show="errors.has('payment_type')"
+                      v-show="false"
                       class="help is-danger"
                     >
-                      {{ errors.first('payment_type') }}
+                      {{ 'error' }}
                     </div>
                     <!--<a href="" @click.prevent="dueField=!dueField" v-if="expense.payment_type =='Cash' || expense.payment_type=='Bank'">+ Add Due</a>-->
                   </div>
@@ -179,19 +177,19 @@
                   <div class="col-md-9">
                     <v-select
                       v-model="expense.payment_type"
-                      v-validate="'required'"
+
                       :options="['Cash','Bank','Accounts Payable','Depreciation Fund']"
                       label="name"
                       name="payment_type"
-                      data-vv-name="payment_type"
-                      :class="{ 'is-danger': errors.has('payment_type') }"
+
+                      :class="{ 'is-danger': false }"
                       @input="employeeReset"
                     />
                     <div
-                      v-show="errors.has('payment_type')"
+                      v-show="false"
                       class="help is-danger"
                     >
-                      {{ errors.first('payment_type') }}
+                      {{ 'error' }}
                     </div>
                     <!--<a href="" @click.prevent="dueField=!dueField" v-if="expense.payment_type =='Cash' || expense.payment_type=='Bank'">+ Add Due</a>-->
                   </div>
@@ -208,19 +206,19 @@
                   <div class="col-md-9">
                     <input
                       v-model="expense.due_amount"
-                      v-validate="'required'"
+
                       class="form-control"
                       type="number"
                       name="due_amount"
                       placeholder="Enter Due Amount"
-                      data-vv-name="due_amount"
+
                       step="any"
                     >
                     <div
-                      v-show="errors.has('due_amount')"
+                      v-show="false"
                       class="help is-danger"
                     >
-                      {{ errors.first('due_amount') }}
+                      {{ 'error' }}
                     </div>
                   </div>
                 </div>
@@ -235,18 +233,18 @@
                   <div class="col-md-9">
                     <v-select
                       v-model="expense.asset"
-                      v-validate="'required'"
+
                       :options="assets"
                       label="name"
                       name="asset"
-                      data-vv-name="asset"
-                      :class="{ 'is-danger': errors.has('asset') }"
+
+                      :class="{ 'is-danger': false }"
                     />
                     <div
-                      v-show="errors.has('asset')"
+                      v-show="false"
                       class="help is-danger"
                     >
-                      {{ errors.first('asset') }}
+                      {{ 'error' }}
                     </div>
                   </div>
                 </div>
@@ -261,18 +259,18 @@
                   <div class="col-md-9">
                     <v-select
                       v-model="expense.asset"
-                      v-validate="'required'"
+
                       :options="prepaidAssets"
                       label="name"
                       name="asset"
-                      data-vv-name="asset"
-                      :class="{ 'is-danger': errors.has('asset') }"
+
+                      :class="{ 'is-danger': false }"
                     />
                     <div
-                      v-show="errors.has('asset')"
+                      v-show="false"
                       class="help is-danger"
                     >
-                      {{ errors.first('asset') }}
+                      {{ 'error' }}
                     </div>
                   </div>
                 </div>
@@ -290,15 +288,14 @@
                       :options="payableHolders"
                       label="name"
                       name="payable_details"
-                      :v-validate="`${expense.payment_type =='Accounts Payable'? 'required' : ''}`"
-                      data-vv-name="payable_details"
-                      :class="{ 'is-danger': errors.has('payable_details') }"
+
+                      :class="{ 'is-danger': false }"
                     />
                     <div
-                      v-show="errors.has('payable_details')"
+                      v-show="false"
                       class="help is-danger"
                     >
-                      {{ errors.first('payable_details') }}
+                      {{ 'error' }}
                     </div>
                   </div>
                 </div>
@@ -313,17 +310,17 @@
                     <div class="col-md-9">
                       <v-select
                         v-model="expense.employee"
-                        v-validate="`${expense.payment_type !='Accounts Payable' || expense.payment_type!='Prepaid Expense'? 'required' : ''}`"
+
                         :options="employees"
                         label="name"
                         name="employee"
-                        :class="{ 'is-danger': errors.has('employee') }"
+                        :class="{ 'is-danger': false }"
                       />
                       <div
-                        v-show="errors.has('employee')"
+                        v-show="false"
                         class="help is-danger"
                       >
-                        {{ errors.first('employee') }}
+                        {{ 'error' }}
                       </div>
                     </div>
                   </div>
@@ -459,7 +456,7 @@
                             let err
                             let errs = error.response.data.errors
                             for (err in errs) {
-                                this.errors.add({
+                                /* this.errors.add */({
                                     'field': err,
                                     'msg': errs[err][0]
                                 })

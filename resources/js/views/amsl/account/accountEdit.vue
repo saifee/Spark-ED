@@ -16,18 +16,18 @@
                   <label class="control-label">Account Type *</label>
                   <v-select
                     v-model="account.account_type"
-                    v-validate="'required|min:3'"
+
                     :options="['Fixed Asset','Current Asset','Current Asset-AR','Liabilities-AP','Long-term Liabilities','Short-term Liabilities','Expense','Income']"
                     label="name"
                     name="account_type"
-                    data-vv-name="account_type"
-                    :class="{ 'is-danger': errors.has('account_type') }"
+
+                    :class="{ 'is-danger': false }"
                   />
                   <div
-                    v-show="errors.has('account_type')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('account_type') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -37,18 +37,18 @@
                   <label class="control-label">Account Name *</label>
                   <input
                     v-model="account.name"
-                    v-validate="'required|min:3'"
-                    :class="{'form-control': true, 'is-danger': errors.has('name') }"
+
+                    :class="{'form-control': true, 'is-danger': false }"
                     type="text"
                     name="name"
-                    data-vv-name="name"
+
                     placeholder="Enter Account name"
                   >
                   <div
-                    v-show="errors.has('name')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('name') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -118,7 +118,7 @@
                             let err
                             let errs = error.response.data.errors
                             for (err in errs) {
-                                this.errors.add({
+                                /* this.errors.add */({
                                     'field': err,
                                     'msg': errs[err][0]
                                 })

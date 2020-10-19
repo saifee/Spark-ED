@@ -16,18 +16,18 @@
                   <label class="control-label">Name *</label>
                   <input
                     v-model="employee.name"
-                    v-validate="'required|min:3'"
-                    :class="{'form-control': true, 'is-danger': errors.has('name') }"
+
+                    :class="{'form-control': true, 'is-danger': false }"
                     type="text"
                     name="name"
-                    data-vv-name="name"
+
                     placeholder="Enter full name"
                   >
                   <div
-                    v-show="errors.has('name')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('name') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -36,18 +36,17 @@
                   <label class="control-label"> Employee ID *</label>
                   <input
                     v-model="employee.id_card"
-                    v-validate="'required'"
+
                     type="text"
                     name="id_card"
                     placeholder="ID No"
-                    :class="{'form-control': true, 'is-danger': errors.has('id_card') }"
-                    data-vv-name="id_card"
+                    :class="{'form-control': true, 'is-danger': false }"
                   >
                   <div
-                    v-show="errors.has('id_card')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('id_card') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -140,7 +139,7 @@
                             let err
                             let errs = error.response.data.errors
                             for (err in errs) {
-                                this.errors.add({
+                                /* this.errors.add */({
                                     'field': err,
                                     'msg': errs[err][0]
                                 })

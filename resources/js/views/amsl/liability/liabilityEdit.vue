@@ -19,15 +19,14 @@
                   <label class="control-label">Date*</label>
                   <date-picker
                     v-model="liability.liability_date"
-                    v-validate="'required|min:3'"
+
                     :config="options"
-                    data-vv-name="liability_date"
                   />
                   <div
-                    v-show="errors.has('liability_date')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('liability_date') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -36,18 +35,17 @@
                   <label class="control-label">Ref *</label>
                   <input
                     v-model="liability.ref"
-                    v-validate="'required|min:3'"
+
                     class="form-control"
                     type="text"
                     name="ref"
                     placeholder="Enter Ref"
-                    data-vv-name="ref"
                   >
                   <div
-                    v-show="errors.has('ref')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('ref') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -56,19 +54,19 @@
                   <label class="control-label">Liability Type *</label>
                   <v-select
                     v-model="liability.account"
-                    v-validate="'required|min:3'"
+
                     :options="accounts"
                     label="name"
                     name="account"
-                    data-vv-name="account"
-                    :class="{ 'is-danger': errors.has('account') }"
+
+                    :class="{ 'is-danger': false }"
                     @input="setTansactionType()"
                   />
                   <div
-                    v-show="errors.has('account')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('account') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -77,19 +75,19 @@
                   <label class="control-label">Transaction Type *</label>
                   <v-select
                     v-model="liability.transaction_type"
-                    v-validate="'required|min:3'"
+
                     :options="transactionOptions"
                     label="name"
                     name="transaction_type"
-                    data-vv-name="transaction_type"
-                    :class="{ 'is-danger': errors.has('transaction_type') }"
+
+                    :class="{ 'is-danger': false }"
                     @input="setPaymentType()"
                   />
                   <div
-                    v-show="errors.has('transaction_type')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('transaction_type') }}
+                    {{ 'error' }}
                   </div>
                 </div>
 
@@ -98,38 +96,38 @@
                   <label class="control-label">Amount *</label>
                   <input
                     v-model="liability.amount"
-                    v-validate="'required'"
+
                     class="form-control"
                     type="number"
                     name="amount"
                     placeholder="Enter Amount"
-                    data-vv-name="amount"
+
                     step="any"
                   >
                   <div
-                    v-show="errors.has('amount')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('amount') }}
+                    {{ 'error' }}
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label">Payment Type *</label>
                   <v-select
                     v-model="liability.payment_type"
-                    v-validate="'required|min:3'"
+
                     :options="paymentOptions"
                     label="name"
                     name="payment_type"
-                    data-vv-name="payment_type"
-                    :class="{ 'is-danger': errors.has('payment_type') }"
+
+                    :class="{ 'is-danger': false }"
                     @input="resetAsset"
                   />
                   <div
-                    v-show="errors.has('payment_type')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('payment_type') }}
+                    {{ 'error' }}
                   </div>
                 </div>
 
@@ -140,18 +138,18 @@
                   <label class="control-label">Receivable Holder *</label>
                   <v-select
                     v-model="liability.asset"
-                    v-validate="'required|min:3'"
+
                     :options="receivableHolders"
                     label="name"
                     name="asset"
-                    data-vv-name="asset"
-                    :class="{ 'is-danger': errors.has('asset') }"
+
+                    :class="{ 'is-danger': false }"
                   />
                   <div
-                    v-show="errors.has('asset')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('asset') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -247,7 +245,7 @@
                             let err
                             let errs = error.response.data.errors
                             for (err in errs) {
-                                this.errors.add({
+                                /* this.errors.add */({
                                     'field': err,
                                     'msg': errs[err][0]
                                 })

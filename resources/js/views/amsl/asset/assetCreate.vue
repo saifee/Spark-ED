@@ -19,15 +19,14 @@
                   <label class="control-label">Date*</label>
                   <date-picker
                     v-model="asset.asset_date"
-                    v-validate="'required|min:3'"
+
                     :config="options"
-                    data-vv-name="asset_date"
                   />
                   <div
-                    v-show="errors.has('asset_date')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('asset_date') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -36,18 +35,17 @@
                   <label class="control-label">Ref *</label>
                   <input
                     v-model="asset.ref"
-                    v-validate="'required|min:3'"
+
                     class="form-control"
                     type="text"
                     name="ref"
                     placeholder="Enter Ref"
-                    data-vv-name="ref"
                   >
                   <div
-                    v-show="errors.has('ref')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('ref') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -56,19 +54,19 @@
                   <label class="control-label">Asset Type *</label>
                   <v-select
                     v-model="asset.account"
-                    v-validate="'required|min:3'"
+
                     :options="accounts"
                     label="name"
                     name="account"
-                    data-vv-name="account"
-                    :class="{ 'is-danger': errors.has('account') }"
+
+                    :class="{ 'is-danger': false }"
                     @input="changePaymentType(),changeTransactionType()"
                   />
                   <div
-                    v-show="errors.has('account')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('account') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -77,19 +75,19 @@
                   <label class="control-label">Transaction Type *</label>
                   <v-select
                     v-model="asset.transaction_type"
-                    v-validate="'required|min:3'"
+
                     :options="transactionOptions"
                     label="name"
                     name="transaction_type"
-                    data-vv-name="transaction_type"
-                    :class="{ 'is-danger': errors.has('transaction_type') }"
+
+                    :class="{ 'is-danger': false }"
                     @input="asset.payment_type=null, changePaymentType()"
                   />
                   <div
-                    v-show="errors.has('transaction_type')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('transaction_type') }}
+                    {{ 'error' }}
                   </div>
                 </div>
                 <div
@@ -99,37 +97,36 @@
                   <label class="control-label">Adjust For*</label>
                   <v-select
                     v-model="asset.expense"
-                    v-validate="'required|min:3'"
+
                     :options="expenses"
                     label="name"
                     name="expense"
-                    data-vv-name="expense"
-                    :class="{ 'is-danger': errors.has('expense') }"
+
+                    :class="{ 'is-danger': false }"
                   />
                   <div
-                    v-show="errors.has('expense')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('expense') }}
+                    {{ 'error' }}
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label">Amount *</label>
                   <input
                     v-model="asset.amount"
-                    v-validate="'required'"
+
                     class="form-control"
                     type="number"
                     step="any"
                     name="amount"
                     placeholder="Enter Amount"
-                    data-vv-name="amount"
                   >
                   <div
-                    v-show="errors.has('amount')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('amount') }}
+                    {{ 'error' }}
                   </div>
                 </div>
                 <div
@@ -139,19 +136,19 @@
                   <label class="control-label">Payment Type *</label>
                   <v-select
                     v-model="asset.payment_type"
-                    v-validate="'required|min:3'"
+
                     :options="paymentOptions"
                     label="name"
                     name="payment_type"
-                    data-vv-name="payment_type"
-                    :class="{ 'is-danger': errors.has('payment_type') }"
+
+                    :class="{ 'is-danger': false }"
                     @input="asset.liability=null"
                   />
                   <div
-                    v-show="errors.has('payment_type')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('payment_type') }}
+                    {{ 'error' }}
                   </div>
                 </div>
 
@@ -162,18 +159,18 @@
                   <label class="control-label">Payable Holder *</label>
                   <v-select
                     v-model="asset.liability"
-                    v-validate="'required|min:3'"
+
                     :options="payableHolders"
                     label="name"
                     name="liability"
-                    data-vv-name="liability"
-                    :class="{ 'is-danger': errors.has('liability') }"
+
+                    :class="{ 'is-danger': false }"
                   />
                   <div
-                    v-show="errors.has('liability')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('liability') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -265,7 +262,7 @@
                             let err
                             let errs = error.response.data.errors
                             for (err in errs) {
-                                this.errors.add({
+                                /* this.errors.add */({
                                     'field': err,
                                     'msg': errs[err][0]
                                 })

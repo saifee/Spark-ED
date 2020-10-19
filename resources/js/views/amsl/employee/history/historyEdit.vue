@@ -19,18 +19,18 @@
                   <label class="control-label">Employee *</label>
                   <v-select
                     v-model="history.employee"
-                    v-validate="'required|min:3'"
+
                     :options="employees"
                     label="name"
                     name="account"
-                    data-vv-name="account"
-                    :class="{ 'is-danger': errors.has('account') }"
+
+                    :class="{ 'is-danger': false }"
                   />
                   <div
-                    v-show="errors.has('account')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('account') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -39,15 +39,14 @@
                   <label class="control-label">Start Date&Time*</label>
                   <date-picker
                     v-model="history.start_date"
-                    v-validate="'required|min:3'"
+
                     :config="options"
-                    data-vv-name="start_date"
                   />
                   <div
-                    v-show="errors.has('start_date')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('start_date') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -134,7 +133,7 @@
                             let err
                             let errs = error.response.data.errors
                             for (err in errs) {
-                                this.errors.add({
+                                /* this.errors.add */({
                                     'field': err,
                                     'msg': errs[err][0]
                                 })

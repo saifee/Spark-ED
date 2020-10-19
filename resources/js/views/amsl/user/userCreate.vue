@@ -19,18 +19,18 @@
                   <label class="control-label">Account Type *</label>
                   <v-select
                     v-model="userInfo.role"
-                    v-validate="'required|min:3'"
+
                     :options="['sub-admin','user']"
                     label="Account Type"
                     name="role"
-                    data-vv-name="role"
-                    :class="{ 'is-danger': errors.has('role') }"
+
+                    :class="{ 'is-danger': false }"
                   />
                   <div
-                    v-show="errors.has('role')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('role') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -39,18 +39,18 @@
                   <label class="control-label">Name *</label>
                   <input
                     v-model="userInfo.name"
-                    v-validate="'required|min:3'"
-                    :class="{'form-control': true, 'is-danger': errors.has('name') }"
+
+                    :class="{'form-control': true, 'is-danger': false }"
                     type="text"
                     name="name"
-                    data-vv-name="name"
+
                     placeholder="Enter name"
                   >
                   <div
-                    v-show="errors.has('name')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('name') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -60,18 +60,18 @@
                   <label class="control-label">Email *</label>
                   <input
                     v-model="userInfo.email"
-                    v-validate="'required'"
-                    :class="{'form-control': true, 'is-danger': errors.has('email') }"
+
+                    :class="{'form-control': true, 'is-danger': false }"
                     type="email"
                     name="email"
-                    data-vv-name="email"
+
                     placeholder="Enter email"
                   >
                   <div
-                    v-show="errors.has('email')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('email') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -81,18 +81,18 @@
                   <label class="control-label">Password *</label>
                   <input
                     v-model="userInfo.password"
-                    v-validate="'required|min:6'"
-                    :class="{'form-control': true, 'is-danger': errors.has('password') }"
+
+                    :class="{'form-control': true, 'is-danger': false }"
                     type="password"
                     name="password"
-                    data-vv-name="password"
+
                     placeholder="Enter password"
                   >
                   <div
-                    v-show="errors.has('password')"
+                    v-show="false"
                     class="help is-danger"
                   >
-                    {{ errors.first('password') }}
+                    {{ 'error' }}
                   </div>
                 </div>
               </div>
@@ -149,7 +149,7 @@
                             let err
                             let errs = error.response.data.errors
                             for (err in errs) {
-                                this.errors.add({
+                                /* this.errors.add */({
                                     'field': err,
                                     'msg': errs[err][0]
                                 })

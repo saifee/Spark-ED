@@ -11,15 +11,14 @@
             <label class="control-label">Date*</label>
             <date-picker
               v-model="regular.date"
-              v-validate="'required'"
+
               :config="options"
-              data-vv-name="date"
             />
             <div
-              v-show="errors.has('date')"
+              v-show="false"
               class="help is-danger"
             >
-              {{ errors.first('date') }}
+              {{ 'error' }}
             </div>
           </div>
         </div>
@@ -28,18 +27,18 @@
             <label class="control-label">Name</label>
             <input
               v-model="regular.name"
-              v-validate="'required|min:3'"
+
               class="form-control"
               type="text"
-              data-vv-name="name"
+
               name="name"
               placeholder="Name"
             >
             <div
-              v-show="errors.has('name')"
+              v-show="false"
               class="help is-danger"
             >
-              {{ errors.first('name') }}
+              {{ 'error' }}
             </div>
           </div>
         </div>
@@ -283,7 +282,7 @@
                             let err
                             let errs = error.response.data.errors
                             for (err in errs) {
-                                this.errors.add({
+                                /* this.errors.add */({
                                     'field': err,
                                     'msg': errs[err][0]
                                 })
