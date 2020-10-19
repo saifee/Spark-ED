@@ -123,83 +123,71 @@
         v-else
         class="center-screen"
       />
-      <div class="table__footer">
-        <div class="bottomAdjust">
-          <div>
-            <div class="dataTables_length">
-              <label>Show
-                <select
-                  id="resultPerPage"
-                  style="text-align-last: center; height: 24px;"
-                  name="table1_length"
-                  aria-controls="table1"
-                  class="form-control form-control-sm customShown"
-                  @change="onChangePerPage"
-                >
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                  <option value="200">200</option>
-                  <option value="All">All</option>
-                </select> Entries &nbsp;</label>
-            </div>
-          </div>
-          <div>
-            <div
-              id="table1_info"
-              class="dataTables_info"
-              role="status"
-              aria-live="polite"
+      <v-toolbar class="elevation-0">
+        <div class="dataTables_length">
+          <label>Show
+            <select
+              id="resultPerPage"
+              style="text-align-last: center; height: 24px;"
+              name="table1_length"
+              aria-controls="table1"
+              class="form-control form-control-sm customShown"
+              @change="onChangePerPage"
             >
-              ( Showing {{ from }} to
-              {{ to }}
-              of {{ total }} )
-            </div>
-          </div>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+              <option value="All">All</option>
+            </select> Entries &nbsp;</label>
         </div>
-        <div class="bottom_pagination">
-          <div
-            v-if="paging"
-            class="dataTables_paginate paging_simple_numbers mt-1"
-          >
-            <ul class="pagination">
+        <div>
+          ( Showing {{ from }} to
+          {{ to }}
+          of {{ total }} )
+        </div>
+        <v-spacer />
+        <div
+          v-if="paging"
+          class="dataTables_paginate paging_simple_numbers mt-1"
+        >
+          <ul class="pagination">
+            <li
+              id="table1_previous"
+              :class="{'paginate_button': true, 'page-item':true, 'previous':true, 'disabled':(current_page === 1)}"
+            >
+              <a
+                tabindex="0"
+                class="page-link"
+                @click="getResult(current_page - 1)"
+              >Previous</a>
+            </li>
+            <template v-for="page in last_page">
               <li
-                id="table1_previous"
-                :class="{'paginate_button': true, 'page-item':true, 'previous':true, 'disabled':(current_page === 1)}"
+                v-if="Math.abs(page - current_page) < 3"
+                :class="{'paginate_button': true, 'page-item':true, 'active':(page === current_page)}"
               >
                 <a
                   tabindex="0"
                   class="page-link"
-                  @click="getResult(current_page - 1)"
-                >Previous</a>
+                  @click="getResult(page)"
+                >{{ page }}</a>
               </li>
-              <template v-for="page in last_page">
-                <li
-                  v-if="Math.abs(page - current_page) < 3"
-                  :class="{'paginate_button': true, 'page-item':true, 'active':(page === current_page)}"
-                >
-                  <a
-                    tabindex="0"
-                    class="page-link"
-                    @click="getResult(page)"
-                  >{{ page }}</a>
-                </li>
-              </template>
-              <li
-                id="table1_next"
-                :class="{'paginate_button': true, 'page-item':true, 'next':true, 'disabled':(current_page === last_page)}"
-              >
-                <a
-                  tabindex="0"
-                  class="page-link"
-                  @click="getResult(current_page + 1)"
-                >Next</a>
-              </li>
-            </ul>
-          </div>
+            </template>
+            <li
+              id="table1_next"
+              :class="{'paginate_button': true, 'page-item':true, 'next':true, 'disabled':(current_page === last_page)}"
+            >
+              <a
+                tabindex="0"
+                class="page-link"
+                @click="getResult(current_page + 1)"
+              >Next</a>
+            </li>
+          </ul>
         </div>
-      </div>
+      </v-toolbar>
       <div class="row be-datatable-footer">
         <!--<div class="col-sm-5 d-flex align-items-center flex-wrap" id="bottomAdjust">-->
         <!---->
