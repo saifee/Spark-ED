@@ -410,8 +410,8 @@
                         }
                     }).then(response => {
                         if (this.paging) {
-                            this.dataList = response.data.data
-                            this.reverseData = (response.data.data).slice().reverse()
+                            this.dataList = response.data
+                            this.reverseData = (response.data).slice().reverse()
                             var totalAmount=response.data.previous_balance
                             var i=1
                             this.reverseData.forEach(value=>{

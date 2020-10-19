@@ -111,7 +111,7 @@
               </template>
 
             </span>
-                        
+
             <template v-if="$root.$data.company">
               <h6 class="text-center">
                 {{ $root.$data.company.mobile }}<br>
@@ -412,8 +412,8 @@
                         }
                     }).then(response => {
                         if (this.paging) {
-                            this.dataList = response.data.data
-                            this.reverseData = (response.data.data).slice().reverse()
+                            this.dataList = response.data
+                            this.reverseData = (response.data).slice().reverse()
                             var totalAmount=response.data.previous_balance
                             var totalDueAmount=response.data.previous_due_balance
                             var i=1

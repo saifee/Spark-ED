@@ -402,7 +402,7 @@
                         }
                     }).then(response => {
                         if (this.paging) {
-                            this.dataList = response.data.data
+                            this.dataList = response.data
                             var totalAmount=0
                             this.dataList.forEach(value=>{
                                 if(value.amount){

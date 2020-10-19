@@ -452,7 +452,7 @@
                         }
                     }).then(response => {
                         if (this.paging) {
-                            this.dataList = response.data.data
+                            this.dataList = response.data
                             var totalCash=0
                             var totalBank=0
                             var totalReturn=0
