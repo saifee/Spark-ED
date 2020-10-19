@@ -6,7 +6,7 @@
       </div>
     </div>
 
-    <template v-if="$root.$data.user?$root.$data.user.role!='user':false">
+    <template v-if="$root.$data.user?$root.$data.user && $root.$data.user.role!='user':false">
       <div class=" d-flex flex-wrap justify-content-around">
         <div class=" accountsInfo ">
           <div>

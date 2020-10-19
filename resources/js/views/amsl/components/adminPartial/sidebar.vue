@@ -24,7 +24,7 @@
           </router-link>
         </li>
 
-        <template v-if="$root.$data.user.role!='user'">
+        <template v-if="$root.$data.user && $root.$data.user.role!='user'">
           <li class="treeview">
             <a
               class="app-menu__item"
@@ -390,7 +390,7 @@
               </li>
             </ul>
           </li>
-          <template v-if="$root.$data.user.role =='admin'">
+          <template v-if="$root.$data.user && $root.$data.user.role =='admin'">
             <li class="treeview">
               <a
                 class="app-menu__item"

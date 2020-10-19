@@ -28,7 +28,7 @@
           class="pt-3 text-white"
           style="text-transform: capitalize"
         >
-          {{ $root.$data.user.name }}<span style="text-transform: capitalize">{{ ' ('+$root.$data.user.role+') ' }}</span>
+          {{ $root.$data.user.name }}<span style="text-transform: capitalize">{{ ' ('+$root.$data.user && $root.$data.user.role+') ' }}</span>
         </li>
       </template>
 
@@ -42,7 +42,7 @@
           <i class="fa fa-cog" />
         </a>
         <ul class="dropdown-menu settings-menu dropdown-menu-right">
-          <template v-if="$root.$data.user?$root.$data.user.role=='admin':false">
+          <template v-if="$root.$data.user?$root.$data.user && $root.$data.user.role=='admin':false">
             <li>
               <router-link
                 :to="{name:'companyDetails'}"

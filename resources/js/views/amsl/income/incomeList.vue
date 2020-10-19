@@ -44,7 +44,7 @@
 
         <td>
           <div class="adjustAction">
-            <template v-if="$root.$data.user.role=='admin'">
+            <template v-if="$root.$data.user && $root.$data.user.role=='admin'">
               <router-link :to="{name:'incomeEdit', params:{id:props.data.id}}">
                 <i class="fa fa-edit" />
               </router-link>
