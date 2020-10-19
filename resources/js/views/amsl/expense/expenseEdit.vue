@@ -17,7 +17,7 @@
               <div class="col-md-2">
                 <div class="form-group">
                   <label class="control-label">Date*</label>
-                  <date-picker
+                  <datepicker
                     v-model="expense.expense_date"
 
                     :config="options"

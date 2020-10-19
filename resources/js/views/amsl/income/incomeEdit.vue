@@ -14,7 +14,7 @@
               <div class="col-md-2">
                 <div class="form-group">
                   <label class="control-label">Date*</label>
-                  <date-picker
+                  <datepicker
                     v-model="income.income_date"
 
                     :config="options"

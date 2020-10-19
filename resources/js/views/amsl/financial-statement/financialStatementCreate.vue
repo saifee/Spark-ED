@@ -3,14 +3,14 @@
     <div class="card p-4">
       <div class="col-md-12 mt-3 d-flex justify-content-end">
         <div class="search-container mr-1">
-          <date-picker
+          <datepicker
             v-model="from_date"
             :config="dateOptions"
             @input="searched=false"
           />
         </div>
         <div class="search-container mr-1">
-          <date-picker
+          <datepicker
             v-model="to_date"
             :config="dateOptions"
             @input="searched=false"

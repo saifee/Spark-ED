@@ -37,7 +37,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="control-label">Start Date&Time*</label>
-                  <date-picker
+                  <datepicker
                     v-model="history.start_date"
 
                     :config="options"
@@ -53,7 +53,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="control-label">End Date&Time</label>
-                  <date-picker
+                  <datepicker
                     v-model="history.end_date"
                     :config="options"
                   />

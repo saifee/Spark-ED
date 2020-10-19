@@ -16,7 +16,7 @@
               v-if="search"
               class="search-container mr-2"
             >
-              <date-picker
+              <datepicker
                 v-model="from_date"
                 :config="dateOptions"
                 @input="searched=false"
@@ -26,7 +26,7 @@
               v-if="search"
               class="search-container mr-2"
             >
-              <date-picker
+              <datepicker
                 v-model="to_date"
                 :config="dateOptions"
                 @input="searched=false"
