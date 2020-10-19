@@ -390,13 +390,13 @@
                                     value['total_amount']=totalAmount.toFixed(2)
                                 }
                             })
-                            this.current_page = response.data.current_page
-                            this.last_page = response.data.last_page
-                            this.per_page = response.data.per_page
-                            this.total = response.data.total
-                            this.path = response.data.path
-                            this.from = response.data.from
-                            this.to = response.data.to
+                            this.current_page = response.current_page
+                            this.last_page = response.last_page
+                            this.per_page = response.per_page
+                            this.total = response.total
+                            this.path = response.path
+                            this.from = response.from
+                            this.to = response.to
                         } else {
                             this.dataList = response.data
                         }
