@@ -56,7 +56,7 @@
     export default {
         data() {
             return {
-                url:'/amsl-api/employee',
+                url:'/amsl-api'+'/employee',
                 columns: [
                     {name: 'Name'},
                     {name: 'Id No'},

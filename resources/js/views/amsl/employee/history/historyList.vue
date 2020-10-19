@@ -54,7 +54,7 @@
     export default {
         data() {
             return {
-                url:'/employee/history',
+                url:'/amsl-api'+'/employee/history',
                 columns: [
                     {name: 'Name'},
                     {name: 'Start Time'},

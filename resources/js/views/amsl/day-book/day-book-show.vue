@@ -65,7 +65,7 @@
     export default {
         data() {
             return {
-                url:'/day-book?type='+this.$route.params.type,
+                url:'/amsl-api'+'/day-book?type='+this.$route.params.type,
                 columns: [
                     {name: 'Date'},
                     {name: 'Description'},

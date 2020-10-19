@@ -67,7 +67,7 @@
     export default {
         data() {
             return {
-                url:'/income',
+                url:'/amsl-api'+'/income',
                 columns: [
                     {name: 'Account'},
                     {name: 'Ref'},

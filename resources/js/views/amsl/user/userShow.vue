@@ -48,7 +48,7 @@
     export default {
         data() {
             return {
-                url:'/user-info',
+                url:'/amsl-api'+'/user-info',
                 columns: [
                     {name: 'Name'},
                     {name: 'Email'},

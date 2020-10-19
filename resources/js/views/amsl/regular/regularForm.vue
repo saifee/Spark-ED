@@ -152,7 +152,7 @@
                 callRegularEditForm:false,
 				id:null,
 
-                url:'/regular-form',
+                url:'/amsl-api'+'/regular-form',
                 columns: [
                     {name: 'Date'},
                     {name: 'Name'},

@@ -49,7 +49,7 @@
     export default {
         data() {
             return {
-                url:'/account',
+                url:'/amsl-api'+'/account',
                 columns: [
                     {name: 'Name'},
                     {name: 'Account Type'},

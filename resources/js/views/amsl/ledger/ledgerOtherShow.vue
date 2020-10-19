@@ -103,7 +103,7 @@
     export default {
         data() {
             return {
-                url:'/ledger?id='+this.$route.params.id+'&type='+this.$route.params.type,
+                url:'/amsl-api'+'/ledger?id='+this.$route.params.id+'&type='+this.$route.params.type,
                 newHeadline:'Ledger of '+this.$route.params.name,
                 columns: [
                     {name: 'Date'},

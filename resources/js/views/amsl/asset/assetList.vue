@@ -58,7 +58,7 @@
     export default {
         data() {
             return {
-                url:'/asset',
+                url:'/amsl-api'+'/asset',
                 columns: [
                     {name: 'Account'},
                     {name: 'Ref'},

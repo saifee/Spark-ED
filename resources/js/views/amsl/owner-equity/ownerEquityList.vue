@@ -57,7 +57,7 @@
     export default {
         data() {
             return {
-                url:'/owner-equity',
+                url:'/amsl-api'+'/owner-equity',
                 columns: [
                     {name: 'Account'},
                     {name: 'Ref'},

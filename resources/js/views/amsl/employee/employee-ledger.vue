@@ -29,7 +29,7 @@
     export default {
         data() {
             return {
-                url:'/ledger/employee-ledger',
+                url:'/amsl-api'+'/ledger/employee-ledger',
                 columns: [
                     {name: 'Name'},
 

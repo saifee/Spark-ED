@@ -29,7 +29,7 @@
     export default {
         data() {
             return {
-                url:'/ledger/accounts/account-payable',
+                url:'/amsl-api'+'/ledger/accounts/account-payable',
                 columns: [
                     {name: 'Name'},
 
