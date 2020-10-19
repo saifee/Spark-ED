@@ -35,6 +35,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
+        Route::prefix('amsl-api')->middleware('api')->namespace($this->namespace.'\Amsl')->group(base_path('routes/amsl-api.php'));
         Route::middleware('web')->namespace($this->namespace)->group(base_path('routes/import.php'));
         Route::prefix('api')->middleware('api')->namespace($this->namespace)->group(base_path('routes/api-spark.php'));
 
