@@ -252,7 +252,7 @@
                     if (result) {
                         this.btnDisabled = true
                         axios.post('/amsl-api'+'/regular-form', this.regular).then(response => {
-                            /* this.$swal */({
+                            toastr.success(response.message);/* this.$swal */({
                                 // type: response.data.type,
                                 // title: response.data.message,
                                 showConfirmButton: false,

@@ -215,7 +215,7 @@
                         this.btnDisabled=true
                         this.equity['liability_id']=this.equity.liability?this.equity.liability.id:null
                         axios.post('/amsl-api'+'/owner-equity',this.equity).then(response => {
-                            /* this.$swal */({
+                            toastr.success(response.message);/* this.$swal */({
                                 // type: response.data.type,
                                 // title: response.data.message,
                                 showConfirmButton: false,

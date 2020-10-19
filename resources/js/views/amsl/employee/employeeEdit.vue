@@ -129,7 +129,7 @@
                 Promise.resolve(true).then((result) => {
                     if (result) {
                         axios.patch('/amsl-api'+'/employee/'+this.$route.params.id,this.employee).then(response => {
-                            /* this.$swal */({
+                            toastr.success(response.message);/* this.$swal */({
                                 // type: response.data.type,
                                 // title: response.data.message,
                                 showConfirmButton: false,

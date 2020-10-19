@@ -445,7 +445,7 @@
                         this.expense['asset_id']=this.expense.asset?this.expense.asset.id:null
                         this.expense['employee_id']=this.expense.employee?this.expense.employee.id:null
                         axios.patch('/amsl-api'+'/expense/'+this.$route.params.id,this.expense).then(response => {
-                            /* this.$swal */({
+                            toastr.success(response.message);/* this.$swal */({
                                 // type: response.data.type,
                                 // title: response.data.message,
                                 showConfirmButton: false,
