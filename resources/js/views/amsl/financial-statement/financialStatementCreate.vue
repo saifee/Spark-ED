@@ -574,20 +574,20 @@
                         toDate:this.to_date,
                     }
                 }).then(res=>{
-                    this.fixedAssets=res.data.fixedAssets
-                    this.currentAssets=res.data.currentAssets
-                    this.currentAssetsArs=res.data.currentAssetsArs
-                    this.longTermLiabilites=res.data.longTermLiabilites
-                    this.shortTermLiabilites=res.data.shortTermLiabilites
-                    this.liabilitesAps=res.data.liabilitesAps
-                    this.capital=res.data.capital
-                    this.withdraw=res.data.withdraw
-                    this.cash=res.data.cash
-                    this.bank=res.data.bank
-                    this.otherCapital=res.data.otherCapital
-                    this.liabilitesApsEmloyee=res.data.liabilitesApsEmloyee
-                    this.liabilityVat=res.data.liabilityVat
-                    this.assetVat=res.data.assetVat
+                    this.fixedAssets=res.fixedAssets
+                    this.currentAssets=res.currentAssets
+                    this.currentAssetsArs=res.currentAssetsArs
+                    this.longTermLiabilites=res.longTermLiabilites
+                    this.shortTermLiabilites=res.shortTermLiabilites
+                    this.liabilitesAps=res.liabilitesAps
+                    this.capital=res.capital
+                    this.withdraw=res.withdraw
+                    this.cash=res.cash
+                    this.bank=res.bank
+                    this.otherCapital=res.otherCapital
+                    this.liabilitesApsEmloyee=res.liabilitesApsEmloyee
+                    this.liabilityVat=res.liabilityVat
+                    this.assetVat=res.assetVat
 
                 })
             },
@@ -598,9 +598,9 @@
                         toDate:this.to_date,
                     }
                 }).then(res=>{
-                    this.incomes=res.data.incomes
-                    this.expenses=res.data.expenses
-                    this.tax=res.data.tax
+                    this.incomes=res.incomes
+                    this.expenses=res.expenses
+                    this.tax=res.tax
                 })
             },
             getPreviouProfitLossData(){
@@ -614,17 +614,17 @@
                 }).then(res=>{
 
                     var incomeAmount=0;
-                    res.data.incomes.forEach(value=>{
+                    res.incomes.forEach(value=>{
                         incomeAmount += Number(value.amount)
                     })
 
 
                     var expenseAmount=0;
-                    res.data.expenses.forEach(value=>{
+                    res.expenses.forEach(value=>{
                         expenseAmount += Number(value.amount)+Number(value.prepaid_amount)
                     })
                    expenseAmount.toFixed(2)
-                    this.previousProfitLoss=(incomeAmount-expenseAmount-res.data.tax).toFixed(2)
+                    this.previousProfitLoss=(incomeAmount-expenseAmount-res.tax).toFixed(2)
 
                 })
             },

@@ -251,11 +251,11 @@
         },
         created(){
             axios.get('/amsl-api'+'/income/'+this.$route.params.id+'/edit').then(res=>{
-                this.accounts=res.data.accounts
-                this.receivableHolders=res.data.receivableHolders
-                this.income=res.data.income
-                this.income.payable_details=res.data.income.account_receivable
-                this.income.income_date=res.data.income.income_date?this.parseDate(res.data.income.income_date):null
+                this.accounts=res.accounts
+                this.receivableHolders=res.receivableHolders
+                this.income=res.income
+                this.income.payable_details=res.income.account_receivable
+                this.income.income_date=res.income.income_date?this.parseDate(res.income.income_date):null
 
 
             })

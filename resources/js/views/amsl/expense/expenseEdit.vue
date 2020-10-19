@@ -412,16 +412,16 @@
         },
         created(){
             axios.get('/amsl-api'+'/expense/'+this.$route.params.id+'/edit').then(res=>{
-                this.accounts=res.data.accounts
-                this.payableHolders=res.data.payableHolders
-                this.prepaidAssets=res.data.prepaidAssets
-                this.assets=res.data.assets
-                this.createdExpense=res.data.expense
-                this.employees=res.data.employees
-                this.expense=res.data.expense
-                this.expense.expense_date=res.data.expense.expense_date?this.parseDate(res.data.expense.expense_date):null
-                this.expense.payable_details=res.data.expense.modelable
-                this.expense.asset=res.data.expense.asset
+                this.accounts=res.accounts
+                this.payableHolders=res.payableHolders
+                this.prepaidAssets=res.prepaidAssets
+                this.assets=res.assets
+                this.createdExpense=res.expense
+                this.employees=res.employees
+                this.expense=res.expense
+                this.expense.expense_date=res.expense.expense_date?this.parseDate(res.expense.expense_date):null
+                this.expense.payable_details=res.expense.modelable
+                this.expense.asset=res.expense.asset
 
             })
 

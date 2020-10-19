@@ -206,9 +206,9 @@
                         toDate: this.to_date,
                     }
                 }).then(res => {
-                    this.incomes = res.data.incomes
-                    this.expenses = res.data.expenses
-                    this.tax = Number(res.data.tax)
+                    this.incomes = res.incomes
+                    this.expenses = res.expenses
+                    this.tax = Number(res.tax)
                 })
             },
 

@@ -259,7 +259,7 @@
             getData(){
                 axios.get('/amsl-api'+'/regular-form/'+this.id+'/edit').then(res=>{
                         this.regular=res.data
-                    this.regular.date=this.parseDateTime(res.data.date)
+                    this.regular.date=this.parseDateTime(res.date)
                 })
             },
             updateRegular(){

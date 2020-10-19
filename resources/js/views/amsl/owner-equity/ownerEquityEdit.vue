@@ -206,10 +206,10 @@
         },
         created(){
             axios.get('/amsl-api'+'/owner-equity/'+this.$route.params.id+'/edit').then(res=>{
-                this.receivableHolders=res.data.receivableHolders
-                this.equity=res.data.equity
-                this.equity.equity_date=this.parseDate(res.data.equity.equity_date)
-                this.equity.asset=res.data.equity.account_receivable
+                this.receivableHolders=res.receivableHolders
+                this.equity=res.equity
+                this.equity.equity_date=this.parseDate(res.equity.equity_date)
+                this.equity.asset=res.equity.account_receivable
             })
         },
         methods: {

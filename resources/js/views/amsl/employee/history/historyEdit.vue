@@ -112,10 +112,10 @@
         },
         created(){
             axios.get('/amsl-api'+'/employee/history/'+this.$route.params.id+'/edit').then(res=>{
-                this.employees=res.data.employees
-                this.history=res.data.history
-                this.history.start_date=res.data.history.start_date?this.parseDate(res.data.history.start_date):null
-                this.history.end_date=res.data.history.end_date?this.parseDate(res.data.history.end_date):null
+                this.employees=res.employees
+                this.history=res.history
+                this.history.start_date=res.history.start_date?this.parseDate(res.history.start_date):null
+                this.history.end_date=res.history.end_date?this.parseDate(res.history.end_date):null
             })
         },
         methods: {

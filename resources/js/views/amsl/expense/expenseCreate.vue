@@ -417,11 +417,11 @@
         },
         created(){
             axios.get('/amsl-api'+'/expense/create').then(res=>{
-                this.accounts=res.data.accounts
-                this.payableHolders=res.data.payableHolders
-                this.assets=res.data.assets
-                this.prepaidAssets=res.data.prepaidAssets
-                this.employees=res.data.employees
+                this.accounts=res.accounts
+                this.payableHolders=res.payableHolders
+                this.assets=res.assets
+                this.prepaidAssets=res.prepaidAssets
+                this.employees=res.employees
             })
         },
         methods: {

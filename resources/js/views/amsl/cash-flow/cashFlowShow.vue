@@ -274,14 +274,14 @@
                         toDate:this.to_date,
                     }
                 }).then(res=>{
-                    this.incomes=res.data.incomes
-                    this.expenses=res.data.expenses
-                    this.asset=res.data.asset
-                    this.liability=res.data.liability
-                    this.liabilityEm=res.data.liabilityEm
-                    this.equity=res.data.equity
-                    this.cash=res.data.cash?res.data.cash.amount:0
-                    this.bank=res.data.bank?res.data.bank.amount:0
+                    this.incomes=res.incomes
+                    this.expenses=res.expenses
+                    this.asset=res.asset
+                    this.liability=res.liability
+                    this.liabilityEm=res.liabilityEm
+                    this.equity=res.equity
+                    this.cash=res.cash?res.cash.amount:0
+                    this.bank=res.bank?res.bank.amount:0
                 })
             },
             previousBalace(){
@@ -291,8 +291,8 @@
                         toDate:this.subDayOne(this.from_date),
                     }
                 }).then(res=>{
-                    this.previousCash=res.data.previousCash
-                    this.previousBank=res.data.previousBank
+                    this.previousCash=res.previousCash
+                    this.previousBank=res.previousBank
                 })
             },
             subDayOne(date){

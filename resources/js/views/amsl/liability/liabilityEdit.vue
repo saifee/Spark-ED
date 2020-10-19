@@ -212,13 +212,13 @@
         },
         created(){
             axios.get('/amsl-api'+'/liability/'+this.$route.params.id+'/edit').then(res=>{
-                this.accounts=res.data.accounts
-                this.receivableHolders=res.data.receivableHolders
-                this.liability=res.data.liability
-                this.liability.account=res.data.liability.accountable
-                this.accountType=res.data.liability.accountable_type
-                this.liability.liability_date=this.parseDate(res.data.liability.liability_date)
-                this.liability.asset=res.data.liability.account_receivable
+                this.accounts=res.accounts
+                this.receivableHolders=res.receivableHolders
+                this.liability=res.liability
+                this.liability.account=res.liability.accountable
+                this.accountType=res.liability.accountable_type
+                this.liability.liability_date=this.parseDate(res.liability.liability_date)
+                this.liability.asset=res.liability.account_receivable
             })
         },
         methods: {

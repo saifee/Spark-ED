@@ -231,9 +231,9 @@
         },
         created() {
             axios.get('/amsl-api'+'/asset/create').then(res => {
-                this.accounts = res.data.accounts
-                this.payableHolders = res.data.payableHolders
-                this.expenses = res.data.expenses
+                this.accounts = res.accounts
+                this.payableHolders = res.payableHolders
+                this.expenses = res.expenses
             })
         },
         methods: {

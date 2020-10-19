@@ -109,12 +109,12 @@
 		methods:{
 			getData(){
                 axios.get('/amsl-api'+'/dashboard-data').then(res=>{
-					this.weeklySales=res.data.weeklySales
-					this.monthlySales=res.data.monthlySales
-					this.monthlyExpenseData=res.data.monthlyExpenseData
-					this.weeklyExpenseData=res.data.weeklyExpenseData
-					this.cash=res.data.cash
-					this.bank=res.data.bank
+					this.weeklySales=res.weeklySales
+					this.monthlySales=res.monthlySales
+					this.monthlyExpenseData=res.monthlyExpenseData
+					this.weeklyExpenseData=res.weeklyExpenseData
+					this.cash=res.cash
+					this.bank=res.bank
                 })
 			}
 		}

@@ -204,7 +204,7 @@
         },
         created(){
             axios.get('/amsl-api'+'/owner-equity/create').then(res=>{
-                this.payableHolders=res.data.payableHolders
+                this.payableHolders=res.payableHolders
             })
         },
         methods: {

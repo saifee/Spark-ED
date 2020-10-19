@@ -230,11 +230,11 @@
         },
         created(){
             axios.get('/amsl-api'+'/asset/'+this.$route.params.id+'/edit').then(res=>{
-                this.accounts=res.data.accounts
-                this.payableHolders=res.data.payableHolders
-                this.asset=res.data.asset
-                this.asset.liability=res.data.asset.account_payable
-                this.asset.asset_date=this.parseDate(res.data.asset.asset_date)
+                this.accounts=res.accounts
+                this.payableHolders=res.payableHolders
+                this.asset=res.asset
+                this.asset.liability=res.asset.account_payable
+                this.asset.asset_date=this.parseDate(res.asset.asset_date)
             })
         },
         methods: {

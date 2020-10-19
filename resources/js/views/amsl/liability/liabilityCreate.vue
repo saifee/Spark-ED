@@ -210,8 +210,8 @@
         },
         created(){
             axios.get('/amsl-api'+'/liability/create').then(res=>{
-                this.accounts=res.data.accounts
-                this.receivableHolders=res.data.receivableHolders
+                this.accounts=res.accounts
+                this.receivableHolders=res.receivableHolders
             })
         },
         methods: {
