@@ -24,7 +24,7 @@ class EmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|unique_with:employees,name,ignore:'.$this->route('employee'),
+            'name' => 'required|min:3',//|unique_with:employees,name,ignore:'.$this->route('employee'),
         ];
     }
 }

@@ -24,7 +24,7 @@ class AccountRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|unique_with:accounts,name,ignore:'.$this->route('account'),
+            'name' => 'required|min:3',//|unique_with:accounts,name,ignore:'.$this->route('account'),
             'account_type'=>'required'
         ];
     }

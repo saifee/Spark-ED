@@ -26,8 +26,8 @@ class UserInfoRequest extends FormRequest
 
 
         return [
-           'name' => 'required|min:3|unique_with:users,name,ignore:'.$this->route('user_info'),
-           'email'=>'required|min:3|unique_with:users,email,ignore:'.$this->route('user_info'),
+           'name' => 'required|min:3',//|unique_with:users,name,ignore:'.$this->route('user_info'),
+           'email'=>'required|min:3',//|unique_with:users,email,ignore:'.$this->route('user_info'),
 
         ];
     }
