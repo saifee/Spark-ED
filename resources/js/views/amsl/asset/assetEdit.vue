@@ -229,7 +229,7 @@
             }
         },
         created(){
-            axios.get('/asset/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/asml-api'+'/asset/'+this.$route.params.id+'/edit').then(res=>{
                 this.accounts=res.data.accounts
                 this.payableHolders=res.data.payableHolders
                 this.asset=res.data.asset

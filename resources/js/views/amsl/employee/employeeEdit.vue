@@ -120,7 +120,7 @@
             }
         },
         created(){
-            axios.get('/employee/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/asml-api'+'/employee/'+this.$route.params.id+'/edit').then(res=>{
                 this.employee=res.data
             })
         },

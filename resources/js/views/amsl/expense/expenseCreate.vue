@@ -416,7 +416,7 @@
             }
         },
         created(){
-            axios.get('/expense/create').then(res=>{
+            axios.get('/asml-api'+'/expense/create').then(res=>{
                 this.accounts=res.data.accounts
                 this.payableHolders=res.data.payableHolders
                 this.assets=res.data.assets
@@ -432,7 +432,7 @@
 
                         this.expense['asset_id']=this.expense.asset?this.expense.asset.id:null
                         this.expense['employee_id']=this.expense.employee?this.expense.employee.id:null
-                        axios.post('/expense',this.expense).then(response => {
+                        axios.post('/asml-api'+'/expense',this.expense).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

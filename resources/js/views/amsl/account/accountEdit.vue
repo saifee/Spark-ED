@@ -98,7 +98,7 @@
             }
         },
         created(){
-            axios.get('/account/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/asml-api'+'/account/'+this.$route.params.id+'/edit').then(res=>{
                 this.account=res.data
             })
         },

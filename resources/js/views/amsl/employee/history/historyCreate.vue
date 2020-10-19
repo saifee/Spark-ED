@@ -113,7 +113,7 @@
             }
         },
         created(){
-          axios.get('/employee/history/create').then(res=>{
+          axios.get('/asml-api'+'/employee/history/create').then(res=>{
                 this.employees=res.data
           })
         },
@@ -121,7 +121,7 @@
             postEmployee(){
                 this.$validator.validateAll().then((result) => {
                     if (result) {
-                        axios.post('/employee/history',this.history).then(response => {
+                        axios.post('/asml-api'+'/employee/history',this.history).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

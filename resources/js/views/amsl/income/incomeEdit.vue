@@ -250,7 +250,7 @@
             }
         },
         created(){
-            axios.get('/income/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/asml-api'+'/income/'+this.$route.params.id+'/edit').then(res=>{
                 this.accounts=res.data.accounts
                 this.receivableHolders=res.data.receivableHolders
                 this.income=res.data.income

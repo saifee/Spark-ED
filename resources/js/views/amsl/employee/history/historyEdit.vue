@@ -111,7 +111,7 @@
             }
         },
         created(){
-            axios.get('/employee/history/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/asml-api'+'/employee/history/'+this.$route.params.id+'/edit').then(res=>{
                 this.employees=res.data.employees
                 this.history=res.data.history
                 this.history.start_date=res.data.history.start_date?this.parseDate(res.data.history.start_date):null

@@ -205,7 +205,7 @@
             }
         },
         created(){
-            axios.get('/owner-equity/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/asml-api'+'/owner-equity/'+this.$route.params.id+'/edit').then(res=>{
                 this.receivableHolders=res.data.receivableHolders
                 this.equity=res.data.equity
                 this.equity.equity_date=this.parseDate(res.data.equity.equity_date)

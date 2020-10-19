@@ -255,7 +255,7 @@
             }
         },
         created(){
-            axios.get('/income/create').then(res=>{
+            axios.get('/asml-api'+'/income/create').then(res=>{
                 this.accounts=res.data.accounts
                 this.receivableHolders=res.data.receivableHolders
             })
@@ -266,7 +266,7 @@
                     if (result) {
                         this.btnDisabled=true
                         this.income['asset_id']=this.income.payable_details?this.income.payable_details.id:null
-                        axios.post('/income',this.income).then(response => {
+                        axios.post('/asml-api'+'/income',this.income).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

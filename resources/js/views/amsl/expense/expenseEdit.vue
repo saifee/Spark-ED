@@ -411,7 +411,7 @@
             }
         },
         created(){
-            axios.get('/expense/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/asml-api'+'/expense/'+this.$route.params.id+'/edit').then(res=>{
                 this.accounts=res.data.accounts
                 this.payableHolders=res.data.payableHolders
                 this.prepaidAssets=res.data.prepaidAssets

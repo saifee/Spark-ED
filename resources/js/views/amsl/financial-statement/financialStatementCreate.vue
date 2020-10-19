@@ -286,7 +286,7 @@
                 (6) Long Term Liabilities
               </td>
             </tr>
-                   
+
             <tr v-for="longTermLiabilite in longTermLiabilites">
               <td
                 class="pl-4 fs-13"
@@ -568,7 +568,7 @@
         },
         methods:{
             getData(){
-                axios.get('financial-statement',{
+                axios.get('/asml-api'+'financial-statement',{
                     params:{
                         fromDate:this.from_date,
                         toDate:this.to_date,
@@ -592,7 +592,7 @@
                 })
             },
             getProfitLossData(){
-                axios.get('profit-loss',{
+                axios.get('/asml-api'+'profit-loss',{
                     params:{
                         fromDate:this.from_date,
                         toDate:this.to_date,
@@ -605,7 +605,7 @@
             },
             getPreviouProfitLossData(){
 
-                axios.get('profit-loss',{
+                axios.get('/asml-api'+'profit-loss',{
                     params:{
                         fromDate:'01-01-1971',
                         toDate:this.subDayOne(this.from_date),

@@ -156,7 +156,7 @@
             }
         },
         created(){
-            axios.get('/user-info/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/asml-api'+'/user-info/'+this.$route.params.id+'/edit').then(res=>{
                 this.userInfo=res.data
             })
         },

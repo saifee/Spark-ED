@@ -75,7 +75,7 @@
             deleteMe(id) {
                 this.$root.confirmationDelete().then(val => {
                     if (val) {
-                        axios.delete('/liability/' + id).then(response => {
+                        axios.delete('/asml-api'+'/liability/' + id).then(response => {
                             var dataTable = this.$refs.dataTable
                             dataTable.getResult();
                             this.$swal({

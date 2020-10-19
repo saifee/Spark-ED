@@ -211,7 +211,7 @@
             }
         },
         created(){
-            axios.get('/liability/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/asml-api'+'/liability/'+this.$route.params.id+'/edit').then(res=>{
                 this.accounts=res.data.accounts
                 this.receivableHolders=res.data.receivableHolders
                 this.liability=res.data.liability

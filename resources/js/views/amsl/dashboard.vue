@@ -108,7 +108,7 @@
 		},
 		methods:{
 			getData(){
-                axios.get('/dashboard-data').then(res=>{
+                axios.get('/asml-api'+'/dashboard-data').then(res=>{
 					this.weeklySales=res.data.weeklySales
 					this.monthlySales=res.data.monthlySales
 					this.monthlyExpenseData=res.data.monthlyExpenseData
