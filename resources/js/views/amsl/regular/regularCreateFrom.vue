@@ -248,7 +248,7 @@
         },
         methods:{
             postRegular(){
-                this.$validator.validateAll().then((result) => {
+                Promise.resolve(true).then((result) => {
                     if (result) {
                         this.btnDisabled = true
                         axios.post('/asml-api'+'/regular-form', this.regular).then(response => {

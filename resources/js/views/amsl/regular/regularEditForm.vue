@@ -263,7 +263,7 @@
                 })
             },
             updateRegular(){
-                this.$validator.validateAll().then((result) => {
+                Promise.resolve(true).then((result) => {
                     if (result) {
                         this.btnDisabled = true
                         axios.patch('/asml-api'+'/regular-form/'+this.id, this.regular).then(response => {

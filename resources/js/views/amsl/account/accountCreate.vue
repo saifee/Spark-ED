@@ -104,7 +104,7 @@
         },
         methods: {
             postAccount(){
-                this.$validator.validateAll().then((result) => {
+                Promise.resolve(true).then((result) => {
                     if (result) {
                         axios.post('/asml-api'+'/account',this.account).then(response => {
                             this.$swal({

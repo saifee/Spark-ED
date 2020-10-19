@@ -215,7 +215,7 @@
         methods: {
             postEquity(){
 
-                this.$validator.validateAll().then((result) => {
+                Promise.resolve(true).then((result) => {
                     if (result) {
                         this.btnDisabled=true
                         this.equity['liability_id']=this.equity.liability?this.equity.liability.id:null

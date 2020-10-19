@@ -136,7 +136,7 @@
         },
         methods: {
             postCompany(){
-                this.$validator.validateAll().then((result) => {
+                Promise.resolve(true).then((result) => {
                     if (result) {
                         var data = new FormData()
                         var imagefile = document.querySelector('#logo')

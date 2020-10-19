@@ -217,7 +217,7 @@
         methods: {
             postAsset(){
 
-                this.$validator.validateAll().then((result) => {
+                Promise.resolve(true).then((result) => {
                     if (result) {
                         this.btnDisabled=true
                         this.liability['asset_id']=this.liability.asset?this.liability.asset.id:null

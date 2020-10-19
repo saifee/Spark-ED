@@ -133,7 +133,7 @@
         },
         methods: {
             postUser(){
-                this.$validator.validateAll().then((result) => {
+                Promise.resolve(true).then((result) => {
                     if (result) {
                         axios.post('/asml-api'+'/user-info',this.userInfo).then(response => {
                             this.$swal({

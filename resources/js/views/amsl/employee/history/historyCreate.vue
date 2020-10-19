@@ -119,7 +119,7 @@
         },
         methods: {
             postEmployee(){
-                this.$validator.validateAll().then((result) => {
+                Promise.resolve(true).then((result) => {
                     if (result) {
                         axios.post('/asml-api'+'/employee/history',this.history).then(response => {
                             this.$swal({

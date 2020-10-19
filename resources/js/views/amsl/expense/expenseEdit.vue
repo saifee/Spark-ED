@@ -439,7 +439,7 @@
                 }
 
 
-                this.$validator.validateAll().then((result) => {
+                Promise.resolve(true).then((result) => {
                     if (result) {
                         this.btnDisabled=true
                         this.expense['asset_id']=this.expense.asset?this.expense.asset.id:null

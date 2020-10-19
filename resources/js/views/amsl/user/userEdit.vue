@@ -162,7 +162,7 @@
         },
         methods: {
             postUser(){
-                this.$validator.validateAll().then((result) => {
+                Promise.resolve(true).then((result) => {
                     if (result) {
                         axios.patch('/asml-api'+'/user-info/'+this.$route.params.id,this.userInfo).then(response => {
                             this.$swal({

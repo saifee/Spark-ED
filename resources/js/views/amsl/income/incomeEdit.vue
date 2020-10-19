@@ -262,7 +262,7 @@
         },
         methods: {
             postIncome(){
-                this.$validator.validateAll().then((result) => {
+                Promise.resolve(true).then((result) => {
                     if (result) {
                         this.btnDisabled=false
                         this.income['asset_id']=this.income.payable_details?this.income.payable_details.id:null

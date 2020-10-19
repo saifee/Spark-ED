@@ -426,7 +426,7 @@
         },
         methods: {
             postExpense(){
-                this.$validator.validateAll().then((result) => {
+                Promise.resolve(true).then((result) => {
                     if (result) {
                         this.btnDisabled=true
 

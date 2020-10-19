@@ -126,7 +126,7 @@
         },
         methods: {
             postEmployee(id){
-                this.$validator.validateAll().then((result) => {
+                Promise.resolve(true).then((result) => {
                     if (result) {
                         axios.patch('/asml-api'+'/employee/'+this.$route.params.id,this.employee).then(response => {
                             this.$swal({
