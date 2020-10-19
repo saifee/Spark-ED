@@ -268,8 +268,8 @@
                         this.income['asset_id']=this.income.payable_details?this.income.payable_details.id:null
                         axios.post('/amsl-api'+'/income',this.income).then(response => {
                             /* this.$swal */({
-                                type: response.data.type,
-                                title: response.data.message,
+                                // type: response.data.type,
+                                // title: response.data.message,
                                 showConfirmButton: false,
                                 timer: 1500
                             })

@@ -108,8 +108,8 @@
                     if (result) {
                         axios.post('/amsl-api'+'/account',this.account).then(response => {
                             /* this.$swal */({
-                                type: response.data.type,
-                                title: response.data.message,
+                                // type: response.data.type,
+                                // title: response.data.message,
                                 showConfirmButton: false,
                                 timer: 1500
                             })

@@ -124,8 +124,8 @@
                     if (result) {
                         axios.patch('/amsl-api'+'/employee/history/'+this.$route.params.id,this.history).then(response => {
                             /* this.$swal */({
-                                type: response.data.type,
-                                title: response.data.message,
+                                // type: response.data.type,
+                                // title: response.data.message,
                                 showConfirmButton: false,
                                 timer: 1500
                             })

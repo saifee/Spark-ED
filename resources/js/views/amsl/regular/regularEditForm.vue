@@ -268,8 +268,8 @@
                         this.btnDisabled = true
                         axios.patch('/amsl-api'+'/regular-form/'+this.id, this.regular).then(response => {
                             /* this.$swal */({
-                                type: response.data.type,
-                                title: response.data.message,
+                                // type: response.data.type,
+                                // title: response.data.message,
                                 showConfirmButton: false,
                                 timer: 1500
                             })

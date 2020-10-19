@@ -234,8 +234,8 @@
                         this.liability['asset_id']=this.liability.asset?this.liability.asset.id:null
                         axios.patch('/amsl-api'+'/liability/'+this.$route.params.id,this.liability).then(response => {
                             /* this.$swal */({
-                                type: response.data.type,
-                                title: response.data.message,
+                                // type: response.data.type,
+                                // title: response.data.message,
                                 showConfirmButton: false,
                                 timer: 1500
                             })
