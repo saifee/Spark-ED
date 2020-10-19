@@ -266,7 +266,7 @@
                 this.$validator.validateAll().then((result) => {
                     if (result) {
                         this.btnDisabled = true
-                        axios.patch('/regular-form/'+this.id, this.regular).then(response => {
+                        axios.patch('/asml-api'+'/regular-form/'+this.id, this.regular).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

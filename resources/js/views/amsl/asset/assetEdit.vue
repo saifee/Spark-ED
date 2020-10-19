@@ -244,7 +244,7 @@
                     if (result) {
                         this.btnDisabled=true
                         this.asset['liability_id']=this.asset.liability?this.asset.liability.id:null
-                        axios.patch('/asset/'+this.$route.params.id,this.asset).then(response => {
+                        axios.patch('/asml-api'+'/asset/'+this.$route.params.id,this.asset).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

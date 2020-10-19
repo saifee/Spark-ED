@@ -106,7 +106,7 @@
             updateAccount(){
                 this.$validator.validateAll().then((result) => {
                     if (result) {
-                        axios.patch('/account/'+this.$route.params.id,this.account).then(response => {
+                        axios.patch('/asml-api'+'/account/'+this.$route.params.id,this.account).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

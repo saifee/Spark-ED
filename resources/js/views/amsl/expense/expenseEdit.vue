@@ -444,7 +444,7 @@
                         this.btnDisabled=true
                         this.expense['asset_id']=this.expense.asset?this.expense.asset.id:null
                         this.expense['employee_id']=this.expense.employee?this.expense.employee.id:null
-                        axios.patch('/expense/'+this.$route.params.id,this.expense).then(response => {
+                        axios.patch('/asml-api'+'/expense/'+this.$route.params.id,this.expense).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

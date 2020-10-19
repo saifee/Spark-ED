@@ -266,7 +266,7 @@
                     if (result) {
                         this.btnDisabled=false
                         this.income['asset_id']=this.income.payable_details?this.income.payable_details.id:null
-                        axios.patch('/income/'+this.$route.params.id,this.income).then(response => {
+                        axios.patch('/asml-api'+'/income/'+this.$route.params.id,this.income).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

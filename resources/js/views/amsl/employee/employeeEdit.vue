@@ -128,7 +128,7 @@
             postEmployee(id){
                 this.$validator.validateAll().then((result) => {
                     if (result) {
-                        axios.patch('/employee/'+this.$route.params.id,this.employee).then(response => {
+                        axios.patch('/asml-api'+'/employee/'+this.$route.params.id,this.employee).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

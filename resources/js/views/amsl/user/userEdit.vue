@@ -164,7 +164,7 @@
             postUser(){
                 this.$validator.validateAll().then((result) => {
                     if (result) {
-                        axios.patch('/user-info/'+this.$route.params.id,this.userInfo).then(response => {
+                        axios.patch('/asml-api'+'/user-info/'+this.$route.params.id,this.userInfo).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,
