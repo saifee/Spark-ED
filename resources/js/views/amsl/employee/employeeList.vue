@@ -73,7 +73,7 @@
             deleteMe(id) {
                 this.$root.confirmationDelete().then(val => {
                     if (val) {
-                        axios.delete('/asml-api'+'/employee/' + id).then(response => {
+                        axios.delete('/amsl-api'+'/employee/' + id).then(response => {
                             var dataTable = this.$refs.dataTable
                             dataTable.getResult();
                             this.$swal({

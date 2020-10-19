@@ -230,7 +230,7 @@
             }
         },
         created() {
-            axios.get('/asml-api'+'/asset/create').then(res => {
+            axios.get('/amsl-api'+'/asset/create').then(res => {
                 this.accounts = res.data.accounts
                 this.payableHolders = res.data.payableHolders
                 this.expenses = res.data.expenses
@@ -248,7 +248,7 @@
                             this.asset['payment_type'] = 'Adjust'
                         }
 
-                        axios.post('/asml-api'+'/asset', this.asset).then(response => {
+                        axios.post('/amsl-api'+'/asset', this.asset).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

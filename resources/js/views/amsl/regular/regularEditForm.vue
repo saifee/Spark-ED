@@ -257,7 +257,7 @@
         },
         methods:{
             getData(){
-                axios.get('/asml-api'+'/regular-form/'+this.id+'/edit').then(res=>{
+                axios.get('/amsl-api'+'/regular-form/'+this.id+'/edit').then(res=>{
                         this.regular=res.data
                     this.regular.date=this.parseDateTime(res.data.date)
                 })
@@ -266,7 +266,7 @@
                 Promise.resolve(true).then((result) => {
                     if (result) {
                         this.btnDisabled = true
-                        axios.patch('/asml-api'+'/regular-form/'+this.id, this.regular).then(response => {
+                        axios.patch('/amsl-api'+'/regular-form/'+this.id, this.regular).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

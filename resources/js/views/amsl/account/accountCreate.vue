@@ -106,7 +106,7 @@
             postAccount(){
                 Promise.resolve(true).then((result) => {
                     if (result) {
-                        axios.post('/asml-api'+'/account',this.account).then(response => {
+                        axios.post('/amsl-api'+'/account',this.account).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

@@ -113,7 +113,7 @@
             }
         },
         created(){
-          axios.get('/asml-api'+'/employee/history/create').then(res=>{
+          axios.get('/amsl-api'+'/employee/history/create').then(res=>{
                 this.employees=res.data
           })
         },
@@ -121,7 +121,7 @@
             postEmployee(){
                 Promise.resolve(true).then((result) => {
                     if (result) {
-                        axios.post('/asml-api'+'/employee/history',this.history).then(response => {
+                        axios.post('/amsl-api'+'/employee/history',this.history).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

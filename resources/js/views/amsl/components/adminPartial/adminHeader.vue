@@ -100,7 +100,7 @@
         },
 	    methods:{
 	        logout(){
-	            axios.post('/asml-api'+'/logout').then(res=>{
+	            axios.post('/amsl-api'+'/logout').then(res=>{
                     this.$router.push({path:'/login'})
                     window.location.reload(true)
 				})

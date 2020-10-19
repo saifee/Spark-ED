@@ -250,7 +250,7 @@
             }
         },
         created(){
-            axios.get('/asml-api'+'/income/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/amsl-api'+'/income/'+this.$route.params.id+'/edit').then(res=>{
                 this.accounts=res.data.accounts
                 this.receivableHolders=res.data.receivableHolders
                 this.income=res.data.income
@@ -266,7 +266,7 @@
                     if (result) {
                         this.btnDisabled=false
                         this.income['asset_id']=this.income.payable_details?this.income.payable_details.id:null
-                        axios.patch('/asml-api'+'/income/'+this.$route.params.id,this.income).then(response => {
+                        axios.patch('/amsl-api'+'/income/'+this.$route.params.id,this.income).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

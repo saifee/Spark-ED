@@ -209,7 +209,7 @@
             }
         },
         created(){
-            axios.get('/asml-api'+'/liability/create').then(res=>{
+            axios.get('/amsl-api'+'/liability/create').then(res=>{
                 this.accounts=res.data.accounts
                 this.receivableHolders=res.data.receivableHolders
             })
@@ -221,7 +221,7 @@
                     if (result) {
                         this.btnDisabled=true
                         this.liability['asset_id']=this.liability.asset?this.liability.asset.id:null
-                        axios.post('/asml-api'+'/liability',this.liability).then(response => {
+                        axios.post('/amsl-api'+'/liability',this.liability).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

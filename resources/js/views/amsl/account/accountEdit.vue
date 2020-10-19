@@ -98,7 +98,7 @@
             }
         },
         created(){
-            axios.get('/asml-api'+'/account/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/amsl-api'+'/account/'+this.$route.params.id+'/edit').then(res=>{
                 this.account=res.data
             })
         },
@@ -106,7 +106,7 @@
             updateAccount(){
                 Promise.resolve(true).then((result) => {
                     if (result) {
-                        axios.patch('/asml-api'+'/account/'+this.$route.params.id,this.account).then(response => {
+                        axios.patch('/amsl-api'+'/account/'+this.$route.params.id,this.account).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

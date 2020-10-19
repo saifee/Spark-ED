@@ -205,7 +205,7 @@
             }
         },
         created(){
-            axios.get('/asml-api'+'/owner-equity/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/amsl-api'+'/owner-equity/'+this.$route.params.id+'/edit').then(res=>{
                 this.receivableHolders=res.data.receivableHolders
                 this.equity=res.data.equity
                 this.equity.equity_date=this.parseDate(res.data.equity.equity_date)
@@ -219,7 +219,7 @@
                     if (result) {
                         this.btnDisabled=true
                         this.equity['liability_id']=this.equity.liability?this.equity.liability.id:null
-                        axios.patch('/asml-api'+'/owner-equity/'+this.$route.params.id,this.equity).then(response => {
+                        axios.patch('/amsl-api'+'/owner-equity/'+this.$route.params.id,this.equity).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

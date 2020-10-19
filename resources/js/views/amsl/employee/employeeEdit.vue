@@ -120,7 +120,7 @@
             }
         },
         created(){
-            axios.get('/asml-api'+'/employee/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/amsl-api'+'/employee/'+this.$route.params.id+'/edit').then(res=>{
                 this.employee=res.data
             })
         },
@@ -128,7 +128,7 @@
             postEmployee(id){
                 Promise.resolve(true).then((result) => {
                     if (result) {
-                        axios.patch('/asml-api'+'/employee/'+this.$route.params.id,this.employee).then(response => {
+                        axios.patch('/amsl-api'+'/employee/'+this.$route.params.id,this.employee).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

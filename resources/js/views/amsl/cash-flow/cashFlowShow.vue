@@ -268,7 +268,7 @@
                 window.print()
             },
             getData(){
-                axios.get('/asml-api'+'cash-flow',{
+                axios.get('/amsl-api'+'cash-flow',{
                     params:{
                         fromDate:this.from_date,
                         toDate:this.to_date,
@@ -285,7 +285,7 @@
                 })
             },
             previousBalace(){
-                axios.get('/asml-api'+'cash-flow-previous-balance',{
+                axios.get('/amsl-api'+'cash-flow-previous-balance',{
                     params:{
                         fromDate:'01-01-1971',
                         toDate:this.subDayOne(this.from_date),

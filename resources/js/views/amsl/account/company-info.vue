@@ -130,7 +130,7 @@
             }
         },
         created(){
-            axios.get('/asml-api'+'/company/1/edit').then(res=>{
+            axios.get('/amsl-api'+'/company/1/edit').then(res=>{
                 this.company=res.data?res.data:{}
             })
         },
@@ -143,7 +143,7 @@
                         data.append("file", imagefile.files[0])
                         data.append('company',JSON.stringify(this.company))
 
-                        axios.post('/asml-api'+'/company',data,{
+                        axios.post('/amsl-api'+'/company',data,{
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }

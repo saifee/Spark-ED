@@ -156,7 +156,7 @@
             }
         },
         created(){
-            axios.get('/asml-api'+'/user-info/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/amsl-api'+'/user-info/'+this.$route.params.id+'/edit').then(res=>{
                 this.userInfo=res.data
             })
         },
@@ -164,7 +164,7 @@
             postUser(){
                 Promise.resolve(true).then((result) => {
                     if (result) {
-                        axios.patch('/asml-api'+'/user-info/'+this.$route.params.id,this.userInfo).then(response => {
+                        axios.patch('/amsl-api'+'/user-info/'+this.$route.params.id,this.userInfo).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,

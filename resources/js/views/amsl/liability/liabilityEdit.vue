@@ -211,7 +211,7 @@
             }
         },
         created(){
-            axios.get('/asml-api'+'/liability/'+this.$route.params.id+'/edit').then(res=>{
+            axios.get('/amsl-api'+'/liability/'+this.$route.params.id+'/edit').then(res=>{
                 this.accounts=res.data.accounts
                 this.receivableHolders=res.data.receivableHolders
                 this.liability=res.data.liability
@@ -232,7 +232,7 @@
                     if (result) {
                         this.btnDisabled=true
                         this.liability['asset_id']=this.liability.asset?this.liability.asset.id:null
-                        axios.patch('/asml-api'+'/liability/'+this.$route.params.id,this.liability).then(response => {
+                        axios.patch('/amsl-api'+'/liability/'+this.$route.params.id,this.liability).then(response => {
                             this.$swal({
                                 type: response.data.type,
                                 title: response.data.message,
