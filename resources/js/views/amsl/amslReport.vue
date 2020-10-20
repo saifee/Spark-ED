@@ -115,6 +115,47 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-12">
+          <h3>{{ trans('amsl.vat_ledger') }}</h3>
+        </div>
+        <div class="col-12 col-sm-3">
+          <div class="card card-box">
+            <div class="card-body">
+              <h4 class="card-title">
+                {{ trans('amsl.vat_receive') }}
+              </h4>
+              <v-btn
+                :to="{name:'ledgerShow',params:{id:'vat',type:'income-vat',name:'received-vat'}}"
+                x-small
+                color="#009efb"
+                dark
+                depressed
+              >
+                {{ trans('general.go_to_link', {link: trans('amsl.vat_receive')}) }}
+              </v-btn>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-3">
+          <div class="card card-box">
+            <div class="card-body">
+              <h4 class="card-title">
+                {{ trans('amsl.vat_paid') }}
+              </h4>
+              <v-btn
+                :to="{name:'ledgerShow',params:{id:'vat',type:'expense-vat',name:'paid-vat'}}"
+                x-small
+                color="#009efb"
+                dark
+                depressed
+              >
+                {{ trans('general.go_to_link', {link: trans('amsl.vat_paid')}) }}
+              </v-btn>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
