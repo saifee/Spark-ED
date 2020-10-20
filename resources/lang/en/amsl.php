@@ -1,0 +1,18 @@
+<?php return array (
+"amsl" => "AMSL",
+"amsl_account_list" => "Account List",
+"amsl_employee_list_amsl" => "Employee List",
+"amsl_employee_history_list" => "Employee History List",
+"amsl_expense_list" => "Expense List",
+"amsl_income_list" => "Income List",
+"amsl_asset_list" => "Asset List",
+"amsl_liability_list" => "Liability List",
+"amsl_owner_equity_list" => "Owner Equity List",
+"financial_statement" => "Financial Statement",
+'cash_flow_report' => 'Cash Flow Report',
+'cash_flow_report_module_description' => 'Cash Flow Report Module Description',
+'profit_loss_report' => 'Profit Loss Report',
+'profit_loss_report_module_description' => 'Profit Loss Report Module Description',
+'balance_sheet_report' => 'Balance Sheet Report',
+'balance_sheet_report_module_description' => 'Balance Sheet Report Module Description',
+);
