@@ -1,5 +1,8 @@
 <?php return array (
 "amsl" => "AMSL",
+"day_book" => "Day Book",
+"bank" => "Bank",
+"cash" => "Cash",
 "amsl_account_list" => "Account List",
 "amsl_employee_list_amsl" => "Employee List",
 "amsl_employee_history_list" => "Employee History List",
