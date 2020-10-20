@@ -687,6 +687,71 @@
 		}
 	},
 	{
+		"module": "amsl",
+		"translation": "amsl.amsl",
+		"menu": {
+			"name": "amsl",
+			"translation": "amsl.amsl",
+			"visibility": true,
+			"submenu": [
+				{
+					"name": "amsl_account_list",
+					"translation": "amsl.amsl_account_list",
+					"visibility": true,
+					"submenu": []
+				},
+				{
+					"name": "amsl_employee_list_amsl",
+					"translation": "amsl.amsl_employee_list_amsl",
+					"visibility": true,
+					"submenu": []
+				},
+				{
+					"name": "amsl_employee_history_list",
+					"translation": "amsl.amsl_employee_history_list",
+					"visibility": true,
+					"submenu": []
+				},
+				{
+					"name": "amsl_expense_list",
+					"translation": "amsl.amsl_expense_list",
+					"visibility": true,
+					"submenu": []
+				},
+				{
+					"name": "amsl_income_list",
+					"translation": "amsl.amsl_income_list",
+					"visibility": true,
+					"submenu": []
+				},
+				{
+					"name": "amsl_asset_list",
+					"translation": "amsl.amsl_asset_list",
+					"visibility": true,
+					"submenu": []
+				},
+				{
+					"name": "amsl_liability_list",
+					"translation": "amsl.amsl_liability_list",
+					"visibility": true,
+					"submenu": []
+				},
+				{
+					"name": "amsl_owner_equity_list",
+					"translation": "amsl.amsl_owner_equity_list",
+					"visibility": true,
+					"submenu": []
+				},
+				{
+					"name": "financial_statement",
+					"translation": "amsl.financial_statement",
+					"visibility": true,
+					"submenu": []
+				}
+			]
+		}
+	},
+	{
 		"module": "utility",
 		"translation": "utility.utility",
 		"menu": {

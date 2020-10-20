@@ -1672,6 +1672,111 @@
         </v-list-item>
       </template>
     </v-list-group>
+    <v-list-group
+      v-show="moduleMenu && showMenu('amsl') && hasAnyPermission([
+        'access-amsl-account-list',
+        'access-amsl-employee-list-amsl',
+        'access-amsl-employee-history-list',
+        'access-amsl-expense-list',
+        'access-amsl-income-list',
+        'access-amsl-asset-list',
+        'access-amsl-liability-list',
+        'access-amsl-owner-equity-list',
+        'access-amsl-financial-statement',
+      ])"
+      no-action
+    >
+      <template v-slot:activator>
+        <v-list-item-action><i class="fas fa-puzzle-piece fa-fw" /></v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('amsl.amsl') }}</v-list-item-title>
+        </v-list-item-content>
+      </template>
+      <v-list-item
+        v-if="hasPermission('access-amsl-account-list') && showMenu('amsl_account_list')"
+        :to="{name:'accountList'}"
+        exact
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('amsl.amsl_account_list') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item
+        v-if="hasPermission('access-amsl-employee-list-amsl') && showMenu('amsl_employee_list_amsl')"
+        :to="{name:'employeeListAmsl'}"
+        exact
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('amsl.amsl_employee_list_amsl') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item
+        v-if="hasPermission('access-amsl-employee-history-list') && showMenu('amsl_employee_history_list')"
+        :to="{name:'employeeHistoryList'}"
+        exact
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('amsl.amsl_employee_history_list') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item
+        v-if="hasPermission('access-amsl-expense-list') && showMenu('amsl_expense_list')"
+        :to="{name:'expenseList'}"
+        exact
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('amsl.amsl_expense_list') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item
+        v-if="hasPermission('access-amsl-income-list') && showMenu('amsl_income_list')"
+        :to="{name:'incomeList'}"
+        exact
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('amsl.amsl_income_list') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item
+        v-if="hasPermission('access-amsl-asset-list') && showMenu('amsl_asset_list')"
+        :to="{name:'assetList'}"
+        exact
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('amsl.amsl_asset_list') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item
+        v-if="hasPermission('access-amsl-liability-list') && showMenu('amsl_liability_list')"
+        :to="{name:'liabilityList'}"
+        exact
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('amsl.amsl_liability_list') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item
+        v-if="hasPermission('access-amsl-owner-equity-list') && showMenu('amsl_owner_equity_list')"
+        :to="{name:'ownerEquityList'}"
+        exact
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('amsl.amsl_owner_equity_list') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item
+        v-if="hasPermission('access-amsl-financial-statement') && showMenu('financial_statement')"
+        :to="{name:'financialStatementReport'}"
+        exact
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('amsl.financial_statement') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list-group>
     <v-list-item
       v-show="moduleMenu && hasPermission('access-configuration')"
       to="/configuration"

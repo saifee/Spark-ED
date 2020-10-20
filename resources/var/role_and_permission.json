@@ -313,6 +313,17 @@
 			"edit-syllabus": ["manager","principal","staff"],
 			"delete-syllabus": ["manager","principal","staff"]
 		},
+		"amsl": {
+			"access-amsl-account-list": ["manager","principal"],
+			"access-amsl-employee-list-amsl": ["manager","principal"],
+			"access-amsl-employee-history-list": ["manager","principal"],
+			"access-amsl-expense-list": ["manager","principal"],
+			"access-amsl-income-list": ["manager","principal"],
+			"access-amsl-asset-list": ["manager","principal"],
+			"access-amsl-liability-list": ["manager","principal"],
+			"access-amsl-owner-equity-list": ["manager","principal"],
+			"access-amsl-financial-statement": ["manager","principal"]
+		},
 		"inventory": {
 			"list-vendor": ["manager","principal"],
 			"create-vendor": ["manager","principal"],
