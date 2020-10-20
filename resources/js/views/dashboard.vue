@@ -18,6 +18,7 @@
                 <div class="col-12 col-md-8">
                     <div class="card border-right">
                         <div class="card-body p-4">
+                            <template v-if="getConfig('made') !== 'saudi'">
                             <template v-if="hasPermission('ambassador-view')">
                                 <v-card class="mb-4">
                                     <v-card-text>
@@ -70,6 +71,7 @@
                             </v-tabs>
                                     </v-card-text>
                                 </v-card>
+                            </template>
                             </template>
 
                         <template v-if="getConfig('made') === 'saudi'">
