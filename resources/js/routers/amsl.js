@@ -7,7 +7,7 @@ export default [
     {
         path: 'amsl-report',
         name: 'amslReport',
-        component: () => import(/* webpackChunkName: "js/amsl/amsl-report" */ '@views/amsl/amslReport')
+        component: () => import(/* webpackChunkName: "js/amsl/amsl-report" */ '@views/amsl/amslReport.vue')
     },
 
     //Employee History
