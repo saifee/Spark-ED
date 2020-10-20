@@ -288,12 +288,44 @@
           </div>
         </div>
       </div>
+      <div
+        v-if="accounts.length"
+        class="row"
+      >
+        <div class="col-12">
+          <h3>{{ trans('amsl.ledger') }}</h3>
+          <v-list-item
+            v-for="(account, i) in accounts"
+            :key="`ledger${i}`"
+            :to="{name:'ledgerShow',params:{id:account.id,type:account.account_type,name:account.name}}"
+          >
+            <v-list-item-action><i class="fas fa-dot-circle-o fa-fw" /></v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ account.name }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 	export default {
-
+     data(){
+      return{
+         accounts:[],
+      }
+    },
+     created(){
+        this.getAccounts()
+     },
+     methods:{
+         getAccounts(){
+                axios.get('/amsl-api'+'/account-list').then(res=>{
+                    this.accounts=res
+                })
+            },
+     }
 	}
 </script>
