@@ -9,6 +9,11 @@ export default [
         name: 'amslReport',
         component: () => import(/* webpackChunkName: "js/amsl/amsl-report" */ '@views/amsl/amslReport.vue')
     },
+    {
+        path: 'amsl-ledger',
+        name: 'amslLedger',
+        component: () => import(/* webpackChunkName: "js/amsl/amsl-ledger" */ '@views/amsl/amslLedger.vue')
+    },
 
     //Employee History
     {

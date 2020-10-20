@@ -743,6 +743,12 @@
 					"submenu": []
 				},
 				{
+					"name": "amsl_ledger",
+					"translation": "amsl.ledger",
+					"visibility": true,
+					"submenu": []
+				},
+				{
 					"name": "amsl_report",
 					"translation": "amsl.report",
 					"visibility": true,

@@ -1682,6 +1682,7 @@
         'access-amsl-asset-list',
         'access-amsl-liability-list',
         'access-amsl-owner-equity-list',
+        'access-amsl-ledger',
         'access-amsl-report',
       ])"
       no-action
@@ -1765,6 +1766,15 @@
       >
         <v-list-item-content>
           <v-list-item-title>{{ trans('amsl.amsl_owner_equity_list') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item
+        v-if="hasPermission('access-amsl-ledger') && showMenu('amslLedger')"
+        :to="{name:'amslLedger'}"
+        exact
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('amsl.ledger') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-list-item

@@ -322,6 +322,7 @@
 			"access-amsl-asset-list": ["manager","principal"],
 			"access-amsl-liability-list": ["manager","principal"],
 			"access-amsl-owner-equity-list": ["manager","principal"],
+			"access-amsl-ledger": ["manager","principal"],
 			"access-amsl-report": ["manager","principal"]
 		},
 		"inventory": {
