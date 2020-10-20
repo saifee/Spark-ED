@@ -5,9 +5,9 @@ export default [
         component: () => import(/* webpackChunkName: "js/amsl/dashboard" */ '@views/amsl/dashboard')
     },
     {
-        path: 'financial-statement-report',
-        name: 'financialStatementReport',
-        component: () => import(/* webpackChunkName: "js/amsl/financial-statement-report" */ '@views/amsl/financialStatementReport')
+        path: 'amsl-report',
+        name: 'amslReport',
+        component: () => import(/* webpackChunkName: "js/amsl/amsl-report" */ '@views/amsl/amslReport')
     },
 
     //Employee History

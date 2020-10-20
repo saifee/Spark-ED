@@ -9,6 +9,7 @@
 "amsl_liability_list" => "Liability List",
 "amsl_owner_equity_list" => "Owner Equity List",
 "financial_statement" => "Financial Statement",
+'report' => 'Report',
 'cash_flow_report' => 'Cash Flow Report',
 'cash_flow_report_module_description' => 'Cash Flow Report Module Description',
 'profit_loss_report' => 'Profit Loss Report',

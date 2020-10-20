@@ -1682,7 +1682,7 @@
         'access-amsl-asset-list',
         'access-amsl-liability-list',
         'access-amsl-owner-equity-list',
-        'access-amsl-financial-statement',
+        'access-amsl-report',
       ])"
       no-action
     >
@@ -1768,12 +1768,12 @@
         </v-list-item-content>
       </v-list-item>
       <v-list-item
-        v-if="hasPermission('access-amsl-financial-statement') && showMenu('financial_statement')"
-        :to="{name:'financialStatementReport'}"
+        v-if="hasPermission('access-amsl-report') && showMenu('amslReport')"
+        :to="{name:'amslReport'}"
         exact
       >
         <v-list-item-content>
-          <v-list-item-title>{{ trans('amsl.financial_statement') }}</v-list-item-title>
+          <v-list-item-title>{{ trans('amsl.report') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list-group>

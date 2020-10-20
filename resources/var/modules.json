@@ -743,8 +743,8 @@
 					"submenu": []
 				},
 				{
-					"name": "financial_statement",
-					"translation": "amsl.financial_statement",
+					"name": "amsl_report",
+					"translation": "amsl.report",
 					"visibility": true,
 					"submenu": []
 				}
