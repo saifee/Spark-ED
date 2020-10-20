@@ -84,6 +84,9 @@
               <h4 class="card-title">
                 {{ trans('amsl.cash') }}
               </h4>
+              <p class="card-text font-80pc">
+                {{ trans('amsl.bank_description') }}
+              </p>
               <v-btn
                 :to="{name:'dayBookShow',params:{type:'cash'}}"
                 x-small
@@ -102,6 +105,9 @@
               <h4 class="card-title">
                 {{ trans('amsl.bank') }}
               </h4>
+              <p class="card-text font-80pc">
+                {{ trans('amsl.cash_description') }}
+              </p>
               <v-btn
                 :to="{name:'dayBookShow',params:{type:'bank'}}"
                 x-small
@@ -125,6 +131,9 @@
               <h4 class="card-title">
                 {{ trans('amsl.vat_receive') }}
               </h4>
+              <p class="card-text font-80pc">
+                {{ trans('amsl.vat_receive_description') }}
+              </p>
               <v-btn
                 :to="{name:'ledgerShow',params:{id:'vat',type:'income-vat',name:'received-vat'}}"
                 x-small
@@ -143,6 +152,9 @@
               <h4 class="card-title">
                 {{ trans('amsl.vat_paid') }}
               </h4>
+              <p class="card-text font-80pc">
+                {{ trans('amsl.vat_paid_description') }}
+              </p>
               <v-btn
                 :to="{name:'ledgerShow',params:{id:'vat',type:'expense-vat',name:'paid-vat'}}"
                 x-small
