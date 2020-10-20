@@ -168,6 +168,126 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-12">
+          <h3>{{ trans('amsl.asset') }}</h3>
+        </div>
+        <div class="col-12 col-sm-3">
+          <div class="card card-box">
+            <div class="card-body">
+              <h4 class="card-title">
+                {{ trans('amsl.receivable_ledger') }}
+              </h4>
+              <p class="card-text font-80pc">
+                {{ trans('amsl.receivable_ledger_description') }}
+              </p>
+              <v-btn
+                :to="{name:'ledgerAccountReceivableShow'}"
+                x-small
+                color="#009efb"
+                dark
+                depressed
+              >
+                {{ trans('general.go_to_link', {link: trans('amsl.receivable_ledger')}) }}
+              </v-btn>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-3">
+          <div class="card card-box">
+            <div class="card-body">
+              <h4 class="card-title">
+                {{ trans('amsl.ledger') }}
+              </h4>
+              <p class="card-text font-80pc">
+                {{ trans('amsl.ledger_description') }}
+              </p>
+              <v-btn
+                :to="{name:'ledgerAccountFixedAsset'}"
+                x-small
+                color="#009efb"
+                dark
+                depressed
+              >
+                {{ trans('general.go_to_link', {link: trans('amsl.ledger')}) }}
+              </v-btn>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <h3>{{ trans('amsl.liability') }}</h3>
+        </div>
+        <div class="col-12 col-sm-3">
+          <div class="card card-box">
+            <div class="card-body">
+              <h4 class="card-title">
+                {{ trans('amsl.payable_ledger') }}
+              </h4>
+              <p class="card-text font-80pc">
+                {{ trans('amsl.payable_ledger_description') }}
+              </p>
+              <v-btn
+                :to="{name:'ledgerAccountPayableShow'}"
+                x-small
+                color="#009efb"
+                dark
+                depressed
+              >
+                {{ trans('general.go_to_link', {link: trans('amsl.payable_ledger')}) }}
+              </v-btn>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-3">
+          <div class="card card-box">
+            <div class="card-body">
+              <h4 class="card-title">
+                {{ trans('amsl.ledger') }}
+              </h4>
+              <p class="card-text font-80pc">
+                {{ trans('amsl.ledger_description') }}
+              </p>
+              <v-btn
+                :to="{name:'ledgerAccountLiability'}"
+                x-small
+                color="#009efb"
+                dark
+                depressed
+              >
+                {{ trans('general.go_to_link', {link: trans('amsl.ledger')}) }}
+              </v-btn>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <h3>{{ trans('amsl.employee') }}</h3>
+        </div>
+        <div class="col-12 col-sm-3">
+          <div class="card card-box">
+            <div class="card-body">
+              <h4 class="card-title">
+                {{ trans('amsl.employee_ledger') }}
+              </h4>
+              <p class="card-text font-80pc">
+                {{ trans('amsl.employee_ledger_description') }}
+              </p>
+              <v-btn
+                :to="{name:'ledgerEmployeeShow'}"
+                x-small
+                color="#009efb"
+                dark
+                depressed
+              >
+                {{ trans('general.go_to_link', {link: trans('amsl.employee_ledger')}) }}
+              </v-btn>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
