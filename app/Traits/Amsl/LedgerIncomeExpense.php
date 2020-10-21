@@ -8,8 +8,8 @@
 
 namespace App\Traits\Amsl;
 
-use App\Asset;
-use App\Income;
+use App\Models\Amsl\Asset;
+use App\Models\Amsl\Income;
 use Illuminate\Support\Facades\DB;
 
 trait LedgerIncomeExpense

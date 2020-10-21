@@ -9,7 +9,7 @@
 namespace App\Traits\Amsl;
 
 
-use App\Asset;
+use App\Models\Amsl\Asset;
 use Illuminate\Support\Facades\DB;
 
 trait LedgerAssetTrait

@@ -51,7 +51,7 @@ trait LedgerEmployeeTrait
     {
         $liability = DB::table('liabilities')
             ->select('liabilities.accountable_id', 'liabilities.amount', 'liabilities.transaction_type', 'liabilities.payment_type', 'liabilities.liability_date as date', 'liabilities.description', 'liabilities.ref', DB::raw("'employeeliabilityAp' AS type"))
-            ->where('liabilities.accountable_type', 'App\Employee')
+            ->where('liabilities.accountable_type', 'App\Models\Amsl\Employee')
             ->where('liabilities.accountable_id', request()->input('id'));
         $liability = $this->dateSearch('liability_date', $liability, request());
 

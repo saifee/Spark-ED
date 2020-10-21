@@ -34,7 +34,7 @@ trait CashFlowAssetLiabilityTrait
         $data=DB::table('accounts')
             ->leftJoin('liabilities','liabilities.accountable_id','=','accounts.id')
             ->select('accounts.name','liabilities.payment_type','accounts.id',DB::raw("(SUM(CASE  WHEN liabilities.transaction_type ='Payment' THEN liabilities.amount ELSE -liabilities.amount END)) as amount"))
-            ->where('liabilities.accountable_type','=','App\Account')
+            ->where('liabilities.accountable_type','=','App\Models\Amsl\Account')
             ->groupBy('accounts.id')
             ->orderBy('accounts.name');
 
@@ -50,7 +50,7 @@ trait CashFlowAssetLiabilityTrait
         $data=DB::table('employees')
             ->leftJoin('liabilities','liabilities.accountable_id','=','employees.id')
             ->select('employees.name','liabilities.payment_type','employees.id',DB::raw("(SUM(CASE  WHEN liabilities.transaction_type ='Payment' THEN liabilities.amount ELSE -liabilities.amount END)) as amount"))
-            ->where('liabilities.accountable_type','=','App\Employee')
+            ->where('liabilities.accountable_type','=','App\Models\Amsl\Employee')
             ->groupBy('employees.id')
             ->orderBy('employees.name');
 

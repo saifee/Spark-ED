@@ -9,7 +9,7 @@
 namespace App\Traits\Amsl;
 
 
-use App\Liability;
+use App\Models\Amsl\Liability;
 use Illuminate\Support\Facades\DB;
 
 trait LedgerLiabilityTrait
@@ -54,7 +54,7 @@ trait LedgerLiabilityTrait
 
     public function longLiabilitiesData(){
 
-        $query = Liability::where('accountable_id',request()->input('id'))->where('accountable_type','=','App\Account')
+        $query = Liability::where('accountable_id',request()->input('id'))->where('accountable_type','=','App\Models\Amsl\Account')
             ->select('id', 'accountable_id as account_id', 'ref', 'amount', 'payment_type','transaction_type',
                 'description','liability_date as date',
                 DB::raw("'long-term-liabilities' AS type"))
@@ -69,7 +69,7 @@ trait LedgerLiabilityTrait
     public function liabilitiesApData(){
         $liability = DB::table('liabilities')
             ->select('accountable_id','amount','transaction_type' ,'payment_type','liability_date as date','description','ref',DB::raw("'liabilityAp' AS type"))
-            ->where('accountable_type','App\Account')
+            ->where('accountable_type','App\Models\Amsl\Account')
             ->where('accountable_id',request()->input('id'));
 
         $liability=$this->dateSearch('liability_date',$liability,request());
@@ -83,7 +83,7 @@ trait LedgerLiabilityTrait
         $query = DB::table('expenses')
             ->select('account_id','amount',DB::raw("'Payment' AS transaction_type"),'payment_type','expense_date as date','description','ref',DB::raw("'aPexpenseAr' AS type"))
             ->where('modelable_id',request()->input('id'))
-            ->where('modelable_type','=','App\Account')
+            ->where('modelable_type','=','App\Models\Amsl\Account')
             ->union($liability)
             ->union($asset)
             ->orderBy('date','DESC');
