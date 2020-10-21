@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 trait LiabilityTrait
 {
     public function getLongTermLaibilities(){
-        $data= DB::table('accounts')
+        $data= DB::table('amsl_accounts')
             ->leftJoin('liabilities', 'liabilities.accountable_id', '=', 'accounts.id')
             ->select('accounts.name', 'accounts.id', 'liabilities.transaction_type', DB::raw("SUM(CASE  WHEN liabilities.transaction_type ='Payment' THEN -liabilities.amount ELSE liabilities.amount END) as amount"))
             ->where('liabilities.accountable_type', "App\Models\Amsl\Account")
@@ -29,7 +29,7 @@ trait LiabilityTrait
 
 
     public function getShortTermLaibilities(){
-        $data=DB::table('accounts')
+        $data=DB::table('amsl_accounts')
             ->leftJoin('liabilities', 'liabilities.accountable_id', '=', 'accounts.id')
             ->select('accounts.name', 'accounts.id', 'liabilities.transaction_type', DB::raw("SUM(CASE  WHEN liabilities.transaction_type ='Payment' THEN -liabilities.amount ELSE liabilities.amount END) as amount"))
             ->where('accounts.account_type', 'Short-term Liabilities')
@@ -44,7 +44,7 @@ trait LiabilityTrait
 
     public function getLiabilitiesAp(){
 
-        $data=DB::table('accounts')
+        $data=DB::table('amsl_accounts')
             ->leftJoin('liabilities', 'accounts.id', '=', 'liabilities.accountable_id')
             ->select('accounts.id as aid', 'accounts.name',
 
@@ -69,7 +69,7 @@ trait LiabilityTrait
 
     public function getLiabilitiesEmployee(){
 
-        $data=DB::table('employees')
+        $data=DB::table('amsl_employees')
             ->leftJoin('liabilities', 'employees.id', '=', 'liabilities.accountable_id')
             ->select('employees.id as aid', 'employees.name',
 

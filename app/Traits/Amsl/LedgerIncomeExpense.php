@@ -26,7 +26,7 @@ trait LedgerIncomeExpense
     {
         $asset = Asset::whereExpenseId(request()->input('id'))->select('id', 'account_id', 'ref', 'amount', 'payment_type', 'description', 'asset_date as date', DB::raw("'expense' AS type"))->where('payment_type', 'Adjust');
         $asset = $this->dateSearch('asset_date', $asset, request());
-        $query = DB::table('expenses')
+        $query = DB::table('amsl_expenses')
             ->select('id', 'account_id', 'ref', 'amount', 'payment_type', 'description', 'expense_date as date', DB::raw("'expense' AS type"))
             ->where('account_id', request()->input('id'))
             ->union($asset)

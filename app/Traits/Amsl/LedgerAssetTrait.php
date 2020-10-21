@@ -82,7 +82,7 @@ trait LedgerAssetTrait
 
         $asset=$this->dateSearch('asset_date',$asset,request());
 
-        $query = DB::table('expenses')
+        $query = DB::table('amsl_expenses')
             ->select('id', 'account_id', 'ref', 'amount', 'payment_type',
                 'description', DB::raw("'null' AS expense_id"), 'expense_date as date',
                 DB::raw("'prepaid expense' AS type"),
@@ -112,7 +112,7 @@ trait LedgerAssetTrait
 
         $asset=$this->dateSearch('asset_date',$asset,request());
 
-        $query = DB::table('expenses')
+        $query = DB::table('amsl_expenses')
             ->select('id', 'account_id', 'ref', 'amount', 'payment_type',
                 DB::raw("'depreciation' AS transaction_type"),
                 'description','expense_date as date',
@@ -130,7 +130,7 @@ trait LedgerAssetTrait
 
 
     public function currentAssetArData(){
-        $asset = DB::table('assets')
+        $asset = DB::table('amsl_assets')
             ->select('assets.account_id', 'assets.amount',
                 'assets.transaction_type', 'assets.payment_type',
                 'assets.asset_date as date', 'assets.description',
@@ -140,7 +140,7 @@ trait LedgerAssetTrait
         $asset=$this->dateSearch('asset_date',$asset,request());
 
 
-        $query = DB::table('incomes')
+        $query = DB::table('amsl_incomes')
             ->select('incomes.account_id', 'incomes.amount',
                 DB::raw("'Receive' AS transaction_type"),
                 'incomes.payment_type', 'incomes.income_date as date',

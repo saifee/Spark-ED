@@ -67,20 +67,20 @@ trait LedgerLiabilityTrait
     }
 
     public function liabilitiesApData(){
-        $liability = DB::table('liabilities')
+        $liability = DB::table('amsl_liabilities')
             ->select('accountable_id','amount','transaction_type' ,'payment_type','liability_date as date','description','ref',DB::raw("'liabilityAp' AS type"))
             ->where('accountable_type','App\Models\Amsl\Account')
             ->where('accountable_id',request()->input('id'));
 
         $liability=$this->dateSearch('liability_date',$liability,request());
 
-        $asset = DB::table('assets')
+        $asset = DB::table('amsl_assets')
             ->select('account_id','amount','transaction_type' ,'payment_type','asset_date as date','description','ref',DB::raw("'liabilityAp_asset' AS type"))
             ->where('liability_id',request()->input('id'));
 
         $asset=$this->dateSearch('asset_date',$asset,request());
 
-        $query = DB::table('expenses')
+        $query = DB::table('amsl_expenses')
             ->select('account_id','amount',DB::raw("'Payment' AS transaction_type"),'payment_type','expense_date as date','description','ref',DB::raw("'aPexpenseAr' AS type"))
             ->where('modelable_id',request()->input('id'))
             ->where('modelable_type','=','App\Models\Amsl\Account')

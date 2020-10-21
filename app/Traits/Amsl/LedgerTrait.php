@@ -84,7 +84,7 @@ trait LedgerTrait
 
     public function receiveVat(){
 
-        $receiveAsIncome = DB::table('accounts')
+        $receiveAsIncome = DB::table('amsl_accounts')
             ->leftJoin('incomes','accounts.id','=','incomes.account_id')
             ->select('incomes.account_id','incomes.amount','incomes.payment_type','incomes.income_date as date','incomes.description','incomes.ref',DB::raw("'receiveVat' AS type"))
             ->where('accounts.account_type','=','Income')
@@ -92,7 +92,7 @@ trait LedgerTrait
 
         $receiveAsIncome = $this->dateSearch('income_date', $receiveAsIncome, request());
 
-        $query = DB::table('incomes')
+        $query = DB::table('amsl_incomes')
             ->select('account_id','tax_amount as amount','payment_type','income_date as date','description','ref',DB::raw("'receiveVat' AS type"))
             ->union($receiveAsIncome)
             ->where('tax_amount','!=',0)
@@ -104,14 +104,14 @@ trait LedgerTrait
 
     public function paidVat(){
 
-        $paidAsExpense = DB::table('accounts')
+        $paidAsExpense = DB::table('amsl_accounts')
             ->leftJoin('expenses','accounts.id','=','expenses.account_id')
             ->select('expenses.account_id','expenses.amount','expenses.payment_type','expenses.expense_date as date','expenses.description','expenses.ref',DB::raw("'paidVat' AS type"))
             ->where('accounts.account_type','=','Expense')
             ->where('accounts.name','LIKE','%value%');
 
         $paidAsExpense = $this->dateSearch('expense_date', $paidAsExpense, request());
-        $query = DB::table('expenses')
+        $query = DB::table('amsl_expenses')
             ->select('account_id','tax_amount as amount','payment_type','expense_date as date','description','ref',DB::raw("'paidVat' AS type"))
             ->union($paidAsExpense)
             ->where('tax_amount','!=',0)

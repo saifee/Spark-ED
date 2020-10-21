@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 trait EquityTrait
 {
     public function getCapital(){
-        $data=DB::table('ownerequities')
+        $data=DB::table('amsl_ownerequities')
             ->select('ownerequities.account', 'ownerequities.transaction_type', DB::raw("SUM(CASE  WHEN transaction_type ='Payment' THEN -amount ELSE amount END) as amount"))
             ->where('ownerequities.account', '=','Capital')
             ->groupBy('ownerequities.account');
@@ -26,7 +26,7 @@ trait EquityTrait
 
 
     public function getOtherCapital(){
-        $data=DB::table('accounts')
+        $data=DB::table('amsl_accounts')
             ->select(DB::raw("(SELECT SUM(CASE  WHEN transaction_type = 'Sold' THEN -amount ELSE amount END) from assets where payment_type='Owner Equity' and asset_date between '$this->fromDate' and '$this->toDate')as assetEquityAmount"), DB::raw("(Select SUM(CASE  WHEN transaction_type = 'Payment' THEN amount ELSE -amount END) from liabilities  where payment_type='Owner Equity' and liability_date between '$this->fromDate' and '$this->toDate') as liabilityAmount"));
 
 
@@ -38,7 +38,7 @@ trait EquityTrait
 
 
     public function getWithdraw(){
-        $data=DB::table('ownerequities')
+        $data=DB::table('amsl_ownerequities')
             ->select('ownerequities.account', 'ownerequities.transaction_type', DB::raw("SUM(CASE  WHEN transaction_type ='Payment' THEN amount ELSE -amount END) as amount"))
             ->where('ownerequities.account', '=','Withdraw')
             ->groupBy('ownerequities.account');

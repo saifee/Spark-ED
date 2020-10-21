@@ -18,7 +18,7 @@ trait CashAndBankTrait
     public function getCash(){
 
 
-        $data=DB::table('accounts')
+        $data=DB::table('amsl_accounts')
             ->select(DB::raw("(SELECT SUM(CASE  WHEN transaction_type ='Sold' OR transaction_type ='Receive' THEN amount ELSE -amount END) from assets where payment_type='Cash' and asset_date between '$this->fromDate' and '$this->toDate') as assetCashAmount"),
                 DB::raw("(SELECT SUM(assets.amount) FROM assets left join accounts on accounts.id = assets.account_id where accounts.name='Cash' or accounts.name='Cash' and asset_date between '$this->fromDate' and '$this->toDate') as initialCashAmount"),
                 DB::raw("(SELECT SUM(amount) FROM expenses where payment_type='Cash' and expense_date between '$this->fromDate' and '$this->toDate') as expenseAmount"),
@@ -33,7 +33,7 @@ trait CashAndBankTrait
 
 
     public function getBank(){
-        $data= DB::table('accounts')
+        $data= DB::table('amsl_accounts')
             ->select(DB::raw("(SELECT SUM(CASE  WHEN transaction_type ='Sold' OR transaction_type ='Receive' THEN amount ELSE -amount END) from assets where payment_type='Bank' and asset_date between '$this->fromDate' and '$this->toDate') as assetBankAmount"),
                 DB::raw("(SELECT SUM(assets.amount) FROM assets left join accounts on accounts.id = assets.account_id where accounts.name='Bank' or accounts.name='bank' and asset_date between '$this->fromDate' and '$this->toDate') as initialBankAmount"),
                 DB::raw("(SELECT SUM(amount) FROM expenses where payment_type='Bank' and expense_date between '$this->fromDate' and '$this->toDate') as expenseAmount"),
