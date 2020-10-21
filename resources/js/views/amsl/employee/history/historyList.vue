@@ -64,7 +64,7 @@
         methods:{
 
             deleteMe(id) {
-                this.$root.confirmationDelete().then(val => {
+                /* this.$root.confirmationDelete() */ Promise.resolve(true).then(val => {
                     if (val) {
                         axios.delete('/amsl-api'+'/employee/history/' + id).then(response => {
                             var dataTable = this.$refs.dataTable

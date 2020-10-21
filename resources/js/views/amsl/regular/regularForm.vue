@@ -188,7 +188,7 @@
 			},
 
             deleteMe(id) {
-                this.$root.confirmationDelete().then(val => {
+                /* this.$root.confirmationDelete() */ Promise.resolve(true).then(val => {
                     if (val) {
                         axios.delete('/amsl-api'+'/regular-form/' + id).then(response => {
                             var dataTable = this.$refs.dataTable
