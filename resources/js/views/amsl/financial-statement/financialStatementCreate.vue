@@ -79,7 +79,7 @@
                 Description
               </td>
 
-              <td>Amounts(£)</td>
+              <td>Amounts</td>
             </tr>
           </thead>
           <tbody>

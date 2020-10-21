@@ -77,7 +77,7 @@
             </tr>
             <tr>
               <td>Particulars </td>
-              <td>Amounts(£) </td>
+              <td>Amounts </td>
             </tr>
           </thead>
           <tbody>
