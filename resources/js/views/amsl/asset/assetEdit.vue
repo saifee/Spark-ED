@@ -59,6 +59,8 @@
                     dense
                     hide-details
                     :items="accounts"
+                    item-text="name"
+                    return-object
 
                     name="account"
 
@@ -108,6 +110,8 @@
                     dense
                     hide-details
                     :items="expenses"
+                    item-text="name"
+                    return-object
 
                     name="expense"
 
@@ -176,6 +180,8 @@
                     dense
                     hide-details
                     :items="payableHolders"
+                    item-text="name"
+                    return-object
 
                     name="liability"
 

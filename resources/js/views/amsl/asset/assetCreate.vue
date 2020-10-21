@@ -59,6 +59,8 @@
                     dense
                     hide-details
                     :items="accounts"
+                    item-text="name"
+                    return-object
 
                     name="account"
 
@@ -83,6 +85,8 @@
                     dense
                     hide-details
                     :items="transactionOptions"
+                    item-text="name"
+                    return-object
 
                     name="transaction_type"
 
@@ -108,6 +112,8 @@
                     dense
                     hide-details
                     :items="expenses"
+                    item-text="name"
+                    return-object
 
                     name="expense"
 

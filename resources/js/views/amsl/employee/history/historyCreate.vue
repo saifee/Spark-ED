@@ -24,6 +24,8 @@
                     dense
                     hide-details
                     :items="employees"
+                    item-text="name"
+                    return-object
 
                     name="account"
 

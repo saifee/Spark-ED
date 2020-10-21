@@ -59,6 +59,8 @@
                     dense
                     hide-details
                     :items="accounts"
+                    item-text="name"
+                    return-object
 
                     name="account"
 
@@ -152,6 +154,8 @@
                     dense
                     hide-details
                     :items="receivableHolders"
+                    item-text="name"
+                    return-object
 
                     name="asset"
 

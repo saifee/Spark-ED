@@ -32,7 +32,7 @@
               </div>
               <div class="col-md-2">
                 <div class="form-group">
-                  <label class="control-label">Inocme  Type *</label>
+                  <label class="control-label">Income  Type *</label>
                   <v-select
                     v-model="income.account"
 
@@ -40,6 +40,8 @@
                     dense
                     hide-details
                     :items="accounts"
+                    item-text="name"
+                    return-object
 
                     name="account"
 
@@ -182,6 +184,8 @@
                       dense
                       hide-details
                       :items="receivableHolders"
+                      item-text="name"
+                      return-object
 
                       name="payable_details"
 

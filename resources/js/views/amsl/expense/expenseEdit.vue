@@ -247,6 +247,8 @@
                       dense
                       hide-details
                       :items="assets"
+                      item-text="name"
+                      return-object
 
                       name="asset"
 
@@ -276,6 +278,8 @@
                       dense
                       hide-details
                       :items="prepaidAssets"
+                      item-text="name"
+                      return-object
 
                       name="asset"
 
@@ -304,6 +308,8 @@
                       dense
                       hide-details
                       :items="payableHolders"
+                      item-text="name"
+                      return-object
 
                       name="payable_details"
 
@@ -333,6 +339,8 @@
                         dense
                         hide-details
                         :items="employees"
+                        item-text="name"
+                        return-object
 
                         name="employee"
                         :class="{ 'is-danger': false }"
