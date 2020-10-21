@@ -1769,7 +1769,7 @@
         </v-list-item-content>
       </v-list-item>
       <v-list-item
-        v-if="hasPermission('access-amsl-ledger') && showMenu('amslLedger')"
+        v-if="hasPermission('access-amsl-ledger') && showMenu('amsl_ledger')"
         :to="{name:'amslLedger'}"
         exact
       >
@@ -1778,7 +1778,7 @@
         </v-list-item-content>
       </v-list-item>
       <v-list-item
-        v-if="hasPermission('access-amsl-report') && showMenu('amslReport')"
+        v-if="hasPermission('access-amsl-report') && showMenu('amsl_report')"
         :to="{name:'amslReport'}"
         exact
       >
