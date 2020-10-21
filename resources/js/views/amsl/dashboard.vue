@@ -14,9 +14,9 @@
           </div>
           <div>
             <h4>Total Sale </h4>
-            <small>&nbsp;&nbsp;( <strong>Week = </strong>{{ weeklySales|currency('£') }} )</small>
+            <small>&nbsp;&nbsp;( <strong>Week = </strong>{{ weeklySales|currency }} )</small>
             <br>
-            <small>( <strong>Month = </strong>{{ monthlySales|currency('£') }} )</small>
+            <small>( <strong>Month = </strong>{{ monthlySales|currency }} )</small>
           </div>
         </div>
         <div class=" accountsInfo ">
@@ -25,9 +25,9 @@
           </div>
           <div>
             <h4>Total Expense </h4>
-            <small>&nbsp;&nbsp;(  <strong> Week = </strong>{{ weeklyExpense|currency('£') }}  )</small>
+            <small>&nbsp;&nbsp;(  <strong> Week = </strong>{{ weeklyExpense|currency }}  )</small>
             <br>
-            <small>(  <strong>Month = </strong>{{ monthlyExpense|currency('£') }}  )</small>
+            <small>(  <strong>Month = </strong>{{ monthlyExpense|currency }}  )</small>
           </div>
         </div>
         <div class=" accountsInfo ">
@@ -36,7 +36,7 @@
           </div>
           <div>
             <h4>Total Cash </h4>
-            <small>( <strong>{{ cashAmount|currency('£') }}</strong>)</small>
+            <small>( <strong>{{ cashAmount|currency }}</strong>)</small>
           </div>
         </div>
         <div class=" accountsInfo ">
@@ -45,7 +45,7 @@
           </div>
           <div>
             <h4>Total Bank </h4>
-            <small>( <strong>{{ bankAmount|currency('£') }}</strong>)</small>
+            <small>( <strong>{{ bankAmount|currency }}</strong>)</small>
           </div>
         </div>
       </div>

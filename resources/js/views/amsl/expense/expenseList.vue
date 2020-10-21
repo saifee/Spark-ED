@@ -30,16 +30,16 @@
           {{ props.data.payment_type }}{{ props.data.modelable?' - '+props.data.modelable.name:null }}
         </td>
         <td class="text-center">
-          {{ props.data.amount|currency('£') }}
+          {{ props.data.amount|currency }}
         </td>
         <td class="text-center">
           {{ props.data.tax_rate?props.data.tax_rate+'%':'0%' }}
         </td>
         <td class="text-center">
-          {{ props.data.tax_amount|currency('£') }}
+          {{ props.data.tax_amount|currency }}
         </td>
         <td class="text-center">
-          {{ props.data.after_tax_amount|currency('£') }}
+          {{ props.data.after_tax_amount|currency }}
         </td>
 
         <td class="text-center">

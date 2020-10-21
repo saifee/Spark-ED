@@ -19,3 +19,7 @@ Vue.component('amsl-data-table-other-ledger', comp7)
 Vue.component('amsl-data-table-regular-form', comp8)
 Vue.component('regular-create-form', comp9)
 Vue.component('regular-edit-form', comp10)
+
+Vue.filter('currency', function (value) {
+  return value; //helper.formatCurrency(value)
+})

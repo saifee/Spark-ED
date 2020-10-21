@@ -32,48 +32,48 @@
         </td>
         <td class="text-right">
           <template v-if="props.data.amount>=0 && props.data.type=='expense' && props.data.payment_type!='Prepaid Expense'">
-            {{ props.data.amount |currency('£') }}
+            {{ props.data.amount |currency }}
           </template>
           <template v-if="props.data.amount<0 && props.data.type=='income'">
-            {{ props.data.amount |currency('£') }}
+            {{ props.data.amount |currency }}
           </template>
           <template v-if="props.data.type=='prepaid expense' && props.data.payment_type=='Prepaid Expense'">
-            {{ props.data.amount |currency('£') }}
+            {{ props.data.amount |currency }}
           </template>
           <template v-if="(props.data.type=='assetAr' || props.data.type=='incomeAr') && props.data.transaction_type =='Receive'">
-            {{ props.data.amount |currency('£') }}
+            {{ props.data.amount |currency }}
           </template>
           <template v-if="(props.data.type=='liabilityAp' || props.data.type=='expenseAr') && props.data.transaction_type =='Receive'">
-            {{ props.data.amount |currency('£') }}
+            {{ props.data.amount |currency }}
           </template>
           <template v-if="props.data.type=='paidVat'">
-            {{ props.data.amount |currency('£') }}
+            {{ props.data.amount |currency }}
           </template>
         </td>
 
         <td class="text-right">
           <template v-if="(props.data.amount<0 && props.data.type=='expense')|| (props.data.payment_type=='Prepaid Expense'&& props.data.type=='expense')">
-            {{ props.data.amount |currency('£') }}
+            {{ props.data.amount |currency }}
           </template>
           <template v-if="props.data.amount>=0 && props.data.type=='income'">
-            {{ props.data.amount |currency('£') }}
+            {{ props.data.amount |currency }}
           </template>
           <template v-if="props.data.payment_type=='Adjust' && props.data.type !='expense'">
-            {{ props.data.amount |currency('£') }}
+            {{ props.data.amount |currency }}
           </template>
           <template v-if="(props.data.type=='assetAr' || props.data.type=='incomeAr')&& props.data.transaction_type=='Payment'">
-            {{ props.data.amount |currency('£') }}
+            {{ props.data.amount |currency }}
           </template>
           <template v-if="(props.data.type=='liabilityAp' || props.data.type=='expenseAr') && props.data.transaction_type =='Payment'">
-            {{ props.data.amount |currency('£') }}
+            {{ props.data.amount |currency }}
           </template>
 
           <template v-if="props.data.type=='receiveVat'">
-            {{ props.data.amount |currency('£') }}
+            {{ props.data.amount |currency }}
           </template>
         </td>
         <td class="text-right">
-          {{ props.data.total_amount |currency('£') }}
+          {{ props.data.total_amount |currency }}
         </td>
       </template>
     </amsl-data-table-ledger>

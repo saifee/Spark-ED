@@ -30,7 +30,7 @@
           {{ props.data.payment_type }}{{ props.data.account_payable?' - '+props.data.account_payable.name:null }}
         </td>
         <td class="text-center">
-          {{ props.data.amount|currency('£') }}
+          {{ props.data.amount|currency }}
         </td>
 
         <td>

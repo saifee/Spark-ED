@@ -25,36 +25,36 @@
         </td>
         <td class="text-right">
           <template v-if="props.data.type=='income'">
-            {{ props.data.amount|currency('£') }}
+            {{ props.data.amount|currency }}
           </template>
           <template v-if="props.data.type=='asset' && (props.data.transaction_type=='Sold'|| props.data.transaction_type=='Receive'|| props.data.transaction_type=='Initial')">
-            {{ props.data.amount|currency('£') }}
+            {{ props.data.amount|currency }}
           </template>
 
           <template v-if="props.data.type=='liability' && (props.data.transaction_type=='Receive' || props.data.transaction_type=='Initial')">
-            {{ props.data.amount|currency('£') }}
+            {{ props.data.amount|currency }}
           </template>
 
           <template v-if="props.data.type=='equity' && props.data.transaction_type=='Receive'">
-            {{ props.data.amount|currency('£') }}
+            {{ props.data.amount|currency }}
           </template>
         </td>
         <td class="text-right">
           <template v-if="props.data.type=='expense'">
-            {{ props.data.amount|currency('£') }}
+            {{ props.data.amount|currency }}
           </template>
           <template v-if="props.data.type=='asset' && (props.data.transaction_type=='Purchase' || props.data.transaction_type=='Payment')">
-            {{ props.data.amount|currency('£') }}
+            {{ props.data.amount|currency }}
           </template>
           <template v-if="props.data.type=='liability' && props.data.transaction_type=='Payment'">
-            {{ props.data.amount|currency('£') }}
+            {{ props.data.amount|currency }}
           </template>
           <template v-if="props.data.type=='equity' && props.data.transaction_type=='Payment'">
-            {{ props.data.amount|currency('£') }}
+            {{ props.data.amount|currency }}
           </template>
         </td>
         <td class="text-right">
-          {{ props.data.total_amount|currency('£') }}
+          {{ props.data.total_amount|currency }}
         </td>
       </template>
     </amsl-data-table-day-book>
