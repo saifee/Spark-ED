@@ -29,7 +29,7 @@ trait AssetTrait
 
         $data=DB::table('amsl_accounts as accounts')
             ->leftJoin('amsl_assets as assets', 'assets.account_id', '=', 'accounts.id')
-            ->select('accounts.name', 'accounts.id as aid', 'assets.transaction_type', DB::raw("(SELECT SUM(CASE  WHEN assets.transaction_type ='Adjust' THEN -assets.amount ELSE assets.amount END)from assets LEFT JOIN amsl_accounts as accounts on accounts.id = assets.account_id WHERE  accounts.account_type='Current Asset' and accounts.name !='Cash' and accounts.name!='Bank' and  assets.account_id = aid and asset_date between '$this->fromDate' and '$this->toDate')as assetAmount"), DB::raw("(SELECT sum(amount) from amsl_expenses WHERE asset_id=aid and expense_date between '$this->fromDate' and '$this->toDate')as expenseAmount"))
+            ->select('accounts.name', 'accounts.id as aid', 'assets.transaction_type', DB::raw("(SELECT SUM(CASE  WHEN assets.transaction_type ='Adjust' THEN -assets.amount ELSE assets.amount END) from amsl_assets LEFT JOIN amsl_accounts as accounts on accounts.id = assets.account_id WHERE  accounts.account_type='Current Asset' and accounts.name !='Cash' and accounts.name!='Bank' and  assets.account_id = aid and asset_date between '$this->fromDate' and '$this->toDate')as assetAmount"), DB::raw("(SELECT sum(amount) from amsl_expenses WHERE asset_id=aid and expense_date between '$this->fromDate' and '$this->toDate')as expenseAmount"))
             ->where('accounts.account_type', 'Current Asset')
             ->where('accounts.name','!=','Cash')
             ->where('accounts.name','!=','Bank')
