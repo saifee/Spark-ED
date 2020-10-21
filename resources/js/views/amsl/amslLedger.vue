@@ -184,7 +184,9 @@
             :key="`ledger${i}`"
             :to="{name:'ledgerShow',params:{id:account.id,type:account.account_type,name:account.name}}"
           >
-            <v-list-item-action><i class="fas fa-dot-circle-o fa-fw" /></v-list-item-action>
+            <v-list-item-action>
+              <v-icon>play_arrow</v-icon>
+            </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>{{ account.name }}</v-list-item-title>
             </v-list-item-content>
