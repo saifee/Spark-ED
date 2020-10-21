@@ -479,9 +479,7 @@
                 this.expense.payable_details= null
                 this.expense.asset= null
                 this.dueField=false
-                console.log(this.expense.due_amount)
                 this.expense.due_amount=null
-                console.log(this.expense.due_amount)
 
             },
 
