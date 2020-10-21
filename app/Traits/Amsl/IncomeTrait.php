@@ -24,7 +24,7 @@ trait IncomeTrait
     }
 
     public function getIncomeVat(){
-       $data=DB::table('amsl_incomes')
+       $data=DB::table('amsl_incomes as incomes')
             ->leftJoin('amsl_accounts as accounts','accounts.id','=','incomes.account_id')
             ->where('accounts.name','LIKE','%value%');
         $data=$this->dateSearch('income_date',$data,request())->sum('amount');

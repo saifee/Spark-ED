@@ -47,7 +47,7 @@ trait CashFlowAssetLiabilityTrait
     }
 
     public function getCashAndBankLiabilityEm(){
-        $data=DB::table('amsl_employees')
+        $data=DB::table('amsl_employees as employees')
             ->leftJoin('amsl_liabilities as liabilities','liabilities.accountable_id','=','employees.id')
             ->select('employees.name','liabilities.payment_type','employees.id',DB::raw("(SUM(CASE  WHEN liabilities.transaction_type ='Payment' THEN liabilities.amount ELSE -liabilities.amount END)) as amount"))
             ->where('liabilities.accountable_type','=','App\Models\Amsl\Employee')

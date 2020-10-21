@@ -69,7 +69,7 @@ trait LiabilityTrait
 
     public function getLiabilitiesEmployee(){
 
-        $data=DB::table('amsl_employees')
+        $data=DB::table('amsl_employees as employees')
             ->leftJoin('amsl_liabilities as liabilities', 'employees.id', '=', 'liabilities.accountable_id')
             ->select('employees.id as aid', 'employees.name',
 

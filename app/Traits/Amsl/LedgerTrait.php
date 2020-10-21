@@ -92,7 +92,7 @@ trait LedgerTrait
 
         $receiveAsIncome = $this->dateSearch('income_date', $receiveAsIncome, request());
 
-        $query = DB::table('amsl_incomes')
+        $query = DB::table('amsl_incomes as incomes')
             ->select('account_id','tax_amount as amount','payment_type','income_date as date','description','ref',DB::raw("'receiveVat' AS type"))
             ->union($receiveAsIncome)
             ->where('tax_amount','!=',0)

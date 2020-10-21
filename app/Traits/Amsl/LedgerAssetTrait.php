@@ -140,7 +140,7 @@ trait LedgerAssetTrait
         $asset=$this->dateSearch('asset_date',$asset,request());
 
 
-        $query = DB::table('amsl_incomes')
+        $query = DB::table('amsl_incomes as incomes')
             ->select('incomes.account_id', 'incomes.amount',
                 DB::raw("'Receive' AS transaction_type"),
                 'incomes.payment_type', 'incomes.income_date as date',
