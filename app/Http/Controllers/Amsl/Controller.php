@@ -9,7 +9,6 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
 class Controller extends BaseController
@@ -76,7 +75,7 @@ class Controller extends BaseController
 
     public function makePaginate($query){
 
-        $page = Input::get('page', 1);
+        $page = Request::input('page', 1);
         $query=$query->get()->toArray();
         if(request()->input('resultPerPage')=='All'){
             $slice = array_slice($query, count($query) * ($page - 1), count($query));
