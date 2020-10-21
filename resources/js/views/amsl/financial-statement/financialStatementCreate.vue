@@ -568,7 +568,7 @@
         },
         methods:{
             getData(){
-                axios.get('/amsl-api'+'financial-statement',{
+                axios.get('/amsl-api'+'/financial-statement',{
                     params:{
                         fromDate:this.from_date,
                         toDate:this.to_date,
@@ -592,7 +592,7 @@
                 })
             },
             getProfitLossData(){
-                axios.get('/amsl-api'+'profit-loss',{
+                axios.get('/amsl-api'+'/profit-loss',{
                     params:{
                         fromDate:this.from_date,
                         toDate:this.to_date,
@@ -605,7 +605,7 @@
             },
             getPreviouProfitLossData(){
 
-                axios.get('/amsl-api'+'profit-loss',{
+                axios.get('/amsl-api'+'/profit-loss',{
                     params:{
                         fromDate:'01-01-1971',
                         toDate:this.subDayOne(this.from_date),
