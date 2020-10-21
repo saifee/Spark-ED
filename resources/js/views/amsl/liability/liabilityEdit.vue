@@ -55,8 +55,11 @@
                   <v-select
                     v-model="liability.account"
 
-                    :options="accounts"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="accounts"
+
                     name="account"
 
                     :class="{ 'is-danger': false }"
@@ -76,8 +79,11 @@
                   <v-select
                     v-model="liability.transaction_type"
 
-                    :options="transactionOptions"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="transactionOptions"
+
                     name="transaction_type"
 
                     :class="{ 'is-danger': false }"
@@ -116,8 +122,11 @@
                   <v-select
                     v-model="liability.payment_type"
 
-                    :options="paymentOptions"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="paymentOptions"
+
                     name="payment_type"
 
                     :class="{ 'is-danger': false }"
@@ -139,8 +148,11 @@
                   <v-select
                     v-model="liability.asset"
 
-                    :options="receivableHolders"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="receivableHolders"
+
                     name="asset"
 
                     :class="{ 'is-danger': false }"
@@ -193,7 +205,11 @@
   </div>
 </template>
 <script>
+    import { VSelect } from 'vuetify/lib'
     export default {
+        components: {
+          VSelect,
+        },
         data() {
             return {
                 liability:{},

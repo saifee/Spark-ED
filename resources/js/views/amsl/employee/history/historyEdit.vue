@@ -20,8 +20,11 @@
                   <v-select
                     v-model="history.employee"
 
-                    :options="employees"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="employees"
+
                     name="account"
 
                     :class="{ 'is-danger': false }"
@@ -98,7 +101,11 @@
   </div>
 </template>
 <script>
+    import { VSelect } from 'vuetify/lib'
     export default {
+        components: {
+          VSelect,
+        },
         data() {
             return {
                 sError:{},

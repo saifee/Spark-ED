@@ -20,8 +20,10 @@
                   <v-select
                     v-model="account.account_type"
 
-                    :options="['Fixed Asset','Current Asset','Current Asset-AR','Liabilities-AP','Long-term Liabilities','Short-term Liabilities','Expense','Income']"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="['Fixed Asset','Current Asset','Current Asset-AR','Liabilities-AP','Long-term Liabilities','Short-term Liabilities','Expense','Income']"
                     name="account_type"
 
                     :class="{ 'is-danger': false }"
@@ -96,7 +98,11 @@
 </template>
 
 <script>
+    import { VSelect } from 'vuetify/lib'
     export default {
+        components: {
+          VSelect,
+        },
         data() {
             return {
                 account:{}

@@ -55,8 +55,11 @@
                   <v-select
                     v-model="asset.account"
 
-                    :options="accounts"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="accounts"
+
                     name="account"
 
                     :class="{ 'is-danger': false }"
@@ -76,8 +79,11 @@
                   <v-select
                     v-model="asset.transaction_type"
 
-                    :options="transactionOptions"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="transactionOptions"
+
                     name="transaction_type"
 
                     :class="{ 'is-danger': false }"
@@ -98,8 +104,11 @@
                   <v-select
                     v-model="asset.expense"
 
-                    :options="expenses"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="expenses"
+
                     name="expense"
 
                     :class="{ 'is-danger': false }"
@@ -137,8 +146,11 @@
                   <v-select
                     v-model="asset.payment_type"
 
-                    :options="paymentOptions"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="paymentOptions"
+
                     name="payment_type"
 
                     :class="{ 'is-danger': false }"
@@ -160,8 +172,11 @@
                   <v-select
                     v-model="asset.liability"
 
-                    :options="payableHolders"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="payableHolders"
+
                     name="liability"
 
                     :class="{ 'is-danger': false }"
@@ -214,7 +229,11 @@
 </template>
 
 <script>
+    import { VSelect } from 'vuetify/lib'
     export default {
+        components: {
+          VSelect,
+        },
         data() {
             return {
                 asset: {asset_date: new Date()},

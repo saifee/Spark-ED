@@ -36,8 +36,11 @@
                   <v-select
                     v-model="expense.account"
 
-                    :options="accounts"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="accounts"
+
                     name="account"
 
                     :class="{ 'is-danger': false }"
@@ -151,8 +154,11 @@
                     <v-select
                       v-model="expense.payment_type"
 
-                      :options="['Cash','Bank','Accounts Payable','Prepaid Expense']"
-                      label="name"
+                      outlined
+                      dense
+                      hide-details
+                      :items="['Cash','Bank','Accounts Payable','Prepaid Expense']"
+
                       name="payment_type"
 
                       :class="{ 'is-danger': false }"
@@ -178,8 +184,11 @@
                     <v-select
                       v-model="expense.payment_type"
 
-                      :options="['Cash','Bank','Accounts Payable','Depreciation Fund']"
-                      label="name"
+                      outlined
+                      dense
+                      hide-details
+                      :items="['Cash','Bank','Accounts Payable','Depreciation Fund']"
+
                       name="payment_type"
 
                       :class="{ 'is-danger': false }"
@@ -234,8 +243,11 @@
                     <v-select
                       v-model="expense.asset"
 
-                      :options="assets"
-                      label="name"
+                      outlined
+                      dense
+                      hide-details
+                      :items="assets"
+
                       name="asset"
 
                       :class="{ 'is-danger': false }"
@@ -260,8 +272,11 @@
                     <v-select
                       v-model="expense.asset"
 
-                      :options="prepaidAssets"
-                      label="name"
+                      outlined
+                      dense
+                      hide-details
+                      :items="prepaidAssets"
+
                       name="asset"
 
                       :class="{ 'is-danger': false }"
@@ -285,8 +300,11 @@
                   <div class="col-md-9">
                     <v-select
                       v-model="expense.payable_details"
-                      :options="payableHolders"
-                      label="name"
+                      outlined
+                      dense
+                      hide-details
+                      :items="payableHolders"
+
                       name="payable_details"
 
                       :class="{ 'is-danger': false }"
@@ -311,8 +329,11 @@
                       <v-select
                         v-model="expense.employee"
 
-                        :options="employees"
-                        label="name"
+                        outlined
+                        dense
+                        hide-details
+                        :items="employees"
+
                         name="employee"
                         :class="{ 'is-danger': false }"
                       />
@@ -366,7 +387,11 @@
 </template>
 
 <script>
+    import { VSelect } from 'vuetify/lib'
     export default {
+        components: {
+          VSelect,
+        },
         data() {
             return {
                 expense:{tax_rate:0},

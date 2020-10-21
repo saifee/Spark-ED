@@ -36,8 +36,11 @@
                   <v-select
                     v-model="income.account"
 
-                    :options="accounts"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="accounts"
+
                     name="account"
 
                     :class="{ 'is-danger': false }"
@@ -146,8 +149,11 @@
                     <v-select
                       v-model="income.payment_type"
 
-                      :options="['Cash','Bank','Accounts Receivable']"
-                      label="name"
+                      outlined
+                      dense
+                      hide-details
+                      :items="['Cash','Bank','Accounts Receivable']"
+
                       name="payment_type"
 
                       :class="{ 'is-danger': false }"
@@ -172,8 +178,11 @@
                     <v-select
                       v-model="income.payable_details"
 
-                      :options="receivableHolders"
-                      label="name"
+                      outlined
+                      dense
+                      hide-details
+                      :items="receivableHolders"
+
                       name="payable_details"
 
                       :class="{ 'is-danger': false }"
@@ -227,7 +236,11 @@
 </template>
 
 <script>
+    import { VSelect } from 'vuetify/lib'
     export default {
+        components: {
+          VSelect,
+        },
         data() {
             return {
                 income:{tax_rate:0,income_date:new Date()},

@@ -55,8 +55,11 @@
                   <v-select
                     v-model="equity.account"
 
-                    :options="['Capital','Withdraw']"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="['Capital','Withdraw']"
+
                     name="account"
 
                     :class="{ 'is-danger': false }"
@@ -79,8 +82,11 @@
                   <v-select
                     v-model="equity.transaction_type"
 
-                    :options="['Receive']"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="['Receive']"
+
                     name="transaction_type"
 
                     :class="{ 'is-danger': false }"
@@ -100,8 +106,11 @@
                   <v-select
                     v-model="equity.transaction_type"
 
-                    :options="['Payment']"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="['Payment']"
+
                     name="transaction_type"
 
                     :class="{ 'is-danger': false }"
@@ -135,8 +144,11 @@
                   <v-select
                     v-model="equity.payment_type"
 
-                    :options="['Cash','Bank']"
-                    label="name"
+                    outlined
+                    dense
+                    hide-details
+                    :items="['Cash','Bank']"
+
                     name="payment_type"
 
                     :class="{ 'is-danger': false }"
@@ -191,7 +203,11 @@
 </template>
 
 <script>
+    import { VSelect } from 'vuetify/lib'
     export default {
+        components: {
+          VSelect,
+        },
         data() {
             return {
                 equity:{},

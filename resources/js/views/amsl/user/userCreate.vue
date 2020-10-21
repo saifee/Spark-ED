@@ -20,7 +20,10 @@
                   <v-select
                     v-model="userInfo.role"
 
-                    :options="['sub-admin','user']"
+                    outlined
+                    dense
+                    hide-details
+                    :items="['sub-admin','user']"
                     label="Account Type"
                     name="role"
 
@@ -125,7 +128,11 @@
 </template>
 
 <script>
+    import { VSelect } from 'vuetify/lib'
     export default {
+        components: {
+          VSelect,
+        },
         data() {
             return {
                 userInfo:{}
