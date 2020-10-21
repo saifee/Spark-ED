@@ -111,7 +111,7 @@ trait LedgerTrait
             ->where('accounts.name','LIKE','%value%');
 
         $paidAsExpense = $this->dateSearch('expense_date', $paidAsExpense, request());
-        $query = DB::table('amsl_expenses')
+        $query = DB::table('amsl_expenses as expenses')
             ->select('account_id','tax_amount as amount','payment_type','expense_date as date','description','ref',DB::raw("'paidVat' AS type"))
             ->union($paidAsExpense)
             ->where('tax_amount','!=',0)

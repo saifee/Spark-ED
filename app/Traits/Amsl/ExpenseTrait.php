@@ -26,7 +26,7 @@ trait ExpenseTrait
 
 
     public function getExpenseVat(){
-        $data= DB::table('amsl_expenses')
+        $data= DB::table('amsl_expenses as expenses')
             ->leftJoin('amsl_accounts as accounts','accounts.id','=','expenses.account_id')
             ->where('accounts.name','LIKE','%value%');
         $data=$this->dateSearch('expense_date',$data,request())->sum('amount');

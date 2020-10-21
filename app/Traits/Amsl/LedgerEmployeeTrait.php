@@ -49,13 +49,13 @@ trait LedgerEmployeeTrait
 
     public function employeeLedgerData()
     {
-        $liability = DB::table('amsl_liabilities')
+        $liability = DB::table('amsl_liabilities as liabilities')
             ->select('liabilities.accountable_id', 'liabilities.amount', 'liabilities.transaction_type', 'liabilities.payment_type', 'liabilities.liability_date as date', 'liabilities.description', 'liabilities.ref', DB::raw("'employeeliabilityAp' AS type"))
             ->where('liabilities.accountable_type', 'App\Models\Amsl\Employee')
             ->where('liabilities.accountable_id', request()->input('id'));
         $liability = $this->dateSearch('liability_date', $liability, request());
 
-        $query = DB::table('amsl_expenses')
+        $query = DB::table('amsl_expenses as expenses')
             ->select('expenses.account_id', 'expenses.amount', DB::raw("'Payment' AS transaction_type"), 'expenses.payment_type', 'expenses.expense_date as date', 'expenses.description', 'expenses.ref', DB::raw("'expenseAr' AS type"))
             ->where('expenses.employee_id', request()->input('id'))
             ->union($liability)

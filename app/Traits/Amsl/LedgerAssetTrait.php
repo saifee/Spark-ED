@@ -82,7 +82,7 @@ trait LedgerAssetTrait
 
         $asset=$this->dateSearch('asset_date',$asset,request());
 
-        $query = DB::table('amsl_expenses')
+        $query = DB::table('amsl_expenses as expenses')
             ->select('id', 'account_id', 'ref', 'amount', 'payment_type',
                 'description', DB::raw("'null' AS expense_id"), 'expense_date as date',
                 DB::raw("'prepaid expense' AS type"),
@@ -112,7 +112,7 @@ trait LedgerAssetTrait
 
         $asset=$this->dateSearch('asset_date',$asset,request());
 
-        $query = DB::table('amsl_expenses')
+        $query = DB::table('amsl_expenses as expenses')
             ->select('id', 'account_id', 'ref', 'amount', 'payment_type',
                 DB::raw("'depreciation' AS transaction_type"),
                 'description','expense_date as date',

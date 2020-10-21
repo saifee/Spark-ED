@@ -15,7 +15,7 @@ trait DayBookTrait
 {
     public function getDayBookExpense()
     {
-        $data = DB::table('amsl_expenses')->where('payment_type', request()->input('type'))->select('expense_date as date', 'ref', 'description', 'amount', DB::raw("'expense' AS type"), DB::raw("'expense' AS transaction_type"));
+        $data = DB::table('amsl_expenses as expenses')->where('payment_type', request()->input('type'))->select('expense_date as date', 'ref', 'description', 'amount', DB::raw("'expense' AS type"), DB::raw("'expense' AS transaction_type"));
         return $data;
     }
 
@@ -31,7 +31,7 @@ trait DayBookTrait
 
     public function getDayBookLiability()
     {
-        $data = DB::table('amsl_liabilities')->where('payment_type', request()->input('type'))->select('liability_date as date', 'ref', 'description', 'amount', DB::raw("'liability' AS type"), 'transaction_type');
+        $data = DB::table('amsl_liabilities as liabilities')->where('payment_type', request()->input('type'))->select('liability_date as date', 'ref', 'description', 'amount', DB::raw("'liability' AS type"), 'transaction_type');
         return $data;
     }
 
