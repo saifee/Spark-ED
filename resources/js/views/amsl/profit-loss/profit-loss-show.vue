@@ -200,7 +200,7 @@
         },
         methods: {
             getData() {
-                axios.get('/amsl-api'+'profit-loss', {
+                axios.get('/amsl-api'+'/profit-loss', {
                     params: {
                         fromDate: this.from_date,
                         toDate: this.to_date,
