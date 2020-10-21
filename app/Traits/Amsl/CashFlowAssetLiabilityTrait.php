@@ -64,7 +64,7 @@ trait CashFlowAssetLiabilityTrait
     }
 
     public function getCashAndBankEquity(){
-        $data=DB::table('amsl_ownerequities')
+        $data=DB::table('amsl_ownerequities as ownerequities')
             ->select('account','payment_type','id',DB::raw("(SUM(CASE  WHEN transaction_type ='Payment' THEN -amount ELSE amount END)) as amount"))
             ->groupBy('id')
             ->orderBy('account');

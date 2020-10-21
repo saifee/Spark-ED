@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 trait EquityTrait
 {
     public function getCapital(){
-        $data=DB::table('amsl_ownerequities')
+        $data=DB::table('amsl_ownerequities as ownerequities')
             ->select('ownerequities.account', 'ownerequities.transaction_type', DB::raw("SUM(CASE  WHEN transaction_type ='Payment' THEN -amount ELSE amount END) as amount"))
             ->where('ownerequities.account', '=','Capital')
             ->groupBy('ownerequities.account');
@@ -38,7 +38,7 @@ trait EquityTrait
 
 
     public function getWithdraw(){
-        $data=DB::table('amsl_ownerequities')
+        $data=DB::table('amsl_ownerequities as ownerequities')
             ->select('ownerequities.account', 'ownerequities.transaction_type', DB::raw("SUM(CASE  WHEN transaction_type ='Payment' THEN amount ELSE -amount END) as amount"))
             ->where('ownerequities.account', '=','Withdraw')
             ->groupBy('ownerequities.account');

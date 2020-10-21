@@ -38,7 +38,7 @@ trait DayBookTrait
 
 
     public function getDayBookEquity(){
-        $data=DB::table('amsl_ownerequities')->where('payment_type',request()->input('type'))->select('equity_date as date','ref','description','amount',DB::raw("'equity' AS type"),'transaction_type');
+        $data=DB::table('amsl_ownerequities as ownerequities')->where('payment_type',request()->input('type'))->select('equity_date as date','ref','description','amount',DB::raw("'equity' AS type"),'transaction_type');
         return $data;
     }
 
