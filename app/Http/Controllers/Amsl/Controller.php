@@ -75,7 +75,7 @@ class Controller extends BaseController
 
     public function makePaginate($query){
 
-        $page = Request::input('page', 1);
+        $page = (new Request)->input('page', 1);
         $query=$query->get()->toArray();
         if(request()->input('resultPerPage')=='All'){
             $slice = array_slice($query, count($query) * ($page - 1), count($query));
