@@ -1694,6 +1694,14 @@
         </v-list-item-content>
       </template>
       <v-list-item
+        :to="{name:'amslDashboard'}"
+        exact
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('general.dashboard') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item
         v-if="hasPermission('access-amsl-account-list') && showMenu('amsl_account_list')"
         :to="{name:'accountList'}"
         exact
