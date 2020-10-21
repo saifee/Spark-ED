@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Amsl;
 
 use App\Traits\Amsl\DayBookTrait;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 
 class DayBookController extends Controller
