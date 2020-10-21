@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Amsl;
 
 use App\Helpers\GlobalMethod;
-use App\Income;
+use App\Models\Amsl\Income;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Amsl;
 
-use App\Asset;
+use App\Models\Amsl\Asset;
 use App\Helpers\GlobalMethod;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;

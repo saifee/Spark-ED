@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Amsl;
 
-use App\EmployeeHistory;
+use App\Models\Amsl\EmployeeHistory;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 

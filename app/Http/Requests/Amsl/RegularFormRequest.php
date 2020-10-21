@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Amsl;
 
 use App\Helpers\GlobalMethod;
-use App\RegularForm;
+use App\Models\Amsl\RegularForm;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 

@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Amsl;
 
 use App\Helpers\GlobalMethod;
-use App\Ownerequity;
+use App\Models\Amsl\Ownerequity;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
