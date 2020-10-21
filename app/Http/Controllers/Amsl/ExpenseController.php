@@ -21,9 +21,9 @@ class ExpenseController extends Controller
 
     public function create()
     {
-        $employee=DB::table('amsl_employees')->select('id','name',DB::raw("'App\\\Employee' AS payable_type"));
+        $employee=DB::table('amsl_employees')->select('id','name',DB::raw("'App\\\Models\\\Amsl\\\Employee' AS payable_type"));
         $payableHolders=DB::table('amsl_accounts')
-            ->select('id','name',DB::raw("'App\\\Account' AS payable_type"))
+            ->select('id','name',DB::raw("'App\\\Models\\\Amsl\\\Account' AS payable_type"))
             ->where('account_type','Liabilities-AP')
             ->union($employee)
             ->orderBy('name')
@@ -56,9 +56,9 @@ class ExpenseController extends Controller
     public function edit(Request $request, $id)
     {
 
-        $employee=DB::table('amsl_employees')->select('id','name',DB::raw("'App\\\Employee' AS payable_type"));
+        $employee=DB::table('amsl_employees')->select('id','name',DB::raw("'App\\\Models\\\Amsl\\\Employee' AS payable_type"));
         $payableHolders=DB::table('amsl_accounts')
-            ->select('id','name',DB::raw("'App\\\Account' AS payable_type"))
+            ->select('id','name',DB::raw("'App\\\Models\\\Amsl\\\Account' AS payable_type"))
             ->where('account_type','Liabilities-AP')
             ->orderBy('name')
             ->union($employee)
