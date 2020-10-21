@@ -2,16 +2,12 @@
   <div>
     <div class="app-title">
       <div class="p-3">
-        <h1><i class="fa fa-dashboard" /> Dashboard</h1>
+        <h1>Dashboard</h1>
       </div>
     </div>
 
-    <template v-if="$root.$data.user?$root.$data.user && $root.$data.user.role!='user':false">
       <div class=" d-flex flex-wrap justify-content-around">
         <div class=" accountsInfo ">
-          <div>
-            <i class="fa fa fa-calculator" />
-          </div>
           <div>
             <h4>Total Sale </h4>
             <small>&nbsp;&nbsp;( <strong>Week = </strong>{{ weeklySales|currency }} )</small>
@@ -21,9 +17,6 @@
         </div>
         <div class=" accountsInfo ">
           <div>
-            <i class="fa fa-bar-chart" />
-          </div>
-          <div>
             <h4>Total Expense </h4>
             <small>&nbsp;&nbsp;(  <strong> Week = </strong>{{ weeklyExpense|currency }}  )</small>
             <br>
@@ -32,24 +25,17 @@
         </div>
         <div class=" accountsInfo ">
           <div>
-            <i class="fa fa-pie-chart" />
-          </div>
-          <div>
             <h4>Total Cash </h4>
             <small>( <strong>{{ cashAmount|currency }}</strong>)</small>
           </div>
         </div>
         <div class=" accountsInfo ">
           <div>
-            <i class="fa fa-area-chart" />
-          </div>
-          <div>
             <h4>Total Bank </h4>
             <small>( <strong>{{ bankAmount|currency }}</strong>)</small>
           </div>
         </div>
       </div>
-    </template>
   </div>
 </template>
 
