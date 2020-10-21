@@ -29,7 +29,7 @@
               </div>
               <div class="col-md-2">
                 <div class="form-group">
-                  <label class="control-label">Inocme Type *</label>
+                  <label class="control-label">Income Type *</label>
                   <v-select
                     v-model="income.account"
 

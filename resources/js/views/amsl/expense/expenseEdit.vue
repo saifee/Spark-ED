@@ -40,6 +40,8 @@
                     dense
                     hide-details
                     :items="accounts"
+                    item-text="name"
+                    return-object
 
                     name="account"
 
