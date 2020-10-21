@@ -74,7 +74,7 @@ trait LedgerLiabilityTrait
 
         $liability=$this->dateSearch('liability_date',$liability,request());
 
-        $asset = DB::table('amsl_assets')
+        $asset = DB::table('amsl_assets as assets')
             ->select('account_id','amount','transaction_type' ,'payment_type','asset_date as date','description','ref',DB::raw("'liabilityAp_asset' AS type"))
             ->where('liability_id',request()->input('id'));
 

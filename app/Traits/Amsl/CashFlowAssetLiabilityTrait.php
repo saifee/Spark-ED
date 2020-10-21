@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\DB;
 trait CashFlowAssetLiabilityTrait
 {
     public function getCashAndBankAsset(){
-        $data=DB::table('amsl_accounts')
-            ->leftJoin('assets','assets.account_id','=','accounts.id')
+        $data=DB::table('amsl_accounts as accounts')
+            ->leftJoin('amsl_assets as assets','assets.account_id','=','accounts.id')
             ->select('accounts.name','assets.payment_type','accounts.id',DB::raw("(SUM(CASE  WHEN (assets.transaction_type ='Payment' and accounts.account_type='Fixed Asset') or assets.transaction_type='Adjust' or  (assets.transaction_type ='Receive' and accounts.account_type='Current Asset-AR') or assets.transaction_type ='Sold' THEN -assets.amount ELSE assets.amount END)) as amount"))
             ->where('accounts.name','NOT LIKE','%cash%')
             ->where('accounts.name','NOT LIKE','%bank%')
@@ -31,8 +31,8 @@ trait CashFlowAssetLiabilityTrait
     }
 
     public function getCashAndBankLiability(){
-        $data=DB::table('amsl_accounts')
-            ->leftJoin('liabilities','liabilities.accountable_id','=','accounts.id')
+        $data=DB::table('amsl_accounts as accounts')
+            ->leftJoin('amsl_liabilities as liabilities','liabilities.accountable_id','=','accounts.id')
             ->select('accounts.name','liabilities.payment_type','accounts.id',DB::raw("(SUM(CASE  WHEN liabilities.transaction_type ='Payment' THEN liabilities.amount ELSE -liabilities.amount END)) as amount"))
             ->where('liabilities.accountable_type','=','App\Models\Amsl\Account')
             ->groupBy('accounts.id')
@@ -48,7 +48,7 @@ trait CashFlowAssetLiabilityTrait
 
     public function getCashAndBankLiabilityEm(){
         $data=DB::table('amsl_employees')
-            ->leftJoin('liabilities','liabilities.accountable_id','=','employees.id')
+            ->leftJoin('amsl_liabilities as liabilities','liabilities.accountable_id','=','employees.id')
             ->select('employees.name','liabilities.payment_type','employees.id',DB::raw("(SUM(CASE  WHEN liabilities.transaction_type ='Payment' THEN liabilities.amount ELSE -liabilities.amount END)) as amount"))
             ->where('liabilities.accountable_type','=','App\Models\Amsl\Employee')
             ->groupBy('employees.id')
@@ -79,8 +79,8 @@ trait CashFlowAssetLiabilityTrait
     }
 
     public function getAccountNameByCash(){
-        $data=DB::table('amsl_accounts')
-            ->leftJoin('assets','assets.account_id','=','accounts.id')
+        $data=DB::table('amsl_accounts as accounts')
+            ->leftJoin('amsl_assets as assets','assets.account_id','=','accounts.id')
             ->select('accounts.name','assets.payment_type','accounts.id',DB::raw("(SUM(CASE  WHEN assets.transaction_type ='Initial' THEN assets.amount ELSE -assets.amount END)) as amount"))
             ->where('accounts.name','LIKE','%cash%')
             ->groupBy('assets.account_id')
@@ -89,8 +89,8 @@ trait CashFlowAssetLiabilityTrait
         return $data->first();
     }
     public function getAccountNameByBank(){
-        $data=DB::table('amsl_accounts')
-            ->leftJoin('assets','assets.account_id','=','accounts.id')
+        $data=DB::table('amsl_accounts as accounts')
+            ->leftJoin('amsl_assets as assets','assets.account_id','=','accounts.id')
             ->select('accounts.name','assets.payment_type','accounts.id',DB::raw("(SUM(CASE  WHEN assets.transaction_type ='Initial' THEN assets.amount ELSE -assets.amount END)) as amount"))
             ->where('accounts.name','LIKE','%bank%')
             ->groupBy('assets.account_id')

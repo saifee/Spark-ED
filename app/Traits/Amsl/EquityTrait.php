@@ -26,8 +26,8 @@ trait EquityTrait
 
 
     public function getOtherCapital(){
-        $data=DB::table('amsl_accounts')
-            ->select(DB::raw("(SELECT SUM(CASE  WHEN transaction_type = 'Sold' THEN -amount ELSE amount END) from assets where payment_type='Owner Equity' and asset_date between '$this->fromDate' and '$this->toDate')as assetEquityAmount"), DB::raw("(Select SUM(CASE  WHEN transaction_type = 'Payment' THEN amount ELSE -amount END) from liabilities  where payment_type='Owner Equity' and liability_date between '$this->fromDate' and '$this->toDate') as liabilityAmount"));
+        $data=DB::table('amsl_accounts as accounts')
+            ->select(DB::raw("(SELECT SUM(CASE  WHEN transaction_type = 'Sold' THEN -amount ELSE amount END) from amsl_assets as assets where payment_type='Owner Equity' and asset_date between '$this->fromDate' and '$this->toDate')as assetEquityAmount"), DB::raw("(Select SUM(CASE  WHEN transaction_type = 'Payment' THEN amount ELSE -amount END) from amsl_liabilities  where payment_type='Owner Equity' and liability_date between '$this->fromDate' and '$this->toDate') as liabilityAmount"));
 
 
         return $data->first();

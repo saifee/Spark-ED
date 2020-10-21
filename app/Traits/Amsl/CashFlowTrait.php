@@ -15,8 +15,8 @@ trait CashFlowTrait
 {
     public function getCashAndBankIncome(){
 
-        $data=DB::table('amsl_accounts')
-            ->leftJoin('incomes','incomes.account_id','=','accounts.id')
+        $data=DB::table('amsl_accounts as accounts')
+            ->leftJoin('amsl_incomes as incomes','incomes.account_id','=','accounts.id')
             ->select('accounts.name','incomes.payment_type','accounts.id',DB::raw("SUM(incomes.amount) as amount"))
             ->where('accounts.account_type','Income')
             ->groupBy('incomes.account_id');
@@ -33,9 +33,9 @@ trait CashFlowTrait
 
     public function getCashAndBankExpense(){
 
-        $data= DB::table('amsl_accounts')
+        $data= DB::table('amsl_accounts as accounts')
             ->select('accounts.id as aid','expenses.payment_type','accounts.name',DB::raw("(SUM(CASE  WHEN expenses.payment_type ='Prepaid Expense' THEN -expenses.amount ELSE expenses.amount END)) as amount"))
-            ->leftJoin('expenses','accounts.id','=','expenses.account_id')
+            ->leftJoin('amsl_expenses as expenses','accounts.id','=','expenses.account_id')
             ->where('accounts.account_type','=','Expense')
             ->groupBy('accounts.id');
 

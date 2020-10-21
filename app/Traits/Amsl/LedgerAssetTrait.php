@@ -130,7 +130,7 @@ trait LedgerAssetTrait
 
 
     public function currentAssetArData(){
-        $asset = DB::table('amsl_assets')
+        $asset = DB::table('amsl_assets as assets')
             ->select('assets.account_id', 'assets.amount',
                 'assets.transaction_type', 'assets.payment_type',
                 'assets.asset_date as date', 'assets.description',

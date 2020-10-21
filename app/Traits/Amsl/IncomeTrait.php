@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\DB;
 trait IncomeTrait
 {
     public function getIncome(){
-        $data=DB::table('amsl_accounts')
-            ->leftJoin('incomes','incomes.account_id','=','accounts.id')
+        $data=DB::table('amsl_accounts as accounts')
+            ->leftJoin('amsl_incomes as incomes','incomes.account_id','=','accounts.id')
             ->select('accounts.name','accounts.id',DB::raw("SUM(incomes.amount) as amount"))
             ->where('accounts.account_type','Income')
             ->groupBy('incomes.account_id');
@@ -25,7 +25,7 @@ trait IncomeTrait
 
     public function getIncomeVat(){
        $data=DB::table('amsl_incomes')
-            ->leftJoin('accounts','accounts.id','=','incomes.account_id')
+            ->leftJoin('amsl_accounts as accounts','accounts.id','=','incomes.account_id')
             ->where('accounts.name','LIKE','%value%');
         $data=$this->dateSearch('income_date',$data,request())->sum('amount');
        return $data;

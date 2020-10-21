@@ -23,7 +23,7 @@ trait DayBookTrait
 
     public function getDayBookAsset()
     {
-        $data = DB::table('amsl_assets')->where('payment_type', request()->input('type'))->select('asset_date as date', 'ref', 'description', 'amount', DB::raw("'asset' AS type"), 'transaction_type');
+        $data = DB::table('amsl_assets as assets')->where('payment_type', request()->input('type'))->select('asset_date as date', 'ref', 'description', 'amount', DB::raw("'asset' AS type"), 'transaction_type');
         return $data;
     }
 
@@ -43,7 +43,7 @@ trait DayBookTrait
     }
 
     public function getDayBookInitialAmount(){
-        $data = DB::table('amsl_assets')->leftJoin('accounts','assets.account_id','=','accounts.id')->where('accounts.name', ucfirst(request()->input('type')))->select('assets.asset_date as date', 'assets.ref', 'assets.description', 'assets.amount', DB::raw("'asset' AS type"), 'assets.transaction_type');
+        $data = DB::table('amsl_assets as assets')->leftJoin('amsl_accounts as accounts','assets.account_id','=','accounts.id')->where('accounts.name', ucfirst(request()->input('type')))->select('assets.asset_date as date', 'assets.ref', 'assets.description', 'assets.amount', DB::raw("'asset' AS type"), 'assets.transaction_type');
         return $data;
     }
 }
