@@ -258,7 +258,7 @@
         methods:{
             getData(){
                 axios.get('/amsl-api'+'/regular-form/'+this.id+'/edit').then(res=>{
-                        this.regular=res.data
+                        this.regular=res
                     this.regular.date=this.parseDateTime(res.date)
                 })
             },

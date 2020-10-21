@@ -157,7 +157,7 @@
         },
         created(){
             axios.get('/amsl-api'+'/user-info/'+this.$route.params.id+'/edit').then(res=>{
-                this.userInfo=res.data
+                this.userInfo=res
             })
         },
         methods: {

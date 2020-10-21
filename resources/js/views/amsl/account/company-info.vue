@@ -131,7 +131,7 @@
         },
         created(){
             axios.get('/amsl-api'+'/company/1/edit').then(res=>{
-                this.company=res.data?res.data:{}
+                this.company=res?res:{}
             })
         },
         methods: {

@@ -114,7 +114,7 @@
         },
         created(){
           axios.get('/amsl-api'+'/employee/history/create').then(res=>{
-                this.employees=res.data
+                this.employees=res
           })
         },
         methods: {
