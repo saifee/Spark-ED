@@ -221,12 +221,6 @@ export default [
         name: 'cashFlow',
         component: () => import(/* webpackChunkName: "js/amsl/cash" */ '@views/amsl/cash-flow/cashFlowShow.vue')
     },
-    //Regular form
-    {
-        path: 'regular',
-        name: 'regularForm',
-        component: () => import(/* webpackChunkName: "js/amsl/regular" */ '@views/amsl/regular/regularForm.vue')
-    },
 
     //user
 

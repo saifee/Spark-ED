@@ -43,7 +43,6 @@ Route::get('/get-loggedin-user',function (){
 // });
 
 // Route::group(['middleware'=>['webJson']],function(){
-    Route::resource('regular-form','RegularFormController');
 // });
 
 // Route::get('/', function () {
