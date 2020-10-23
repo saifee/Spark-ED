@@ -44,6 +44,7 @@
                   <label class="control-label">Start Date&Time*</label>
                   <datepicker
                     v-model="history.start_date"
+                    :bootstrap-styling="true"
 
                     :config="options"
                   />
@@ -60,6 +61,7 @@
                   <label class="control-label">End Date&Time</label>
                   <datepicker
                     v-model="history.end_date"
+                    :bootstrap-styling="true"
                     :config="options"
                   />
                 </div>

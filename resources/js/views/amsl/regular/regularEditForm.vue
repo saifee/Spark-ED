@@ -11,6 +11,7 @@
             <label class="control-label">Date*</label>
             <datepicker
               v-model="regular.date"
+              :bootstrap-styling="true"
 
               :config="options"
             />

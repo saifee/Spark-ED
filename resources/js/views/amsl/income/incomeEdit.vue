@@ -16,6 +16,7 @@
                   <label class="control-label">Date*</label>
                   <datepicker
                     v-model="income.income_date"
+                    :bootstrap-styling="true"
 
                     :config="options"
                   />

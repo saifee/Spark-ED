@@ -9,6 +9,7 @@
       >
         <datepicker
           v-model="from_date"
+          :bootstrap-styling="true"
           :config="dateOptions"
         />
       </div>
@@ -18,6 +19,7 @@
       >
         <datepicker
           v-model="to_date"
+          :bootstrap-styling="true"
           :config="dateOptions"
         />
       </div>

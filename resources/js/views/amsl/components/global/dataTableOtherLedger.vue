@@ -18,6 +18,7 @@
             >
               <datepicker
                 v-model="from_date"
+                :bootstrap-styling="true"
                 :config="dateOptions"
                 @input="searched=false"
               />
@@ -28,6 +29,7 @@
             >
               <datepicker
                 v-model="to_date"
+                :bootstrap-styling="true"
                 :config="dateOptions"
                 @input="searched=false"
               />
