@@ -87,9 +87,10 @@
               <p>Address: {{ $root.$data.company.address }}</p>
             </template>
           </div>
+          <div class="v-data-table">
+            <div class="v-data-table__wrapper">
           <table
             id="table1"
-            class="table table-striped  table-fw-widget dataTable no-footer table_block"
             role="grid"
             aria-describedby="table1_info"
           >
@@ -117,6 +118,8 @@
               </tr>
             </tbody>
           </table>
+            </div>
+          </div>
         </div>
       </div>
       <div
