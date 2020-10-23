@@ -94,7 +94,7 @@
             role="grid"
             aria-describedby="table1_info"
           >
-            <thead>
+            <thead class="v-data-table-header">
               <tr role="row">
                 <th
                   v-for="(column, index) in columns"
