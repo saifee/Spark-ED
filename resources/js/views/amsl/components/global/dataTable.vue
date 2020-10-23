@@ -13,26 +13,21 @@
           :config="dateOptions"
         />
       </div>
-      <div
+      <template
         v-if="dateSearch"
-        class="search-container mr-2"
       >
         <datepicker
           v-model="to_date"
           :bootstrap-styling="true"
           :config="dateOptions"
         />
-      </div>
-      <div
-        v-if="dateSearch"
-        class="search-container mr-2"
-      >
         <v-btn
           @click.prevent="assainSearchValue()"
         >
           Search
         </v-btn>
-      </div>
+        <v-spacer />
+      </template>
       <v-text-field
         v-if="search"
         v-model="searchValue"
