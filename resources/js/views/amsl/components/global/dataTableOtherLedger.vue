@@ -130,7 +130,7 @@
                 <th
                   v-for="(column, index) in columns"
                   :id="column.field"
-                  class="sorting text-center"
+                  class="sorting"
                   tabindex="0"
                   rowspan="1"
                   colspan="1"

@@ -16,22 +16,22 @@
         slot="items"
         slot-scope="props"
       >
-        <td class="text-center">
+        <td>
           {{ props.data.name }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.id_card }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.phone }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.email }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.address }}
         </td>
-        <td class="text-center">
+        <td>
           <div class="adjustAction">
             <v-btn
               :to="{name:'accountEdit', params:{id:props.data.id}}"

@@ -16,16 +16,16 @@
         slot="items"
         slot-scope="props"
       >
-        <td class="text-center">
+        <td>
           {{ parseDate(props.data.date) }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.name }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.agt }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.ref }}
         </td>
         <td class="text-right">
@@ -40,7 +40,7 @@
         <td class="text-right">
           {{ props.data.rm_total }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.parking_cash }}
         </td>
         <td class="text-right">
@@ -55,10 +55,10 @@
         <td class="text-right">
           {{ props.data.advance_sales }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.remark }}
         </td>
-        <td class="text-center">
+        <td>
           <div
             v-if="props.data.id!='balance'"
             class="adjustAction"

@@ -17,19 +17,19 @@
         slot="items"
         slot-scope="props"
       >
-        <td class="text-center">
+        <td>
           {{ props.data.accountable.name }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.ref }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.description }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.payment_type }}{{ props.data.account_receivable?' - '+props.data.account_receivable.name:null }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.amount|currency }}
         </td>
 

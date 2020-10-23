@@ -17,28 +17,28 @@
         slot="items"
         slot-scope="props"
       >
-        <td class="text-center">
+        <td>
           {{ props.data.account.name }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.ref }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.description }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.payment_type }}{{ props.data.account_receivable?' - '+props.data.account_receivable.name:null }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.amount|currency }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.tax_rate?props.data.tax_rate+'%':'0%' }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.tax_amount|currency }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.after_tax_amount|currency }}
         </td>
 

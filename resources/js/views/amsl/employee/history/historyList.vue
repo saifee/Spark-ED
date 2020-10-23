@@ -17,19 +17,19 @@
         slot="items"
         slot-scope="props"
       >
-        <td class="text-center">
+        <td>
           {{ props.data.employee.name }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.start_date }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.end_date }}
         </td>
-        <td class="text-center">
+        <td>
           {{ $refs.dataTable.getHoursAndMinute(props.data.start_date,props.data.end_date) }}
         </td>
-        <td class="text-center">
+        <td>
           <div class="adjustAction">
             <v-btn
               :to="{name:'employeeHistoryEdit', params:{id:props.data.id}}"

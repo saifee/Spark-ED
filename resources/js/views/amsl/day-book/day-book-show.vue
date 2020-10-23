@@ -14,13 +14,13 @@
         slot="items"
         slot-scope="props"
       >
-        <td class="text-center">
+        <td>
           {{ parseDate(props.data.date) }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.description }}
         </td>
-        <td class="text-center">
+        <td>
           {{ props.data.ref }}
         </td>
         <td class="text-right">
