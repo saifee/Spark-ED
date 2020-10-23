@@ -467,10 +467,4 @@
     }
 </script>
 
-<style scoped>
 
-    .btn{
-        line-height: 25px;
-    }
-
-</style>

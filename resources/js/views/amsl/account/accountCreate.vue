@@ -138,6 +138,4 @@
     }
 </script>
 
-<style scoped>
 
-</style>

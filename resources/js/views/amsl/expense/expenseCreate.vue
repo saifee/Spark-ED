@@ -501,6 +501,4 @@
     }
 </script>
 
-<style scoped>
 
-</style>

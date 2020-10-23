@@ -211,8 +211,4 @@
     }
 </script>
 
-<style scoped lang="scss">
-	table.dataTable thead > tr > th.sorting {
-		 padding-right: 0px!important;
-	}
-</style>
+

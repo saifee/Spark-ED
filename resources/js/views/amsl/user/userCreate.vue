@@ -168,6 +168,4 @@
     }
 </script>
 
-<style scoped>
 
-</style>

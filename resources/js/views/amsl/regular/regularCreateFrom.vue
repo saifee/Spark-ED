@@ -279,9 +279,4 @@
         }
     }
 </script>
-<style scoped>
-    .own-form-size{
-        padding-left: 5px!important;
-        padding-right: 5px!important;
-    }
-</style>
+

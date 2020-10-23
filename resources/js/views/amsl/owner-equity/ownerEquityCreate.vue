@@ -256,6 +256,4 @@
     }
 </script>
 
-<style scoped>
 
-</style>

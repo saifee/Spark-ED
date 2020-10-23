@@ -291,6 +291,4 @@
     }
 </script>
 
-<style scoped>
 
-</style>

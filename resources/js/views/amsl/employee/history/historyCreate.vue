@@ -155,6 +155,4 @@
     }
 </script>
 
-<style scoped>
 
-</style>
