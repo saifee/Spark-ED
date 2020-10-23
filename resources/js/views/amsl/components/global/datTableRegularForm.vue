@@ -154,7 +154,6 @@
                 <th
                   v-for="(column, index) in columns"
                   :id="column.field"
-                  class="text-center"
                   tabindex="0"
                   rowspan="1"
                   colspan="1"
