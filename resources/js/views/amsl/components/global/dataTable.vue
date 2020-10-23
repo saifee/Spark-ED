@@ -127,24 +127,17 @@
         class="center-screen"
       />
       <v-toolbar class="elevation-0">
-        <div class="dataTables_length">
-          <label>Show
-            <select
-              id="resultPerPage"
-              style="text-align-last: center; height: 24px;"
-              name="table1_length"
-              aria-controls="table1"
-              class="form-control form-control-sm customShown"
-              @change="onChangePerPage"
-            >
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-              <option value="200">200</option>
-              <option value="All">All</option>
-            </select> Entries &nbsp;</label>
-        </div>
+        <v-select
+          id="resultPerPage"
+          v-model="resultPerPage"
+          outlined
+          dense
+          hide-details
+          prefix="Show"
+          suffix="Entries"
+          :items="['10', '20', '50', '100', '200', 'All',]"
+          @change="onChangePerPage"
+        />
         <div>
           ( Showing {{ from }} to
           {{ to }}
@@ -207,7 +200,11 @@
 
 <script>
     import _ from 'lodash'
+    import { VSelect } from 'vuetify/lib'
     export default {
+        components: {
+          VSelect,
+        },
 
         props: {
 
@@ -295,7 +292,7 @@
                 from: 0,
                 to: 0,
                 pageLimit: 10,
-                resultPerPage: 10,
+                resultPerPage: '10',
 
                 searchValue:null,
                 dateOptions: {
@@ -395,7 +392,6 @@
                 }
             },
             onChangePerPage() {
-                this.resultPerPage = document.getElementById('resultPerPage').value;
                 this.getResult()
             },
             printMe(){
