@@ -15,11 +15,14 @@
         slot="items"
         slot-scope="props"
       >
-        <td class="text-center">
-          <router-link :to="{name:'ledgerOtherShow', params:{id:props.data.id,type:'Employee',name:props.data.name}}">
-            {{ props.data.name }}
-          </router-link>
-        </td>
+        <v-list-item :to="{name:'ledgerOtherShow', params:{id:props.data.id,type:'Employee',name:props.data.name}}">
+            <v-list-item-action>
+              <v-icon>play_arrow</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ props.data.name }}</v-list-item-title>
+            </v-list-item-content>
+        </v-list-item>
       </template>
     </amsl-data-table>
   </div>
