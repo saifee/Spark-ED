@@ -28,16 +28,20 @@
         </v-btn>
         <v-spacer />
       </template>
-      <v-text-field
+      <template
         v-if="search"
-        v-model="searchValue"
-        single-line
-        hide-details
-        append-icon="search"
-        placeholder="Search.."
-        @keyup="getResult(null,'created_at',from_date,to_date)"
-      />
-      <v-spacer />
+      >
+        <v-text-field
+          v-model="searchValue"
+          hide-details
+          outlined
+          dense
+          append-icon="search"
+          placeholder="Search.."
+          @keyup="getResult(null,'created_at',from_date,to_date)"
+        />
+        <v-spacer />
+      </template>
       <v-btn
         :to="{name:addLink}"
         color="primary"
