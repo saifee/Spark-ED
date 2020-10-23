@@ -377,7 +377,6 @@
 
                                         }
                                     }else{
-                                        console.log('hello')
                                         totalAmount = totalAmount - amount
                                     }
 
