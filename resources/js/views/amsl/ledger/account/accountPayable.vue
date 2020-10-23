@@ -16,12 +16,12 @@
         slot-scope="props"
       >
         <v-list-item :to="{name:'ledgerOtherShow', params:{id:props.data.id,type:props.data.account_type,name:props.data.name}}">
-            <v-list-item-action>
-              <v-icon>play_arrow</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>{{ props.data.name }}</v-list-item-title>
-            </v-list-item-content>
+          <v-list-item-action>
+            <v-icon>play_arrow</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ props.data.name }}</v-list-item-title>
+          </v-list-item-content>
         </v-list-item>
       </template>
     </amsl-data-table>

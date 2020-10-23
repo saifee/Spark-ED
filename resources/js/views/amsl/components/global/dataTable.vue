@@ -91,35 +91,35 @@
           </div>
           <div class="v-data-table">
             <div class="v-data-table__wrapper">
-          <table
-            id="table1"
-            role="grid"
-            aria-describedby="table1_info"
-          >
-            <thead class="v-data-table-header">
-              <tr role="row">
-                <th
-                  v-for="(column, index) in columns"
-                  :id="column.field"
-                  class="sorting"
-                  tabindex="0"
-                  rowspan="1"
-                  colspan="1"
-                  @click="onClickColumn"
-                >
-                  {{ column.name }}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="data in dataList">
-                <slot
-                  name="items"
-                  :data="data"
-                />
-              </tr>
-            </tbody>
-          </table>
+              <table
+                id="table1"
+                role="grid"
+                aria-describedby="table1_info"
+              >
+                <thead class="v-data-table-header">
+                  <tr role="row">
+                    <th
+                      v-for="(column, index) in columns"
+                      :id="column.field"
+                      class="sorting"
+                      tabindex="0"
+                      rowspan="1"
+                      colspan="1"
+                      @click="onClickColumn"
+                    >
+                      {{ column.name }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="data in dataList">
+                    <slot
+                      name="items"
+                      :data="data"
+                    />
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
