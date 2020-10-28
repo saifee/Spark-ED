@@ -17,6 +17,7 @@
                 <th>{{trans('finance.payment_method')}}</th>
                 <th>{{trans('finance.amount')}}</th>
                 <th>{{trans('finance.date_of_transaction')}}</th>
+                <th>{{trans('finance.fee_payment_remarks')}}</th>
                 <th>{{trans('general.created_by')}}</th>
                 <th>{{trans('general.created_at')}}</th>
             </tr>
@@ -36,6 +37,7 @@
                     </td>
                     <td>{{currency($payroll_transaction->amount,1)}}</td>
                     <td>{{showDate($payroll_transaction->date)}}</td>
+                    <td>{{$payroll_transaction->remarks}}</td>
                     <td>{{$payroll_transaction->user->employee->name.' '.getEmployeeDesignationName($payroll_transaction->user->employee, $payroll_transaction->date)}}</td>
                     <td>{{showDateTime($payroll_transaction->created_at)}}</td>
         		</tr>
