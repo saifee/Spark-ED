@@ -43,5 +43,12 @@
         		</tr>
         	@endforeach
         </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="5"></th>
+                <th>{{currency($footer['grand_total'],1)}}</th>
+                <th colspan="4"></th>
+            </tr>
+        </tfoot>
     </table>
 @include('print.print-layout.footer')

@@ -71,9 +71,11 @@ class PayrollTransactionController extends Controller
     {
         $this->authorize('listPayrollTransaction', Transaction::class);
 
+        $footer = $this->repo->getFooter($this->request->all());
+
         $payroll_transactions = $this->repo->print(request('filter'));
 
-        return view('print.employee.payroll.transaction', compact('payroll_transactions'))->render();
+        return view('print.employee.payroll.transaction', compact('payroll_transactions', 'footer'))->render();
     }
 
     /**
