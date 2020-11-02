@@ -111,8 +111,8 @@ class ReportRepository
 
         $account = Account::find($account_id);
         $opening_balance = $account->opening_balance;
-        $expense = $this->transaction->where('date', '<=', getStartOfDate($params['start_date']))->where('type', 0)->sum('amount');
-        $income = $this->transaction->where('date', '<=', getStartOfDate($params['start_date']))->where('type', 1)->sum('amount');
+        $expense = $this->transaction->where('account_id', $account_id)->where('date', '<=', getStartOfDate($params['start_date']))->where('type', 0)->sum('amount');
+        $income = $this->transaction->where('account_id', $account_id)->where('date', '<=', getStartOfDate($params['start_date']))->where('type', 1)->sum('amount');
         $opening_balance -= $expense;
         $opening_balance += $income;
         $opening_balance_copy = $opening_balance;
