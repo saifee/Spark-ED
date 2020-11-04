@@ -43,15 +43,15 @@
                                                 </tr>
                                                 <tr>
                                                   <td><b>Fee Total/Sum</b></td>
-                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total : '—' }}</td>
+                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? formatCurrency(academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total) : '—' }}</td>
                                                 </tr>
                                                 <tr>
                                                   <td><b>Fee Paid Sum</b></td>
-                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid : '—' }}</td>
+                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? formatCurrency(academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid) : '—' }}</td>
                                                 </tr>
                                                 <tr>
                                                   <td><b>Remaining Fee</b></td>
-                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total - academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid : '—' }}</td>
+                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? formatCurrency(academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total - academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid) : '—' }}</td>
                                                 </tr>
                                                 <tr>
                                                   <td><b>Total Employee</b></td>
@@ -59,7 +59,7 @@
                                                 </tr>
                                                 <tr>
                                                   <td><b>Total Salary</b></td>
-                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_salary : '—' }}</td>
+                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? formatCurrency(academic_sessions_detail[academic_session.id].total_salary) : '—' }}</td>
                                                 </tr>
                                               </tbody>
                                             </template>
@@ -284,6 +284,9 @@
         methods: {
             getConfig(config){
                 return helper.getConfig(config);
+            },
+            formatCurrency(price){
+                return helper.formatCurrency(price);
             },
             hasRole(role){
                 return helper.hasRole(role);
