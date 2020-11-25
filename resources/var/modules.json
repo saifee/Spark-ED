@@ -577,6 +577,12 @@
 					"translation": "inventory_sale.stock_sale",
 					"visibility": true,
 					"submenu": []
+				},
+				{
+					"name": "stock_pos",
+					"translation": "inventory_sale.stock_pos",
+					"visibility": true,
+					"submenu": []
 				}
 			]
 		}

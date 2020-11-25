@@ -346,6 +346,7 @@
 			"create-stock-sale": ["manager","principal"],
 			"edit-stock-sale": ["manager","principal"],
 			"delete-stock-sale": ["manager"],
+			"stock-pos": ["manager","principal"],
 			"list-stock-transfer": ["manager","principal"],
 			"create-stock-transfer": ["manager","principal"],
 			"edit-stock-transfer": ["manager","principal"],

@@ -12,6 +12,7 @@
   'stock_item_associated_with_sale' => 'Stock Item associated with multiple sale.',
   'stock_item_sale_price' => 'Sale Price',
   'stock_sale' => 'Sale',
+  'stock_pos' => 'POS',
   'stock_sale_added' => 'Sale added.',
   'stock_sale_added_to_wallet' => 'added to wallet',
   'stock_sale_balance' => 'Balance',

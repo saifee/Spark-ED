@@ -608,6 +608,10 @@ export default [
         component: () => import(/* webpackChunkName: "js/inventory/stock-sale/show" */ '@views/inventory/stock-sale/show')
     },
     {
+        path: '/inventory/stock/pos',
+        component: () => import(/* webpackChunkName: "js/inventory/stock-pos/index" */ '@views/inventory/stock-pos/index')
+    },
+    {
         path: '/inventory/vendor',
         name: 'inventoryVendor',
         component: () => import(/* webpackChunkName: "js/inventory/vendor/index" */ '@views/inventory/vendor/index')

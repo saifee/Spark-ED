@@ -1517,6 +1517,15 @@
           <v-list-item-title>{{ trans('inventory_sale.stock_sale') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-list-item
+        v-if="showMenu('stock_pos')"
+        to="/inventory/stock/pos"
+        exact
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ trans('inventory_sale.stock_pos') }}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list-group>
     <v-list-group
       v-show="moduleMenu && showMenu('post') && hasPermission('list-article')"
