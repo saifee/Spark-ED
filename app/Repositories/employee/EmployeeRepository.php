@@ -202,6 +202,7 @@ class EmployeeRepository {
 		$employee_group_id = gv($params, 'employee_group_id');
 		$self = gv($params, 'self', 1);
 		$date = toDate(gv($params, 'date', date('Y-m-d')));
+        $gender               = gv($params, 'gender', []);
 
 		$this->employee->whereNull('prefix')->update(['prefix' => config('config.employee_code_prefix')]);
 
@@ -209,6 +210,7 @@ class EmployeeRepository {
 		$department_id = is_array($department_id) ? $department_id : ($department_id ? explode(',', $department_id) : []);
 		$employee_group_id = is_array($employee_group_id) ? $employee_group_id : ($employee_group_id ? explode(',', $employee_group_id) : []);
 		$employee_category_id = is_array($employee_category_id) ? $employee_category_id : ($employee_category_id ? explode(',', $employee_category_id) : []);
+        $gender          = is_array($gender) ? $gender : ($gender ? explode(',', $gender) : []);
 
 		$system_admins = $this->employee->whereHas('user', function ($q) {
 			$q->role(config('system.default_role.admin'));
@@ -277,6 +279,10 @@ class EmployeeRepository {
 				$q->whereIn('employee_group_id', $employee_group_id);
 			});
 		}
+
+        if (count($gender)) {
+            $query->whereIn('gender', $gender);
+        }
 
 		if ($status == 'active') {
 			$query->whereHas('employeeTerms', function ($q) use ($date) {
@@ -399,8 +405,10 @@ class EmployeeRepository {
 		$departments = $this->department->selectAll();
 		$designations = $this->designation->getDesignationOption();
 		$employee_groups = $this->employee_group->selectAll();
+		$list = getVar('list');
+		$genders = generateTranslatedSelectOption(isset($list['gender']) ? $list['gender'] : []);
 
-		return compact('departments', 'designations', 'employee_groups');
+		return compact('departments', 'designations', 'employee_groups', 'genders');
 	}
 
 	/**

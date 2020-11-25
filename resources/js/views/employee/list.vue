@@ -111,6 +111,16 @@
                              <div class="col-12 col-sm-6">
                                 <date-range-picker :start-date.sync="filter.date_of_birth_start_date" :end-date.sync="filter.date_of_birth_end_date" :label="trans('student.date_of_birth_between')"></date-range-picker>
                             </div>
+                            <div class="col-12 col-sm-2">
+                                <div class="form-group">
+                                    <label for="">{{trans('employee.gender')}}</label>
+                                    <v-select label="name" track-by="id" v-model="selected_genders" name="gender" id="gender" :options="genders" @select="onGenderSelect" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" @remove="onGenderRemove" :selected="selected_genders">
+                                        <div class="multiselect__option" slot="afterList" v-if="!genders.length">
+                                            {{trans('general.no_option_found')}}
+                                        </div>
+                                    </v-select>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer text-right">
                             <button type="button" @click="showFilterPanel = false" class="btn btn-danger">{{trans('general.cancel')}}</button>
@@ -267,10 +277,12 @@
                     department_id: [],
                     designation_id: [],
                     employee_group_id: [],
+                    gender: [],
                     date_of_joining: '',
                     date_of_birth_start_date: '',
                     date_of_birth_end_date: '',
                     status: 'active'
+
                 },
                 orderByOptions: [
                     {
@@ -290,6 +302,8 @@
                 designations: [],
                 selected_designations: null,
                 selected_employee_groups: null,
+                genders: [],
+                selected_genders: null,
                 statuses: [
                     {
                         text: i18n.employee.status_active,
@@ -341,6 +355,7 @@
                         this.designations = response.filters.designations;
                         this.employee_categories = response.filters.employee_categories;
                         this.employee_groups = response.filters.employee_groups;
+                        this.genders = response.filters.genders;
                         let ids = [];
                         this.employees.data.forEach(employee => {
                             ids.push(employee.id);
@@ -421,6 +436,12 @@
             },
             onEmployeeGroupRemove(removedOption){
                 this.filter.employee_group_id.splice(this.filter.employee_group_id.indexOf(removedOption.id), 1);
+            },
+            onGenderSelect(selectedOption){
+                this.filter.gender.push(selectedOption.id);
+            },
+            onGenderRemove(removedOption){
+                this.filter.gender.splice(this.filter.gender.indexOf(removedOption.id), 1);
             },
             onGroupSelect(selectedOption){
                 this.employeeGroupForm.employee_group_id = selectedOption.id;
