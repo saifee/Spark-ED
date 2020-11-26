@@ -129,7 +129,7 @@
                 v-confirm="{ok: confirmDelete(index)}"
                 small
               >
-                delete
+                cancel
               </v-icon>
               <v-list-item-action-text v-text="formatCurrency(detail.price * detail.quantity)" />
             </v-list-item-action>
