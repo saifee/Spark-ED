@@ -11,28 +11,33 @@
         >
           <v-row>
             <v-col cols="12">
-                <v-row>
-                    <template v-if="stock_items.length === 0">
-                        <p class="grey--text lighten-2">no items</p>
-                    </template>
-                    <v-col cols="12" lg="3"
-                        v-for="(stock_item, i) in stock_items"
-                        :key="`stock_item${i}`"
-
+              <v-row>
+                <template v-if="stock_items.length === 0">
+                  <p class="grey--text lighten-2">
+                    no items
+                  </p>
+                </template>
+                <v-col
+                  v-for="(stock_item, i) in stock_items"
+                  :key="`stock_item${i}`"
+                  cols="12"
+                  lg="3"
+                >
+                  <v-card @click="addRow(stock_item)">
+                    <v-avatar
+                      class="ma-3"
+                      size="125"
+                      tile
                     >
-                    <v-card @click="addRow(stock_item)">
-                          <v-avatar
-                            class="ma-3"
-                            size="125"
-                            tile
-                          >
-                            <v-img src="/camera-placeholder.jpg"></v-img>
-                          </v-avatar>
-                        <v-card-title class="subtitle-1 pt-0">{{stock_item.name}}</v-card-title>
-                        <v-card-subtitle>{{formatCurrency(stock_item.sale_price)}}</v-card-subtitle>
-                    </v-card>
-                    </v-col>
-                </v-row>
+                      <v-img src="/camera-placeholder.jpg" />
+                    </v-avatar>
+                    <v-card-title class="subtitle-1 pt-0">
+                      {{ stock_item.name }}
+                    </v-card-title>
+                    <v-card-subtitle>{{ formatCurrency(stock_item.sale_price) }}</v-card-subtitle>
+                  </v-card>
+                </v-col>
+              </v-row>
             </v-col>
           </v-row>
         </v-col>
@@ -52,11 +57,15 @@
             <v-list-item-content>
               <v-list-item-title v-text="getStockItemTitle(detail.stock_item_id)" />
               <v-list-item-subtitle>
-                <v-icon small>
+                <v-icon
+                  small
+                >
                   remove_circle
                 </v-icon>
                 {{ detail.quantity }} Unit(s)
-                <v-icon small>
+                <v-icon
+                  small
+                >
                   add_circle
                 </v-icon>
                 &ndash;
@@ -103,8 +112,8 @@
           </div>
           <v-row>
             <v-col
-            cols="12"
-            lg="6"
+              cols="12"
+              lg="6"
             >
               <label for="">{{ trans('student.student') }}</label>
               <v-select
@@ -127,8 +136,8 @@
               />
             </v-col>
             <v-col
-            cols="12"
-            lg="6"
+              cols="12"
+              lg="6"
             >
               <div class="form-group">
                 <label for="">{{ trans('inventory_sale.stock_sale_payment_method') }}</label>
@@ -149,8 +158,8 @@
               v-if="stockSaleForm.payment_method === 'cash'"
             >
               <v-col
-              cols="12"
-              lg="6"
+                cols="12"
+                lg="6"
               >
                 <label for="">{{ trans('inventory_sale.stock_sale_paid_amount') }}</label>
                 <v-text-field
@@ -164,8 +173,8 @@
                 />
               </v-col>
               <v-col
-              cols="12"
-              lg="6"
+                cols="12"
+                lg="6"
               >
                 <label for="">{{ trans('inventory_sale.stock_sale_discount') }}</label>
                 <v-text-field
