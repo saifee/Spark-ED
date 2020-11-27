@@ -21,6 +21,12 @@
 
                     >
                     <v-card @click="addRow(stock_item)">
+                          <v-avatar
+                            class="ma-3"
+                            tile
+                          >
+                            <v-img src="/camera-placeholder.jpg"></v-img>
+                          </v-avatar>
                         <v-card-title class="subtitle-1">{{stock_item.name}}</v-card-title>
                         <v-card-subtitle>{{formatCurrency(stock_item.sale_price)}}</v-card-subtitle>
                     </v-card>
