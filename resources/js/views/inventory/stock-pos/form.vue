@@ -144,7 +144,7 @@
           <div
             class="table-responsive"
           >
-            <table class="table">
+            <table class="table table-bordered table-sm font-weight-black">
               <tbody>
                 <tr>
                   <td>{{ trans('inventory_sale.stock_sale_sub_total') }}</td>
