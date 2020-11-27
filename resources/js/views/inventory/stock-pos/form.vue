@@ -23,6 +23,7 @@
                     <v-card @click="addRow(stock_item)">
                           <v-avatar
                             class="ma-3"
+                            size="125"
                             tile
                           >
                             <v-img src="/camera-placeholder.jpg"></v-img>
