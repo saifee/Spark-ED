@@ -27,9 +27,9 @@
               <v-divider />
               <v-row>
                 <template v-if="stock_items.length === 0">
-                  <p class="grey--text lighten-2">
+                  <v-col class="grey--text lighten-2">
                     no items
-                  </p>
+                  </v-col>
                 </template>
                 <v-col
                   v-for="(stock_item, i) in stock_items"
