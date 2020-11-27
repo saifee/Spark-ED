@@ -292,6 +292,11 @@
                 }
             },
             dItemQuantity(detail){
+                if (detail.quantity-1 < 1) {
+                    let index = this.stockSaleForm.details.indexOf(detail)
+                    this.deleteDetail(index)
+                    return
+                }
                 this.$set(detail, 'quantity', detail.quantity-1)
             },
             iItemQuantity(detail){
