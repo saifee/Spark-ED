@@ -259,9 +259,6 @@
             },
         },
         mounted(){
-            if(this.id)
-                this.get();
-            else
                 this.stockSaleForm.upload_token = this.$uuid.v4();
 
             this.getPreRequisite();
@@ -328,33 +325,6 @@
             },
             getPriceName(index){
                 return index+'_price';
-            },
-            get(){
-                let loader = this.$loading.show();
-                axios.get('/api/stock/transfer/'+this.id)
-                    .then(response => {
-                        this.stockSaleForm.type = response.stock_transfer.type;
-                        this.module_id = response.stock_transfer.id;
-                        this.stockSaleForm.number = response.stock_transfer.number;
-                        this.stockSaleForm.date = response.stock_transfer.date;
-                        this.stockSaleForm.description = response.stock_transfer.description;
-                        this.stockSaleForm.student_id = response.stock_transfer.student_id;
-                        this.selected_student = response.selected_student;
-                        response.stock_transfer.details.forEach(detail => {
-                            this.stockSaleForm.details.push({
-                                quantity: detail.quantity,
-                                price: detail.price,
-                                stock_item_id: detail.stock_item_id,
-                                selected_stock_item: (detail.stock_item_id) ? {id: detail.stock_item_id, name: detail.item.name} : null,
-                                description: detail.description
-                            });
-                        });
-                        loader.hide();
-                    })
-                    .catch(error => {
-                        loader.hide();
-                        helper.showErrorMsg(error);
-                    })
             },
             store(){
                 let loader = this.$loading.show();
