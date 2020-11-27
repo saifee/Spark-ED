@@ -95,7 +95,7 @@
                 </tr>
                 <tr>
                   <td>{{ trans('inventory_sale.stock_sale_discount') }}</td>
-                  <td>{{ formatCurrency(stockSaleForm.discount) }}</td>
+                  <td>{{ formatCurrency(+stockSaleForm.discount) }}</td>
                 </tr>
                 <tr>
                   <td>{{ trans('inventory_sale.stock_sale_total') }}</td>
