@@ -11,6 +11,20 @@
         >
           <v-row>
             <v-col cols="12">
+              <v-autocomplete
+                v-model="addStockItem"
+                outlined
+                dense
+                hide-details
+                auto-select-first
+                clearable
+                item-text="name"
+                return-object
+                :items="stock_items"
+                :placeholder="trans('inventory.select_stock_item')"
+                @input="addRow"
+              />
+              <v-divider />
               <v-row>
                 <template v-if="stock_items.length === 0">
                   <p class="grey--text lighten-2">
