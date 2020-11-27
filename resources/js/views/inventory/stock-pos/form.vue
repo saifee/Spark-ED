@@ -25,7 +25,7 @@
                 item-text="name"
                 return-object
                 :items="stock_items"
-                :placeholder="trans('inventory.select_stock_item')"
+                :placeholder="trans('inventory_sale.search_product_by_name')"
                 @input="addRow"
               />
               <v-divider />

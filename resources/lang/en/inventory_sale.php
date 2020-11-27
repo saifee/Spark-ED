@@ -7,6 +7,7 @@
   'delete_stock_sale_return' => 'Delete Return',
   'edit_stock_sale' => 'Edit Sale',
   'return_date_should_greater_than_equal_to_stock_sale_date' => 'Return date should greater than or equal to stock sale date.',
+  'search_product_by_name' => 'Search Product by Name',
   'select_stock_sale' => 'Select Sale',
   'stock_category_saleable' => 'Saleable',
   'stock_item_associated_with_sale' => 'Stock Item associated with multiple sale.',
