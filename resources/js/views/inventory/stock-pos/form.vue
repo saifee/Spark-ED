@@ -7,7 +7,7 @@
       <v-row>
         <v-col
           cols="12"
-          lg="7"
+          lg="8"
           class="pt-0"
         >
           <v-row>
@@ -61,7 +61,7 @@
         </v-col>
         <v-col
           cols="12"
-          lg="5"
+          lg="4"
           class="pt-0"
         >
           <template v-if="stockSaleForm.details.length === 0">
