@@ -283,7 +283,9 @@
                     selected_stock_item: Object.assign({}, this.addStockItem),
                 })
                 }
+                this.$nextTick(() => {
                 this.addStockItem = null
+                });
             },
             getStockItemTitle(stockItemID){
                 const item = this.stock_items.find((si) => si.id === stockItemID)
