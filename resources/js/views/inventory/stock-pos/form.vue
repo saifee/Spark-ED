@@ -8,9 +8,13 @@
         <v-col
           cols="12"
           lg="7"
+          class="pt-0"
         >
           <v-row>
-            <v-col cols="12">
+            <v-col
+              cols="12"
+              class="pt-0"
+            >
               <v-autocomplete
                 v-model="addStockItem"
                 outlined
@@ -58,6 +62,7 @@
         <v-col
           cols="12"
           lg="5"
+          class="pt-0"
         >
           <template v-if="stockSaleForm.details.length === 0">
             <p class="text-center font-italic shadow-none p-3 mb-5 bg-light rounded">
