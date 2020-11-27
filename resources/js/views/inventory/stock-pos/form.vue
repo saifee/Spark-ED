@@ -28,7 +28,7 @@
                           >
                             <v-img src="/camera-placeholder.jpg"></v-img>
                           </v-avatar>
-                        <v-card-title class="subtitle-1">{{stock_item.name}}</v-card-title>
+                        <v-card-title class="subtitle-1 pt-0">{{stock_item.name}}</v-card-title>
                         <v-card-subtitle>{{formatCurrency(stock_item.sale_price)}}</v-card-subtitle>
                     </v-card>
                     </v-col>
