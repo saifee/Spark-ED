@@ -76,8 +76,8 @@
             </v-list-item-content>
             <v-list-item-action>
               <v-icon
-                v-confirm="{ok: confirmDelete(index)}"
                 small
+                @click="deleteDetail(index)"
               >
                 cancel
               </v-icon>
@@ -358,9 +358,6 @@
                 this.stockSaleForm.student_id = selectedOption.id;
                 let student = this.getStudent(selectedOption.id)
                 this.stockSaleForm.payment_method = (student && student.options && student.options.enable_student_wallet && student.options.enable_student_wallet === 1) ? 'wallet' : 'cash'
-            },
-            confirmDelete(index){
-                return dialog => this.deleteDetail(index);
             },
             deleteDetail(index){
                 this.stockSaleForm.details.splice(index, 1);
