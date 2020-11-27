@@ -204,7 +204,10 @@
                 />
               </v-col>
               <v-col cols="12">
-                <v-btn color="primary">
+                <v-btn
+                  color="primary"
+                  type="submit"
+                >
                   {{ trans('general.save') }}
                 </v-btn>
               </v-col>
