@@ -139,7 +139,7 @@
                 hide-details
                 clearable
                 item-text="name"
-                return-object
+                item-value="id"
                 :items="students"
                 :placeholder="trans('student.select_student')"
                 @select="onStudentSelect"
