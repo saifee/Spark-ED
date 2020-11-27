@@ -332,7 +332,18 @@
                 this.stockSaleForm.post('/api/stock/transfer')
                     .then(response => {
                         toastr.success(response.message);
-                        this.stockSaleForm.details = [];
+                        this.stockSaleForm = new Form({
+                            transfer_type: 'sale',
+                            type: 'student',
+                            date: `${new Date().getFullYear()}-${('0' + (new Date().getMonth() + 1)).slice(-2)}-${('0' + new Date().getDate()).slice(-2)}`,
+                            student_id: '',
+                            description: '',
+                            details: [],
+                            payment_method: '',
+                            cash_paid: '',
+                            discount: '',
+                            upload_token: ''
+                        })
                         this.clearAttachment = !this.clearAttachment;
                         this.$emit('completed');
                         loader.hide();
