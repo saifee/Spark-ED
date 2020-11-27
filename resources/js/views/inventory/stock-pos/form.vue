@@ -133,7 +133,7 @@
             >
               <label for="">{{ trans('student.student') }}</label>
               <v-select
-                v-model="selected_student"
+                v-model="stockSaleForm.student_id"
                 outlined
                 dense
                 hide-details
@@ -240,7 +240,6 @@
                 }),
                 stock_items: [],
                 students: [],
-                selected_student: null,
                 payment_methods: ['wallet', 'cash'],
                 module_id: '',
                 clearAttachment: true
@@ -360,7 +359,6 @@
                 this.stockSaleForm.post('/api/stock/transfer')
                     .then(response => {
                         toastr.success(response.message);
-                        this.selected_student = null;
                         this.stockSaleForm.details = [];
                         this.clearAttachment = !this.clearAttachment;
                         this.$emit('completed');
