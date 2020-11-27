@@ -1,6 +1,10 @@
 <template>
   <div>
     <div class="container-fluid">
+      <v-toolbar class="elevation-0">
+        <v-toolbar-title>{{ trans('inventory_sale.stock_pos') }}</v-toolbar-title>
+        <v-spacer />
+      </v-toolbar>
       <transition
         v-if="hasPermission('create-stock-sale')"
         name="fade"
