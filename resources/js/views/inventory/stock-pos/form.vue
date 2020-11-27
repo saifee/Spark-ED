@@ -59,12 +59,14 @@
               <v-list-item-subtitle>
                 <v-icon
                   small
+                  @click="dItemQuantity(detail)"
                 >
                   remove_circle
                 </v-icon>
                 {{ detail.quantity }} Unit(s)
                 <v-icon
                   small
+                  @click="iItemQuantity(detail)"
                 >
                   add_circle
                 </v-icon>
@@ -288,6 +290,12 @@
                 if (item) {
                     return item.name
                 }
+            },
+            dItemQuantity(detail){
+                this.$set(detail, 'quantity', detail.quantity-1)
+            },
+            iItemQuantity(detail){
+                this.$set(detail, 'quantity', detail.quantity+1)
             },
             getDescriptionName(index){
                 return index+'_description';
