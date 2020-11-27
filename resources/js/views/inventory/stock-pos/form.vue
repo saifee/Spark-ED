@@ -34,74 +34,6 @@
                     </v-col>
                 </v-row>
             </v-col>
-            <v-col cols="12">
-              <label for="">{{ trans('student.student') }}</label>
-              <v-select
-                v-model="selected_student"
-                outlined
-                dense
-                hide-details
-                clearable
-                item-text="name"
-                return-object
-                :items="students"
-                :placeholder="trans('student.select_student')"
-                @select="onStudentSelect"
-                @close="stockSaleForm.errors.clear('student_id')"
-                @remove="stockSaleForm.student_id = ''"
-              />
-              <show-error
-                :form-name="stockSaleForm"
-                prop-name="student_id"
-              />
-            </v-col>
-            <v-col cols="12">
-              <div class="form-group">
-                <label for="">{{ trans('inventory_sale.stock_sale_payment_method') }}</label>
-                <v-radio-group
-                  v-model="stockSaleForm.payment_method"
-                  hide-details
-                >
-                  <v-radio
-                    v-for="(payment_method, i) in available_payment_methods"
-                    :key="`payment_method${i}`"
-                    :label="trans('inventory_sale.'+payment_method)"
-                    :value="payment_method"
-                  />
-                </v-radio-group>
-              </div>
-            </v-col>
-            <template
-              v-if="stockSaleForm.payment_method === 'cash'"
-            >
-              <v-col cols="12">
-                <label for="">{{ trans('inventory_sale.stock_sale_paid_amount') }}</label>
-                <v-text-field
-                  v-model="stockSaleForm.cash_paid"
-                  name="cash_paid"
-                  :placeholder="trans('inventory_sale.stock_sale_paid_amount')"
-                  outlined
-                  dense
-                  hide-details
-                />
-              </v-col>
-              <v-col cols="12">
-                <label for="">{{ trans('inventory_sale.stock_sale_discount') }}</label>
-                <v-text-field
-                  v-model="stockSaleForm.discount"
-                  name="discount"
-                  :placeholder="trans('inventory_sale.stock_sale_discount')"
-                  outlined
-                  dense
-                  hide-details
-                />
-              </v-col>
-              <v-col cols="12">
-                <v-btn color="primary">
-                  {{ trans('general.save') }}
-                </v-btn>
-              </v-col>
-            </template>
           </v-row>
         </v-col>
         <v-col
@@ -169,6 +101,90 @@
               </tbody>
             </table>
           </div>
+          <v-row>
+            <v-col
+            cols="12"
+            lg="6"
+            >
+              <label for="">{{ trans('student.student') }}</label>
+              <v-select
+                v-model="selected_student"
+                outlined
+                dense
+                hide-details
+                clearable
+                item-text="name"
+                return-object
+                :items="students"
+                :placeholder="trans('student.select_student')"
+                @select="onStudentSelect"
+                @close="stockSaleForm.errors.clear('student_id')"
+                @remove="stockSaleForm.student_id = ''"
+              />
+              <show-error
+                :form-name="stockSaleForm"
+                prop-name="student_id"
+              />
+            </v-col>
+            <v-col
+            cols="12"
+            lg="6"
+            >
+              <div class="form-group">
+                <label for="">{{ trans('inventory_sale.stock_sale_payment_method') }}</label>
+                <v-radio-group
+                  v-model="stockSaleForm.payment_method"
+                  hide-details
+                >
+                  <v-radio
+                    v-for="(payment_method, i) in available_payment_methods"
+                    :key="`payment_method${i}`"
+                    :label="trans('inventory_sale.'+payment_method)"
+                    :value="payment_method"
+                  />
+                </v-radio-group>
+              </div>
+            </v-col>
+            <template
+              v-if="stockSaleForm.payment_method === 'cash'"
+            >
+              <v-col
+              cols="12"
+              lg="6"
+              >
+                <label for="">{{ trans('inventory_sale.stock_sale_paid_amount') }}</label>
+                <v-text-field
+                  v-model="stockSaleForm.cash_paid"
+                  name="cash_paid"
+                  type="number"
+                  :placeholder="trans('inventory_sale.stock_sale_paid_amount')"
+                  outlined
+                  dense
+                  hide-details
+                />
+              </v-col>
+              <v-col
+              cols="12"
+              lg="6"
+              >
+                <label for="">{{ trans('inventory_sale.stock_sale_discount') }}</label>
+                <v-text-field
+                  v-model="stockSaleForm.discount"
+                  name="discount"
+                  type="number"
+                  :placeholder="trans('inventory_sale.stock_sale_discount')"
+                  outlined
+                  dense
+                  hide-details
+                />
+              </v-col>
+              <v-col cols="12">
+                <v-btn color="primary">
+                  {{ trans('general.save') }}
+                </v-btn>
+              </v-col>
+            </template>
+          </v-row>
         </v-col>
       </v-row>
     </form>
