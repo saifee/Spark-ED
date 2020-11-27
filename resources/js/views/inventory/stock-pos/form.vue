@@ -135,6 +135,7 @@
             <v-col
               cols="12"
               lg="6"
+              class="py-0"
             >
               <label for="">{{ trans('student.student') }}</label>
               <v-select
@@ -159,12 +160,14 @@
             <v-col
               cols="12"
               lg="6"
+              class="py-0"
             >
               <div class="form-group">
                 <label for="">{{ trans('inventory_sale.stock_sale_payment_method') }}</label>
                 <v-radio-group
                   v-model="stockSaleForm.payment_method"
                   hide-details
+                  class="mt-0"
                 >
                   <v-radio
                     v-for="(payment_method, i) in available_payment_methods"
@@ -181,6 +184,7 @@
               <v-col
                 cols="12"
                 lg="6"
+                class="py-0"
               >
                 <label for="">{{ trans('inventory_sale.stock_sale_paid_amount') }}</label>
                 <v-text-field
@@ -196,6 +200,7 @@
               <v-col
                 cols="12"
                 lg="6"
+                class="py-0"
               >
                 <label for="">{{ trans('inventory_sale.stock_sale_discount') }}</label>
                 <v-text-field
