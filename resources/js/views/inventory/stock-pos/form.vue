@@ -361,7 +361,7 @@
                 if (this.stockSaleForm.payment_method === 'wallet') {
                     return this.getTotal()
                 } else if (this.stockSaleForm.payment_method === 'cash') {
-                    return this.stockSaleForm.cash_paid
+                    return +this.stockSaleForm.cash_paid
                 }
             },
             getBalance(){
