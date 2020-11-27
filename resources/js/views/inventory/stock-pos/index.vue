@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="container-fluid">
+  <v-row>
+    <v-col cols="12">
       <v-toolbar class="elevation-0">
         <v-toolbar-title>{{ trans('inventory_sale.stock_pos') }}</v-toolbar-title>
         <v-spacer />
@@ -20,8 +20,8 @@
           </v-card-text>
         </v-card>
       </transition>
-    </div>
-  </div>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
