@@ -1,119 +1,239 @@
 <template>
-    <v-app>
-     <v-main class="grey lighten-4">
+  <v-app>
+    <v-main class="grey lighten-4">
       <v-container fluid>
-       <v-row justify="center" align="center" no-gutters>
-        <v-col cols="12" sm="8" md="4">
+        <v-row
+          justify="center"
+          align="center"
+          no-gutters
+        >
+          <v-col
+            cols="12"
+            sm="8"
+            md="4"
+          >
             <v-card class="elevation-12">
-                <v-card-text>
-                    <div class="text-center">
-                    <img :src="getLogo" class="org-logo" />
+              <v-card-text>
+                <div class="text-center">
+                  <img
+                    :src="getLogo"
+                    class="org-logo"
+                  >
+                </div>
+                <form
+                  id="loginform"
+                  @keydown="loginForm.errors.clear($event.target.name)"
+                >
+                  <h3 class="box-title m-t-20 m-b-10">
+                    {{ trans('auth.login') }}
+                  </h3>
+                  <social-login v-if="getConfig('made') === 'saudi'" />
+                  <div v-if="! login_with_otp">
+                    <v-text-field
+                      v-model="loginForm.email_or_username"
+                      color="primary"
+                      type="text"
+                      name="email_or_username"
+                      :label="trans('auth.email_or_username')"
+                      :persistent-hint="loginForm.errors.has('email_or_username')"
+                      :error="loginForm.errors.has('email_or_username')"
+                      :hint="loginForm.errors.get('email_or_username')"
+                      outlined
+                      @keyup.enter="process"
+                    />
+                    <v-text-field
+                      v-model="loginForm.password"
+                      color="primary"
+                      type="password"
+                      name="password"
+                      :label="trans('auth.password')"
+                      :persistent-hint="loginForm.errors.has('password')"
+                      :error="loginForm.errors.has('password')"
+                      :hint="loginForm.errors.get('password')"
+                      outlined
+                      @keyup.enter="process"
+                    />
+                  </div>
+                  <div v-else>
+                    <div class="form-group">
+                      <input
+                        v-if="!otp_generated"
+                        v-model="loginForm.mobile"
+                        type="text"
+                        name="mobile"
+                        class="form-control"
+                        :placeholder="trans('auth.mobile')"
+                      >
+                      <label v-if="otp_generated">{{ loginForm.mobile }}</label>
+                      <show-error
+                        :form-name="loginForm"
+                        prop-name="mobile"
+                      />
                     </div>
-                    <form id="loginform" @keydown="loginForm.errors.clear($event.target.name)">
-                        <h3 class="box-title m-t-20 m-b-10">{{trans('auth.login')}}</h3>
-                        <social-login v-if="getConfig('made') === 'saudi'" />
-                        <div v-if="! login_with_otp">
-                                <v-text-field
-                                    v-model="loginForm.email_or_username"
-                                    color="primary"
-                                    type="text"
-                                    name="email_or_username"
-                                    :label="trans('auth.email_or_username')"
-                                    :persistent-hint="loginForm.errors.has('email_or_username')"
-                                    :error="loginForm.errors.has('email_or_username')"
-                                    :hint="loginForm.errors.get('email_or_username')"
-                                    outlined
-                                    @keyup.enter="process"
-                                />
-                                <v-text-field
-                                    v-model="loginForm.password"
-                                    color="primary"
-                                    type="password"
-                                    name="password"
-                                    :label="trans('auth.password')"
-                                    :persistent-hint="loginForm.errors.has('password')"
-                                    :error="loginForm.errors.has('password')"
-                                    :hint="loginForm.errors.get('password')"
-                                    outlined
-                                    @keyup.enter="process"
-                                />
-                        </div>
-                        <div v-else>
-                            <div class="form-group">
-                                <input type="text" name="mobile" class="form-control" :placeholder="trans('auth.mobile')" v-model="loginForm.mobile" v-if="!otp_generated">
-                                <label v-if="otp_generated">{{loginForm.mobile}}</label>
-                                <show-error :form-name="loginForm" prop-name="mobile"></show-error>
-                            </div>
-                            <div class="form-group" v-if="otp_generated">
-                                <input type="text" name="otp" class="form-control" :placeholder="trans('auth.otp')" v-model="loginForm.otp">
-                                <show-error :form-name="loginForm" prop-name="otp"></show-error>
-                            </div>
-                        </div>
-                        <div class="g-recaptcha" v-if="getConfig('recaptcha') && getConfig('login_recaptcha')" :data-sitekey="getConfig('recaptcha_key')"></div>
-                        <v-btn
-                            block
-                            x-large
-                            dark
-                            color="primary"
-                            @click="process"
+                    <div
+                      v-if="otp_generated"
+                      class="form-group"
+                    >
+                      <input
+                        v-model="loginForm.otp"
+                        type="text"
+                        name="otp"
+                        class="form-control"
+                        :placeholder="trans('auth.otp')"
+                      >
+                      <show-error
+                        :form-name="loginForm"
+                        prop-name="otp"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    v-if="getConfig('recaptcha') && getConfig('login_recaptcha')"
+                    class="g-recaptcha"
+                    :data-sitekey="getConfig('recaptcha_key')"
+                  />
+                  <v-btn
+                    block
+                    x-large
+                    dark
+                    color="primary"
+                    @click="process"
+                  >
+                    {{ trans('auth.sign_in') }}
+                  </v-btn>
+                  <div class="form-group m-b-0">
+                    <div class="col-sm-12 text-center">
+                      <p v-if="getConfig('reset_password')">
+                        {{ trans('auth.forgot_your_password?') }} <router-link
+                          to="/password"
+                          class="text-info m-l-5"
                         >
-                            {{trans('auth.sign_in')}}
-                        </v-btn>
-                        <div class="form-group m-b-0">
-                            <div class="col-sm-12 text-center">
-                                <p v-if="getConfig('reset_password')">{{trans('auth.forgot_your_password?')}} <router-link to="/password" class="text-info m-l-5"><b>{{trans('auth.reset_here!')}}</b></router-link></p>
-                            </div>
-                            <template v-if="getConfig('login_with_otp')">
-                                <div class="col-sm-12 text-center" v-if="!login_with_otp">
-                                    <p><a href="#" @click="otpLogin(true)">{{trans('auth.login_with_otp')}}</a></p>
-                                </div>
-                                <div class="col-sm-12 text-center" v-if="login_with_otp">
-                                    <p><a href="#" @click="otpLogin(false)">{{trans('auth.login_with_password')}}</a></p>
-                                </div>
-                            </template>
-                        </div>
-                        <div class="row m-t-10 justify-content-center" v-if="!getConfig('mode')">
-                            <div class="col-6 text-center">
-                                <button type="button" class="btn btn-success text-uppercase btn-block dropup" href="#" role="button" id="loginAs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Auto Login As <i class="fas fa-chevron-up m-l-5"></i>
-                                </button>
-                                <div :class="['dropdown-menu',getConfig('direction') == 'ltr' ? 'dropdown-menu-right' : '']" aria-labelledby="loginAs">
-                                    <button type="button" style="cursor:pointer;" class="dropdown-item" @click="loginAs('admin')">
-                                        Admin Role
-                                    </button>
-                                    <button type="button" style="cursor:pointer;" class="dropdown-item" @click="loginAs('manager')">
-                                        Manager Role
-                                    </button>
-                                    <button type="button" style="cursor:pointer;" class="dropdown-item" @click="loginAs('principal')">
-                                        Principal Role
-                                    </button>
-                                    <button type="button" style="cursor:pointer;" class="dropdown-item" @click="loginAs('staff')">
-                                        Staff Role
-                                    </button>
-                                    <button type="button" style="cursor:pointer;" class="dropdown-item" @click="loginAs('accountant')">
-                                        Accountant Role
-                                    </button>
-                                    <button type="button" style="cursor:pointer;" class="dropdown-item" @click="loginAs('librarian')">
-                                        Librarian Role
-                                    </button>
-                                    <button type="button" style="cursor:pointer;" class="dropdown-item" @click="loginAs('student')">
-                                        Student Role
-                                    </button>
-                                    <button type="button" style="cursor:pointer;" class="dropdown-item" @click="loginAs('parent')">
-                                        Parent Role
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </v-card-text>
-                <!-- <guest-footer></guest-footer> -->
+                          <b>{{ trans('auth.reset_here!') }}</b>
+                        </router-link>
+                      </p>
+                    </div>
+                    <template v-if="getConfig('login_with_otp')">
+                      <div
+                        v-if="!login_with_otp"
+                        class="col-sm-12 text-center"
+                      >
+                        <p>
+                          <a
+                            href="#"
+                            @click="otpLogin(true)"
+                          >{{ trans('auth.login_with_otp') }}</a>
+                        </p>
+                      </div>
+                      <div
+                        v-if="login_with_otp"
+                        class="col-sm-12 text-center"
+                      >
+                        <p>
+                          <a
+                            href="#"
+                            @click="otpLogin(false)"
+                          >{{ trans('auth.login_with_password') }}</a>
+                        </p>
+                      </div>
+                    </template>
+                  </div>
+                  <div
+                    v-if="!getConfig('mode')"
+                    class="row m-t-10 justify-content-center"
+                  >
+                    <div class="col-6 text-center">
+                      <button
+                        id="loginAs"
+                        type="button"
+                        class="btn btn-success text-uppercase btn-block dropup"
+                        href="#"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Auto Login As <i class="fas fa-chevron-up m-l-5" />
+                      </button>
+                      <div
+                        :class="['dropdown-menu',getConfig('direction') == 'ltr' ? 'dropdown-menu-right' : '']"
+                        aria-labelledby="loginAs"
+                      >
+                        <button
+                          type="button"
+                          style="cursor:pointer;"
+                          class="dropdown-item"
+                          @click="loginAs('admin')"
+                        >
+                          Admin Role
+                        </button>
+                        <button
+                          type="button"
+                          style="cursor:pointer;"
+                          class="dropdown-item"
+                          @click="loginAs('manager')"
+                        >
+                          Manager Role
+                        </button>
+                        <button
+                          type="button"
+                          style="cursor:pointer;"
+                          class="dropdown-item"
+                          @click="loginAs('principal')"
+                        >
+                          Principal Role
+                        </button>
+                        <button
+                          type="button"
+                          style="cursor:pointer;"
+                          class="dropdown-item"
+                          @click="loginAs('staff')"
+                        >
+                          Staff Role
+                        </button>
+                        <button
+                          type="button"
+                          style="cursor:pointer;"
+                          class="dropdown-item"
+                          @click="loginAs('accountant')"
+                        >
+                          Accountant Role
+                        </button>
+                        <button
+                          type="button"
+                          style="cursor:pointer;"
+                          class="dropdown-item"
+                          @click="loginAs('librarian')"
+                        >
+                          Librarian Role
+                        </button>
+                        <button
+                          type="button"
+                          style="cursor:pointer;"
+                          class="dropdown-item"
+                          @click="loginAs('student')"
+                        >
+                          Student Role
+                        </button>
+                        <button
+                          type="button"
+                          style="cursor:pointer;"
+                          class="dropdown-item"
+                          @click="loginAs('parent')"
+                        >
+                          Parent Role
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </v-card-text>
+              <!-- <guest-footer></guest-footer> -->
             </v-card>
-        </v-col>
-       </v-row>
+          </v-col>
+        </v-row>
       </v-container>
-     </v-main>
-    </v-app>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -121,6 +241,10 @@
     import guestFooter from '@js/layouts/partials/guest-footer.vue'
 
     export default {
+        components: {
+            socialLogin,
+            guestFooter
+        },
         data() {
             return {
                 loginForm: new Form({
@@ -133,9 +257,10 @@
                 otp_generated: false
             }
         },
-        components: {
-            socialLogin,
-            guestFooter
+        computed: {
+            getLogo(){
+                return helper.getLogo();
+            }
         },
         mounted(){
             helper.showDemoNotification(['login','login_with_different_role']);
@@ -255,11 +380,6 @@
             },
             getConfig(config){
                 return helper.getConfig(config);
-            }
-        },
-        computed: {
-            getLogo(){
-                return helper.getLogo();
             }
         }
     }
