@@ -1,28 +1,57 @@
 <template>
-    <form @submit.prevent="proceed" @keydown="skillIconForm.errors.clear($event.target.name)">
-        <div class="row">
-            <div class="col-12 col-sm-6">
-                <div class="form-group">
-                    <label for="">{{trans('behaviour.skill_icon_name')}}</label>
-                    <input class="form-control" type="text" v-model="skillIconForm.name" name="name" :placeholder="trans('behaviour.skill_icon_name')">
-                    <show-error :form-name="skillIconForm" prop-name="name"></show-error>
-                </div>
-            </div>
+  <form
+    @submit.prevent="proceed"
+    @keydown="skillIconForm.errors.clear($event.target.name)"
+  >
+    <div class="row">
+      <div class="col-12 col-sm-6">
+        <div class="form-group">
+          <label for="">{{ trans('behaviour.skill_icon_name') }}</label>
+          <input
+            v-model="skillIconForm.name"
+            class="form-control"
+            type="text"
+            name="name"
+            :placeholder="trans('behaviour.skill_icon_name')"
+          >
+          <show-error
+            :form-name="skillIconForm"
+            prop-name="name"
+          />
         </div>
-        <div class="card-footer text-right">
-            <router-link to="/configuration/behaviour/skill/icon" class="btn btn-danger waves-effect waves-light " v-show="id">{{trans('general.cancel')}}</router-link>
-            <button v-if="!id" type="button" class="btn btn-danger waves-effect waves-light " @click="$emit('cancel')">{{trans('general.cancel')}}</button>
-            <button type="submit" class="btn btn-info waves-effect waves-light">
-                <span v-if="id">{{trans('general.update')}}</span>
-                <span v-else>{{trans('general.save')}}</span>
-            </button>
-        </div>
-    </form>
+      </div>
+    </div>
+    <div class="card-footer text-right">
+      <router-link
+        v-show="id"
+        to="/configuration/behaviour/skill/icon"
+        class="btn btn-danger waves-effect waves-light "
+      >
+        {{ trans('general.cancel') }}
+      </router-link>
+      <button
+        v-if="!id"
+        type="button"
+        class="btn btn-danger waves-effect waves-light "
+        @click="$emit('cancel')"
+      >
+        {{ trans('general.cancel') }}
+      </button>
+      <button
+        type="submit"
+        class="btn btn-info waves-effect waves-light"
+      >
+        <span v-if="id">{{ trans('general.update') }}</span>
+        <span v-else>{{ trans('general.save') }}</span>
+      </button>
+    </div>
+  </form>
 </template>
 
 
 <script>
     export default {
+        props: ['id'],
         data() {
             return {
                 skillIconForm: new Form({
@@ -30,7 +59,6 @@
                 })
             };
         },
-        props: ['id'],
         mounted() {
             if(this.id)
                 this.get();

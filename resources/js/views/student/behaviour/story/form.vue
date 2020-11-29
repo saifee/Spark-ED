@@ -20,7 +20,9 @@
               :size="40"
               color="grey lighten-1 white--text"
             >
-              <v-icon dark>person</v-icon>
+              <v-icon dark>
+                person
+              </v-icon>
             </v-avatar>
           </template>
         </v-textarea>

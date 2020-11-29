@@ -48,7 +48,9 @@
                     :value="item.student_parent_id"
                   >
                     <v-list-item-avatar color="grey lighten-1 white--text">
-                      <v-icon dark>person</v-icon>
+                      <v-icon dark>
+                        person
+                      </v-icon>
                     </v-list-item-avatar>
 
                     <v-list-item-content>

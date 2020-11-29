@@ -1,83 +1,145 @@
 <template>
-    <div>
-        <div class="page-titles">
-            <div class="row">
-                <div class="col-12 col-sm-6">
-                    <h3 class="text-themecolor">{{trans('behaviour.behaviour')}} 
-                        <span class="card-subtitle d-none d-sm-inline" v-if="employees.total">{{trans('general.total_result_found',{count : employees.total, from: employees.from, to: employees.to})}}</span>
-                        <span class="card-subtitle d-none d-sm-inline" v-else>{{trans('general.no_result_found')}}</span>
-                    </h3>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <div class="action-buttons pull-right">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-info btn-sm dropdown-toggle no-caret " role="menu" id="moreOption" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-tooltip="trans('general.more_option')">
-                                <i class="fas fa-ellipsis-h"></i> <span class="d-none d-sm-inline"></span>
-                            </button>
-                            <div :class="['dropdown-menu',getConfig('direction') == 'ltr' ? 'dropdown-menu-right' : '']" aria-labelledby="moreOption">
-                                <button class="dropdown-item custom-dropdown"><i class="fas fa-print"></i> {{trans('behaviour.view_reports')}}</button>
-                                <button class="dropdown-item custom-dropdown"><i class="fas fa-undo"></i> {{trans('behaviour.reset_bubbles')}}</button>
-                                <div class="dropdown-divider"></div>
-                                <button class="dropdown-item custom-dropdown" v-for="option in avatarSizeOptions" @click="avatarSize = option">
-                                    {{option}} <span v-if="option == avatarSize" class="pull-right"><i class="fas fa-check"></i></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div>
+    <div class="page-titles">
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <h3 class="text-themecolor">
+            {{ trans('behaviour.behaviour') }} 
+            <span
+              v-if="employees.total"
+              class="card-subtitle d-none d-sm-inline"
+            >{{ trans('general.total_result_found',{count : employees.total, from: employees.from, to: employees.to}) }}</span>
+            <span
+              v-else
+              class="card-subtitle d-none d-sm-inline"
+            >{{ trans('general.no_result_found') }}</span>
+          </h3>
         </div>
-        <div class="container-fluid">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row mt-5" v-if="employees.total">
-                        <div class="col-2 text-center" v-for="employee in employees.data">
-                          <v-badge
-                            overlap
-                            :content="employee.employee_terms[0].employee_behaviour_point ? employee.employee_terms[0].employee_behaviour_point.total : '0'"
-                            :color="employee.employee_terms[0].employee_behaviour_point && employee.employee_terms[0].employee_behaviour_point.total > 0 ? 'success' : !employee.employee_terms[0].employee_behaviour_point || employee.employee_terms[0].employee_behaviour_point.total == 0 ? 'warning' : 'error'"
-                          >
-                            <v-avatar
-                                @click="giveFeedbackToEmployee(employee)"
-                                :size="avatarSize"
-                            >
-                                <v-img :src="getImage(employee)"></v-img>
-                            </v-avatar>
-                          </v-badge>
-                          <div>{{getEmployeeName(employee)}}</div>
-                        </div>
-                    </div>
-                    <module-info v-if="!employees.total" module="employee" title="employee_module_title" description="employee_module_description" icon="check-circle">
-                        <div slot="btn">
-                            <button class="btn btn-info btn-md" v-if="!showCreatePanel" @click="showCreatePanel = !showCreatePanel"><i class="fas fa-plus"></i> {{trans('general.add_new')}}</button>
-                        </div>
-                    </module-info>
-                    <pagination-record :page-length.sync="filter.page_length" :records="employees" @updateRecords="getEmployees"></pagination-record>
-                </div>
+        <div class="col-12 col-sm-6">
+          <div class="action-buttons pull-right">
+            <div class="btn-group">
+              <button
+                id="moreOption"
+                v-tooltip="trans('general.more_option')"
+                type="button"
+                class="btn btn-info btn-sm dropdown-toggle no-caret "
+                role="menu"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fas fa-ellipsis-h" /> <span class="d-none d-sm-inline" />
+              </button>
+              <div
+                :class="['dropdown-menu',getConfig('direction') == 'ltr' ? 'dropdown-menu-right' : '']"
+                aria-labelledby="moreOption"
+              >
+                <button class="dropdown-item custom-dropdown">
+                  <i class="fas fa-print" /> {{ trans('behaviour.view_reports') }}
+                </button>
+                <button class="dropdown-item custom-dropdown">
+                  <i class="fas fa-undo" /> {{ trans('behaviour.reset_bubbles') }}
+                </button>
+                <div class="dropdown-divider" />
+                <button
+                  v-for="option in avatarSizeOptions"
+                  class="dropdown-item custom-dropdown"
+                  @click="avatarSize = option"
+                >
+                  {{ option }} <span
+                    v-if="option == avatarSize"
+                    class="pull-right"
+                  ><i class="fas fa-check" /></span>
+                </button>
+              </div>
             </div>
+          </div>
         </div>
-        <right-panel :topic="help_topic"></right-panel>
-        <transition name="modal" v-if="showFeedbackModal">
-            <div class="modal-mask">
-                <div class="modal-wrapper">
-                    <div class="modal-container modal-lg">
-                        <div class="modal-header">
-                            <slot name="header">
-                                {{trans('behaviour.give_feedback_to_employee')}}
-                                <span class="float-right pointer" @click="showFeedbackModal = false">&times;</span>
-                            </slot>
-                        </div>
-                        <div class="modal-body">
-                            <slot name="body">
-                                <feedback-form :employee-term-id="employeeTermId" @completed="giveFeedbackToEmployeeComplete" @cancel="showFeedbackModal = false"></feedback-form>
-                                <div class="clearfix"></div>
-                            </slot>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </transition>
+      </div>
     </div>
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-body">
+          <div
+            v-if="employees.total"
+            class="row mt-5"
+          >
+            <div
+              v-for="employee in employees.data"
+              class="col-2 text-center"
+            >
+              <v-badge
+                overlap
+                :content="employee.employee_terms[0].employee_behaviour_point ? employee.employee_terms[0].employee_behaviour_point.total : '0'"
+                :color="employee.employee_terms[0].employee_behaviour_point && employee.employee_terms[0].employee_behaviour_point.total > 0 ? 'success' : !employee.employee_terms[0].employee_behaviour_point || employee.employee_terms[0].employee_behaviour_point.total == 0 ? 'warning' : 'error'"
+              >
+                <v-avatar
+                  :size="avatarSize"
+                  @click="giveFeedbackToEmployee(employee)"
+                >
+                  <v-img :src="getImage(employee)" />
+                </v-avatar>
+              </v-badge>
+              <div>{{ getEmployeeName(employee) }}</div>
+            </div>
+          </div>
+          <module-info
+            v-if="!employees.total"
+            module="employee"
+            title="employee_module_title"
+            description="employee_module_description"
+            icon="check-circle"
+          >
+            <div slot="btn">
+              <button
+                v-if="!showCreatePanel"
+                class="btn btn-info btn-md"
+                @click="showCreatePanel = !showCreatePanel"
+              >
+                <i class="fas fa-plus" /> {{ trans('general.add_new') }}
+              </button>
+            </div>
+          </module-info>
+          <pagination-record
+            :page-length.sync="filter.page_length"
+            :records="employees"
+            @updateRecords="getEmployees"
+          />
+        </div>
+      </div>
+    </div>
+    <right-panel :topic="help_topic" />
+    <transition
+      v-if="showFeedbackModal"
+      name="modal"
+    >
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-container modal-lg">
+            <div class="modal-header">
+              <slot name="header">
+                {{ trans('behaviour.give_feedback_to_employee') }}
+                <span
+                  class="float-right pointer"
+                  @click="showFeedbackModal = false"
+                >&times;</span>
+              </slot>
+            </div>
+            <div class="modal-body">
+              <slot name="body">
+                <feedback-form
+                  :employee-term-id="employeeTermId"
+                  @completed="giveFeedbackToEmployeeComplete"
+                  @cancel="showFeedbackModal = false"
+                />
+                <div class="clearfix" />
+              </slot>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
 </template>
 
 
@@ -86,6 +148,14 @@
 
     export default {
         components: {feedbackForm,},
+        filters: {
+          moment(date) {
+            return helper.formatDate(date);
+          },
+          momentDateTime(date) {
+            return helper.formatDateTime(date);
+          }
+        },
         data() {
             return {
                 employeeTermId: null,
@@ -146,6 +216,17 @@
                     }
                 ]
             };
+        },
+        watch: {
+            'filter.sort_by': function(val){
+                this.getEmployees();
+            },
+            'filter.order': function(val){
+                this.getEmployees();
+            },
+            'filter.page_length': function(val){
+                this.getEmployees();
+            }
         },
         mounted(){
             if(!helper.hasPermission('list-employee')){
@@ -217,25 +298,6 @@
                 else
                     return '<span class="label label-danger">'+i18n.employee.status_inactive+'</span>';
             },
-        },
-        filters: {
-          moment(date) {
-            return helper.formatDate(date);
-          },
-          momentDateTime(date) {
-            return helper.formatDateTime(date);
-          }
-        },
-        watch: {
-            'filter.sort_by': function(val){
-                this.getEmployees();
-            },
-            'filter.order': function(val){
-                this.getEmployees();
-            },
-            'filter.page_length': function(val){
-                this.getEmployees();
-            }
         },
     }
 </script>

@@ -1,142 +1,292 @@
 <template>
-    <div>
-        <div class="page-titles">
-            <div class="row">
-                <div class="col-12 col-sm-6">
-                    <v-btn icon @click="$router.push('/student/behaviour')"><v-icon>arrow_back</v-icon></v-btn>
-                    <h3 class="text-themecolor d-inline-block">{{trans('behaviour.classroom')}}
-                        <span class="card-subtitle d-none d-sm-inline" v-if="students.total">{{trans('general.total_result_found',{count : students.total, from: students.from, to: students.to})}}</span>
-                        <span class="card-subtitle d-none d-sm-inline" v-else>{{trans('general.no_result_found')}}</span>
-                    </h3>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <div class="action-buttons pull-right">
-                        <button class="btn btn-info btn-sm" @click="$router.push(`/student/behaviour/${$route.params.batch_id}/story`)" v-tooltip="trans('behaviour.class_story')"><i class="fas fa-quote-right"></i> <span class="d-none d-sm-inline">{{trans('behaviour.class_story')}}</span></button>
-                        <button class="btn btn-info btn-sm" @click="$router.push(`/student/behaviour/${$route.params.batch_id}/messages`)" v-tooltip="trans('behaviour.messages')"><i class="fas fa-comment"></i> <span class="d-none d-sm-inline">{{trans('behaviour.messages')}}</span></button>
-                        <template v-if="hasNotAnyRole(['student','parent'])">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-info btn-sm dropdown-toggle no-caret " role="menu" id="moreOption" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-tooltip="trans('general.more_option')">
-                                    <i class="fas fa-ellipsis-h"></i> <span class="d-none d-sm-inline"></span>
-                                </button>
-                                <div :class="['dropdown-menu',getConfig('direction') == 'ltr' ? 'dropdown-menu-right' : '']" aria-labelledby="moreOption">
-                                    <button class="dropdown-item custom-dropdown"><i class="fas fa-print"></i> {{trans('behaviour.view_reports')}}</button>
-                                    <button class="dropdown-item custom-dropdown"><i class="fas fa-undo"></i> {{trans('behaviour.reset_bubbles')}}</button>
-                                    <div class="dropdown-divider"></div>
-                                    <button class="dropdown-item custom-dropdown" v-for="option in avatarSizeOptions" @click="avatarSize = option">
-                                        {{option}} <span v-if="option == avatarSize" class="pull-right"><i class="fas fa-check"></i></span>
-                                    </button>
-                                </div>
-                            </div>
-                            <help-button @clicked="help_topic = 'admission'"></help-button>
-                        </template>
-                    </div>
-                </div>
-            </div>
+  <div>
+    <div class="page-titles">
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <v-btn
+            icon
+            @click="$router.push('/student/behaviour')"
+          >
+            <v-icon>arrow_back</v-icon>
+          </v-btn>
+          <h3 class="text-themecolor d-inline-block">
+            {{ trans('behaviour.classroom') }}
+            <span
+              v-if="students.total"
+              class="card-subtitle d-none d-sm-inline"
+            >{{ trans('general.total_result_found',{count : students.total, from: students.from, to: students.to}) }}</span>
+            <span
+              v-else
+              class="card-subtitle d-none d-sm-inline"
+            >{{ trans('general.no_result_found') }}</span>
+          </h3>
         </div>
-        <div class="container-fluid">
-            <transition name="fade">
-                <div class="card card-form" v-if="showColumnPanel">
-                    <div class="card-body">
-                        <h4 class="card-title">{{trans('general.column')}}</h4>
-                        <div class="row">
-                            <div class="col-12 col-sm-2" v-for="column in columns">
-                                <label class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" :value="column.value" v-model="filter.columns">
-                                    <span class="custom-control-label">{{column.text}}</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="card-footer text-right">
-                            <button type="button" @click="showColumnPanel = false" class="btn btn-danger">{{trans('general.cancel')}}</button>
-                        </div>
-                    </div>
+        <div class="col-12 col-sm-6">
+          <div class="action-buttons pull-right">
+            <button
+              v-tooltip="trans('behaviour.class_story')"
+              class="btn btn-info btn-sm"
+              @click="$router.push(`/student/behaviour/${$route.params.batch_id}/story`)"
+            >
+              <i class="fas fa-quote-right" /> <span class="d-none d-sm-inline">{{ trans('behaviour.class_story') }}</span>
+            </button>
+            <button
+              v-tooltip="trans('behaviour.messages')"
+              class="btn btn-info btn-sm"
+              @click="$router.push(`/student/behaviour/${$route.params.batch_id}/messages`)"
+            >
+              <i class="fas fa-comment" /> <span class="d-none d-sm-inline">{{ trans('behaviour.messages') }}</span>
+            </button>
+            <template v-if="hasNotAnyRole(['student','parent'])">
+              <div class="btn-group">
+                <button
+                  id="moreOption"
+                  v-tooltip="trans('general.more_option')"
+                  type="button"
+                  class="btn btn-info btn-sm dropdown-toggle no-caret "
+                  role="menu"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-ellipsis-h" /> <span class="d-none d-sm-inline" />
+                </button>
+                <div
+                  :class="['dropdown-menu',getConfig('direction') == 'ltr' ? 'dropdown-menu-right' : '']"
+                  aria-labelledby="moreOption"
+                >
+                  <button class="dropdown-item custom-dropdown">
+                    <i class="fas fa-print" /> {{ trans('behaviour.view_reports') }}
+                  </button>
+                  <button class="dropdown-item custom-dropdown">
+                    <i class="fas fa-undo" /> {{ trans('behaviour.reset_bubbles') }}
+                  </button>
+                  <div class="dropdown-divider" />
+                  <button
+                    v-for="option in avatarSizeOptions"
+                    class="dropdown-item custom-dropdown"
+                    @click="avatarSize = option"
+                  >
+                    {{ option }} <span
+                      v-if="option == avatarSize"
+                      class="pull-right"
+                    ><i class="fas fa-check" /></span>
+                  </button>
                 </div>
-            </transition>
-            <div class="card">
-                <div class="card-body">
-                    <div class="row mt-5" v-if="students.total">
-                        <div class="col-2 text-center" v-for="student in students.data">
-                          <v-badge
-                            overlap
-                            :content="student.student_behaviour_point ? student.student_behaviour_point.total : '0'"
-                            :color="student.student_behaviour_point && student.student_behaviour_point.total > 0 ? 'success' : !student.student_behaviour_point || student.student_behaviour_point.total == 0 ? 'warning' : 'error'"
-                          >
-                            <v-avatar
-                                @click="giveFeedbackToStudent(student)"
-                                :size="avatarSize"
-                            >
-                                <v-img :src="getImage(student.student)"></v-img>
-                            </v-avatar>
-                          </v-badge>
-                          <div>{{getStudentName(student.student)}}</div>
-                        </div>
-                    </div>
-                    <module-info v-if="!students.total" module="behaviour" title="behaviour_module_title" description="behaviour_module_description" icon="list">
-                    </module-info>
-                    <pagination-record :page-length.sync="filter.page_length" :records="students" @updateRecords="getStudents" v-if="students.total > 10"></pagination-record>
-                </div>
-                <div class="m-t-10 card-body border-top p-4" v-if="studentGroupForm.ids.length && hasPermission('edit-student')">
-                    <h4 class="card-title"></h4>
-                    <form @submit.prevent="submit" @keydown="studentGroupForm.errors.clear($event.target.name)">
-                        <div class="row">
-                            <div class="col-12 col-sm-3">
-                                <div class="form-group">
-                                    <label for="">{{trans('student.student_group')}}</label>
-                                    <v-select label="name" track-by="id" v-model="selected_group" name="group_id" id="group_id" :options="student_groups" :placeholder="trans('student.select_student_group')" @select="onGroupSelect" @remove="studentGroupForm.student_group_id = ''">
-                                        <div class="multiselect__option" slot="afterList" v-if="!student_groups.length">
-                                            {{trans('general.no_option_found')}}
-                                        </div>
-                                    </v-select>
-                                    <show-error :form-name="studentGroupForm" prop-name="group_id"></show-error>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
-                                    <div class="radio radio-success m-t-20">
-                                        <input type="radio" value="attach" id="type_attach" v-model="studentGroupForm.action" :checked="studentGroupForm.action == 'attach'" name="action" @click="studentGroupForm.errors.clear('action')">
-                                        <label for="type_attach">{{trans('general.add')}}</label>
-                                    </div>
-                                    <div class="radio radio-success">
-                                        <input type="radio" value="detach" id="type_detach" v-model="studentGroupForm.action" :checked="studentGroupForm.action == 'detach'" name="action" @click="studentGroupForm.errors.clear('action')">
-                                        <label for="type_detach">{{trans('general.remove')}}</label>
-                                    </div>
-                                    <show-error :form-name="studentGroupForm" prop-name="action"></show-error>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-info waves-effect waves-light" key="group-action" v-confirm="{ok: confirmGroupAction()}">{{trans('general.save')}}</button>
-                    </form>
-                </div>
-            </div>
+              </div>
+              <help-button @clicked="help_topic = 'admission'" />
+            </template>
+          </div>
         </div>
-        <right-panel :topic="help_topic"></right-panel>
-        <transition name="modal" v-if="showFeedbackModal">
-            <div class="modal-mask">
-                <div class="modal-wrapper">
-                    <div class="modal-container modal-lg">
-                        <div class="modal-header">
-                            <slot name="header">
-                                {{trans('behaviour.give_feedback_to_student')}}
-                                <span class="float-right pointer" @click="showFeedbackModal = false">&times;</span>
-                            </slot>
-                        </div>
-                        <div class="modal-body">
-                            <slot name="body">
-                                <feedback-form :batch-id="batchId" :student-record-id="studentRecordId" @completed="giveFeedbackToStudentComplete" @cancel="showFeedbackModal = false"></feedback-form>
-                                <div class="clearfix"></div>
-                            </slot>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </transition>
+      </div>
     </div>
+    <div class="container-fluid">
+      <transition name="fade">
+        <div
+          v-if="showColumnPanel"
+          class="card card-form"
+        >
+          <div class="card-body">
+            <h4 class="card-title">
+              {{ trans('general.column') }}
+            </h4>
+            <div class="row">
+              <div
+                v-for="column in columns"
+                class="col-12 col-sm-2"
+              >
+                <label class="custom-control custom-checkbox">
+                  <input
+                    v-model="filter.columns"
+                    type="checkbox"
+                    class="custom-control-input"
+                    :value="column.value"
+                  >
+                  <span class="custom-control-label">{{ column.text }}</span>
+                </label>
+              </div>
+            </div>
+            <div class="card-footer text-right">
+              <button
+                type="button"
+                class="btn btn-danger"
+                @click="showColumnPanel = false"
+              >
+                {{ trans('general.cancel') }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </transition>
+      <div class="card">
+        <div class="card-body">
+          <div
+            v-if="students.total"
+            class="row mt-5"
+          >
+            <div
+              v-for="student in students.data"
+              class="col-2 text-center"
+            >
+              <v-badge
+                overlap
+                :content="student.student_behaviour_point ? student.student_behaviour_point.total : '0'"
+                :color="student.student_behaviour_point && student.student_behaviour_point.total > 0 ? 'success' : !student.student_behaviour_point || student.student_behaviour_point.total == 0 ? 'warning' : 'error'"
+              >
+                <v-avatar
+                  :size="avatarSize"
+                  @click="giveFeedbackToStudent(student)"
+                >
+                  <v-img :src="getImage(student.student)" />
+                </v-avatar>
+              </v-badge>
+              <div>{{ getStudentName(student.student) }}</div>
+            </div>
+          </div>
+          <module-info
+            v-if="!students.total"
+            module="behaviour"
+            title="behaviour_module_title"
+            description="behaviour_module_description"
+            icon="list"
+          />
+          <pagination-record
+            v-if="students.total > 10"
+            :page-length.sync="filter.page_length"
+            :records="students"
+            @updateRecords="getStudents"
+          />
+        </div>
+        <div
+          v-if="studentGroupForm.ids.length && hasPermission('edit-student')"
+          class="m-t-10 card-body border-top p-4"
+        >
+          <h4 class="card-title" />
+          <form
+            @submit.prevent="submit"
+            @keydown="studentGroupForm.errors.clear($event.target.name)"
+          >
+            <div class="row">
+              <div class="col-12 col-sm-3">
+                <div class="form-group">
+                  <label for="">{{ trans('student.student_group') }}</label>
+                  <v-select
+                    id="group_id"
+                    v-model="selected_group"
+                    label="name"
+                    track-by="id"
+                    name="group_id"
+                    :options="student_groups"
+                    :placeholder="trans('student.select_student_group')"
+                    @select="onGroupSelect"
+                    @remove="studentGroupForm.student_group_id = ''"
+                  >
+                    <div
+                      v-if="!student_groups.length"
+                      slot="afterList"
+                      class="multiselect__option"
+                    >
+                      {{ trans('general.no_option_found') }}
+                    </div>
+                  </v-select>
+                  <show-error
+                    :form-name="studentGroupForm"
+                    prop-name="group_id"
+                  />
+                </div>
+              </div>
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <div class="radio radio-success m-t-20">
+                    <input
+                      id="type_attach"
+                      v-model="studentGroupForm.action"
+                      type="radio"
+                      value="attach"
+                      :checked="studentGroupForm.action == 'attach'"
+                      name="action"
+                      @click="studentGroupForm.errors.clear('action')"
+                    >
+                    <label for="type_attach">{{ trans('general.add') }}</label>
+                  </div>
+                  <div class="radio radio-success">
+                    <input
+                      id="type_detach"
+                      v-model="studentGroupForm.action"
+                      type="radio"
+                      value="detach"
+                      :checked="studentGroupForm.action == 'detach'"
+                      name="action"
+                      @click="studentGroupForm.errors.clear('action')"
+                    >
+                    <label for="type_detach">{{ trans('general.remove') }}</label>
+                  </div>
+                  <show-error
+                    :form-name="studentGroupForm"
+                    prop-name="action"
+                  />
+                </div>
+              </div>
+            </div>
+            <button
+              key="group-action"
+              v-confirm="{ok: confirmGroupAction()}"
+              type="button"
+              class="btn btn-info waves-effect waves-light"
+            >
+              {{ trans('general.save') }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <right-panel :topic="help_topic" />
+    <transition
+      v-if="showFeedbackModal"
+      name="modal"
+    >
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-container modal-lg">
+            <div class="modal-header">
+              <slot name="header">
+                {{ trans('behaviour.give_feedback_to_student') }}
+                <span
+                  class="float-right pointer"
+                  @click="showFeedbackModal = false"
+                >&times;</span>
+              </slot>
+            </div>
+            <div class="modal-body">
+              <slot name="body">
+                <feedback-form
+                  :batch-id="batchId"
+                  :student-record-id="studentRecordId"
+                  @completed="giveFeedbackToStudentComplete"
+                  @cancel="showFeedbackModal = false"
+                />
+                <div class="clearfix" />
+              </slot>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script>
     import feedbackForm from './feedback-form'
     export default {
         components: {feedbackForm,},
+        filters: {
+          moment(date) {
+            return helper.formatDate(date);
+          },
+          momentDateTime(date) {
+            return helper.formatDateTime(date);
+          }
+        },
         data() {
             return {
                 batchId: null,
@@ -288,6 +438,22 @@
                 selected_student_groups: null,
                 help_topic: ''
             };
+        },
+        computed:{
+            authToken(){
+                return helper.getAuthToken();
+            }
+        },
+        watch: {
+            'filter.sort_by': function(val){
+                this.getStudents();
+            },
+            'filter.order': function(val){
+                this.getStudents();
+            },
+            'filter.page_length': function(val){
+                this.getStudents();
+            }
         },
         mounted(){
             if(!helper.hasPermission('list-student') && !helper.hasPermission('list-class-teacher-wise-student')){
@@ -448,30 +614,6 @@
                         loader.hide();
                         helper.showErrorMsg(error);
                     })
-            }
-        },
-        computed:{
-            authToken(){
-                return helper.getAuthToken();
-            }
-        },
-        filters: {
-          moment(date) {
-            return helper.formatDate(date);
-          },
-          momentDateTime(date) {
-            return helper.formatDateTime(date);
-          }
-        },
-        watch: {
-            'filter.sort_by': function(val){
-                this.getStudents();
-            },
-            'filter.order': function(val){
-                this.getStudents();
-            },
-            'filter.page_length': function(val){
-                this.getStudents();
             }
         }
     }

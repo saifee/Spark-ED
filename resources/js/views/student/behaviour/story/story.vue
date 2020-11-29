@@ -3,7 +3,9 @@
     <v-card-text class="pb-0">
       <v-list-item class="grow">
         <v-list-item-avatar color="grey lighten-1 white--text">
-          <v-icon dark>person</v-icon>
+          <v-icon dark>
+            person
+          </v-icon>
         </v-list-item-avatar>
 
         <v-list-item-content>
@@ -23,9 +25,9 @@
         </v-row>
       </v-list-item>
       <v-row>
-          <v-col cols="12">
-            {{ story.content }}
-          </v-col>
+        <v-col cols="12">
+          {{ story.content }}
+        </v-col>
         <template v-if="story.type === 'photo'">
           <v-col cols="12">
             <v-img
@@ -35,7 +37,10 @@
         </template>
         <template v-if="story.type === 'file'">
           <v-col cols="12">
-            <a target="_blank" :href="`/storage/${story.attachment}`">view file</a>
+            <a
+              target="_blank"
+              :href="`/storage/${story.attachment}`"
+            >view file</a>
           </v-col>
         </template>
         <v-col cols="12">
@@ -143,7 +148,9 @@
             dense
           >
             <v-list-item-avatar color="grey lighten-1 white--text">
-              <v-icon dark>person</v-icon>
+              <v-icon dark>
+                person
+              </v-icon>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>
@@ -158,7 +165,9 @@
         <v-divider class="my-0" />
         <v-list-item dense>
           <v-list-item-avatar color="grey lighten-1 white--text">
-            <v-icon dark>person</v-icon>
+            <v-icon dark>
+              person
+            </v-icon>
           </v-list-item-avatar>
           <v-list-item-content>
             <comment-form

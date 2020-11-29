@@ -1,78 +1,163 @@
 <template>
-    <div>
-        <div class="page-titles">
-            <div class="row">
-                <div class="col-12 col-sm-6">
-                    <h3 class="text-themecolor">{{trans('behaviour.skill_icon')}}
-                        <span class="card-subtitle d-none d-sm-inline" v-if="skill_icons.total">{{trans('general.total_result_found',{count : skill_icons.total, from: skill_icons.from, to: skill_icons.to})}}</span>
-                        <span class="card-subtitle d-none d-sm-inline" v-else>{{trans('general.no_result_found')}}</span>
-                    </h3>
-                </div>
-                <div class="col-12 col-sm-6">
-                    <div class="action-buttons pull-right">
-                        <button class="btn btn-info btn-sm" v-if="skill_icons.total && !showCreatePanel" @click="showCreatePanel = !showCreatePanel" v-tooltip="trans('general.add_new')"><i class="fas fa-plus"></i> <span class="d-none d-sm-inline">{{trans('behaviour.add_new_skill_icon')}}</span></button>
-                        <sort-by :order-by-options="orderByOptions" :sort-by="filter.sort_by" :order="filter.order" @updateSortBy="value => {filter.sort_by = value}"  @updateOrder="value => {filter.order = value}"></sort-by>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-info btn-sm dropdown-toggle no-caret " role="menu" id="moreOption" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-tooltip="trans('general.more_option')">
-                                <i class="fas fa-ellipsis-h"></i> <span class="d-none d-sm-inline"></span>
-                            </button>
-                            <div :class="['dropdown-menu',getConfig('direction') == 'ltr' ? 'dropdown-menu-right' : '']" aria-labelledby="moreOption">
-                                <button class="dropdown-item custom-dropdown" @click="print"><i class="fas fa-print"></i> {{trans('general.print')}}</button>
-                                <button class="dropdown-item custom-dropdown" @click="pdf"><i class="fas fa-file-pdf"></i> {{trans('general.generate_pdf')}}</button>
-                            </div>
-                        </div>
-                        <help-button @clicked="help_topic = 'configuration.behaviour.skill-icon'"></help-button>
-                    </div>
-                </div>
-            </div>
+  <div>
+    <div class="page-titles">
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <h3 class="text-themecolor">
+            {{ trans('behaviour.skill_icon') }}
+            <span
+              v-if="skill_icons.total"
+              class="card-subtitle d-none d-sm-inline"
+            >{{ trans('general.total_result_found',{count : skill_icons.total, from: skill_icons.from, to: skill_icons.to}) }}</span>
+            <span
+              v-else
+              class="card-subtitle d-none d-sm-inline"
+            >{{ trans('general.no_result_found') }}</span>
+          </h3>
         </div>
-        <div class="container-fluid">
-            <transition name="fade">
-                <div class="card card-form" v-if="showCreatePanel">
-                    <div class="card-body">
-                        <h4 class="card-title">{{trans('behaviour.add_new_skill_icon')}}</h4>
-                        <skill-icon-form @completed="getSkillIcons" @cancel="showCreatePanel = !showCreatePanel"></skill-icon-form>
-                    </div>
-                </div>
-            </transition>
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive" v-if="skill_icons.total">
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>{{trans('behaviour.skill_icon_name')}}</th>
-                                    <th>{{trans('behaviour.skill_icon_description')}}</th>
-                                    <th class="table-option">{{trans('general.action')}}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="skill_icon in skill_icons.data">
-                                    <td><v-icon v-text="skill_icon.name"></v-icon></td>
-                                    <td v-text="skill_icon.name"></td>
-                                    <td v-text="skill_icon.description"></td>
-                                    <td class="table-option">
-                                        <div class="btn-group">
-                                            <button class="btn btn-info btn-sm" v-tooltip="trans('behaviour.edit_skill_icon')" @click.prevent="editSkillIcon(skill_icon)"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-danger btn-sm" :key="skill_icon.id" v-confirm="{ok: confirmDelete(skill_icon)}" v-tooltip="trans('behaviour.delete_skill_icon')"><i class="fas fa-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <module-info v-if="!skill_icons.total" module="behaviour" title="skill_icon_module_title" description="skill_icon_module_description" icon="list">
-                        <div slot="btn">
-                            <button class="btn btn-info btn-md" v-if="!showCreatePanel" @click="showCreatePanel = !showCreatePanel"><i class="fas fa-plus"></i> {{trans('general.add_new')}}</button>
-                        </div>
-                    </module-info>
-                    <pagination-record :page-length.sync="filter.page_length" :records="skill_icons" @updateRecords="getSkillIcons" @change.native="getSkillIcons"></pagination-record>
-                </div>
+        <div class="col-12 col-sm-6">
+          <div class="action-buttons pull-right">
+            <button
+              v-if="skill_icons.total && !showCreatePanel"
+              v-tooltip="trans('general.add_new')"
+              class="btn btn-info btn-sm"
+              @click="showCreatePanel = !showCreatePanel"
+            >
+              <i class="fas fa-plus" /> <span class="d-none d-sm-inline">{{ trans('behaviour.add_new_skill_icon') }}</span>
+            </button>
+            <sort-by
+              :order-by-options="orderByOptions"
+              :sort-by="filter.sort_by"
+              :order="filter.order"
+              @updateSortBy="value => {filter.sort_by = value}"
+              @updateOrder="value => {filter.order = value}"
+            />
+            <div class="btn-group">
+              <button
+                id="moreOption"
+                v-tooltip="trans('general.more_option')"
+                type="button"
+                class="btn btn-info btn-sm dropdown-toggle no-caret "
+                role="menu"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fas fa-ellipsis-h" /> <span class="d-none d-sm-inline" />
+              </button>
+              <div
+                :class="['dropdown-menu',getConfig('direction') == 'ltr' ? 'dropdown-menu-right' : '']"
+                aria-labelledby="moreOption"
+              >
+                <button
+                  class="dropdown-item custom-dropdown"
+                  @click="print"
+                >
+                  <i class="fas fa-print" /> {{ trans('general.print') }}
+                </button>
+                <button
+                  class="dropdown-item custom-dropdown"
+                  @click="pdf"
+                >
+                  <i class="fas fa-file-pdf" /> {{ trans('general.generate_pdf') }}
+                </button>
+              </div>
             </div>
+            <help-button @clicked="help_topic = 'configuration.behaviour.skill-icon'" />
+          </div>
         </div>
-        <right-panel :topic="help_topic"></right-panel>
+      </div>
     </div>
+    <div class="container-fluid">
+      <transition name="fade">
+        <div
+          v-if="showCreatePanel"
+          class="card card-form"
+        >
+          <div class="card-body">
+            <h4 class="card-title">
+              {{ trans('behaviour.add_new_skill_icon') }}
+            </h4>
+            <skill-icon-form
+              @completed="getSkillIcons"
+              @cancel="showCreatePanel = !showCreatePanel"
+            />
+          </div>
+        </div>
+      </transition>
+      <div class="card">
+        <div class="card-body">
+          <div
+            v-if="skill_icons.total"
+            class="table-responsive"
+          >
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th />
+                  <th>{{ trans('behaviour.skill_icon_name') }}</th>
+                  <th>{{ trans('behaviour.skill_icon_description') }}</th>
+                  <th class="table-option">
+                    {{ trans('general.action') }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="skill_icon in skill_icons.data">
+                  <td><v-icon v-text="skill_icon.name" /></td>
+                  <td v-text="skill_icon.name" />
+                  <td v-text="skill_icon.description" />
+                  <td class="table-option">
+                    <div class="btn-group">
+                      <button
+                        v-tooltip="trans('behaviour.edit_skill_icon')"
+                        class="btn btn-info btn-sm"
+                        @click.prevent="editSkillIcon(skill_icon)"
+                      >
+                        <i class="fas fa-edit" />
+                      </button>
+                      <button
+                        :key="skill_icon.id"
+                        v-confirm="{ok: confirmDelete(skill_icon)}"
+                        v-tooltip="trans('behaviour.delete_skill_icon')"
+                        class="btn btn-danger btn-sm"
+                      >
+                        <i class="fas fa-trash" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <module-info
+            v-if="!skill_icons.total"
+            module="behaviour"
+            title="skill_icon_module_title"
+            description="skill_icon_module_description"
+            icon="list"
+          >
+            <div slot="btn">
+              <button
+                v-if="!showCreatePanel"
+                class="btn btn-info btn-md"
+                @click="showCreatePanel = !showCreatePanel"
+              >
+                <i class="fas fa-plus" /> {{ trans('general.add_new') }}
+              </button>
+            </div>
+          </module-info>
+          <pagination-record
+            :page-length.sync="filter.page_length"
+            :records="skill_icons"
+            @updateRecords="getSkillIcons"
+            @change.native="getSkillIcons"
+          />
+        </div>
+      </div>
+    </div>
+    <right-panel :topic="help_topic" />
+  </div>
 </template>
 
 
@@ -81,6 +166,11 @@
 
     export default {
         components : { skillIconForm },
+        filters: {
+          momentDateTime(date) {
+            return helper.formatDateTime(date);
+          }
+        },
         data() {
             return {
                 skill_icons: {
@@ -101,6 +191,22 @@
                 showCreatePanel: false,
                 help_topic: ''
             };
+        },
+        computed: {
+            authToken(){
+                return helper.getAuthToken();
+            }
+        },
+        watch: {
+            'filter.sort_by': function(val){
+                this.getSkillIcons();
+            },
+            'filter.order': function(val){
+                this.getSkillIcons();
+            },
+            'filter.page_length': function(val){
+                this.getSkillIcons();
+            }
         },
         mounted(){
             if(!helper.hasPermission('access-configuration')){
@@ -172,27 +278,6 @@
                         loader.hide();
                         helper.showErrorMsg(error);
                     });
-            }
-        },
-        filters: {
-          momentDateTime(date) {
-            return helper.formatDateTime(date);
-          }
-        },
-        watch: {
-            'filter.sort_by': function(val){
-                this.getSkillIcons();
-            },
-            'filter.order': function(val){
-                this.getSkillIcons();
-            },
-            'filter.page_length': function(val){
-                this.getSkillIcons();
-            }
-        },
-        computed: {
-            authToken(){
-                return helper.getAuthToken();
             }
         }
     }
