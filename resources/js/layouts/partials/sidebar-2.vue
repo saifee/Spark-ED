@@ -1,42 +1,42 @@
 <template>
-    <v-navigation-drawer
-      v-if="getConfig('replace_sidebar_menu_with_top_menu') != 1"
-      v-model="drawer"
-      fixed
-      app
-      :clipped="getConfig('sidebar_clipped') == 1"
-      :right="getConfig('user_direction') === 'rtl'"
-      :mini-variant="getConfig('user_sidebar') === 'mini'"
-      :expand-on-hover="getConfig('user_sidebar') === 'mini'"
-    >
-        <main-menu></main-menu>
-          <template v-slot:append>
-            <v-btn-toggle
-              borderless
-              class="d-flex"
-            >
-              <v-btn
-                v-if="hasPermission('access-configuration')"
-                to="/configuration"
-                class="flex-grow-1"
-              >
-                <i class="fas fa-cogs" />
-              </v-btn>
-              <v-btn
-                to="/change/password"
-                class="flex-grow-1"
-              >
-                <i class="fas fa-key" />
-              </v-btn>
-              <v-btn
-                class="flex-grow-1"
-                @click.prevent="logout"
-              >
-                <i class="fas fa-power-off" />
-              </v-btn>
-            </v-btn-toggle>
-          </template>
-    </v-navigation-drawer>
+  <v-navigation-drawer
+    v-if="getConfig('replace_sidebar_menu_with_top_menu') != 1"
+    v-model="drawer"
+    fixed
+    app
+    :clipped="getConfig('sidebar_clipped') == 1"
+    :right="getConfig('user_direction') === 'rtl'"
+    :mini-variant="getConfig('user_sidebar') === 'mini'"
+    :expand-on-hover="getConfig('user_sidebar') === 'mini'"
+  >
+    <main-menu />
+    <template v-slot:append>
+      <v-btn-toggle
+        borderless
+        class="d-flex"
+      >
+        <v-btn
+          v-if="hasPermission('access-configuration')"
+          to="/configuration"
+          class="flex-grow-1"
+        >
+          <i class="fas fa-cogs" />
+        </v-btn>
+        <v-btn
+          to="/change/password"
+          class="flex-grow-1"
+        >
+          <i class="fas fa-key" />
+        </v-btn>
+        <v-btn
+          class="flex-grow-1"
+          @click.prevent="logout"
+        >
+          <i class="fas fa-power-off" />
+        </v-btn>
+      </v-btn-toggle>
+    </template>
+  </v-navigation-drawer>
 </template>
 
 <script>
@@ -47,12 +47,14 @@
         data: () => ({
             drawer: null,
         }),
-        mounted() {
+        computed: {
         },
         watch: {
           '$store.state.navigationDrawer': function () {
             this.drawer = !this.drawer
           },
+        },
+        mounted() {
         },
         methods : {
             logout(){
@@ -69,8 +71,6 @@
             getConfig(config){
                 return helper.getConfig(config);
             }
-        },
-        computed: {
         }
     }
 </script>
