@@ -13,7 +13,7 @@
             color="primary"
             v-on="on"
           >
-            {{trans('general.add_new')}}
+            {{ trans('general.add_new') }}
           </v-btn>
         </template>
         <form
@@ -70,14 +70,14 @@
                 text
                 @click.native="closeDialog"
               >
-                {{trans('general.cancel')}}
+                {{ trans('general.cancel') }}
               </v-btn>
               <v-btn
                 type="submit"
                 color="primary"
                 dark
               >
-                {{trans('general.save')}}
+                {{ trans('general.save') }}
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -100,13 +100,13 @@
           class="mr-2"
           @click="editItem(item)"
         >
-          {{trans('general.edit')}}
+          {{ trans('general.edit') }}
         </v-icon>
         <v-icon
           small
           @click="deleteItem(item)"
         >
-          {{trans('general.delete')}}
+          {{ trans('general.delete') }}
         </v-icon>
       </template>
     </v-data-table>
