@@ -1,161 +1,310 @@
 <template>
-	<div>
-        <form @submit.prevent="proceed" @keydown="stockSaleForm.errors.clear($event.target.name)">
-            <div class="row">
-                <div class="col-12 col-lg-5">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="">{{trans('inventory_sale.stock_sale_date')}}</label>
-                                <datepicker v-model="stockSaleForm.date" :bootstrapStyling="true" @selected="stockSaleForm.errors.clear('date')" :placeholder="trans('inventory_sale.stock_sale_date')" typeable></datepicker>
-                                <show-error :form-name="stockSaleForm" prop-name="date"></show-error>
-                            </div>
-                        </div>
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="">{{trans('student.student')}}</label>
-                        <v-select label="name" v-model="selected_student" name="student_id" id="student_id" :options="students" :close-on-select="false" :placeholder="trans('student.select_student')" @select="onStudentSelect" @close="stockSaleForm.errors.clear('student_id')" @remove="stockSaleForm.student_id = ''">
-                            <div class="multiselect__option" slot="afterList" v-if="!students.length">
-                                {{trans('general.no_option_found')}}
-                            </div>
-                        </v-select>
-                        <show-error :form-name="stockSaleForm" prop-name="student_id"></show-error>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="">{{trans('inventory.add_new_stock_item')}}</label>
-                        <v-select label="name" v-model="addStockItem" :options="stock_items" :close-on-select="false" :placeholder="trans('inventory.select_stock_item')" @input="addRow">
-                            <div class="multiselect__option" slot="afterList" v-if="!stock_items.length">
-                                {{trans('general.no_option_found')}}
-                            </div>
-                        </v-select>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="">{{trans('inventory_sale.stock_sale_description')}}</label>
-                        <autosize-textarea v-model="stockSaleForm.description" rows="1" name="description" :placeholder="trans('inventory_sale.stock_sale_description')"></autosize-textarea>
-                        <show-error :form-name="stockSaleForm" prop-name="description"></show-error>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="">{{trans('inventory_sale.stock_sale_payment_method')}}</label>
-                        <div class="radio radio-info p-l-0">
-                            <div class="form-check form-check-inline " v-for="(payment_method, i) in available_payment_methods" :key="`payment_method${i}`">
-                                <input class="form-check-input" type="radio" :value="payment_method" :id="`payment_method${i}`" v-model="stockSaleForm.payment_method" :checked="stockSaleForm.payment_method == payment_method" name="payment_method" @click="stockSaleForm.errors.clear('payment_method')">
-                                <label class="form-check-label" :for="`payment_method${i}`"> {{trans('inventory_sale.'+payment_method)}}</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12" v-if="stockSaleForm.payment_method === 'cash'">
-                    <div class="form-group">
-                        <label for="">{{trans('inventory_sale.stock_sale_paid_amount')}}</label>
-                        <input class="form-control" type="text" v-model="stockSaleForm.cash_paid" name="cash_paid" :placeholder="trans('inventory_sale.stock_sale_paid_amount')">
-                    </div>
-                </div>
-                <div class="col-12" v-if="stockSaleForm.payment_method === 'cash'">
-                    <div class="form-group">
-                        <label for="">{{trans('inventory_sale.stock_sale_discount')}}</label>
-                        <input class="form-control" type="text" v-model="stockSaleForm.discount" name="discount" :placeholder="trans('inventory_sale.stock_sale_discount')">
-                    </div>
-                </div>
-                </div>
+  <div>
+    <form
+      @submit.prevent="proceed"
+      @keydown="stockSaleForm.errors.clear($event.target.name)"
+    >
+      <div class="row">
+        <div class="col-12 col-lg-5">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="">{{ trans('inventory_sale.stock_sale_date') }}</label>
+                <datepicker
+                  v-model="stockSaleForm.date"
+                  :bootstrap-styling="true"
+                  :placeholder="trans('inventory_sale.stock_sale_date')"
+                  typeable
+                  @selected="stockSaleForm.errors.clear('date')"
+                />
+                <show-error
+                  :form-name="stockSaleForm"
+                  prop-name="date"
+                />
+              </div>
             </div>
-            <div class="col-12 col-lg-7">
-                <div class="row" v-if="stockSaleForm.details.length === 0">
-                    <div class="col-12">
-                        <p class="text-center font-italic shadow-none p-3 mb-5 bg-light rounded">no selected items</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 col-sm-3">
-                        <div class="form-group">
-                            <label for="">
-                                {{trans('inventory.stock_item')}}
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-3">
-                        <div class="form-group">
-                            <label for="">{{trans('inventory_sale.stock_sale_quantity')}}</label>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-3">
-                        <div class="form-group">
-                            <label for="">{{trans('inventory_sale.stock_sale_price')}}</label>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-3">
-                        <div class="form-group">
-                            <label for="">
-                                {{trans('inventory_sale.stock_sale_total')}}
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" v-for="(detail, index) in stockSaleForm.details" :key="`stockSaleFormDetail${index}`">
-                    <div class="col-12 col-sm-3">
-                        <div class="form-group">
-                            <input class="form-control" type="text" :value="getStockItemTitle(detail.stock_item_id)" readonly>
-                            <button type="button" class="btn btn-xs btn-danger" :key="`${index}_delete_detail`" v-confirm="{ok: confirmDelete(index)}" v-tooltip="trans('general.delete')"><i class="fas fa-times"></i></button>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-3">
-                        <div class="form-group">
-                            <input class="form-control" type="text" v-model="detail.quantity" :name="getQuantityName(index)" :placeholder="trans('inventory_sale.stock_sale_quantity')">
-                            <show-error :form-name="stockSaleForm" :prop-name="getQuantityName(index)"></show-error>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-3">
-                        <div class="form-group">
-                            <input class="form-control" type="text" v-model="detail.price" :name="getPriceName(index)" :placeholder="trans('inventory_sale.stock_sale_price')">
-                            <show-error :form-name="stockSaleForm" :prop-name="getPriceName(index)"></show-error>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-3">
-                        <div class="form-group">
-                            <input class="form-control" type="text" :value="detail.price * detail.quantity">
-                        </div>
-                    </div>
-                </div>
-                <div class="table-responsive" v-if="stockSaleForm.details.length > 0">
-                    <table class="table table-sm custom-show-table">
-                        <tbody>
-                            <tr>
-                                <td>{{trans('inventory_sale.stock_sale_sub_total')}}</td>
-                                <td>{{getSubTotal()}}</td>
-                            </tr>
-                            <tr>
-                                <td>{{trans('inventory_sale.stock_sale_discount')}}</td>
-                                <td>{{stockSaleForm.discount}}</td>
-                            </tr>
-                            <tr>
-                                <td>{{trans('inventory_sale.stock_sale_total')}}</td>
-                                <td>{{getTotal()}}</td>
-                            </tr>
-                            <tr>
-                                <td>{{trans('inventory_sale.stock_sale_paid')}}</td>
-                                <td>{{getPaid()}}</td>
-                            </tr>
-                            <tr>
-                                <td>{{trans('inventory_sale.stock_sale_balance')}}</td>
-                                <td>{{getBalance()}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="">{{ trans('student.student') }}</label>
+                <v-select
+                  id="student_id"
+                  v-model="selected_student"
+                  label="name"
+                  name="student_id"
+                  :options="students"
+                  :close-on-select="false"
+                  :placeholder="trans('student.select_student')"
+                  @select="onStudentSelect"
+                  @close="stockSaleForm.errors.clear('student_id')"
+@remove="stockSaleForm.student_id = ''"
+                >
+                  <div
+                    v-if="!students.length"
+                    slot="afterList"
+                    class="multiselect__option"
+                  >
+                    {{ trans('general.no_option_found') }}
+                  </div>
+                </v-select>
+                <show-error
+                  :form-name="stockSaleForm"
+                  prop-name="student_id"
+                />
+              </div>
             </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="">{{ trans('inventory.add_new_stock_item') }}</label>
+                <v-select
+                  v-model="addStockItem"
+                  label="name"
+                  :options="stock_items"
+                  :close-on-select="false"
+                  :placeholder="trans('inventory.select_stock_item')"
+                  @input="addRow"
+                >
+                  <div
+                    v-if="!stock_items.length"
+                    slot="afterList"
+                    class="multiselect__option"
+                  >
+                    {{ trans('general.no_option_found') }}
+                  </div>
+                </v-select>
+              </div>
             </div>
-            <div class="card-footer text-right">
-                <button v-show="id" type="button" class="btn btn-danger " @click="$router.push('/inventory/stock/sale')">{{trans('general.cancel')}}</button>
-                <button v-if="!id" type="button" class="btn btn-danger " @click="$emit('cancel')">{{trans('general.cancel')}}</button>
-                <button type="submit" class="btn btn-info waves-effect waves-light">{{trans('general.save')}}</button>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="">{{ trans('inventory_sale.stock_sale_description') }}</label>
+                <autosize-textarea
+                  v-model="stockSaleForm.description"
+                  rows="1"
+                  name="description"
+                  :placeholder="trans('inventory_sale.stock_sale_description')"
+                />
+                <show-error
+                  :form-name="stockSaleForm"
+                  prop-name="description"
+                />
+              </div>
             </div>
-        </form>
-    </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="">{{ trans('inventory_sale.stock_sale_payment_method') }}</label>
+                <div class="radio radio-info p-l-0">
+                  <div
+                    v-for="(payment_method, i) in available_payment_methods"
+                    :key="`payment_method${i}`"
+                    class="form-check form-check-inline "
+                  >
+                    <input
+                      :id="`payment_method${i}`"
+                      v-model="stockSaleForm.payment_method"
+                      class="form-check-input"
+                      type="radio"
+                      :value="payment_method"
+                      :checked="stockSaleForm.payment_method == payment_method"
+                      name="payment_method"
+                      @click="stockSaleForm.errors.clear('payment_method')"
+                    >
+                    <label
+                      class="form-check-label"
+                      :for="`payment_method${i}`"
+                    > {{ trans('inventory_sale.'+payment_method) }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              v-if="stockSaleForm.payment_method === 'cash'"
+              class="col-12"
+            >
+              <div class="form-group">
+                <label for="">{{ trans('inventory_sale.stock_sale_paid_amount') }}</label>
+                <input
+                  v-model="stockSaleForm.cash_paid"
+                  class="form-control"
+                  type="text"
+                  name="cash_paid"
+                  :placeholder="trans('inventory_sale.stock_sale_paid_amount')"
+                >
+              </div>
+            </div>
+            <div
+              v-if="stockSaleForm.payment_method === 'cash'"
+              class="col-12"
+            >
+              <div class="form-group">
+                <label for="">{{ trans('inventory_sale.stock_sale_discount') }}</label>
+                <input
+                  v-model="stockSaleForm.discount"
+                  class="form-control"
+                  type="text"
+                  name="discount"
+                  :placeholder="trans('inventory_sale.stock_sale_discount')"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-7">
+          <div
+            v-if="stockSaleForm.details.length === 0"
+            class="row"
+          >
+            <div class="col-12">
+              <p class="text-center font-italic shadow-none p-3 mb-5 bg-light rounded">
+                no selected items
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-sm-3">
+              <div class="form-group">
+                <label for="">
+                  {{ trans('inventory.stock_item') }}
+                </label>
+              </div>
+            </div>
+            <div class="col-12 col-sm-3">
+              <div class="form-group">
+                <label for="">{{ trans('inventory_sale.stock_sale_quantity') }}</label>
+              </div>
+            </div>
+            <div class="col-12 col-sm-3">
+              <div class="form-group">
+                <label for="">{{ trans('inventory_sale.stock_sale_price') }}</label>
+              </div>
+            </div>
+            <div class="col-12 col-sm-3">
+              <div class="form-group">
+                <label for="">
+                  {{ trans('inventory_sale.stock_sale_total') }}
+                </label>
+              </div>
+            </div>
+          </div>
+          <div
+            v-for="(detail, index) in stockSaleForm.details"
+            :key="`stockSaleFormDetail${index}`"
+            class="row"
+          >
+            <div class="col-12 col-sm-3">
+              <div class="form-group">
+                <input
+                  class="form-control"
+                  type="text"
+                  :value="getStockItemTitle(detail.stock_item_id)"
+                  readonly
+                >
+                <button
+                  :key="`${index}_delete_detail`"
+                  v-confirm="{ok: confirmDelete(index)}"
+                  v-tooltip="trans('general.delete')"
+                  type="button"
+                  class="btn btn-xs btn-danger"
+                >
+                  <i class="fas fa-times" />
+                </button>
+              </div>
+            </div>
+            <div class="col-12 col-sm-3">
+              <div class="form-group">
+                <input
+                  v-model="detail.quantity"
+                  class="form-control"
+                  type="text"
+                  :name="getQuantityName(index)"
+                  :placeholder="trans('inventory_sale.stock_sale_quantity')"
+                >
+                <show-error
+                  :form-name="stockSaleForm"
+                  :prop-name="getQuantityName(index)"
+                />
+              </div>
+            </div>
+            <div class="col-12 col-sm-3">
+              <div class="form-group">
+                <input
+                  v-model="detail.price"
+                  class="form-control"
+                  type="text"
+                  :name="getPriceName(index)"
+                  :placeholder="trans('inventory_sale.stock_sale_price')"
+                >
+                <show-error
+                  :form-name="stockSaleForm"
+                  :prop-name="getPriceName(index)"
+                />
+              </div>
+            </div>
+            <div class="col-12 col-sm-3">
+              <div class="form-group">
+                <input
+                  class="form-control"
+                  type="text"
+                  :value="detail.price * detail.quantity"
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            v-if="stockSaleForm.details.length > 0"
+            class="table-responsive"
+          >
+            <table class="table table-sm custom-show-table">
+              <tbody>
+                <tr>
+                  <td>{{ trans('inventory_sale.stock_sale_sub_total') }}</td>
+                  <td>{{ getSubTotal() }}</td>
+                </tr>
+                <tr>
+                  <td>{{ trans('inventory_sale.stock_sale_discount') }}</td>
+                  <td>{{ stockSaleForm.discount }}</td>
+                </tr>
+                <tr>
+                  <td>{{ trans('inventory_sale.stock_sale_total') }}</td>
+                  <td>{{ getTotal() }}</td>
+                </tr>
+                <tr>
+                  <td>{{ trans('inventory_sale.stock_sale_paid') }}</td>
+                  <td>{{ getPaid() }}</td>
+                </tr>
+                <tr>
+                  <td>{{ trans('inventory_sale.stock_sale_balance') }}</td>
+                  <td>{{ getBalance() }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-right">
+        <button
+          v-show="id"
+          type="button"
+          class="btn btn-danger "
+          @click="$router.push('/inventory/stock/sale')"
+        >
+          {{ trans('general.cancel') }}
+        </button>
+        <button
+          v-if="!id"
+          type="button"
+          class="btn btn-danger "
+          @click="$emit('cancel')"
+        >
+          {{ trans('general.cancel') }}
+        </button>
+        <button
+          type="submit"
+          class="btn btn-info waves-effect waves-light"
+        >
+          {{ trans('general.save') }}
+        </button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -185,6 +334,16 @@
                 module_id: '',
                 clearAttachment: true
             }
+        },
+        computed:{
+            available_payment_methods() {
+                let student = this.getStudent(this.stockSaleForm.student_id)
+                if (student && student.options && student.options.enable_student_wallet && student.options.enable_student_wallet === 1) {
+                    return this.payment_methods
+                } else {
+                    return this.payment_methods.filter(pm => pm !== 'wallet')
+                }
+            },
         },
         mounted(){
             if(this.id)
@@ -346,16 +505,6 @@
             getBalance(){
                 var balance = this.getTotal() - this.getPaid()
                 return balance
-            },
-        },
-        computed:{
-            available_payment_methods() {
-                let student = this.getStudent(this.stockSaleForm.student_id)
-                if (student && student.options && student.options.enable_student_wallet && student.options.enable_student_wallet === 1) {
-                    return this.payment_methods
-                } else {
-                    return this.payment_methods.filter(pm => pm !== 'wallet')
-                }
             },
         }
     }
