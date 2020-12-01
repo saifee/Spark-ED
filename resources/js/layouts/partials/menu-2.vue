@@ -1701,7 +1701,7 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-puzzle-piece fa-fw" /></v-list-item-action>
+        <v-list-item-action><i class="fas fa-cash-register fa-fw" /></v-list-item-action>
         <v-list-item-content>
           <v-list-item-title>{{ trans('amsl.amsl') }}</v-list-item-title>
         </v-list-item-content>
