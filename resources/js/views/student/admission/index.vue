@@ -282,11 +282,13 @@
                                             <span v-if="student_record.student.permanent_country"><br /> {{student_record.student.permanent_country}}</span>
                                         </template>
                                     </td>
+                                    <template v-if="getConfig('made') === 'saudi'">
                                     <td class="table-option" v-if="hasRole('parent')">
                                         <button class="btn btn-info btn-sm" v-tooltip="trans('behaviour.messages')" @click="$router.push('/student/behaviour/'+student.batch_id+'/messages')">
                                             <i class="fas fa-comment"></i> {{trans('behaviour.messages')}}
                                         </button>
                                     </td>
+                                    </template>
                                     <td class="table-option">
                                         <div class="btn-group" v-if="hasNotAnyRole(['student','parent'])">
                                             <button class="btn btn-info btn-sm" v-tooltip="trans('student.view_student_detail')" @click="$router.push('/student/'+student_record.student.uuid)">
