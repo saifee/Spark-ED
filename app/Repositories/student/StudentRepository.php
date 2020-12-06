@@ -923,7 +923,7 @@ class StudentRepository
         return $this->student->with(['studentRecords' => function ($q) {
             $q->where('academic_session_id', config('config.default_academic_session.id'));
         } ,'studentRecords.admission','studentRecords.batch','studentRecords.batch.course','parent'])->filterByFirstName($first_name)->filterByMiddleName($middle_name)->filterByLastName($last_name)->whereHas('studentRecords', function ($q) {
-            $q->whereNull('date_of_exit')->filterBySession();
+            $q->filterBySession();
         })->orderBy('first_name', 'asc')->orderBy('last_name', 'asc')->paginate($page_length);
     }
 
