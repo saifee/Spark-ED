@@ -221,8 +221,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-5">
                         <template v-if="getConfig('made') === 'saudi'">
+                <div class="col-12 col-md-4">
                     <div class="card widget" v-if="hasNotAnyRole(['student','parent'])">
                         <div class="card-body">
                             <div class="row border-bottom">
@@ -239,8 +239,6 @@
                             </div>
                         </div>
                     </div>
-                        </template>
-                        <template v-if="getConfig('made') === 'saudi'">
                     <div class="card widget" v-if="hasRole('librarian')">
                         <div class="card-body">
                             <div class="row border-bottom">
@@ -257,7 +255,8 @@
                             </div>
                         </div>
                     </div>
-                        </template>
+                </div>
+                <div class="col-12 col-md-4">
                     <div :class="['card widget', hasAnyRole(['student','parent']) ? 'm-t-20' : '']" v-if="hasPermission('access-todo')">
                         <div class="card-body">
                             <div class="row border-bottom">
@@ -268,13 +267,14 @@
                             </div>
                         </div>
                     </div>
-                    
-                        <template v-if="getConfig('made') === 'saudi'">
+
+                </div>
+                <div class="col-12 col-md-4">
                     <events-list v-if="events.length && hasPermission('list-event')" :events="events" class="frontend-widget" body-class="row-like-margin border-bottom p-4" view-more-link="/calendar/event"></events-list>
 
                     <articles-list v-if="articles.length && hasPermission('list-article')" :articles="articles" class="frontend-widget" body-class="row-like-margin border-bottom p-4" view-more-link="/post/feed"></articles-list>
-                        </template>
                 </div>
+                        </template>
             </div>
         </div>
         <template v-if="getConfig('made') === 'saudi'">
