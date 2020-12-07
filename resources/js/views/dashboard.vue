@@ -137,7 +137,7 @@
             </v-col>
           </v-row>
             <div class="row grey lighten-3">
-                <div class="col-12 col-md-7">
+                <div class="col-12 col-md-6">
                     <div class="card">
                         <div class="card-body p-4">
                             <template v-if="getConfig('made') !== 'saudi'">
@@ -210,6 +210,8 @@
 
                         </div>
                       </div>
+                </div>
+                <div class="col-12 col-md-6">
 
                     <div class="card">
                         <div class="card-body p-4">
