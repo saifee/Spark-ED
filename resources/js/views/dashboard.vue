@@ -211,17 +211,15 @@
                         </div>
                       </div>
                 </div>
+                        <template v-if="getConfig('made') === 'saudi'">
                 <div class="col-12 col-md-6">
 
                     <div class="card">
                         <div class="card-body p-4">
-                        <template v-if="getConfig('made') === 'saudi'">
                             <calendar></calendar>
-                        </template>
                         </div>
                     </div>
                 </div>
-                        <template v-if="getConfig('made') === 'saudi'">
                 <div class="col-12 col-md-4">
                     <div class="card widget" v-if="hasNotAnyRole(['student','parent'])">
                         <div class="card-body">
