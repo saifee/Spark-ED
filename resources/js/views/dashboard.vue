@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="page-titles">
-            <div class="row">
+            <div class="row grey lighten-3">
                 <div class="col-12 col-sm-6">
                     <h3 class="text-themecolor">{{trans('general.home')}}</h3>
                 </div>
