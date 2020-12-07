@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-12 col-sm-6" v-if="getConfig('made') === 'saudi'">
                     <div class="action-buttons pull-right">
-                        <button class="btn btn-info btn-sm right-sidebar-toggle " v-tooltip="trans('user.user_preference')"><i class="fas fa-cog"></i></button>
+                        <button class="btn btn-info btn-sm " @click="drawer = !drawer" v-tooltip="trans('user.user_preference')"><i class="fas fa-cog"></i></button>
                         <button class="btn btn-danger btn-sm" @click.prevent="logout"><i class="fas fa-power-off"></i> <span class="d-none d-sm-inline">{{trans('auth.logout')}}</span></button>
                     </div>
                 </div>
@@ -275,14 +275,20 @@
                 </div>
             </div>
         </div>
-        <div class="right-sidebar" v-if="getConfig('made') === 'saudi'">
-            <div class="slimscrollright">
-                <div class="rpanel-title"> 
-                    {{trans('user.user_preference')}} 
-                    <button class="btn btn-danger btn-sm right-sidebar-toggle pull-right "><i class="fas fa-times"></i></button>
-                </div>
-                <div class="r-panel-body">
+        <template v-if="getConfig('made') === 'saudi'">
+                <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      temporary
+      right
+      width="400"
+    >
+    <v-card class="elevation-0">
+      <v-card-title>
+                    {{trans('user.user_preference')}}
+      </v-card-title>
                     <form @submit.prevent="updatePreference" @keydown="preferenceForm.errors.clear($event.target.name)">
+    <v-card-text>
                         <div class="row">
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
@@ -329,11 +335,17 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-info waves-effect waves-light pull-right m-t-10">{{trans('general.save')}}</button>
+</v-card-text>
+                        <v-card-actions>
+                        <v-spacer />
+                        <v-btn @click="drawer = !drawer" color="red" dark>{{trans('general.close')}}</v-btn>
+                        <v-btn type="submit" @click="drawer = !drawer" color="primary">{{trans('general.save')}}</v-btn>
+                        </v-card-actions>
                     </form>
-                </div>
-            </div>
-        </div>
+    </v-card>
+
+            </v-navigation-drawer>
+        </template>
     </div>
 </template>
 
@@ -356,6 +368,7 @@
         },
         data() {
             return {
+                drawer: false,
                 academic_sessions: [],
                 academic_sessions_detail: [],
                 color_themes: [],
