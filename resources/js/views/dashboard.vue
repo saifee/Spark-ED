@@ -206,7 +206,14 @@
                                 </h4>
                                 <bar-chart :chart="chart.strength"></bar-chart>
                             </template>
+                          </template>
 
+                        </div>
+                      </div>
+
+                    <div class="card">
+                        <div class="card-body p-4">
+                        <template v-if="getConfig('made') === 'saudi'">
                             <calendar></calendar>
                         </template>
                         </div>
