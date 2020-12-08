@@ -513,6 +513,11 @@
                 showTourVideo: false
             }
         },
+        computed: {
+          topBoxDataX() {
+            return (Object.keys(this.academic_sessions_detail).length === 0 && this.academic_sessions_detail.constructor === Object) ? {} : this.academic_sessions_detail[helper.getDefaultAcademicSession().id]
+          },
+        },
         mounted(){
             if(this.$route.query.reload)
                 window.location = window.location.pathname;
@@ -631,11 +636,6 @@
                 this.$cookie.set('hide_tour_video',helper.randomString(20), {expires: '30m'});
                 this.showTourVideo = false;
             }
-        },
-        computed: {
-          topBoxDataX() {
-            return (Object.keys(this.academic_sessions_detail).length === 0 && this.academic_sessions_detail.constructor === Object) ? {} : this.academic_sessions_detail[helper.getDefaultAcademicSession().id]
-          },
         },
         filters: {
           momentDateTime(date) {
