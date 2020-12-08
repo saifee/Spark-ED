@@ -293,7 +293,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card widget" v-if="hasRole('librarian')">
+                    <div class="card widget" v-if="hasAnyRole(['admin','librarian'])">
                         <div class="card-body">
                             <div class="row border-bottom">
                                 <div class="col p-4 b-r">
@@ -571,7 +571,7 @@
                         this.birthday_count= response.birthday_count;
                         this.anniversary_count= response.anniversary_count;
                         this.work_anniversary_count= response.work_anniversary_count;
-                        if (helper.hasRole('librarian')) {
+                        if (helper.hasAnyRole(['admin','librarian'])) {
                             this.total_book_count = response.total_book_count;
                             this.pending_return_book_count = response.pending_return_book_count;
                             this.overdue_return_book_count = response.overdue_return_book_count;
