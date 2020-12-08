@@ -164,59 +164,92 @@
                     <div class="card">
                         <div class="card-body p-4">
                             <template v-if="getConfig('made') !== 'saudi'">
-                            <template v-if="hasPermission('ambassador-view')">
-                                <v-card class="mb-4">
-                                    <v-card-text>
-                                <v-tabs>
-                                    <v-tab>Comparison</v-tab>
-                                    <v-tab>Planning</v-tab>
-                                    <v-tab-item>
-                                        <v-simple-table>
-                                            <template v-slot:default>
-                                                <thead>
-                                                    <tr>
-                                                        <th></th>
-                                                        <th v-for="(academic_session, i) in academic_sessions" :key="`academic_session_tab${i}`"><b>{{academic_session.name}}</b></th>
-                                                    </tr>
-                                                </thead>
-                                              <tbody>
-                                                <tr>
-                                                  <td><b>Total Students</b></td>
-                                    <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">
-                                                  {{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_students : '—' }}
-                                              </td>
-                                                </tr>
-                                                <tr>
-                                                  <td><b>Fee Total/Sum</b></td>
-                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? formatCurrency(academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total) : '—' }}</td>
-                                                </tr>
-                                                <tr>
-                                                  <td><b>Fee Paid Sum</b></td>
-                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? formatCurrency(academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid) : '—' }}</td>
-                                                </tr>
-                                                <tr>
-                                                  <td><b>Remaining Fee</b></td>
-                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? formatCurrency(academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total - academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid) : '—' }}</td>
-                                                </tr>
-                                                <tr>
-                                                  <td><b>Total Employee</b></td>
-                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_employee : '—' }}</td>
-                                                </tr>
-                                                <tr>
-                                                  <td><b>Total Salary</b></td>
-                                                  <td v-for="(academic_session, i) in academic_sessions" :key="`academic_session_content${i}`">{{ academic_sessions_detail[academic_session.id] ? formatCurrency(academic_sessions_detail[academic_session.id].total_salary) : '—' }}</td>
-                                                </tr>
-                                              </tbody>
-                                            </template>
-                                        </v-simple-table>
-                                </v-tab-item>
-                                <v-tab-item>
-                                    <notes :ambassador="true" />
-                                </v-tab-item>
-                            </v-tabs>
-                                    </v-card-text>
-                                </v-card>
-                            </template>
+                                <template v-if="hasPermission('ambassador-view')">
+                                    <v-card class="mb-4">
+                                        <v-card-text>
+                                            <v-tabs>
+                                                <v-tab>Comparison</v-tab>
+                                                <v-tab>Planning</v-tab>
+                                                <v-tab-item>
+                                                    <v-simple-table>
+                                                        <template v-slot:default>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th />
+                                                                    <th
+                                                                        v-for="(academic_session, i) in academic_sessions"
+                                                                        :key="`academic_session_tab${i}`"
+                                                                    >
+                                                                        <b>{{ academic_session.name }}</b>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><b>Total Students</b></td>
+                                                                    <td
+                                                                        v-for="(academic_session, i) in academic_sessions"
+                                                                        :key="`academic_session_content${i}`"
+                                                                    >
+                                                                        {{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_students : '—' }}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Fee Total/Sum</b></td>
+                                                                    <td
+                                                                        v-for="(academic_session, i) in academic_sessions"
+                                                                        :key="`academic_session_content${i}`"
+                                                                    >
+                                                                        {{ academic_sessions_detail[academic_session.id] ? formatCurrency(academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total) : '—' }}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Fee Paid Sum</b></td>
+                                                                    <td
+                                                                        v-for="(academic_session, i) in academic_sessions"
+                                                                        :key="`academic_session_content${i}`"
+                                                                    >
+                                                                        {{ academic_sessions_detail[academic_session.id] ? formatCurrency(academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid) : '—' }}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Remaining Fee</b></td>
+                                                                    <td
+                                                                        v-for="(academic_session, i) in academic_sessions"
+                                                                        :key="`academic_session_content${i}`"
+                                                                    >
+                                                                        {{ academic_sessions_detail[academic_session.id] ? formatCurrency(academic_sessions_detail[academic_session.id].fee_summary.footer.grand_total - academic_sessions_detail[academic_session.id].fee_summary.footer.grand_paid) : '—' }}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Total Employee</b></td>
+                                                                    <td
+                                                                        v-for="(academic_session, i) in academic_sessions"
+                                                                        :key="`academic_session_content${i}`"
+                                                                    >
+                                                                        {{ academic_sessions_detail[academic_session.id] ? academic_sessions_detail[academic_session.id].total_employee : '—' }}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><b>Total Salary</b></td>
+                                                                    <td
+                                                                        v-for="(academic_session, i) in academic_sessions"
+                                                                        :key="`academic_session_content${i}`"
+                                                                    >
+                                                                        {{ academic_sessions_detail[academic_session.id] ? formatCurrency(academic_sessions_detail[academic_session.id].total_salary) : '—' }}
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </template>
+                                                    </v-simple-table>
+                                                </v-tab-item>
+                                                <v-tab-item>
+                                                    <notes :ambassador="true" />
+                                                </v-tab-item>
+                                            </v-tabs>
+                                        </v-card-text>
+                                    </v-card>
+                                </template>
                             </template>
 
                         <template v-if="getConfig('made') === 'saudi'">
