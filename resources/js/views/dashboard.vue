@@ -14,128 +14,151 @@
             </div>
         </div>
         <div class="container-fluid">
-          <v-row v-if="getConfig('made') === 'saudi'" class="grey lighten-3">
-            <v-col
-              cols="12"
-              lg="3"
+            <v-row
+                v-if="getConfig('made') === 'saudi'"
+                class="grey lighten-3"
             >
-              <v-sheet
-                color="white"
-                outlined
-                rounded
-              >
-                <v-list-item class="grow">
-                  <v-list-item-avatar
-                    color="green lighten-5"
-                    size="95"
-                  >
-                    <v-icon
-                      x-large
-                      color="green"
+                <v-col
+                    cols="12"
+                    lg="3"
+                >
+                    <v-sheet
+                        color="white"
+                        outlined
+                        rounded
                     >
-                      groups
-                    </v-icon>
-                  </v-list-item-avatar>
+                        <v-list-item class="grow">
+                            <v-list-item-avatar
+                                color="green lighten-5"
+                                size="95"
+                            >
+                                <v-icon
+                                    x-large
+                                    color="green"
+                                >
+                                    groups
+                                </v-icon>
+                            </v-list-item-avatar>
 
-                  <v-list-item-content>
-                    <v-list-item-subtitle>Students</v-list-item-subtitle>
-                    <v-list-item-title v-if="topBoxDataX">{{ topBoxDataX.total_students}}</v-list-item-title>
-                    <v-skeleton-loader v-else type="heading" />
-                  </v-list-item-content>
-                </v-list-item>
-              </v-sheet>
-            </v-col>
-            <v-col
-              cols="12"
-              lg="3"
-            >
-              <v-sheet
-                color="white"
-                outlined
-                rounded
-              >
-                <v-list-item class="grow">
-                  <v-list-item-avatar
-                    color="blue lighten-5"
-                    size="95"
-                  >
-                    <v-icon
-                      x-large
-                      color="blue"
+                            <v-list-item-content>
+                                <v-list-item-subtitle>Students</v-list-item-subtitle>
+                                <v-list-item-title v-if="topBoxDataX">
+                                    {{ topBoxDataX.total_students }}
+                                </v-list-item-title>
+                                <v-skeleton-loader
+                                    v-else
+                                    type="heading"
+                                />
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-sheet>
+                </v-col>
+                <v-col
+                    cols="12"
+                    lg="3"
+                >
+                    <v-sheet
+                        color="white"
+                        outlined
+                        rounded
                     >
-                      people
-                    </v-icon>
-                  </v-list-item-avatar>
+                        <v-list-item class="grow">
+                            <v-list-item-avatar
+                                color="blue lighten-5"
+                                size="95"
+                            >
+                                <v-icon
+                                    x-large
+                                    color="blue"
+                                >
+                                    people
+                                </v-icon>
+                            </v-list-item-avatar>
 
-                  <v-list-item-content>
-                    <v-list-item-subtitle>Employees</v-list-item-subtitle>
-                    <v-list-item-title v-if="topBoxDataX">{{ topBoxDataX.total_employee}}</v-list-item-title>
-                    <v-skeleton-loader v-else type="heading" />
-                  </v-list-item-content>
-                </v-list-item>
-              </v-sheet>
-            </v-col>
-            <v-col
-              cols="12"
-              lg="3"
-            >
-              <v-sheet
-                color="white"
-                outlined
-                rounded
-              >
-                <v-list-item class="grow">
-                  <v-list-item-avatar
-                    color="orange lighten-5"
-                    size="95"
-                  >
-                    <v-icon
-                      x-large
-                      color="orange"
+                            <v-list-item-content>
+                                <v-list-item-subtitle>Employees</v-list-item-subtitle>
+                                <v-list-item-title v-if="topBoxDataX">
+                                    {{ topBoxDataX.total_employee }}
+                                </v-list-item-title>
+                                <v-skeleton-loader
+                                    v-else
+                                    type="heading"
+                                />
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-sheet>
+                </v-col>
+                <v-col
+                    cols="12"
+                    lg="3"
+                >
+                    <v-sheet
+                        color="white"
+                        outlined
+                        rounded
                     >
-                      score
-                    </v-icon>
-                  </v-list-item-avatar>
+                        <v-list-item class="grow">
+                            <v-list-item-avatar
+                                color="orange lighten-5"
+                                size="95"
+                            >
+                                <v-icon
+                                    x-large
+                                    color="orange"
+                                >
+                                    score
+                                </v-icon>
+                            </v-list-item-avatar>
 
-                  <v-list-item-content>
-                    <v-list-item-subtitle>Fees</v-list-item-subtitle>
-                    <v-list-item-title v-if="topBoxDataX">{{ formatCurrency(topBoxDataX.fee_summary.footer.grand_total)}}</v-list-item-title>
-                    <v-skeleton-loader v-else type="heading" />
-                  </v-list-item-content>
-                </v-list-item>
-              </v-sheet>
-            </v-col>
-            <v-col
-              cols="12"
-              lg="3"
-            >
-              <v-sheet
-                color="white"
-                outlined
-                rounded
-              >
-                <v-list-item class="grow">
-                  <v-list-item-avatar
-                    color="red lighten-5"
-                    size="95"
-                  >
-                    <v-icon
-                      x-large
-                      color="red"
+                            <v-list-item-content>
+                                <v-list-item-subtitle>Fees</v-list-item-subtitle>
+                                <v-list-item-title v-if="topBoxDataX">
+                                    {{ formatCurrency(topBoxDataX.fee_summary.footer.grand_total) }}
+                                </v-list-item-title>
+                                <v-skeleton-loader
+                                    v-else
+                                    type="heading"
+                                />
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-sheet>
+                </v-col>
+                <v-col
+                    cols="12"
+                    lg="3"
+                >
+                    <v-sheet
+                        color="white"
+                        outlined
+                        rounded
                     >
-                      monetization_on
-                    </v-icon>
-                  </v-list-item-avatar>
+                        <v-list-item class="grow">
+                            <v-list-item-avatar
+                                color="red lighten-5"
+                                size="95"
+                            >
+                                <v-icon
+                                    x-large
+                                    color="red"
+                                >
+                                    monetization_on
+                                </v-icon>
+                            </v-list-item-avatar>
 
-                  <v-list-item-content>
-                    <v-list-item-subtitle>Salary</v-list-item-subtitle>
-                    <v-list-item-title v-if="topBoxDataX && topBoxDataX.total_salary">{{ formatCurrency(topBoxDataX.total_salary) }}</v-list-item-title>
-                    <v-skeleton-loader v-else type="heading" />
-                  </v-list-item-content>
-                </v-list-item>
-              </v-sheet>
-            </v-col>
-          </v-row>
+                            <v-list-item-content>
+                                <v-list-item-subtitle>Salary</v-list-item-subtitle>
+                                <v-list-item-title v-if="topBoxDataX && topBoxDataX.total_salary">
+                                    {{ formatCurrency(topBoxDataX.total_salary) }}
+                                </v-list-item-title>
+                                <v-skeleton-loader
+                                    v-else
+                                    type="heading"
+                                />
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-sheet>
+                </v-col>
+            </v-row>
             <div class="row grey lighten-3">
                 <div class="col-12 col-md-6">
                     <div class="card">
