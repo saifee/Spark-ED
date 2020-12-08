@@ -332,74 +332,124 @@
             </div>
         </div>
         <template v-if="getConfig('made') === 'saudi'">
-                <v-navigation-drawer
-      v-model="drawer"
-      absolute
-      temporary
-      right
-      width="400"
-    >
-    <v-card class="elevation-0">
-      <v-card-title>
-                    {{trans('user.user_preference')}}
-      </v-card-title>
-                    <form @submit.prevent="updatePreference" @keydown="preferenceForm.errors.clear($event.target.name)">
-    <v-card-text>
+            <v-navigation-drawer
+                v-model="drawer"
+                absolute
+                temporary
+                right
+                width="400"
+            >
+                <v-card class="elevation-0">
+                    <v-card-title>
+                        {{ trans('user.user_preference') }}
+                    </v-card-title>
+                    <form
+                        @submit.prevent="updatePreference"
+                        @keydown="preferenceForm.errors.clear($event.target.name)"
+                    >
+                        <v-card-text>
                         <div class="row">
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
-                                    <label for="">{{trans('configuration.color_theme')}}</label>
-                                    <select v-model="preferenceForm.color_theme" class="custom-select col-12">
-                                      <option v-for="option in color_themes" v-bind:value="option.value">
-                                        {{ option.text }}
-                                      </option>
+                                    <label for="">{{ trans('configuration.color_theme') }}</label>
+                                    <select
+                                        v-model="preferenceForm.color_theme"
+                                        class="custom-select col-12"
+                                    >
+                                        <option
+                                            v-for="option in color_themes"
+                                            :value="option.value"
+                                        >
+                                            {{ option.text }}
+                                        </option>
                                     </select>
-                                    <show-error :form-name="preferenceForm" prop-name="color_theme"></show-error>
+                                    <show-error
+                                        :form-name="preferenceForm"
+                                        prop-name="color_theme"
+                                    />
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
-                                    <label for="">{{trans('configuration.direction')}}</label>
-                                    <select v-model="preferenceForm.direction" class="custom-select col-12">
-                                      <option v-for="option in directions" v-bind:value="option.value">
-                                        {{ option.text }}
-                                      </option>
+                                    <label for="">{{ trans('configuration.direction') }}</label>
+                                    <select
+                                        v-model="preferenceForm.direction"
+                                        class="custom-select col-12"
+                                    >
+                                        <option
+                                            v-for="option in directions"
+                                            :value="option.value"
+                                        >
+                                            {{ option.text }}
+                                        </option>
                                     </select>
-                                    <show-error :form-name="preferenceForm" prop-name="direction"></show-error>
+                                    <show-error
+                                        :form-name="preferenceForm"
+                                        prop-name="direction"
+                                    />
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
-                                    <label for="">{{trans('configuration.sidebar')}}</label>
-                                    <select v-model="preferenceForm.sidebar" class="custom-select col-12">
-                                      <option v-for="option in sidebar" v-bind:value="option.value">
-                                        {{ option.text }}
-                                      </option>
+                                    <label for="">{{ trans('configuration.sidebar') }}</label>
+                                    <select
+                                        v-model="preferenceForm.sidebar"
+                                        class="custom-select col-12"
+                                    >
+                                        <option
+                                            v-for="option in sidebar"
+                                            :value="option.value"
+                                        >
+                                            {{ option.text }}
+                                        </option>
                                     </select>
-                                    <show-error :form-name="preferenceForm" prop-name="sidebar"></show-error>
+                                    <show-error
+                                        :form-name="preferenceForm"
+                                        prop-name="sidebar"
+                                    />
                                 </div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <div class="form-group">
-                                    <label for="">{{trans('configuration.locale')}}</label>
-                                    <select v-model="preferenceForm.locale" class="custom-select col-12">
-                                      <option v-for="option in locales" v-bind:value="option.value">
-                                        {{ option.text }}
-                                      </option>
+                                    <label for="">{{ trans('configuration.locale') }}</label>
+                                    <select
+                                        v-model="preferenceForm.locale"
+                                        class="custom-select col-12"
+                                    >
+                                        <option
+                                            v-for="option in locales"
+                                            :value="option.value"
+                                        >
+                                            {{ option.text }}
+                                        </option>
                                     </select>
-                                    <show-error :form-name="preferenceForm" prop-name="sidebar"></show-error>
+                                    <show-error
+                                        :form-name="preferenceForm"
+                                        prop-name="sidebar"
+                                    />
                                 </div>
                             </div>
                         </div>
-</v-card-text>
+                        </v-card-text>
                         <v-card-actions>
-                        <v-spacer />
-                        <v-btn @click="drawer = !drawer" color="red" dark>{{trans('general.close')}}</v-btn>
-                        <v-btn type="submit" @click="drawer = !drawer" color="primary">{{trans('general.save')}}</v-btn>
+                            <v-spacer />
+                            <v-btn
+                                color="red"
+                                dark
+                                @click="drawer = !drawer"
+                            >
+                                {{ trans('general.close') }}
+                            </v-btn>
+                            <v-btn
+                                type="submit"
+                                color="primary"
+                                @click="drawer = !drawer"
+                            >
+                                {{ trans('general.save') }}
+                            </v-btn>
                         </v-card-actions>
                     </form>
-    </v-card>
-
+                </v-card>
             </v-navigation-drawer>
         </template>
     </div>
