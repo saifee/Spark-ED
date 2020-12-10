@@ -27,7 +27,7 @@
                         outlined
                         rounded
                     >
-                        <v-list-item class="grow">
+                        <v-list-item class="grow" to="/student/card-view">
                             <v-list-item-avatar
                                 color="green lighten-5"
                                 size="95"
@@ -62,7 +62,7 @@
                         outlined
                         rounded
                     >
-                        <v-list-item class="grow">
+                        <v-list-item class="grow" :to="{name: 'employeeCardView'}">
                             <v-list-item-avatar
                                 color="blue lighten-5"
                                 size="95"
@@ -97,7 +97,7 @@
                         outlined
                         rounded
                     >
-                        <v-list-item class="grow">
+                        <v-list-item class="grow" to="/finance/report">
                             <v-list-item-avatar
                                 color="orange lighten-5"
                                 size="95"
@@ -132,7 +132,7 @@
                         outlined
                         rounded
                     >
-                        <v-list-item class="grow">
+                        <v-list-item class="grow" :to="{name: 'employeePayroll'}">
                             <v-list-item-avatar
                                 color="red lighten-5"
                                 size="95"
