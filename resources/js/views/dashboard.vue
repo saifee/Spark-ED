@@ -325,7 +325,8 @@
                 </div>
                 <div class="col-12 col-md-4">
                     <events-list v-if="events.length && hasPermission('list-event')" :events="events" class="frontend-widget" body-class="row-like-margin border-bottom p-4" view-more-link="/calendar/event"></events-list>
-
+                </div>
+                <div class="col-12 col-md-4">
                     <articles-list v-if="articles.length && hasPermission('list-article')" :articles="articles" class="frontend-widget" body-class="row-like-margin border-bottom p-4" view-more-link="/post/feed"></articles-list>
                 </div>
                         </template>
