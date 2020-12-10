@@ -1067,7 +1067,7 @@
       </v-list-item>
       <v-list-item
         v-if="hasPermission('list-registration') && showMenu('registration')"
-        to="/student/registration/card-view"
+        :to="getConfig('made') === 'saudi' ? `/student/registration/card-view` : `/student/registration`"
         exact
       >
         <v-list-item-content>
@@ -1076,7 +1076,7 @@
       </v-list-item>
       <v-list-item
         v-if="(hasPermission('list-student') || hasPermission('list-class-teacher-wise-student')) && showMenu('student_list')"
-        to="/student/card-view"
+        :to="getConfig('made') === 'saudi' ? `/student/card-view` : `/student/list`"
         exact
       >
         <v-list-item-content>
@@ -1193,7 +1193,7 @@
       </v-list-item>
       <v-list-item
         v-if="showMenu('employee_list')"
-        to="/employee/card-view"
+        :to="getConfig('made') === 'saudi' ? `/employee/card-view` : `/employee/list`"
         exact
       >
         <v-list-item-content>
