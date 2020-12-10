@@ -4,7 +4,12 @@
       to="/dashboard"
       exact
     >
-      <v-list-item-action><i class="fas fa-home fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="deep-purple lighten-5"
+      >
+        <i class="fas fa-home fa-fw deep-purple--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('general.dashboard') }}</v-list-item-title>
       </v-list-item-content>
@@ -15,7 +20,12 @@
       to="/configuration/basic"
       exact
     >
-      <v-list-item-action><i class="fas fa-cog fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="red lighten-5"
+      >
+        <i class="fas fa-cog fa-fw red--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('configuration.basic_configuration') }}</v-list-item-title>
       </v-list-item-content>
@@ -26,7 +36,12 @@
       to="/configuration/social"
       exact
     >
-      <v-list-item-action><i class="fas fa-share-alt fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="amber lighten-5"
+      >
+        <i class="fas fa-share-alt fa-fw amber--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('configuration.social_network') }}</v-list-item-title>
       </v-list-item-content>
@@ -37,7 +52,12 @@
       to="/configuration/system"
       exact
     >
-      <v-list-item-action><i class="fas fa-cogs fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="indigo lighten-5"
+      >
+        <i class="fas fa-cogs fa-fw indigo--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('configuration.system_configuration') }}</v-list-item-title>
       </v-list-item-content>
@@ -48,7 +68,12 @@
       to="/configuration/mail"
       exact
     >
-      <v-list-item-action><i class="fas fa-envelope fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="brown lighten-5"
+      >
+        <i class="fas fa-envelope fa-fw brown--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('configuration.mail_configuration') }}</v-list-item-title>
       </v-list-item-content>
@@ -58,7 +83,12 @@
       to="/configuration/locale"
       exact
     >
-      <v-list-item-action><i class="fas fa-globe fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="orange lighten-5"
+      >
+        <i class="fas fa-globe fa-fw orange--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('configuration.locale') }}</v-list-item-title>
       </v-list-item-content>
@@ -68,7 +98,12 @@
       to="/configuration/role"
       exact
     >
-      <v-list-item-action><i class="fas fa-users fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="deep-purple lighten-5"
+      >
+        <i class="fas fa-users fa-fw deep-purple--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('configuration.role') }}</v-list-item-title>
       </v-list-item-content>
@@ -78,7 +113,12 @@
       to="/configuration/permission"
       exact
     >
-      <v-list-item-action><i class="fas fa-key fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="pink lighten-5"
+      >
+        <i class="fas fa-key fa-fw pink--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('configuration.permission') }}</v-list-item-title>
       </v-list-item-content>
@@ -89,7 +129,12 @@
       to="/configuration/sms"
       exact
     >
-      <v-list-item-action><i class="fas fa-comment fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="cyan lighten-5"
+      >
+        <i class="fas fa-comment fa-fw cyan--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('configuration.sms') }}</v-list-item-title>
       </v-list-item-content>
@@ -100,7 +145,12 @@
       to="/configuration/payment/gateway"
       exact
     >
-      <v-list-item-action><i class="fas fa-credit-card fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="lime lighten-5"
+      >
+        <i class="fas fa-credit-card fa-fw lime--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('finance.payment_gateway') }}</v-list-item-title>
       </v-list-item-content>
@@ -111,7 +161,12 @@
       to="/configuration/authentication"
       exact
     >
-      <v-list-item-action><i class="fas fa-sign-in-alt fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="blue lighten-5"
+      >
+        <i class="fas fa-sign-in-alt fa-fw blue--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('auth.authentication') }}</v-list-item-title>
       </v-list-item-content>
@@ -122,7 +177,12 @@
       to="/configuration/menu"
       exact
     >
-      <v-list-item-action><i class="fas fa-ellipsis-h fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="brown lighten-5"
+      >
+        <i class="fas fa-ellipsis-h fa-fw brown--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('configuration.menu') }}</v-list-item-title>
       </v-list-item-content>
@@ -133,7 +193,12 @@
       to="/configuration/module"
       exact
     >
-      <v-list-item-action><i class="fas fa-boxes fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="cyan lighten-5"
+      >
+        <i class="fas fa-boxes fa-fw cyan--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('configuration.module_configuration') }}</v-list-item-title>
       </v-list-item-content>
@@ -145,7 +210,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-user-circle fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="indigo lighten-5"
+        >
+          <i class="fas fa-user-circle fa-fw indigo--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('reception.reception_configuration') }}</v-list-item-title>
         </v-list-item-content>
@@ -197,7 +267,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-school fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="blue lighten-5"
+        >
+          <i class="fas fa-school fa-fw blue--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.academic_configuration') }}</v-list-item-title>
         </v-list-item-content>
@@ -241,7 +316,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-money-bill-alt fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="deep-purple lighten-5"
+        >
+          <i class="fas fa-money-bill-alt fa-fw deep-purple--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('finance.finance_configuration') }}</v-list-item-title>
         </v-list-item-content>
@@ -269,7 +349,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-graduation-cap fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="green lighten-5"
+        >
+          <i class="fas fa-graduation-cap fa-fw green--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('student.student_configuration') }}</v-list-item-title>
         </v-list-item-content>
@@ -305,7 +390,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-gem fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="blue-grey lighten-5"
+        >
+          <i class="fas fa-gem fa-fw blue-grey--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('behaviour.behaviour_configuration') }}</v-list-item-title>
         </v-list-item-content>
@@ -333,7 +423,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-file-alt fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="purple lighten-5"
+        >
+          <i class="fas fa-file-alt fa-fw purple--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('exam.configuration') }}</v-list-item-title>
         </v-list-item-content>
@@ -375,7 +470,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-user-tie fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="pink lighten-5"
+        >
+          <i class="fas fa-user-tie fa-fw pink--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.employee_configuration') }}</v-list-item-title>
         </v-list-item-content>
@@ -475,7 +575,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-truck fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="cyan lighten-5"
+        >
+          <i class="fas fa-truck fa-fw cyan--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('transport.transport_configuration') }}</v-list-item-title>
         </v-list-item-content>
@@ -511,7 +616,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-book fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="amber lighten-5"
+        >
+          <i class="fas fa-book fa-fw amber--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('library.library_configuration') }}</v-list-item-title>
         </v-list-item-content>
@@ -571,7 +681,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-calendar-alt fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="yellow lighten-5"
+        >
+          <i class="fas fa-calendar-alt fa-fw yellow--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('calendar.calendar_configuration') }}</v-list-item-title>
         </v-list-item-content>
@@ -591,7 +706,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-newspaper fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="purple lighten-5"
+        >
+          <i class="fas fa-newspaper fa-fw purple--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('post.post_configuration') }}</v-list-item-title>
         </v-list-item-content>
@@ -611,7 +731,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-building fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="blue-grey lighten-5"
+        >
+          <i class="fas fa-building fa-fw blue-grey--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('asset.asset_configuration') }}</v-list-item-title>
         </v-list-item-content>
@@ -639,7 +764,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-suitcase fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="purple lighten-5"
+        >
+          <i class="fas fa-suitcase fa-fw purple--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('frontend.frontend_configuration') }}</v-list-item-title>
         </v-list-item-content>
@@ -659,7 +789,12 @@
       to="/configuration/custom-field"
       exact
     >
-      <v-list-item-action><i class="fas fa-cubes fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="orange lighten-5"
+      >
+        <i class="fas fa-cubes fa-fw orange--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('configuration.custom_field') }}</v-list-item-title>
       </v-list-item-content>
@@ -670,7 +805,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-align-justify fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="yellow lighten-5"
+        >
+          <i class="fas fa-align-justify fa-fw yellow--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('misc.misc_configuration') }}</v-list-item-title>
         </v-list-item-content>
@@ -714,7 +854,12 @@
       to="/institute/document"
       exact
     >
-      <v-list-item-action><i class="fas fa-file fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="teal lighten-5"
+      >
+        <i class="fas fa-file fa-fw teal--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('institute.document') }}</v-list-item-title>
       </v-list-item-content>
@@ -725,7 +870,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-user-circle fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="blue lighten-5"
+        >
+          <i class="fas fa-user-circle fa-fw blue--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('reception.reception') }}</v-list-item-title>
         </v-list-item-content>
@@ -799,7 +949,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-school fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="pink lighten-5"
+        >
+          <i class="fas fa-school fa-fw pink--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('academic.academic') }}</v-list-item-title>
         </v-list-item-content>
@@ -891,7 +1046,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-graduation-cap fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="deep-orange lighten-5"
+        >
+          <i class="fas fa-graduation-cap fa-fw deep-orange--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('student.student') }}</v-list-item-title>
         </v-list-item-content>
@@ -924,15 +1084,15 @@
         </v-list-item-content>
       </v-list-item>
       <template v-if="getConfig('made') === 'saudi'">
-      <v-list-item
-        v-if="(hasPermission('list-student') || hasPermission('list-class-teacher-wise-student')) && showMenu('student_behaviour')"
-        to="/student/behaviour"
-        exact
-      >
-        <v-list-item-content>
-          <v-list-item-title>{{ trans('behaviour.behaviour') }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+        <v-list-item
+          v-if="(hasPermission('list-student') || hasPermission('list-class-teacher-wise-student')) && showMenu('student_behaviour')"
+          to="/student/behaviour"
+          exact
+        >
+          <v-list-item-content>
+            <v-list-item-title>{{ trans('behaviour.behaviour') }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </template>
       <v-list-item
         v-if="hasPermission('edit-roll-number') && showMenu('roll_number')"
@@ -1012,7 +1172,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-user-tie fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="light-blue lighten-5"
+        >
+          <i class="fas fa-user-tie fa-fw light-blue--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('employee.employee') }}</v-list-item-title>
         </v-list-item-content>
@@ -1036,15 +1201,15 @@
         </v-list-item-content>
       </v-list-item>
       <template v-if="getConfig('made') === 'saudi'">
-      <v-list-item
-        v-if="showMenu('employee_behaviour')"
-        to="/employee/behaviour"
-        exact
-      >
-        <v-list-item-content>
-          <v-list-item-title>{{ trans('behaviour.behaviour') }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+        <v-list-item
+          v-if="showMenu('employee_behaviour')"
+          to="/employee/behaviour"
+          exact
+        >
+          <v-list-item-content>
+            <v-list-item-title>{{ trans('behaviour.behaviour') }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </template>
       <v-list-item
         v-if="hasPermission('generate-employee-id-card') && showMenu('employee_id_card')"
@@ -1097,7 +1262,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-file-alt fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="indigo lighten-5"
+        >
+          <i class="fas fa-file-alt fa-fw indigo--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('exam.exam') }}</v-list-item-title>
         </v-list-item-content>
@@ -1155,7 +1325,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-money-bill-alt fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="lime lighten-5"
+        >
+          <i class="fas fa-money-bill-alt fa-fw lime--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('finance.finance') }}</v-list-item-title>
         </v-list-item-content>
@@ -1256,7 +1431,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-truck fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="teal lighten-5"
+        >
+          <i class="fas fa-truck fa-fw teal--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('transport.transport') }}</v-list-item-title>
         </v-list-item-content>
@@ -1339,7 +1519,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-calendar-alt fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="light-blue lighten-5"
+        >
+          <i class="fas fa-calendar-alt fa-fw light-blue--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('calendar.calendar') }}</v-list-item-title>
         </v-list-item-content>
@@ -1377,7 +1562,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-folder fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="light-green lighten-5"
+        >
+          <i class="fas fa-folder fa-fw light-green--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('resource.resource') }}</v-list-item-title>
         </v-list-item-content>
@@ -1424,7 +1614,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-book fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="purple lighten-5"
+        >
+          <i class="fas fa-book fa-fw purple--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('library.library') }}</v-list-item-title>
         </v-list-item-content>
@@ -1462,7 +1657,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-box fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="green lighten-5"
+        >
+          <i class="fas fa-box fa-fw green--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('inventory.inventory') }}</v-list-item-title>
         </v-list-item-content>
@@ -1536,7 +1736,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-newspaper fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="red lighten-5"
+        >
+          <i class="fas fa-newspaper fa-fw red--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('post.post') }}</v-list-item-title>
         </v-list-item-content>
@@ -1565,7 +1770,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-paper-plane fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="light-green lighten-5"
+        >
+          <i class="fas fa-paper-plane fa-fw light-green--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('communication.communication') }}</v-list-item-title>
         </v-list-item-content>
@@ -1603,7 +1813,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-suitcase fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="teal lighten-5"
+        >
+          <i class="fas fa-suitcase fa-fw teal--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('frontend.frontend') }}</v-list-item-title>
         </v-list-item-content>
@@ -1641,7 +1856,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-puzzle-piece fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="light-blue lighten-5"
+        >
+          <i class="fas fa-puzzle-piece fa-fw light-blue--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('utility.utility') }}</v-list-item-title>
         </v-list-item-content>
@@ -1701,7 +1921,12 @@
       no-action
     >
       <template v-slot:activator>
-        <v-list-item-action><i class="fas fa-cash-register fa-fw" /></v-list-item-action>
+        <v-list-item-avatar
+          size="30"
+          color="red lighten-5"
+        >
+          <i class="fas fa-cash-register fa-fw red--text darken-1--text" />
+        </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title>{{ trans('amsl.amsl') }}</v-list-item-title>
         </v-list-item-content>
@@ -1813,7 +2038,12 @@
       to="/configuration"
       exact
     >
-      <v-list-item-action><i class="fas fa-cogs fa-fw" /></v-list-item-action>
+      <v-list-item-avatar
+        size="30"
+        color="deep-orange lighten-5"
+      >
+        <i class="fas fa-cogs fa-fw deep-orange--text darken-1--text" />
+      </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>{{ trans('configuration.configuration') }}</v-list-item-title>
       </v-list-item-content>
