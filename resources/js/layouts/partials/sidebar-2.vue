@@ -9,6 +9,14 @@
     :mini-variant="getConfig('user_sidebar') === 'mini'"
     :expand-on-hover="getConfig('user_sidebar') === 'mini'"
   >
+    <v-list-item
+      :style="`background-color:${getColor()}`"
+      to="/"
+      exact
+      class="elevation-4"
+    >
+      <v-list-item-avatar tile height="48" width="48"><v-img :src="getIcon" /></v-list-item-avatar>
+    </v-list-item>
     <main-menu />
     <template v-slot:append>
       <v-btn-toggle
@@ -48,6 +56,9 @@
             drawer: null,
         }),
         computed: {
+            getIcon(){
+                return helper.getIcon();
+            },
         },
         watch: {
           '$store.state.navigationDrawer': function () {
@@ -57,6 +68,25 @@
         mounted() {
         },
         methods : {
+            getColor(){
+                let color = helper.getConfig('user_color_theme')
+                if (color === 'green') {
+                    return '#55ce63'
+                }
+                if (color === 'red') {
+                    return '#fb3a3a'
+                }
+                if (color === 'purple') {
+                    return '#7460ee'
+                }
+                if (color === 'blue') {
+                    return '#02bec9'
+                }
+                if (color === 'megna') {
+                    return '#01c0c8'
+                }
+                return '#02bec9' // default same as blue
+            },
             logout(){
                 helper.logout().then(() => {
                     this.$router.push('/login');
