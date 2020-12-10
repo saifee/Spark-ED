@@ -14,6 +14,7 @@
     <v-spacer />
     <router-link to="/">
       <v-avatar
+        v-if="false"
         tile
         class="mr-3"
       >
