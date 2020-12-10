@@ -6,8 +6,8 @@
     app
     :clipped="getConfig('sidebar_clipped') == 1"
     :right="getConfig('user_direction') === 'rtl'"
-    :mini-variant="getConfig('user_sidebar') === 'mini'"
-    :expand-on-hover="getConfig('user_sidebar') === 'mini'"
+    :mini-variant="miniDrawer"
+    :expand-on-hover="miniDrawer"
   >
     <v-list-item
       :style="`background-color:${getColor()}`"
@@ -54,6 +54,7 @@
         components: {mainMenu},
         data: () => ({
             drawer: null,
+            miniDrawer: false,
         }),
         computed: {
             getIcon(){
@@ -62,7 +63,7 @@
         },
         watch: {
           '$store.state.navigationDrawer': function () {
-            this.drawer = !this.drawer
+            this.miniDrawer = !this.miniDrawer
           },
         },
         mounted() {
