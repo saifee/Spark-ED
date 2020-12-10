@@ -1067,7 +1067,7 @@
       </v-list-item>
       <v-list-item
         v-if="hasPermission('list-registration') && showMenu('registration')"
-        to="/student/registration"
+        to="/student/registration/card-view"
         exact
       >
         <v-list-item-content>
@@ -1076,7 +1076,7 @@
       </v-list-item>
       <v-list-item
         v-if="(hasPermission('list-student') || hasPermission('list-class-teacher-wise-student')) && showMenu('student_list')"
-        to="/student/list"
+        to="/student/card-view"
         exact
       >
         <v-list-item-content>
@@ -1193,7 +1193,7 @@
       </v-list-item>
       <v-list-item
         v-if="showMenu('employee_list')"
-        to="/employee/list"
+        to="/employee/card-view"
         exact
       >
         <v-list-item-content>
