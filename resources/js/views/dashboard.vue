@@ -159,8 +159,6 @@
                     </v-sheet>
                 </v-col>
                 <div class="col-12 col-md-6">
-                    <div class="card">
-                        <div class="card-body p-4">
                             <template v-if="getConfig('made') !== 'saudi'">
                                 <template v-if="hasPermission('ambassador-view')">
                                     <v-card class="mb-4">
@@ -262,8 +260,6 @@
                             </template>
                           </template>
 
-                        </div>
-                      </div>
                 </div>
                 <template v-if="getConfig('made') === 'saudi'">
                 <div class="col-12 col-md-6">
