@@ -263,11 +263,11 @@
                 </div>
                 <template v-if="getConfig('made') === 'saudi'">
                 <div class="col-12 col-md-6">
-                    <div class="card">
-                        <div class="card-body p-4">
+                    <v-card to="/calendar/event">
+                        <v-card-text>
                             <calendar></calendar>
-                        </div>
-                    </div>
+                        </v-card-text>
+                    </v-card>
                 </div>
                 <div class="col-12 col-md-4">
                     <div class="card widget" v-if="hasNotAnyRole(['student','parent'])">
