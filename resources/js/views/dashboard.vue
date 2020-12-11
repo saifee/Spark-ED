@@ -158,8 +158,6 @@
                         </v-list-item>
                     </v-sheet>
                 </v-col>
-            </v-row>
-            <div class="row grey lighten-3">
                 <div class="col-12 col-md-6">
                     <div class="card">
                         <div class="card-body p-4">
@@ -328,7 +326,7 @@
                     <articles-list v-if="articles.length && hasPermission('list-article')" :articles="articles" class="frontend-widget" body-class="row-like-margin border-bottom p-4" view-more-link="/post/feed"></articles-list>
                 </div>
                 </template>
-            </div>
+            </v-row>
         </div>
         <template v-if="getConfig('made') === 'saudi'">
             <v-navigation-drawer
