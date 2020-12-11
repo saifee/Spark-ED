@@ -158,9 +158,12 @@
                         </v-list-item>
                     </v-sheet>
                 </v-col>
-                <div class="col-12 col-md-6">
                             <template v-if="getConfig('made') !== 'saudi'">
                                 <template v-if="hasPermission('ambassador-view')">
+                                  <v-col
+                                      cols="12"
+                                      lg="6"
+                                  >
                                     <v-card class="mb-4">
                                         <v-card-text>
                                             <v-tabs>
@@ -245,11 +248,18 @@
                                             </v-tabs>
                                         </v-card-text>
                                     </v-card>
+                                  </v-col>
                                 </template>
                             </template>
 
                         <template v-if="getConfig('made') === 'saudi'">
                             <template v-if="hasAnyRole(['admin','manager','principal'])">
+                        <v-col
+                            cols="12"
+                            lg="6"
+                        >
+                          <v-card to="/student/attendance">
+                              <v-card-text>
                                 <h4 class="card-title">{{trans('student.total_strength', {total: total_strength})}}
                                     <span class="pull-right">
                                         <button v-if="strength_chart_type == 'batch'" class="btn btn-sm btn-info" @click="strength_chart_type = 'course'">{{trans('academic.course_wise')}}</button>
@@ -257,11 +267,10 @@
                                     </span>
                                 </h4>
                                 <bar-chart :chart="chart.strength"></bar-chart>
+                              </v-card-text>
+                          </v-card>
+                        </v-col>
                             </template>
-                          </template>
-
-                </div>
-                <template v-if="getConfig('made') === 'saudi'">
                 <div class="col-12 col-md-6">
                     <v-card to="/calendar/event">
                         <v-card-text>
@@ -269,6 +278,7 @@
                         </v-card-text>
                     </v-card>
                 </div>
+                <template v-if="hasNotAnyRole(['student','parent'])">
                 <div class="col-12 col-md-4">
                     <div class="card widget" v-if="hasNotAnyRole(['student','parent'])">
                         <div class="card-body">
@@ -286,6 +296,10 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                </template>
+                <template v-if="hasAnyRole(['admin','librarian'])">
+                <div class="col-12 col-md-4">
                     <div class="card widget" v-if="hasAnyRole(['admin','librarian'])">
                         <div class="card-body">
                             <div class="row border-bottom">
@@ -303,17 +317,20 @@
                         </div>
                     </div>
                 </div>
+                </template>
                 <div class="col-12 col-md-4">
-                    <div :class="['card widget', hasAnyRole(['student','parent']) ? 'm-t-20' : '']" v-if="hasPermission('access-todo')">
-                        <div class="card-body">
+                    <template v-if="hasPermission('access-todo')">
+                    <v-card to="/utility/todo" :class="['card widget', hasAnyRole(['student','parent']) ? 'm-t-20' : '']">
+                        <v-card-text>
                             <div class="row border-bottom">
                                 <div class="col-12 p-4">
                                     <h4 class="card-title mb-3">{{trans('utility.todo')}}</h4>
                                     <todo-widget></todo-widget>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </v-card-text>
+                    </v-card>
+                    </template>
                 </div>
                 <div class="col-12 col-md-4">
                     <events-list v-if="events.length && hasPermission('list-event')" :events="events" class="frontend-widget" body-class="row-like-margin border-bottom p-4" view-more-link="/calendar/event"></events-list>
