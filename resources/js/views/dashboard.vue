@@ -14,9 +14,9 @@
             </div>
         </div>
         <div class="container-fluid">
-            <v-row
+            <draggable
                 v-if="getConfig('made') === 'saudi'"
-                class="grey lighten-3"
+                class="row grey lighten-3"
             >
                 <v-col
                     cols="12"
@@ -343,7 +343,7 @@
                     <articles-list v-if="articles.length && hasPermission('list-article')" :articles="articles" class="frontend-widget" body-class="row-like-margin border-bottom p-4" view-more-link="/post/feed"></articles-list>
                 </div>
                 </template>
-            </v-row>
+            </draggable>
         </div>
         <template v-if="getConfig('made') === 'saudi'">
             <v-navigation-drawer
