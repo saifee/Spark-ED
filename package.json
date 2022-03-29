@@ -44,7 +44,7 @@
     "jquery": "~3.5.0",
     "laravel-vue-pagination": "^2.3.1",
     "moment": "^2.29.1",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "popper.js": "^1.16.1",
     "rtcmulticonnection": "^3.7.0",
     "socket.io-client": "^2.3.1",
