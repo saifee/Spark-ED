@@ -72,7 +72,7 @@
     "vuejs-datepicker": "^1.6.2",
     "vuejs-dialog": "^1.4.2",
     "vuescroll": "^4.16.1",
-    "vuetify": "^2.3.18",
+    "vuetify": "^2.6.10",
     "vuex": "^3.5.1",
     "vuex-persistedstate": "^3.1.0"
   }
